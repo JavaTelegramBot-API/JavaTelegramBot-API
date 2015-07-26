@@ -21,22 +21,4 @@ public interface UserProfilePhotos {
     }
 
     PhotoSize[][] getPhotos();
-
-    default Set<Set<PhotoSize>> getPhotosSet() {
-
-        Set<Set<PhotoSize>> photosSet = new HashSet<>();
-
-        for (PhotoSize[] photoSizes : getPhotos()) {
-
-            Set<PhotoSize> photoSizesSet = new HashSet<>();
-            photosSet.add(photoSizesSet);
-
-            for (PhotoSize photoSize : photoSizes) {
-
-                photoSizesSet.add(photoSize);
-            }
-        }
-
-        return photosSet;
-    }
 }
