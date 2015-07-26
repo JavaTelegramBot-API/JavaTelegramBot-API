@@ -51,7 +51,7 @@ public interface ReplyKeyboardMarkup extends Keyboard {
      * @param cellValues The values for the row
      * @return The keyboard object
      */
-    default ReplyKeyboardMarkup setRow(int row, String... cellValues) {
+    default ReplyKeyboardMarkup setRow(int row, String... cellValues) throws ArrayIndexOutOfBoundsException {
 
         List<String> list = new LinkedList<>();
 
