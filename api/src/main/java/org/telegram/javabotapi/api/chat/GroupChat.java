@@ -6,6 +6,4 @@ package org.telegram.javabotapi.api.chat;
 public interface GroupChat extends Chat {
 
     String getName();
-
-    void leave();
 }

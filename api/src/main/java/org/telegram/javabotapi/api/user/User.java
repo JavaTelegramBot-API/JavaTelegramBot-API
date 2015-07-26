@@ -16,4 +16,6 @@ public interface User {
     }
 
     String getUsername();
+
+    UserProfilePhotos getProfilePhotos();
 }
