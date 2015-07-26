@@ -47,8 +47,9 @@ public interface ReplyKeyboardMarkup extends Keyboard {
      *
      * @param cellValues The values for the row
      * @return The keyboard object
+     * @throws IndexOutOfBoundsException if the row is out of range
      */
-    default ReplyKeyboardMarkup setRow(int row, String... cellValues) throws ArrayIndexOutOfBoundsException {
+    default ReplyKeyboardMarkup setRow(int row, String... cellValues) {
 
         List<String> list = new LinkedList<>();
 
@@ -62,8 +63,9 @@ public interface ReplyKeyboardMarkup extends Keyboard {
      * @param row        The index of the row
      * @param cellValues The values for the row
      * @return The keyboard object
+     * @throws IndexOutOfBoundsException if the row is out of range
      */
-    default ReplyKeyboardMarkup setRow(int row, List<String> cellValues) throws ArrayIndexOutOfBoundsException {
+    default ReplyKeyboardMarkup setRow(int row, List<String> cellValues) {
 
         getButtons().get(row).clear();
         getButtons().get(row).addAll(cellValues);
@@ -77,8 +79,9 @@ public interface ReplyKeyboardMarkup extends Keyboard {
      * @param column    The index of the column
      * @param cellValue The value for the cell
      * @return The keyboard object
+     * @throws IndexOutOfBoundsException if the row or column is out of range
      */
-    default ReplyKeyboardMarkup setCell(int row, int column, String cellValue) throws ArrayIndexOutOfBoundsException {
+    default ReplyKeyboardMarkup setCell(int row, int column, String cellValue) {
 
         getButtons().get(row).set(column, cellValue);
         return this;
