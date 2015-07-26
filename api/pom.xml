@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <artifactId>jtelegrambotapi</artifactId>
-        <groupId>org.telegram.jtelegrambotapi</groupId>
+        <artifactId>jtelegrambot-api</artifactId>
+        <groupId>org.telegram.botapi</groupId>
         <version>0.1-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>

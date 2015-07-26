@@ -6,14 +6,14 @@
     <artifactId>implementation</artifactId>
 
     <parent>
-        <artifactId>jtelegrambotapi</artifactId>
-        <groupId>org.telegram.jtelegrambotapi</groupId>
+        <artifactId>jtelegrambot-api</artifactId>
+        <groupId>org.telegram.botapi</groupId>
         <version>0.1-ALPHA</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>org.telegram.jtelegrambotapi</groupId>
+            <groupId>org.telegram.botapi</groupId>
             <artifactId>api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -62,7 +62,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>org.telegram.javabotapi:api:*:*</include>
+                                    <include>org.telegram.botapi:api:*:*</include>
                                 </includes>
                             </artifactSet>
                             <finalName>${project.parent.artifactId}</finalName>
