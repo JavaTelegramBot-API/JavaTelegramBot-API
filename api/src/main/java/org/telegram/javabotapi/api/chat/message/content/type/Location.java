@@ -6,5 +6,6 @@ package org.telegram.javabotapi.api.chat.message.content.type;
 public interface Location {
 
     float getLongitude();
+
     float getLatitude();
 }

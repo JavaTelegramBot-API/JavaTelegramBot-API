@@ -6,11 +6,15 @@ package org.telegram.javabotapi.api.chat.message.content.type;
 public interface Contact {
 
     String getPhoneNumber();
+
     String getFirstName();
+
     String getLastName();
+
     default String getFullName() {
 
         return getFirstName() + " " + getLastName();
     }
+
     String getUserId();
 }

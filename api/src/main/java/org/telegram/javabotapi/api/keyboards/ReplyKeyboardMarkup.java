@@ -1,8 +1,5 @@
 package org.telegram.javabotapi.api.keyboards;
 
-import org.telegram.javabotapi.api.chat.message.ReplyMarkup;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,7 +59,7 @@ public interface ReplyKeyboardMarkup extends Keyboard {
     /**
      * Sets a row of the keyboard
      *
-     * @param row The index of the row
+     * @param row        The index of the row
      * @param cellValues The values for the row
      * @return The keyboard object
      */
@@ -76,8 +73,8 @@ public interface ReplyKeyboardMarkup extends Keyboard {
     /**
      * Sets a cell of the keyboard
      *
-     * @param row The index of the row
-     * @param column The index of the column
+     * @param row       The index of the row
+     * @param column    The index of the column
      * @param cellValue The value for the cell
      * @return The keyboard object
      */

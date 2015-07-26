@@ -26,12 +26,12 @@ public interface UserProfilePhotos {
 
         Set<Set<PhotoSize>> photosSet = new HashSet<>();
 
-        for(PhotoSize[] photoSizes : getPhotos()) {
+        for (PhotoSize[] photoSizes : getPhotos()) {
 
             Set<PhotoSize> photoSizesSet = new HashSet<>();
             photosSet.add(photoSizesSet);
 
-            for(PhotoSize photoSize : photoSizes) {
+            for (PhotoSize photoSize : photoSizes) {
 
                 photoSizesSet.add(photoSize);
             }

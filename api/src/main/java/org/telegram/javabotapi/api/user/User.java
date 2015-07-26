@@ -8,6 +8,7 @@ public interface User {
     int getId();
 
     String getFirstName();
+
     String getLastName();
 
     default String getFullName() {
