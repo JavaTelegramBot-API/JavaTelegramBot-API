@@ -2,6 +2,9 @@ package org.telegram.botapi.api.chat.message;
 
 import org.telegram.botapi.api.chat.Chat;
 import org.telegram.botapi.api.chat.message.content.Content;
+import org.telegram.botapi.api.chat.message.send.ChatAction;
+import org.telegram.botapi.api.chat.message.send.SendableChatAction;
+import org.telegram.botapi.api.chat.message.send.SendableForwardMessage;
 import org.telegram.botapi.api.user.User;
 
 /**
@@ -64,4 +67,11 @@ public interface Message {
      * @return The content of the message
      */
     Content getContent();
+
+    default Message forwardMessage(Chat chat) {
+
+        SendableChatAction.builder().chatAction(ChatAction.FIND_LOCATION);
+
+        return chat.sendMessage(SendableForwardMessage.builder().forwardedMessage(this).build());
+    }
 }
