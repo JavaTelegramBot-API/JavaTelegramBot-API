@@ -30,6 +30,11 @@
             <version>1.16.4</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mashape.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>1.4.7</version>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

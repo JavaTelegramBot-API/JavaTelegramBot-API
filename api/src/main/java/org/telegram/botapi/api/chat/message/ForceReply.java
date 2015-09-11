@@ -9,4 +9,6 @@ public interface ForceReply {
 
         return true;
     }
+
+    boolean getSelective();
 }
