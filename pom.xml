@@ -16,7 +16,6 @@
 
     <modules>
         <module>api</module>
-        <module>implementation</module>
     </modules>
 
     <dependencies>
