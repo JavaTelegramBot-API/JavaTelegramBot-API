@@ -16,5 +16,5 @@ public interface Contact {
         return getFirstName() + " " + getLastName();
     }
 
-    String getUserId();
+    int getUserId();
 }
