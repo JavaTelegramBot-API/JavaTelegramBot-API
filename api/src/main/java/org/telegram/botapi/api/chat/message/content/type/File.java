@@ -10,7 +10,7 @@ public interface File {
      *
      * @return The files ID
      */
-    int getFileId();
+    String getFileId();
 
     /**
      * Gets the size of the file
