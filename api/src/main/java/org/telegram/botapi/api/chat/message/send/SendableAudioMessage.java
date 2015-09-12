@@ -1,6 +1,7 @@
 package org.telegram.botapi.api.chat.message.send;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.telegram.botapi.api.chat.message.Message;
@@ -15,10 +16,14 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 public class SendableAudioMessage implements SendableMessage {
 
     @NonNull
+	@Getter
     private final InputFile audio;
+	@Getter
     private final int duration;
-    private final Message replyTo;
-    private final ReplyMarkup replyMarkup;
+	@Getter
+	private final Message replyTo;
+	@Getter
+	private final ReplyMarkup replyMarkup;
 
     @Override
     public MessageType getType() {

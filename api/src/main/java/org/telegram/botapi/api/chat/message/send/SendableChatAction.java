@@ -1,6 +1,7 @@
 package org.telegram.botapi.api.chat.message.send;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.telegram.botapi.api.chat.message.Message;
@@ -15,7 +16,8 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 public class SendableChatAction implements SendableMessage {
 
     @NonNull
-    private final ChatAction chatAction;
+	@Getter
+	private final ChatAction chatAction;
 
     @Override
     public MessageType getType() {
