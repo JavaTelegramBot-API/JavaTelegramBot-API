@@ -17,5 +17,6 @@ public enum ContentType {
     TEXT,
     VIDEO,
 	VOICE,
-    GROUP_CHAT_CREATED;
+    GROUP_CHAT_CREATED,
+	LEFT_CHAT_PARTICIPANT;
 }
