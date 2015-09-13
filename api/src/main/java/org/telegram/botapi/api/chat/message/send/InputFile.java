@@ -5,9 +5,8 @@ package org.telegram.botapi.api.chat.message.send;
  */
 public interface InputFile {
 
-    int getId();
+    String getId();
     String getFilePath();
-    byte[] getFileHash();
 
     @Override
     boolean equals(Object object);
