@@ -24,7 +24,6 @@ public class SendableLocationMessage implements SendableMessage {
 	@Getter
 	private final ReplyMarkup replyMarkup;
 
-
     @Override
     public MessageType getType() {
         return MessageType.LOCATION;
