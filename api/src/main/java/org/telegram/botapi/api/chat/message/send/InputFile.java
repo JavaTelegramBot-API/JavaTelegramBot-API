@@ -1,5 +1,6 @@
 package org.telegram.botapi.api.chat.message.send;
 
+import lombok.Getter;
 import org.telegram.botapi.api.TelegramBot;
 
 import java.io.File;
@@ -9,7 +10,9 @@ import java.io.File;
  */
 public class InputFile {
 
+	@Getter
     private final String fileID;
+	@Getter
     private final File file;
 
     public InputFile(File file) {
