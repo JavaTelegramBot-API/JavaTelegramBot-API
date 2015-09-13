@@ -3,11 +3,7 @@ package org.telegram.botapi.api.chat.message;
 import org.telegram.botapi.api.TelegramBot;
 import org.telegram.botapi.api.chat.Chat;
 import org.telegram.botapi.api.chat.message.content.Content;
-import org.telegram.botapi.api.chat.message.send.ChatAction;
-import org.telegram.botapi.api.chat.message.send.SendableChatAction;
 import org.telegram.botapi.api.chat.message.send.SendableForwardMessage;
-import org.telegram.botapi.api.chat.message.send.SendableTextMessage;
-import org.telegram.botapi.api.keyboards.ReplyKeyboardMarkup;
 import org.telegram.botapi.api.user.User;
 
 /**
