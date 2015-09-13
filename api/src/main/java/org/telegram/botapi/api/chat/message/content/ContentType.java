@@ -16,5 +16,6 @@ public enum ContentType {
     STICKER,
     TEXT,
     VIDEO,
+	VOICE,
     GROUP_CHAT_CREATED;
 }
