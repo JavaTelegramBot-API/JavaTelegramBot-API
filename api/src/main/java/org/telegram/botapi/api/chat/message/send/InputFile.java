@@ -1,13 +1,26 @@
 package org.telegram.botapi.api.chat.message.send;
 
+import org.telegram.botapi.api.TelegramBot;
+
+import java.io.File;
+
 /**
  * @author Zack Pollard
  */
-public interface InputFile {
+public class InputFile {
 
-    String getId();
-    String getFilePath();
+    private final String fileID;
+    private final File file;
 
-    @Override
-    boolean equals(Object object);
+    public InputFile(File file) {
+
+        this.file = file;
+        this.fileID = TelegramBot.getFileManager().getFileID(file);
+    }
+
+    public InputFile(String fileID) {
+
+        this.file = null;
+        this.fileID = fileID;
+    }
 }
