@@ -13,7 +13,7 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 
 @RequiredArgsConstructor
 @Builder
-public class SendablePhotoMessage implements SendableMessage {
+public class SendablePhotoMessage implements SendableMessage, ReplyingOptions {
 
     @NonNull
     @Getter

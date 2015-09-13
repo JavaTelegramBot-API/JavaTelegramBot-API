@@ -13,7 +13,7 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 
 @RequiredArgsConstructor
 @Builder
-public class SendableAudioMessage implements SendableMessage {
+public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
 
     @NonNull
 	@Getter
