@@ -13,7 +13,14 @@ public interface Contact {
 
     default String getFullName() {
 
-        return getFirstName() + " " + getLastName();
+        String fullName = getFirstName();
+
+        if(getLastName() != null) {
+
+            fullName += " " + getLastName();
+        }
+
+        return fullName;
     }
 
     int getUserId();
