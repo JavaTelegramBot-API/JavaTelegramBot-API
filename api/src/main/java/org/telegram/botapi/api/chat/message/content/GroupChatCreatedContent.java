@@ -3,7 +3,7 @@ package org.telegram.botapi.api.chat.message.content;
 /**
  * @author Zack Pollard
  */
-public interface GroupChatCreated extends Content {
+public interface GroupChatCreatedContent extends Content {
 
 	default boolean getContent() {
 
