@@ -1,5 +1,7 @@
 package org.telegram.botapi.api.keyboards;
 
+import org.telegram.botapi.api.chat.message.ReplyMarkupType;
+
 /**
  * @author Zack Pollard
  */
@@ -40,13 +42,18 @@ public class ReplyKeyboardHide implements Keyboard {
 	 */
 	@Override
 	public boolean getSelective() {
-		return false;
+		return selective;
 	}
 
 	@Override
 	public void setSelective(boolean selective) {
 
 		this.selective = selective;
+	}
+
+	@Override
+	public ReplyMarkupType getType() {
+		return ReplyMarkupType.KEYBOARD_HIDE;
 	}
 
 	public static class ReplyKeyboardHideBuilder {

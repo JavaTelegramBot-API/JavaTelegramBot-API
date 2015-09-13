@@ -1,5 +1,7 @@
 package org.telegram.botapi.api.keyboards;
 
+import org.telegram.botapi.api.chat.message.ReplyMarkupType;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -74,12 +76,17 @@ public class ReplyKeyboardMarkup implements Keyboard {
 	 */
 	@Override
 	public boolean getSelective() {
-		return false;
+		return selective;
 	}
 
 	@Override
 	public void setSelective(boolean selective) {
 
+	}
+
+	@Override
+	public ReplyMarkupType getType() {
+		return ReplyMarkupType.KEYBOARD_MARKUP;
 	}
 
 	public static class ReplyKeyboardMarkupBuilder {

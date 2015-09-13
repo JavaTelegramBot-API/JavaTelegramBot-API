@@ -14,4 +14,6 @@ public interface ReplyMarkup {
      */
     boolean getSelective();
 	void setSelective(boolean selective);
+
+	ReplyMarkupType getType();
 }

@@ -38,6 +38,11 @@ public class ForceReply implements ReplyMarkup {
 		this.selective = selective;
 	}
 
+	@Override
+	public ReplyMarkupType getType() {
+		return ReplyMarkupType.FORCE_REPLY;
+	}
+
 	public static class ForceReplyBuilder {
 
 		private boolean selective = false;
