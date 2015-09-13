@@ -1,22 +1,24 @@
 package org.telegram.botapi.api.user;
 
+import org.telegram.botapi.api.TelegramBot;
+
 /**
  * @author Zack Pollard
  */
 public interface User {
 
-    int getId();
+	int getId();
 
-    String getFirstName();
+	String getFirstName();
 
-    String getLastName();
+	String getLastName();
 
-    default String getFullName() {
+	default String getFullName() {
 
-        return getFirstName() + " " + getLastName();
-    }
+		return getFirstName() + " " + getLastName();
+	}
 
-    String getUsername();
+	String getUsername();
 
-    UserProfilePhotos getProfilePhotos();
+	UserProfilePhotos getProfilePhotos(TelegramBot telegramBot);
 }

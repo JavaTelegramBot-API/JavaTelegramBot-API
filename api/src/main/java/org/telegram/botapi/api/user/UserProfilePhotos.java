@@ -15,10 +15,7 @@ public interface UserProfilePhotos {
      *
      * @return Amount of photos
      */
-    default int getTotalCount() {
-
-        return getPhotos().length;
-    }
+    int getTotalCount();
 
     PhotoSize[][] getPhotos();
 }
