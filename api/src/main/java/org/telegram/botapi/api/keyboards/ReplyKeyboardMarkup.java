@@ -89,7 +89,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
 		return ReplyMarkupType.KEYBOARD_MARKUP;
 	}
 
-	public static class ReplyKeyboardMarkupBuilder {
+	private static class ReplyKeyboardMarkupBuilder {
 
         private final List<List<String>> keyboard = new LinkedList<>();
         private boolean resize_keyboard = false;

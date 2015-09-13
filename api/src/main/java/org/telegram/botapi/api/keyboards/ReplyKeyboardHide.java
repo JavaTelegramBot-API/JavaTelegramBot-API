@@ -56,11 +56,11 @@ public class ReplyKeyboardHide implements Keyboard {
 		return ReplyMarkupType.KEYBOARD_HIDE;
 	}
 
-	public static class ReplyKeyboardHideBuilder {
+	private static class ReplyKeyboardHideBuilder {
 
 		private boolean selective = false;
 
-		public ReplyKeyboardHideBuilder() {
+		private ReplyKeyboardHideBuilder() {
 		}
 
 		public ReplyKeyboardHideBuilder selective(boolean selective) {
