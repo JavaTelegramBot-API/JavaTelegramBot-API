@@ -1,10 +1,13 @@
 package org.telegram.botapi.api.chat.message;
 
+import org.telegram.botapi.api.TelegramBot;
 import org.telegram.botapi.api.chat.Chat;
 import org.telegram.botapi.api.chat.message.content.Content;
 import org.telegram.botapi.api.chat.message.send.ChatAction;
 import org.telegram.botapi.api.chat.message.send.SendableChatAction;
 import org.telegram.botapi.api.chat.message.send.SendableForwardMessage;
+import org.telegram.botapi.api.chat.message.send.SendableTextMessage;
+import org.telegram.botapi.api.keyboards.ReplyKeyboardMarkup;
 import org.telegram.botapi.api.user.User;
 
 /**
@@ -68,10 +71,8 @@ public interface Message {
      */
     Content getContent();
 
-    default Message forwardMessage(Chat chat) {
+    default Message forwardMessage(Chat chat, TelegramBot telegramBot) {
 
-        SendableChatAction.builder().chatAction(ChatAction.FIND_LOCATION);
-
-        return chat.sendMessage(SendableForwardMessage.builder().forwardedMessage(this).build());
+        return chat.sendMessage(SendableForwardMessage.builder().forwardedMessage(this).build(), telegramBot);
     }
 }
