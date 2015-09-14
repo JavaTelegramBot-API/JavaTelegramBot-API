@@ -17,10 +17,10 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
 
 	@Getter
 	@NonNull
-	private final float latitude;
+	private final double latitude;
 	@Getter
 	@NonNull
-	private final float longitude;
+	private final double longitude;
 	@Getter
 	private final Message replyTo;
 	@Getter
