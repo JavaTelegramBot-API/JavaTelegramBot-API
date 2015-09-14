@@ -25,6 +25,8 @@ public class MessageImpl implements Message {
 
 	private MessageImpl(JSONObject jsonObject) {
 
+		if(!jsonObject.isNull("result")) jsonObject = jsonObject.getJSONObject("result");
+
 		message_id = jsonObject.getInt("message_id");
 		from = UserImpl.createUser(jsonObject.getJSONObject("from"));
 		date = jsonObject.getInt("date");
@@ -37,7 +39,7 @@ public class MessageImpl implements Message {
 
 	public static Message createMessage(JSONObject jsonObject) {
 
-		return jsonObject != null ? new MessageImpl(jsonObject.getJSONObject("result")) : null;
+		return jsonObject != null ? new MessageImpl(jsonObject) : null;
 	}
 
 	/**
