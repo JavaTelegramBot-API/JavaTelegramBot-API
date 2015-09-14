@@ -13,5 +13,5 @@ public enum MessageType {
     STICKER,
     VIDEO,
     LOCATION,
-    CHAT_ACTION
+	VOICE, CHAT_ACTION
 }
