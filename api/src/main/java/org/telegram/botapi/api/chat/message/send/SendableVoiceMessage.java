@@ -16,7 +16,7 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions {
 
 	@NonNull
 	@Getter
-	private final InputFile audio;
+	private final InputFile voice;
 	@Getter
 	private final int duration;
 	@Getter
