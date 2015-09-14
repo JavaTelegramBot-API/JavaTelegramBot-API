@@ -1,4 +1,4 @@
-package org.telegram.botapi.api.internal;
+package org.telegram.botapi.api.updates;
 
 import org.telegram.botapi.api.chat.message.Message;
 

@@ -17,9 +17,11 @@ import org.telegram.botapi.api.chat.message.send.*;
 import org.telegram.botapi.api.internal.chat.GroupChatImpl;
 import org.telegram.botapi.api.internal.chat.IndividualChatImpl;
 import org.telegram.botapi.api.internal.chat.message.MessageImpl;
+import org.telegram.botapi.api.internal.chat.updates.RequestUpdatesManager;
 import org.telegram.botapi.api.internal.managers.FileManager;
 import org.telegram.botapi.api.keyboards.ReplyKeyboardHide;
 import org.telegram.botapi.api.keyboards.ReplyKeyboardMarkup;
+import org.telegram.botapi.api.updates.UpdateManager;
 
 /**
  * @author Zack Pollard
@@ -30,7 +32,9 @@ public final class TelegramBot {
 	private static final Gson GSON = new GsonBuilder().create();
 	@Getter
 	private final static FileManager fileManager = new FileManager();
+
 	private final String authToken;
+	private UpdateManager updateManager = null;
 
 	private TelegramBot(String authToken) {
 
@@ -353,10 +357,18 @@ public final class TelegramBot {
 		return messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
 	}
 
+	public void setUpdateMethod(UpdateManager.UpdateMethod updateMethod) {
+
+		if(updateMethod.equals(UpdateManager.UpdateMethod.REQUEST_UPDATES)) {
+
+			updateManager = new RequestUpdatesManager(this);
+		}
+	}
+
 	private void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
 
 		if (replyingOptions.getReplyTo() != null)
-			multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo());
+			multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo().getMessageId());
 		if (replyingOptions.getReplyMarkup() != null) {
 
 			System.out.println("Found reply markup");
