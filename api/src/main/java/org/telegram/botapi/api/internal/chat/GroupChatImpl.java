@@ -20,6 +20,17 @@ public class GroupChatImpl implements GroupChat {
 		this.title = jsonObject.getString("title");
 	}
 
+	private GroupChatImpl(int chatID) {
+
+		this.id = chatID;
+		this.title = null;
+	}
+
+	/**
+	 * Gets the name of the group chat.
+	 *
+	 * @return The group chat name, currently can be null due to chat creation by ID with no way of getting the group chats name from telegram servers.
+	 */
 	@Override
 	public String getName() {
 		return title;
@@ -39,5 +50,10 @@ public class GroupChatImpl implements GroupChat {
 	public static GroupChat createGroupChat(JSONObject jsonObject) {
 
         return new GroupChatImpl(jsonObject);
+	}
+
+	public static GroupChat createGroupChat(int chatID) {
+
+		return new GroupChatImpl(chatID);
 	}
 }

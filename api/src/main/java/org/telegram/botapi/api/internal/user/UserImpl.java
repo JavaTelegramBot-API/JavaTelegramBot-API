@@ -23,15 +23,22 @@ public class UserImpl implements User {
 		this.username = jsonObject.optString("username");
 	}
 
+	private UserImpl(int userID) {
+
+		this.id = userID;
+		this.first_name = null;
+		this.last_name = null;
+		this.username = null;
+	}
+
 	public static User createUser(JSONObject jsonObject) {
 
-		if(jsonObject != null) {
+		return jsonObject != null ? new UserImpl(jsonObject) : null;
+	}
 
-			return new UserImpl(jsonObject);
-		} else {
+	public static User createUser(int userID) {
 
-			return null;
-		}
+		return new UserImpl(userID);
 	}
 
 	@Override
