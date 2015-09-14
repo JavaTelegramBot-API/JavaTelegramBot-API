@@ -125,9 +125,6 @@ public final class TelegramBot {
 
 					HttpResponse<JsonNode> response = request.asJson();
 
-					System.out.println(response.getStatus());
-					System.out.println(response.getBody());
-
 					jsonResponse = response.getBody();
 
 				} catch (UnirestException e) {
@@ -325,7 +322,7 @@ public final class TelegramBot {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
 							.field("chat_id", chat.getId(), "application/json")
 							.field("latitude", sendableLocationMessage.getLatitude())
-							.field("longnitude", sendableLocationMessage.getLongitude());
+							.field("longitude", sendableLocationMessage.getLongitude());
 
 					processReplyContent(request, sendableLocationMessage);
 
