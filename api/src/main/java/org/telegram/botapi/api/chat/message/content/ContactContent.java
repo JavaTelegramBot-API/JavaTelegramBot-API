@@ -7,11 +7,11 @@ import org.telegram.botapi.api.chat.message.content.type.Contact;
  */
 public interface ContactContent extends Content {
 
-    Contact getContent();
+	Contact getContent();
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.CONTACT;
-    }
+		return ContentType.CONTACT;
+	}
 }

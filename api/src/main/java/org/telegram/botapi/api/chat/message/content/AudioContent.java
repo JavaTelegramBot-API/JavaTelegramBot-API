@@ -7,11 +7,11 @@ import org.telegram.botapi.api.chat.message.content.type.Audio;
  */
 public interface AudioContent extends Content {
 
-    Audio getContent();
+	Audio getContent();
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.AUDIO;
-    }
+		return ContentType.AUDIO;
+	}
 }

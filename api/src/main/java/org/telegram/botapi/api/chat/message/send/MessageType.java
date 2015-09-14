@@ -5,13 +5,13 @@ package org.telegram.botapi.api.chat.message.send;
  */
 public enum MessageType {
 
-    TEXT,
-    FORWARDED,
-    PHOTO,
-    AUDIO,
-    DOCUMENT,
-    STICKER,
-    VIDEO,
-    LOCATION,
+	TEXT,
+	FORWARDED,
+	PHOTO,
+	AUDIO,
+	DOCUMENT,
+	STICKER,
+	VIDEO,
+	LOCATION,
 	VOICE, CHAT_ACTION
 }

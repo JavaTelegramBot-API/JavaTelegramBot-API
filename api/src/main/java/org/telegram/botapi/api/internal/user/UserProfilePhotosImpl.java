@@ -28,7 +28,7 @@ public class UserProfilePhotosImpl implements UserProfilePhotos {
 
 		JSONArray jsonPhotos = jsonObject.getJSONArray("photos");
 
-		for(int i = 0; i < jsonPhotos.length(); ++i) {
+		for (int i = 0; i < jsonPhotos.length(); ++i) {
 
 			JSONArray jsonPhotoSizes = jsonPhotos.getJSONArray(i);
 			List<PhotoSize> photoSizesList = new ArrayList<>();
@@ -47,6 +47,18 @@ public class UserProfilePhotosImpl implements UserProfilePhotos {
 				.toArray(PhotoSize[][]::new);
 	}
 
+	public static UserProfilePhotos createUserProfilePhotos(int user_id, TelegramBot telegramBot) {
+
+		try {
+			return new UserProfilePhotosImpl(Unirest.post(TelegramBot.API_URL + "getUserProfilePhotos")
+					.queryString("user_id", user_id).asJson().getBody().getObject());
+		} catch (UnirestException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	/**
 	 * Get the total amount of photos this user has
 	 *
@@ -61,17 +73,5 @@ public class UserProfilePhotosImpl implements UserProfilePhotos {
 	public PhotoSize[][] getPhotos() {
 
 		return photos;
-	}
-
-	public static UserProfilePhotos createUserProfilePhotos(int user_id, TelegramBot telegramBot) {
-
-		try {
-			return new UserProfilePhotosImpl(Unirest.post(TelegramBot.API_URL + "getUserProfilePhotos")
-					.queryString("user_id", user_id).asJson().getBody().getObject());
-		} catch (UnirestException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 }

@@ -5,14 +5,14 @@ package org.telegram.botapi.api.chat.message.content;
  */
 public interface DeleteChatPhotoContent extends Content {
 
-    default boolean getContent() {
+	default boolean getContent() {
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.DELETE_CHAT_PHOTO;
-    }
+		return ContentType.DELETE_CHAT_PHOTO;
+	}
 }

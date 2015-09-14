@@ -7,11 +7,11 @@ import org.telegram.botapi.api.chat.message.content.type.PhotoSize;
  */
 public interface PhotoContent extends Content, Captionable {
 
-    PhotoSize[] getContent();
+	PhotoSize[] getContent();
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.PHOTO;
-    }
+		return ContentType.PHOTO;
+	}
 }

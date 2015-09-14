@@ -23,8 +23,8 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
 	@Getter
 	private final ReplyMarkup replyMarkup;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.DOCUMENT;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.DOCUMENT;
+	}
 }

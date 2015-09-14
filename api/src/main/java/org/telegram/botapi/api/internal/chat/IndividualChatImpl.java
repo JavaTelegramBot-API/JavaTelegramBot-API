@@ -19,17 +19,17 @@ public class IndividualChatImpl implements IndividualChat {
 	private IndividualChatImpl(JSONObject jsonObject) {
 
 		this.partner = UserImpl.createUser(jsonObject);
-    }
+	}
 
 	private IndividualChatImpl(int userID) {
 
 		this.partner = UserImpl.createUser(userID);
 	}
 
-    public static IndividualChat createIndividualChat(JSONObject jsonObject) {
+	public static IndividualChat createIndividualChat(JSONObject jsonObject) {
 
-        return new IndividualChatImpl(jsonObject);
-    }
+		return new IndividualChatImpl(jsonObject);
+	}
 
 	public static Chat createIndividualChat(int chatID) {
 

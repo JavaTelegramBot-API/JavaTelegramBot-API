@@ -6,5 +6,5 @@ package org.telegram.botapi.api.chat.message.send;
 
 public interface SendableMessage {
 
-    MessageType getType();
+	MessageType getType();
 }

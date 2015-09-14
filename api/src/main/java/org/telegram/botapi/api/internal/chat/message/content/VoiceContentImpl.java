@@ -14,7 +14,7 @@ public class VoiceContentImpl implements VoiceContent {
 
 	private VoiceContentImpl(JSONObject jsonObject) {
 
-		this.content = VoiceImpl.createVoice(jsonObject.getJSONObject(""));
+		this.content = VoiceImpl.createVoice(jsonObject);
 	}
 
 	public static VoiceContent createVoiceContent(JSONObject jsonObject) {

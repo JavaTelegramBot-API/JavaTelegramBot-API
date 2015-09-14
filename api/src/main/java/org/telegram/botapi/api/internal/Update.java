@@ -7,7 +7,7 @@ import org.telegram.botapi.api.chat.message.Message;
  */
 public interface Update {
 
-    int getId();
+	int getId();
 
-    Message getMessage();
+	Message getMessage();
 }

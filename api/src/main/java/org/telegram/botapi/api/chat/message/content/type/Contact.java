@@ -5,23 +5,23 @@ package org.telegram.botapi.api.chat.message.content.type;
  */
 public interface Contact {
 
-    String getPhoneNumber();
+	String getPhoneNumber();
 
-    String getFirstName();
+	String getFirstName();
 
-    String getLastName();
+	String getLastName();
 
-    default String getFullName() {
+	default String getFullName() {
 
-        String fullName = getFirstName();
+		String fullName = getFirstName();
 
-        if(getLastName() != null) {
+		if (getLastName() != null) {
 
-            fullName += " " + getLastName();
-        }
+			fullName += " " + getLastName();
+		}
 
-        return fullName;
-    }
+		return fullName;
+	}
 
-    int getUserId();
+	int getUserId();
 }

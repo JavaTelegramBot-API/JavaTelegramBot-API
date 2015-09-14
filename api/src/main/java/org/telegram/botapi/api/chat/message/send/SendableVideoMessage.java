@@ -15,20 +15,20 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 @Builder
 public class SendableVideoMessage implements SendableMessage, ReplyingOptions {
 
-    @NonNull
-    @Getter
+	@NonNull
+	@Getter
 	private final InputFile video;
-    @Getter
+	@Getter
 	private final int duration;
-    @Getter
+	@Getter
 	private final String caption;
-    @Getter
+	@Getter
 	private final Message replyTo;
-    @Getter
+	@Getter
 	private final ReplyMarkup replyMarkup;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.VIDEO;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.VIDEO;
+	}
 }

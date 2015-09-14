@@ -14,12 +14,12 @@ import org.telegram.botapi.api.chat.message.Message;
 @Builder
 public class SendableForwardMessage implements SendableMessage {
 
-    @NonNull
+	@NonNull
 	@Getter
 	private final Message forwardedMessage;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.FORWARDED;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.FORWARDED;
+	}
 }

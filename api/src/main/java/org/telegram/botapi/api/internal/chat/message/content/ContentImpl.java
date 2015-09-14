@@ -8,28 +8,28 @@ import org.telegram.botapi.api.chat.message.content.Content;
  */
 public class ContentImpl {
 
-    private final static String[] CONTENT_TYPE_NAMES = new String[]{
-            "text", "audio", "document", "photo", "sticker",
-            "video", "voice", "contact", "location", "new_chat_participant",
-            "left_chat_participant", "new_chat_title", "new_chat_photo",
-            "delete_chat_photo", "group_chat_created"
-    };
+	private final static String[] CONTENT_TYPE_NAMES = new String[]{
+			"text", "audio", "document", "photo", "sticker",
+			"video", "voice", "contact", "location", "new_chat_participant",
+			"left_chat_participant", "new_chat_title", "new_chat_photo",
+			"delete_chat_photo", "group_chat_created"
+	};
 
-    public static Content createContent(JSONObject jsonObject) {
+	public static Content createContent(JSONObject jsonObject) {
 
-        String messageType = null;
+		String messageType = null;
 
-        for(String contentType : CONTENT_TYPE_NAMES) {
+		for (String contentType : CONTENT_TYPE_NAMES) {
 
-            if(!jsonObject.isNull(contentType)) {
+			if (!jsonObject.isNull(contentType)) {
 
-                messageType = contentType;
-                break;
-            }
-        }
+				messageType = contentType;
+				break;
+			}
+		}
 
 		if (messageType != null) {
-			switch(messageType) {
+			switch (messageType) {
 
 				case "text":
 

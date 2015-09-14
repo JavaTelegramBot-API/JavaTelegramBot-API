@@ -15,16 +15,16 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 @Builder
 public class SendableStickerMessage implements SendableMessage, ReplyingOptions {
 
-    @NonNull
-    @Getter
+	@NonNull
+	@Getter
 	private final InputFile sticker;
-    @Getter
+	@Getter
 	private final Message replyTo;
-    @Getter
+	@Getter
 	private final ReplyMarkup replyMarkup;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.STICKER;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.STICKER;
+	}
 }

@@ -7,11 +7,11 @@ import org.telegram.botapi.api.chat.message.content.type.Location;
  */
 public interface LocationContent extends Content {
 
-    Location getContent();
+	Location getContent();
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.LOCATION;
-    }
+		return ContentType.LOCATION;
+	}
 }

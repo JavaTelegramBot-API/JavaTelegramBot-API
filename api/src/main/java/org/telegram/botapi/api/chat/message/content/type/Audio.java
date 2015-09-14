@@ -6,5 +6,6 @@ package org.telegram.botapi.api.chat.message.content.type;
 public interface Audio extends DurationableFile, Mimetypeable {
 
 	String getPerformer();
+
 	String getTitle();
 }

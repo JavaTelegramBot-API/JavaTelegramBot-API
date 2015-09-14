@@ -26,6 +26,16 @@ public class GroupChatImpl implements GroupChat {
 		this.title = null;
 	}
 
+	public static GroupChat createGroupChat(JSONObject jsonObject) {
+
+		return new GroupChatImpl(jsonObject);
+	}
+
+	public static GroupChat createGroupChat(int chatID) {
+
+		return new GroupChatImpl(chatID);
+	}
+
 	/**
 	 * Gets the name of the group chat.
 	 *
@@ -45,15 +55,5 @@ public class GroupChatImpl implements GroupChat {
 	public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
 
 		return telegramBot.sendMessage(this, message);
-	}
-
-	public static GroupChat createGroupChat(JSONObject jsonObject) {
-
-        return new GroupChatImpl(jsonObject);
-	}
-
-	public static GroupChat createGroupChat(int chatID) {
-
-		return new GroupChatImpl(chatID);
 	}
 }

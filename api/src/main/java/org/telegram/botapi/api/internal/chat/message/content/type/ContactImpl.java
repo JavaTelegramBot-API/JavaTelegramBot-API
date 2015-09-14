@@ -23,30 +23,30 @@ public class ContactImpl implements Contact {
 
 	public static Contact createContact(JSONObject jsonObject) {
 
-			return jsonObject != null ? new ContactImpl(jsonObject) : null;
+		return jsonObject != null ? new ContactImpl(jsonObject) : null;
 	}
 
-    @Override
-    public String getPhoneNumber() {
+	@Override
+	public String getPhoneNumber() {
 
-        return phone_number;
-    }
+		return phone_number;
+	}
 
-    @Override
-    public String getFirstName() {
+	@Override
+	public String getFirstName() {
 
-        return first_name;
-    }
+		return first_name;
+	}
 
-    @Override
-    public String getLastName() {
+	@Override
+	public String getLastName() {
 
-        return last_name;
-    }
+		return last_name;
+	}
 
-    @Override
-    public int getUserId() {
+	@Override
+	public int getUserId() {
 
-        return user_id;
-    }
+		return user_id;
+	}
 }

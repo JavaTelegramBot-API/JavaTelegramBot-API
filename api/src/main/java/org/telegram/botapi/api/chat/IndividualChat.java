@@ -7,5 +7,5 @@ import org.telegram.botapi.api.user.User;
  */
 public interface IndividualChat extends Chat {
 
-    User getPartner();
+	User getPartner();
 }

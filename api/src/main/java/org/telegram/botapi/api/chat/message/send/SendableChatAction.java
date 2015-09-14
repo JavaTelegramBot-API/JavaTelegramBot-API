@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 @Builder
 public class SendableChatAction implements SendableMessage {
 
-    @NonNull
+	@NonNull
 	@Getter
 	private final ChatAction chatAction;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.CHAT_ACTION;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.CHAT_ACTION;
+	}
 }

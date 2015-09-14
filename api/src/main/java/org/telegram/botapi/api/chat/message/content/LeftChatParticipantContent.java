@@ -7,16 +7,16 @@ import org.telegram.botapi.api.user.User;
  */
 public interface LeftChatParticipantContent extends Content {
 
-    /**
-     * Gets the participant who left the chat
-     *
-     * @return The previous participant, or null if there was no participant
-     */
-    User getContent();
+	/**
+	 * Gets the participant who left the chat
+	 *
+	 * @return The previous participant, or null if there was no participant
+	 */
+	User getContent();
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.LEFT_CHAT_PARTICIPANT;
-    }
+		return ContentType.LEFT_CHAT_PARTICIPANT;
+	}
 }

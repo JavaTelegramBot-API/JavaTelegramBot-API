@@ -9,5 +9,6 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 public interface ReplyingOptions {
 
 	Message getReplyTo();
+
 	ReplyMarkup getReplyMarkup();
 }

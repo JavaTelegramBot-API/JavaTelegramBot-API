@@ -10,21 +10,21 @@ import org.telegram.botapi.api.internal.chat.message.content.type.AudioImpl;
  */
 public class AudioContentImpl implements AudioContent {
 
-    private final Audio content;
+	private final Audio content;
 
-    private AudioContentImpl(JSONObject jsonObject) {
+	private AudioContentImpl(JSONObject jsonObject) {
 
-        this.content = AudioImpl.createAudio(jsonObject);
-    }
+		this.content = AudioImpl.createAudio(jsonObject);
+	}
 
-    public static AudioContent createAudioContent(JSONObject jsonObject) {
+	public static AudioContent createAudioContent(JSONObject jsonObject) {
 
-        return jsonObject != null ? new AudioContentImpl(jsonObject) : null;
-    }
+		return jsonObject != null ? new AudioContentImpl(jsonObject) : null;
+	}
 
-    @Override
-    public Audio getContent() {
+	@Override
+	public Audio getContent() {
 
-        return content;
-    }
+		return content;
+	}
 }

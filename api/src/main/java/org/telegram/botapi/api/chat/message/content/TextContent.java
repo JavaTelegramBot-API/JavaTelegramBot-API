@@ -5,11 +5,11 @@ package org.telegram.botapi.api.chat.message.content;
  */
 public interface TextContent extends Content {
 
-    String getContent();
+	String getContent();
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.TEXT;
-    }
+		return ContentType.TEXT;
+	}
 }

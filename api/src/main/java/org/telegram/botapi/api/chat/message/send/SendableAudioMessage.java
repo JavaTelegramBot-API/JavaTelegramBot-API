@@ -15,11 +15,11 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 @Builder
 public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
 
-    @NonNull
+	@NonNull
 	@Getter
-    private final InputFile audio;
+	private final InputFile audio;
 	@Getter
-    private final int duration;
+	private final int duration;
 	@Getter
 	private final String performer;
 	@Getter
@@ -29,8 +29,8 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
 	@Getter
 	private final ReplyMarkup replyMarkup;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.AUDIO;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.AUDIO;
+	}
 }

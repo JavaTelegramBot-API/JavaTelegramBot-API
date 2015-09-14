@@ -8,14 +8,14 @@ import org.telegram.botapi.api.chat.Chat;
  */
 public class ChatImpl {
 
-    public static Chat createChat(JSONObject jsonObject) {
+	public static Chat createChat(JSONObject jsonObject) {
 
-        if(jsonObject.getInt("id") < 0) {
+		if (jsonObject.getInt("id") < 0) {
 
-            return GroupChatImpl.createGroupChat(jsonObject);
-        } else {
+			return GroupChatImpl.createGroupChat(jsonObject);
+		} else {
 
-            return IndividualChatImpl.createIndividualChat(jsonObject);
-        }
-    }
+			return IndividualChatImpl.createIndividualChat(jsonObject);
+		}
+	}
 }

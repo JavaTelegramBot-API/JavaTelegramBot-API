@@ -5,5 +5,5 @@ package org.telegram.botapi.api.chat.message.content;
  */
 public interface Content {
 
-    ContentType getType();
+	ContentType getType();
 }

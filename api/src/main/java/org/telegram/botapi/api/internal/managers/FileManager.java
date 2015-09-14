@@ -13,14 +13,14 @@ import java.util.Map;
  */
 public class FileManager {
 
-	private final Map<String, String> checksumIDs;
 	private static MessageDigest md5Digest;
+	private final Map<String, String> checksumIDs;
 
 	public FileManager() {
 
 		this.checksumIDs = new HashMap<>();
 
-		if(md5Digest == null) {
+		if (md5Digest == null) {
 
 			try {
 				md5Digest = MessageDigest.getInstance("MD5");
@@ -28,45 +28,7 @@ public class FileManager {
 				e.printStackTrace();
 			}
 		}
-    }
-
-	public String getFileID(File file) {
-
-        String checksum = null;
-
-        try {
-            checksum = getFileChecksum(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String fileID = checksumIDs.get(checksum);
-
-        if(fileID != null) {
-
-            return fileID;
-        }
-
-        return null;
 	}
-
-    public String cacheFileID(File file, String fileID) {
-
-        String checksum = null;
-
-        try {
-            checksum = getFileChecksum(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(checksum != null) {
-
-            checksumIDs.put(checksum, fileID);
-        }
-
-		return checksum;
-    }
 
 	private static String getFileChecksum(File file) throws IOException {
 
@@ -92,5 +54,43 @@ public class FileManager {
 		}
 
 		return sb.toString();
+	}
+
+	public String getFileID(File file) {
+
+		String checksum = null;
+
+		try {
+			checksum = getFileChecksum(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		String fileID = checksumIDs.get(checksum);
+
+		if (fileID != null) {
+
+			return fileID;
+		}
+
+		return null;
+	}
+
+	public String cacheFileID(File file, String fileID) {
+
+		String checksum = null;
+
+		try {
+			checksum = getFileChecksum(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (checksum != null) {
+
+			checksumIDs.put(checksum, fileID);
+		}
+
+		return checksum;
 	}
 }

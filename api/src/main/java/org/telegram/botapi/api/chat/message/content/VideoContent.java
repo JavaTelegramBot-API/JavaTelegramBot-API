@@ -7,11 +7,11 @@ import org.telegram.botapi.api.chat.message.content.type.Video;
  */
 public interface VideoContent extends Content, Captionable {
 
-    Video getContent();
+	Video getContent();
 
-    @Override
-    default ContentType getType() {
+	@Override
+	default ContentType getType() {
 
-        return ContentType.VIDEO;
-    }
+		return ContentType.VIDEO;
+	}
 }

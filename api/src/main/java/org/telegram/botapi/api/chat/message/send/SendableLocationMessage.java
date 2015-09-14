@@ -15,7 +15,7 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 public class SendableLocationMessage implements SendableMessage, ReplyingOptions {
 
 	@Getter
-    private final float latitude;
+	private final float latitude;
 	@Getter
 	private final float longitude;
 	@Getter
@@ -23,8 +23,8 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
 	@Getter
 	private final ReplyMarkup replyMarkup;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.LOCATION;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.LOCATION;
+	}
 }

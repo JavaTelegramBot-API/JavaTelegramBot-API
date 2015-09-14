@@ -5,5 +5,5 @@ package org.telegram.botapi.api.chat.message.content.type;
  */
 public interface Thumbnailable {
 
-    PhotoSize getThumbnail();
+	PhotoSize getThumbnail();
 }

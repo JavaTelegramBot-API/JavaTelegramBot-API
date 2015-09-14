@@ -7,7 +7,7 @@ import org.telegram.botapi.api.chat.message.ReplyMarkupType;
  */
 public class ReplyKeyboardHide implements Keyboard {
 
-    private final boolean hide_keyboard = true;
+	private final boolean hide_keyboard = true;
 	private boolean selective = false;
 
 	private ReplyKeyboardHide(ReplyKeyboardHideBuilder builder) {
@@ -23,15 +23,15 @@ public class ReplyKeyboardHide implements Keyboard {
 		this.selective = selective;
 	}
 
-	public static ReplyKeyboardHide builder() {
+	public static ReplyKeyboardHideBuilder builder() {
 
-		return new ReplyKeyboardHide();
+		return new ReplyKeyboardHideBuilder();
 	}
 
-    public boolean getHideKeyboard() {
+	public boolean getHideKeyboard() {
 
-        return hide_keyboard;
-    }
+		return hide_keyboard;
+	}
 
 	/**
 	 * Gets whether the reply markup will only show for selected users

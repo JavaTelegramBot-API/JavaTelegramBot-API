@@ -15,18 +15,18 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 @Builder
 public class SendablePhotoMessage implements SendableMessage, ReplyingOptions {
 
-    @NonNull
-    @Getter
+	@NonNull
+	@Getter
 	private final InputFile photo;
-    @Getter
+	@Getter
 	private final String caption;
-    @Getter
+	@Getter
 	private final Message replyTo;
-    @Getter
+	@Getter
 	private final ReplyMarkup replyMarkup;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.PHOTO;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.PHOTO;
+	}
 }

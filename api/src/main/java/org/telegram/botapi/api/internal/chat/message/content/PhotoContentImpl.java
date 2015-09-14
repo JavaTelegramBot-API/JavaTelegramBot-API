@@ -21,7 +21,7 @@ public class PhotoContentImpl implements PhotoContent {
 
 		List<PhotoSize> photoSizeList = new ArrayList<>();
 
-		for(int i = 0; i < jsonArray.length(); ++i) {
+		for (int i = 0; i < jsonArray.length(); ++i) {
 
 			JSONObject photoObject = jsonArray.getJSONObject(i);
 			photoSizeList.add(PhotoSizeImpl.createPhotoSize(photoObject));

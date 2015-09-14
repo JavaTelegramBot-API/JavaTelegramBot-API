@@ -15,18 +15,18 @@ import org.telegram.botapi.api.chat.message.ReplyMarkup;
 @Builder
 public class SendableTextMessage implements SendableMessage, ReplyingOptions {
 
-    @NonNull
+	@NonNull
 	@Getter
-    private final String message;
+	private final String message;
 	@Getter
-    private final Message replyTo;
+	private final Message replyTo;
 	@Getter
-    private final boolean disableWebPagePreview;
+	private final boolean disableWebPagePreview;
 	@Getter
-    private final ReplyMarkup replyMarkup;
+	private final ReplyMarkup replyMarkup;
 
-    @Override
-    public MessageType getType() {
-        return MessageType.TEXT;
-    }
+	@Override
+	public MessageType getType() {
+		return MessageType.TEXT;
+	}
 }

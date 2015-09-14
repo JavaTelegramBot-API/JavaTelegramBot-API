@@ -5,5 +5,5 @@ package org.telegram.botapi.api.chat;
  */
 public interface GroupChat extends Chat {
 
-    String getName();
+	String getName();
 }

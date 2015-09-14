@@ -11,19 +11,19 @@ import java.io.File;
 public class InputFile {
 
 	@Getter
-    private final String fileID;
+	private final String fileID;
 	@Getter
-    private final File file;
+	private final File file;
 
-    public InputFile(File file) {
+	public InputFile(File file) {
 
-        this.file = file;
-        this.fileID = TelegramBot.getFileManager().getFileID(file);
-    }
+		this.file = file;
+		this.fileID = TelegramBot.getFileManager().getFileID(file);
+	}
 
-    public InputFile(String fileID) {
+	public InputFile(String fileID) {
 
-        this.file = null;
-        this.fileID = fileID;
-    }
+		this.file = null;
+		this.fileID = fileID;
+	}
 }

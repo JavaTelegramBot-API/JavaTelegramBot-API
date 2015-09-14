@@ -5,5 +5,5 @@ package org.telegram.botapi.api.chat.message.content;
  */
 public interface Captionable {
 
-    String getCaption();
+	String getCaption();
 }

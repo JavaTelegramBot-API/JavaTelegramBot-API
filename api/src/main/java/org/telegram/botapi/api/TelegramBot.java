@@ -6,13 +6,11 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.request.HttpRequestWithBody;
 import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
 import org.telegram.botapi.api.chat.Chat;
 import org.telegram.botapi.api.chat.message.ForceReply;
 import org.telegram.botapi.api.chat.message.Message;
-import org.telegram.botapi.api.chat.message.ReplyMarkup;
 import org.telegram.botapi.api.chat.message.content.*;
 import org.telegram.botapi.api.chat.message.content.type.*;
 import org.telegram.botapi.api.chat.message.send.*;
@@ -23,8 +21,6 @@ import org.telegram.botapi.api.internal.managers.FileManager;
 import org.telegram.botapi.api.keyboards.ReplyKeyboardHide;
 import org.telegram.botapi.api.keyboards.ReplyKeyboardMarkup;
 
-import java.io.File;
-
 /**
  * @author Zack Pollard
  */
@@ -32,15 +28,36 @@ public final class TelegramBot {
 
 	public static final String API_URL = "https://api.telegram.org/";
 	private static final Gson GSON = new GsonBuilder().create();
-
-	private final String authToken;
-
-    @Getter
+	@Getter
 	private final static FileManager fileManager = new FileManager();
+	private final String authToken;
 
 	private TelegramBot(String authToken) {
 
 		this.authToken = authToken;
+	}
+
+	/**
+	 * Use this method to get a new TelegramBot instance with the selected auth token.
+	 *
+	 * @param authToken The bots auth token.
+	 * @return A new TelegramBot instance to base your bot around.
+	 */
+
+	public static TelegramBot login(String authToken) {
+
+		return new TelegramBot(authToken);
+	}
+
+	public static Chat getChat(int chatID) {
+
+		if (chatID < 0) {
+
+			return GroupChatImpl.createGroupChat(chatID);
+		} else {
+
+			return IndividualChatImpl.createIndividualChat(chatID);
+		}
 	}
 
 	public String getBotAPIUrl() {
@@ -53,7 +70,7 @@ public final class TelegramBot {
 		JsonNode jsonResponse = null;
 		Message messageResponse = null;
 
-		switch(message.getType()) {
+		switch (message.getType()) {
 
 			case TEXT: {
 
@@ -155,8 +172,10 @@ public final class TelegramBot {
 					processReplyContent(request, audioMessage);
 
 					if (audioMessage.getDuration() != 0) request.field("duration", audioMessage.getDuration());
-					if (audioMessage.getPerformer() != null) request.field("performer", audioMessage.getPerformer(), "application/json");
-					if (audioMessage.getTitle() != null) request.field("title", audioMessage.getTitle(), "application/json");
+					if (audioMessage.getPerformer() != null)
+						request.field("performer", audioMessage.getPerformer(), "application/json");
+					if (audioMessage.getTitle() != null)
+						request.field("title", audioMessage.getTitle(), "application/json");
 
 					jsonResponse = request.asJson().getBody();
 
@@ -169,12 +188,12 @@ public final class TelegramBot {
 				//Audio cacheing to FileManager
 				if (audioMessage.getAudio().getFile() != null && messageResponse != null) {
 
-					if(messageResponse.getContent().getType().equals(ContentType.AUDIO)) {
+					if (messageResponse.getContent().getType().equals(ContentType.AUDIO)) {
 
 						Audio audio = ((AudioContent) messageResponse.getContent()).getContent();
 
 						fileManager.cacheFileID(audioMessage.getAudio().getFile(), audio.getFileId());
-					} else if(messageResponse.getContent().getType().equals(ContentType.VOICE)) {
+					} else if (messageResponse.getContent().getType().equals(ContentType.VOICE)) {
 
 						Voice voice = ((VoiceContent) messageResponse.getContent()).getContent();
 
@@ -249,7 +268,8 @@ public final class TelegramBot {
 							.field("chat_id", chat.getId(), "application/json")
 							.field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : videoMessage.getVideo().getFile(), videoMessage.getVideo().getFileID() == null);
 
-					if (videoMessage.getCaption() != null) request.field("caption", videoMessage.getCaption(), "application/json");
+					if (videoMessage.getCaption() != null)
+						request.field("caption", videoMessage.getCaption(), "application/json");
 
 					processReplyContent(request, videoMessage);
 
@@ -299,35 +319,35 @@ public final class TelegramBot {
 
 			case LOCATION:
 
-                SendableLocationMessage sendableLocationMessage = (SendableLocationMessage) message;
+				SendableLocationMessage sendableLocationMessage = (SendableLocationMessage) message;
 
-                try {
-                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
-                            .field("chat_id", chat.getId(), "application/json")
-                            .field("latitude", sendableLocationMessage.getLatitude())
-                            .field("longnitude", sendableLocationMessage.getLongitude());
+				try {
+					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
+							.field("chat_id", chat.getId(), "application/json")
+							.field("latitude", sendableLocationMessage.getLatitude())
+							.field("longnitude", sendableLocationMessage.getLongitude());
 
 					processReplyContent(request, sendableLocationMessage);
 
 					jsonResponse = request.asJson().getBody();
-                } catch (UnirestException e) {
-                    e.printStackTrace();
-                }
+				} catch (UnirestException e) {
+					e.printStackTrace();
+				}
 
-                break;
+				break;
 			case CHAT_ACTION:
 
-                SendableChatAction sendableChatAction = (SendableChatAction) message;
+				SendableChatAction sendableChatAction = (SendableChatAction) message;
 
-                try {
-                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendChatAction")
-                            .field("chat_id", chat.getId(), "application/json")
-                            .field("action", sendableChatAction.getChatAction().getName());
+				try {
+					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendChatAction")
+							.field("chat_id", chat.getId(), "application/json")
+							.field("action", sendableChatAction.getChatAction().getName());
 
 					jsonResponse = request.asJson().getBody();
-                } catch (UnirestException e) {
-                    e.printStackTrace();
-                }
+				} catch (UnirestException e) {
+					e.printStackTrace();
+				}
 
 				return null;
 			default:
@@ -338,42 +358,24 @@ public final class TelegramBot {
 
 	private void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
 
-		if(replyingOptions.getReplyTo() != null) multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo());
-		if(replyingOptions.getReplyMarkup() != null) {
+		if (replyingOptions.getReplyTo() != null)
+			multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo());
+		if (replyingOptions.getReplyMarkup() != null) {
 
 			System.out.println("Found reply markup");
 
-			switch(replyingOptions.getReplyMarkup().getType()) {
+			switch (replyingOptions.getReplyMarkup().getType()) {
 
-				case FORCE_REPLY: multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json"); break;
-				case KEYBOARD_HIDE: multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json");
+				case FORCE_REPLY:
+					multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json");
+					break;
+				case KEYBOARD_HIDE:
+					multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json");
 					break;
 				case KEYBOARD_MARKUP:
-					multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json"); break;
+					multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json");
+					break;
 			}
-		}
-	}
-
-    /**
-     * Use this method to get a new TelegramBot instance with the selected auth token.
-     *
-     * @param authToken The bots auth token.
-     * @return A new TelegramBot instance to base your bot around.
-     */
-
-    public static TelegramBot login(String authToken) {
-
-		return new TelegramBot(authToken);
-    }
-
-	public static Chat getChat(int chatID) {
-
-		if(chatID < 0) {
-
-			return GroupChatImpl.createGroupChat(chatID);
-		} else {
-
-			return IndividualChatImpl.createIndividualChat(chatID);
 		}
 	}
 }

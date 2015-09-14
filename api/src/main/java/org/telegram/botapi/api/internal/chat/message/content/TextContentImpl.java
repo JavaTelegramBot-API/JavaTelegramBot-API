@@ -7,21 +7,21 @@ import org.telegram.botapi.api.chat.message.content.TextContent;
  */
 public class TextContentImpl implements TextContent {
 
-    private final String content;
+	private final String content;
 
-    private TextContentImpl(String text) {
+	private TextContentImpl(String text) {
 
-        this.content = text;
-    }
+		this.content = text;
+	}
 
-    public static TextContent createTextContent(String text) {
+	public static TextContent createTextContent(String text) {
 
-        return text != null ? new TextContentImpl(text) : null;
-    }
+		return text != null ? new TextContentImpl(text) : null;
+	}
 
-    @Override
-    public String getContent() {
+	@Override
+	public String getContent() {
 
-        return content;
-    }
+		return content;
+	}
 }
