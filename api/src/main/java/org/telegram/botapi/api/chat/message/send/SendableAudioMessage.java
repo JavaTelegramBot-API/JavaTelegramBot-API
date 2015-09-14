@@ -21,6 +21,10 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
 	@Getter
     private final int duration;
 	@Getter
+	private final String performer;
+	@Getter
+	private final String title;
+	@Getter
 	private final Message replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
