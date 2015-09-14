@@ -5,6 +5,7 @@ import org.telegram.botapi.api.chat.Chat;
 import org.telegram.botapi.api.chat.message.Message;
 import org.telegram.botapi.api.chat.message.content.Content;
 import org.telegram.botapi.api.internal.chat.ChatImpl;
+import org.telegram.botapi.api.internal.chat.message.content.ContentImpl;
 import org.telegram.botapi.api.internal.user.UserImpl;
 import org.telegram.botapi.api.user.User;
 
@@ -20,7 +21,7 @@ public class MessageImpl implements Message {
 	private final User forward_from;
 	private final int forward_date;
 	private final Message reply_to_message;
-	//private final Content content;
+	private final Content content;
 
 	private MessageImpl(JSONObject jsonObject) {
 
@@ -31,6 +32,7 @@ public class MessageImpl implements Message {
 		forward_from = UserImpl.createUser(jsonObject.optJSONObject("forward_from"));
 		forward_date = jsonObject.optInt("forward_date");
 		reply_to_message = MessageImpl.createMessage(jsonObject.optJSONObject("reply_to_message"));
+		content = ContentImpl.createContent(jsonObject);
 	}
 
 	public static Message createMessage(JSONObject jsonObject) {
@@ -115,6 +117,6 @@ public class MessageImpl implements Message {
 	 */
 	@Override
 	public Content getContent() {
-		return null;
+		return content;
 	}
 }
