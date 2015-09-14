@@ -47,7 +47,7 @@ public class ForceReply implements ReplyMarkup {
 
 		private boolean selective = false;
 
-		public ForceReplyBuilder() {
+		private ForceReplyBuilder() {
 		}
 
 		public ForceReplyBuilder selective(boolean selective) {
