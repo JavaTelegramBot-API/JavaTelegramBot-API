@@ -7,7 +7,7 @@
     <groupId>org.telegram.botapi</groupId>
     <artifactId>jtelegrambot-api</artifactId>
     <version>0.1-ALPHA</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
