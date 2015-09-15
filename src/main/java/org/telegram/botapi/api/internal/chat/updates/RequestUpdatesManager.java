@@ -65,38 +65,6 @@ public class RequestUpdatesManager extends UpdateManager {
 
 								Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
 
-								if(update.getMessage().getContent().getType().equals(ContentType.TEXT)) {
-
-									TextContent textContent = (TextContent) update.getMessage().getContent();
-
-									if(textContent.getContent().toLowerCase().contains(" rip") || textContent.getContent().toLowerCase().contains("rip ") || textContent.getContent().equals("rip")) {
-
-										getTelegramBot().sendMessage(update.getMessage().getChat(), SendableTextMessage.builder().message("in pieces").replyTo(update.getMessage()).build());
-									}
-
-									if(textContent.getContent().toLowerCase().contains("ayy") && textContent.getContent().toLowerCase().contains("lmao") || textContent.getContent().toLowerCase().contains("alien")) {
-
-										getTelegramBot().sendMessage(update.getMessage().getChat(), SendableTextMessage.builder().message("ayy lmao").replyTo(update.getMessage()).build());
-									} else if(textContent.getContent().toLowerCase().contains("ayy")) {
-
-										getTelegramBot().sendMessage(update.getMessage().getChat(), SendableTextMessage.builder().message("lmao").replyTo(update.getMessage()).build());
-									} else if(textContent.getContent().toLowerCase().contains("lmao")) {
-
-										getTelegramBot().sendMessage(update.getMessage().getChat(), SendableTextMessage.builder().message("ayy").replyTo(update.getMessage()).build());
-									}
-								} else if(update.getMessage().getContent().getType().equals(ContentType.STICKER)) {
-
-									StickerContent stickerContent = (StickerContent) update.getMessage().getContent();
-
-									if(stickerContent.getContent().getFileId().equals("BQADBAADTQADzJm8AsWHAqcGmP2hAg")) {
-
-										getTelegramBot().sendMessage(update.getMessage().getChat(), SendableStickerMessage.builder().sticker(new InputFile("BQADBAADVAADzJm8AlQq_rm3coV0Ag")).build());
-									} else if(stickerContent.getContent().getFileId().equals("BQADBAADVAADzJm8AlQq_rm3coV0Ag")) {
-
-										getTelegramBot().sendMessage(update.getMessage().getChat(), SendableStickerMessage.builder().sticker(new InputFile("BQADBAADTQADzJm8AsWHAqcGmP2hAg")).build());
-									}
-								}
-
 								//TODO: Send these to the relevant events
 							}
 
