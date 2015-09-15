@@ -13,11 +13,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <powermock.version>1.6.2</powermock.version>
     </properties>
-
-    <modules>
-        <module>api</module>
-    </modules>
-
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -29,6 +24,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mashape.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>1.4.5</version>
             <scope>provided</scope>
         </dependency>
 
