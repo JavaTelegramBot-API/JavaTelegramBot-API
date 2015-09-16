@@ -377,8 +377,6 @@ public final class TelegramBot {
 			multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo().getMessageId());
 		if (replyingOptions.getReplyMarkup() != null) {
 
-			System.out.println("Found reply markup");
-
 			switch (replyingOptions.getReplyMarkup().getType()) {
 
 				case FORCE_REPLY:
