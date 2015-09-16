@@ -361,12 +361,9 @@ public final class TelegramBot {
 		return messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
 	}
 
-	public void setUpdateMethod(UpdateManager.UpdateMethod updateMethod) {
+	public void startUpdates() {
 
-		if(updateMethod.equals(UpdateManager.UpdateMethod.REQUEST_UPDATES)) {
-
-			updateManager = new RequestUpdatesManager(this);
-		}
+		updateManager = new RequestUpdatesManager(this);
 	}
 
 	public ListenerRegistry getEventsManager() {
