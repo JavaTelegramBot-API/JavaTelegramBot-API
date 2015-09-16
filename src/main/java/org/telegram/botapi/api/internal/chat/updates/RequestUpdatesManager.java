@@ -60,8 +60,6 @@ public class RequestUpdatesManager extends UpdateManager {
 							.field("offset", offset + 1, "application/json")
 							.field("timeout", 10).asJson();
 
-					System.out.println(response.getBody());
-
 					if(response.getStatus() == 200) {
 
 						if(response.getBody().getObject().getBoolean("ok")) {
@@ -71,8 +69,6 @@ public class RequestUpdatesManager extends UpdateManager {
 							for(int i = 0; i < updates.length(); ++i) {
 
 								Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
-
-								System.out.println(update.getMessage().getContent().getType());
 
 								eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
