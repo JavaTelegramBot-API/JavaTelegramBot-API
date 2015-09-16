@@ -12,6 +12,10 @@ import org.telegram.botapi.api.chat.message.content.TextContent;
 import org.telegram.botapi.api.chat.message.send.InputFile;
 import org.telegram.botapi.api.chat.message.send.SendableStickerMessage;
 import org.telegram.botapi.api.chat.message.send.SendableTextMessage;
+import org.telegram.botapi.api.event.chat.*;
+import org.telegram.botapi.api.event.chat.message.*;
+import org.telegram.botapi.api.internal.event.ListenerRegistryImpl;
+import org.telegram.botapi.api.keyboards.ReplyKeyboardMarkup;
 import org.telegram.botapi.api.updates.Update;
 import org.telegram.botapi.api.updates.UpdateManager;
 
@@ -20,11 +24,14 @@ import org.telegram.botapi.api.updates.UpdateManager;
  */
 public class RequestUpdatesManager extends UpdateManager {
 
+	private final ListenerRegistryImpl eventManager;
+
 	public RequestUpdatesManager(TelegramBot telegramBot) {
 
 		super(telegramBot);
 
 		new Thread(new UpdaterRunnable(this)).start();
+		eventManager = (ListenerRegistryImpl) telegramBot.getEventsManager();
 	}
 
 	public UpdateMethod getUpdateMethod() {
@@ -65,7 +72,26 @@ public class RequestUpdatesManager extends UpdateManager {
 
 								Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
 
-								//TODO: Send these to the relevant events
+								eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
+
+								switch(update.getMessage().getContent().getType()) {
+
+									case AUDIO: eventManager.callEvent(new AudioMessageReceivedEvent(update.getMessage())); break;
+									case CONTACT: eventManager.callEvent(new ContactMessageReceivedEvent(update.getMessage())); break;
+									case DELETE_CHAT_PHOTO: eventManager.callEvent(new DeleteGroupChatPhotoEvent(update.getMessage())); break;
+									case DOCUMENT: eventManager.callEvent(new DocumentMessageReceivedEvent(update.getMessage())); break;
+									case LOCATION: eventManager.callEvent(new LocationMessageReceivedEvent(update.getMessage())); break;
+									case NEW_CHAT_TITLE: eventManager.callEvent(new NewGroupChatTitleEvent(update.getMessage())); break;
+									case NEW_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage())); break;
+									case PHOTO: eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage())); break;
+									case STICKER: eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage())); break;
+									case TEXT: eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage())); break;
+									case VIDEO: eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage())); break;
+									case VOICE: eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage())); break;
+									case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;
+									case LEFT_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage())); break;
+									case NEW_CHAT_PHOTO: eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage())); break;
+								}
 							}
 
 							if(updates.length() != 0) offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
