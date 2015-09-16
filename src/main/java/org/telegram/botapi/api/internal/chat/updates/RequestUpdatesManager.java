@@ -30,8 +30,8 @@ public class RequestUpdatesManager extends UpdateManager {
 
 		super(telegramBot);
 
-		new Thread(new UpdaterRunnable(this)).start();
 		eventManager = (ListenerRegistryImpl) telegramBot.getEventsManager();
+		new Thread(new UpdaterRunnable(this)).start();
 	}
 
 	public UpdateMethod getUpdateMethod() {
@@ -71,6 +71,8 @@ public class RequestUpdatesManager extends UpdateManager {
 							for(int i = 0; i < updates.length(); ++i) {
 
 								Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
+
+								System.out.println(update.getMessage().getContent().getType());
 
 								eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
