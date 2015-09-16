@@ -14,10 +14,12 @@ import org.telegram.botapi.api.chat.message.Message;
 import org.telegram.botapi.api.chat.message.content.*;
 import org.telegram.botapi.api.chat.message.content.type.*;
 import org.telegram.botapi.api.chat.message.send.*;
+import org.telegram.botapi.api.event.ListenerRegistry;
 import org.telegram.botapi.api.internal.chat.GroupChatImpl;
 import org.telegram.botapi.api.internal.chat.IndividualChatImpl;
 import org.telegram.botapi.api.internal.chat.message.MessageImpl;
 import org.telegram.botapi.api.internal.chat.updates.RequestUpdatesManager;
+import org.telegram.botapi.api.internal.event.ListenerRegistryImpl;
 import org.telegram.botapi.api.internal.managers.FileManager;
 import org.telegram.botapi.api.keyboards.ReplyKeyboardHide;
 import org.telegram.botapi.api.keyboards.ReplyKeyboardMarkup;
@@ -34,11 +36,13 @@ public final class TelegramBot {
 	private final static FileManager fileManager = new FileManager();
 
 	private final String authToken;
+	private final ListenerRegistry listenerRegistry;
 	private UpdateManager updateManager = null;
 
 	private TelegramBot(String authToken) {
 
 		this.authToken = authToken;
+		listenerRegistry = ListenerRegistryImpl.getNewInstance();
 	}
 
 	/**
@@ -363,6 +367,11 @@ public final class TelegramBot {
 
 			updateManager = new RequestUpdatesManager(this);
 		}
+	}
+
+	public ListenerRegistry getEventsManager() {
+
+		return listenerRegistry;
 	}
 
 	private void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
