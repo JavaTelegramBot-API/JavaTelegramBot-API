@@ -7,7 +7,7 @@ import org.telegram.botapi.api.chat.message.content.Content;
  * @author Zack Pollard
  */
 
-public abstract class MessageReceivedEvent extends MessageEvent {
+public class MessageReceivedEvent extends MessageEvent {
 
 	public MessageReceivedEvent(Message message) {
 
