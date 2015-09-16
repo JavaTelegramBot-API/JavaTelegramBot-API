@@ -16,23 +16,23 @@ import java.util.function.BiConsumer;
 public class ListenerRegistryImpl implements ListenerRegistry {
 
 	private final Map<Class<?>, BiConsumer<Listener, ? extends Event>> invokers = new HashMap<Class<?>, BiConsumer<Listener, ? extends Event>>() {{
-		register(AudioMessageReceivedEvent.class, Listener::on);
-		register(ContactMessageReceivedEvent.class, Listener::on);
-		register(DocumentMessageReceivedEvent.class, Listener::on);
-		register(LocationMessageReceivedEvent.class, Listener::on);
-		register(MessageReceivedEvent.class, Listener::on);
-		register(PhotoMessageReceivedEvent.class, Listener::on);
-		register(StickerMessageReceivedEvent.class, Listener::on);
-		register(TextMessageReceivedEvent.class, Listener::on);
-		register(VideoMessageReceivedEvent.class, Listener::on);
-		register(VoiceMessageReceivedEvent.class, Listener::on);
+		register(AudioMessageReceivedEvent.class, Listener::onAudioMessageReceived);
+		register(ContactMessageReceivedEvent.class, Listener::onContactMessageReceived);
+		register(DocumentMessageReceivedEvent.class, Listener::onDocumentMessageReceived);
+		register(LocationMessageReceivedEvent.class, Listener::onLocationMessageReceived);
+		register(MessageReceivedEvent.class, Listener::onMessageReceived);
+		register(PhotoMessageReceivedEvent.class, Listener::onPhotoMessageReceived);
+		register(StickerMessageReceivedEvent.class, Listener::onStickerMessageReceived);
+		register(TextMessageReceivedEvent.class, Listener::onTextMessageReceived);
+		register(VideoMessageReceivedEvent.class, Listener::onVideoMessageReceived);
+		register(VoiceMessageReceivedEvent.class, Listener::onVoiceMessageReceived);
 
-		register(DeleteGroupChatPhotoEvent.class, Listener::on);
-		register(GroupChatCreatedEvent.class, Listener::on);
-		register(NewGroupChatPhotoEvent.class, Listener::on);
-		register(NewGroupChatTitleEvent.class, Listener::on);
-		register(ParticipantJoinGroupChatEvent.class, Listener::on);
-		register(ParticipantLeaveGroupChatEvent.class, Listener::on);
+		register(DeleteGroupChatPhotoEvent.class, Listener::onDeleteGroupChatPhoto);
+		register(GroupChatCreatedEvent.class, Listener::onGroupChatCreated);
+		register(NewGroupChatPhotoEvent.class, Listener::onNewGroupChatPhoto);
+		register(NewGroupChatTitleEvent.class, Listener::onNewGroupChatTitle);
+		register(ParticipantJoinGroupChatEvent.class, Listener::onParticipantJoinGroupChat);
+		register(ParticipantLeaveGroupChatEvent.class, Listener::onParticipantLeaveGroupChat);
 	}
 
 		private <T extends Event> void register(Class<T> clazz, BiConsumer<Listener, T> invoker) {

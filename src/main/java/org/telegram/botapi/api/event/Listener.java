@@ -8,37 +8,37 @@ import org.telegram.botapi.api.event.chat.message.*;
  */
 public interface Listener {
 
-	default void on(AudioMessageReceivedEvent e) {
+	default void onAudioMessageReceived(AudioMessageReceivedEvent event) {
 	}
-	default void on(ContactMessageReceivedEvent e) {
+	default void onContactMessageReceived(ContactMessageReceivedEvent event) {
 	}
-	default void on(DocumentMessageReceivedEvent e) {
+	default void onDocumentMessageReceived(DocumentMessageReceivedEvent event) {
 	}
-	default void on(LocationMessageReceivedEvent e) {
+	default void onLocationMessageReceived(LocationMessageReceivedEvent event) {
 	}
-	default void on(MessageReceivedEvent e) {
+	default void onMessageReceived(MessageReceivedEvent event) {
 	}
-	default void on(PhotoMessageReceivedEvent e) {
+	default void onPhotoMessageReceived(PhotoMessageReceivedEvent event) {
 	}
-	default void on(StickerMessageReceivedEvent e) {
+	default void onStickerMessageReceived(StickerMessageReceivedEvent event) {
 	}
-	default void on(TextMessageReceivedEvent e) {
+	default void onTextMessageReceived(TextMessageReceivedEvent event) {
 	}
-	default void on(VideoMessageReceivedEvent e) {
+	default void onVideoMessageReceived(VideoMessageReceivedEvent event) {
 	}
-	default void on(VoiceMessageReceivedEvent e) {
+	default void onVoiceMessageReceived(VoiceMessageReceivedEvent event) {
 	}
 
-	default void on(DeleteGroupChatPhotoEvent e) {
+	default void onDeleteGroupChatPhoto(DeleteGroupChatPhotoEvent event) {
 	}
-	default void on(GroupChatCreatedEvent e) {
+	default void onGroupChatCreated(GroupChatCreatedEvent event) {
 	}
-	default void on(NewGroupChatPhotoEvent e) {
+	default void onNewGroupChatPhoto(NewGroupChatPhotoEvent event) {
 	}
-	default void on(NewGroupChatTitleEvent e) {
+	default void onNewGroupChatTitle(NewGroupChatTitleEvent event) {
 	}
-	default void on(ParticipantJoinGroupChatEvent e) {
+	default void onParticipantJoinGroupChat(ParticipantJoinGroupChatEvent event) {
 	}
-	default void on(ParticipantLeaveGroupChatEvent e) {
+	default void onParticipantLeaveGroupChat(ParticipantLeaveGroupChatEvent event) {
 	}
 }
