@@ -67,6 +67,9 @@ public class ContentImpl {
 				case "new_chat_title":
 
 					return NewChatTitleContentImpl.createNewChatTitleContent(jsonObject.getString("new_chat_title"));
+				case "new_chat_photo":
+
+					return NewChatPhotoContentImpl.createNewChatPhotoContent(jsonObject.getJSONArray("new_chat_photo"));
 				case "delete_chat_photo":
 
 					return DeleteChatPhotoContentImpl.createDeleteChatPhotoContent();
