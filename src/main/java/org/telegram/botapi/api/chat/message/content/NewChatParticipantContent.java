@@ -5,7 +5,7 @@ import org.telegram.botapi.api.user.User;
 /**
  * @author Zack Pollard
  */
-public interface NewParticipantContent extends Content {
+public interface NewChatParticipantContent extends Content {
 
 	/**
 	 * Gets the new participant in the chat
@@ -17,6 +17,6 @@ public interface NewParticipantContent extends Content {
 	@Override
 	default ContentType getType() {
 
-		return ContentType.NEW_PARTICIPANT;
+		return ContentType.NEW_CHAT_PARTICIPANT;
 	}
 }
