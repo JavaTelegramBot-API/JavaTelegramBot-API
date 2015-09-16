@@ -1,14 +1,14 @@
 package org.telegram.botapi.api.internal.chat.message.content;
 
 import org.json.JSONObject;
-import org.telegram.botapi.api.chat.message.content.NewParticipantContent;
+import org.telegram.botapi.api.chat.message.content.NewChatParticipantContent;
 import org.telegram.botapi.api.internal.user.UserImpl;
 import org.telegram.botapi.api.user.User;
 
 /**
  * @author Zack Pollard
  */
-public class NewParticipantContentImpl implements NewParticipantContent {
+public class NewParticipantContentImpl implements NewChatParticipantContent {
 
 	private final User content;
 
@@ -17,7 +17,7 @@ public class NewParticipantContentImpl implements NewParticipantContent {
 		this.content = UserImpl.createUser(jsonObject);
 	}
 
-	public static NewParticipantContent createNewParticipantContent(JSONObject jsonObject) {
+	public static NewChatParticipantContent createNewParticipantContent(JSONObject jsonObject) {
 
 		return jsonObject != null ? new NewParticipantContentImpl(jsonObject) : null;
 	}
