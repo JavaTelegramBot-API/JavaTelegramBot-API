@@ -7,10 +7,7 @@ import org.telegram.botapi.api.event.chat.*;
 import org.telegram.botapi.api.event.chat.message.*;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
@@ -58,7 +55,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
 
 	public void callEvent(Event event) {
 		BiConsumer<Listener, Event> invoker = (BiConsumer<Listener, Event>) this.invokers.get(event.getClass());
-		listenerByContent.get(event.getClass()).forEach(listener -> invoker.accept(listener, event));
+		listenerByContent.getOrDefault(event.getClass(), Collections.emptySet()).forEach(listener -> invoker.accept(listener, event));
 	}
 
 	private ListenerRegistryImpl() {
