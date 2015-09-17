@@ -26,12 +26,12 @@ public class RequestUpdatesManager extends UpdateManager {
 
 	private final ListenerRegistryImpl eventManager;
 
-	public RequestUpdatesManager(TelegramBot telegramBot) {
+	public RequestUpdatesManager(TelegramBot telegramBot, boolean getPreviousUpdates) {
 
 		super(telegramBot);
 
 		eventManager = (ListenerRegistryImpl) telegramBot.getEventsManager();
-		new Thread(new UpdaterRunnable(this)).start();
+		new Thread(new UpdaterRunnable(this, getPreviousUpdates)).start();
 	}
 
 	public UpdateMethod getUpdateMethod() {
@@ -42,10 +42,14 @@ public class RequestUpdatesManager extends UpdateManager {
 	private class UpdaterRunnable implements Runnable {
 
 		private final RequestUpdatesManager requestUpdatesManager;
+		private boolean getPreviousUpdates;
+		private final long unixTime;
 
-		protected UpdaterRunnable(RequestUpdatesManager requestUpdatesManager) {
+		protected UpdaterRunnable(RequestUpdatesManager requestUpdatesManager, boolean getPreviousUpdates) {
 
 			this.requestUpdatesManager = requestUpdatesManager;
+			this.getPreviousUpdates = getPreviousUpdates;
+			this.unixTime = System.currentTimeMillis() / 1000;
 		}
 
 		@Override
@@ -69,6 +73,17 @@ public class RequestUpdatesManager extends UpdateManager {
 							for(int i = 0; i < updates.length(); ++i) {
 
 								Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
+
+								if(!getPreviousUpdates) {
+
+									if(update.getMessage().getTimeStamp() < unixTime) {
+
+										break;
+									} else {
+
+										getPreviousUpdates = true;
+									}
+								}
 
 								eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
