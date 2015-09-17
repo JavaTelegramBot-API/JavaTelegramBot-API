@@ -17,6 +17,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
 
 	private final Map<Class<?>, BiConsumer<Listener, ? extends Event>> invokers = new HashMap<Class<?>, BiConsumer<Listener, ? extends Event>>() {{
 		register(AudioMessageReceivedEvent.class, Listener::onAudioMessageReceived);
+		register(CommandMessageReceivedEvent.class, Listener::onCommandMessageReceived);
 		register(ContactMessageReceivedEvent.class, Listener::onContactMessageReceived);
 		register(DocumentMessageReceivedEvent.class, Listener::onDocumentMessageReceived);
 		register(LocationMessageReceivedEvent.class, Listener::onLocationMessageReceived);

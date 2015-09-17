@@ -98,7 +98,18 @@ public class RequestUpdatesManager extends UpdateManager {
 									case NEW_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage())); break;
 									case PHOTO: eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage())); break;
 									case STICKER: eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage())); break;
-									case TEXT: eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage())); break;
+									case TEXT: {
+
+										if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
+
+											eventManager.callEvent(new CommandMessageReceivedEvent(update.getMessage()));
+										} else {
+
+											eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage()));
+										}
+
+										break;
+									}
 									case VIDEO: eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage())); break;
 									case VOICE: eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage())); break;
 									case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;

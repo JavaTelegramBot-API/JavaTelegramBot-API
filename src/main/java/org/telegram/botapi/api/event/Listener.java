@@ -12,6 +12,8 @@ public interface Listener {
 	}
 	default void onContactMessageReceived(ContactMessageReceivedEvent event) {
 	}
+	default void onCommandMessageReceived(CommandMessageReceivedEvent event) {
+	}
 	default void onDocumentMessageReceived(DocumentMessageReceivedEvent event) {
 	}
 	default void onLocationMessageReceived(LocationMessageReceivedEvent event) {
