@@ -6,16 +6,10 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.telegram.botapi.api.TelegramBot;
-import org.telegram.botapi.api.chat.message.content.ContentType;
-import org.telegram.botapi.api.chat.message.content.StickerContent;
 import org.telegram.botapi.api.chat.message.content.TextContent;
-import org.telegram.botapi.api.chat.message.send.InputFile;
-import org.telegram.botapi.api.chat.message.send.SendableStickerMessage;
-import org.telegram.botapi.api.chat.message.send.SendableTextMessage;
 import org.telegram.botapi.api.event.chat.*;
 import org.telegram.botapi.api.event.chat.message.*;
 import org.telegram.botapi.api.internal.event.ListenerRegistryImpl;
-import org.telegram.botapi.api.keyboards.ReplyKeyboardMarkup;
 import org.telegram.botapi.api.updates.Update;
 import org.telegram.botapi.api.updates.UpdateManager;
 

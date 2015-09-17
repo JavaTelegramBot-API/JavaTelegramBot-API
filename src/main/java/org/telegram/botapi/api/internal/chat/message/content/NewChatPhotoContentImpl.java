@@ -1,6 +1,5 @@
 package org.telegram.botapi.api.internal.chat.message.content;
 
-import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.telegram.botapi.api.chat.message.content.NewChatPhotoContent;
