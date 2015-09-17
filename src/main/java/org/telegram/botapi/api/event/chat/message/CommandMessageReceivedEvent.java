@@ -20,7 +20,6 @@ public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
 		super(message);
 
 		this.command = getContent().getContent().substring(1).split(" ")[0].split("@")[0];
-		System.out.println("Command: " + command);
 
 		int argsStart = getContent().getContent().indexOf(" ");
 
@@ -32,13 +31,6 @@ public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
 
 			this.args = new String[]{};
 			this.argsString = "";
-		}
-
-		System.out.println("Command arguments: ");
-
-		for(String arg : args) {
-
-			System.out.println("  - " + arg);
 		}
 	}
 }
