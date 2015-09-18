@@ -5,6 +5,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.telegram.botapi.api.TelegramBot;
 import org.telegram.botapi.api.chat.message.content.TextContent;
 import org.telegram.botapi.api.event.chat.*;
@@ -116,7 +117,23 @@ public class RequestUpdatesManager extends UpdateManager {
 						}
 					}
 				} catch (UnirestException e) {
-					e.printStackTrace();
+					System.err.println("There was a connection error when trying to retrieve updates, waiting for 1 second and then trying again.");
+					System.err.println(e.getLocalizedMessage());
+
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				} catch (JSONException e) {
+					System.err.println("There was a JSON error, suspected API error, waiting for 1 second and then trying again.");
+					System.err.println(e.getMessage());
+
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
 				}
 
 				try {
