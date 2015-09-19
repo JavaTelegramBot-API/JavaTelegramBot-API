@@ -36,6 +36,7 @@ public class DocumentImpl implements Document {
 	 */
 	@Override
 	public String getFileId() {
+
 		return file_id;
 	}
 
@@ -58,4 +59,10 @@ public class DocumentImpl implements Document {
 	public PhotoSize getThumbnail() {
 		return thumb;
 	}
+
+    @Override
+    public String getFileName() {
+
+        return file_name;
+    }
 }

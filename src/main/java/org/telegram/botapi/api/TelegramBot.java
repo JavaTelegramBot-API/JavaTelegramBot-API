@@ -35,6 +35,7 @@ public final class TelegramBot {
 	@Getter
 	private final static FileManager fileManager = new FileManager();
 
+	@Getter
 	private final String authToken;
 	private final ListenerRegistry listenerRegistry;
 	private UpdateManager updateManager = null;
@@ -361,9 +362,9 @@ public final class TelegramBot {
 		return messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
 	}
 
-	public void startUpdates() {
+	public void startUpdates(boolean getPreviousUpdates) {
 
-		updateManager = new RequestUpdatesManager(this);
+		updateManager = new RequestUpdatesManager(this, getPreviousUpdates);
 	}
 
 	public ListenerRegistry getEventsManager() {
