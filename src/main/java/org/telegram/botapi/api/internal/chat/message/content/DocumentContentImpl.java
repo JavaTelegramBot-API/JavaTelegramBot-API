@@ -24,6 +24,6 @@ public class DocumentContentImpl implements DocumentContent {
 
 	@Override
 	public Document getContent() {
-		return null;
+		return content;
 	}
 }
