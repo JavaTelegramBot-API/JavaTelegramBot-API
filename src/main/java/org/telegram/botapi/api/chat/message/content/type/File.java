@@ -65,8 +65,6 @@ public interface File {
             }
         }
 
-        System.out.println("Downloaded file to " + downloadLocation.getAbsolutePath());
-
         return downloadLocation;
 	}
 }
