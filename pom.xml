@@ -2,17 +2,29 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.telegram.botapi</groupId>
-    <artifactId>jtelegrambot-api</artifactId>
-    <version>0.1-ALPHA</version>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>pro.zackpollard.telegrambot.api</groupId>
+    <artifactId>jtelegram-botapi</artifactId>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <powermock.version>1.6.2</powermock.version>
-    </properties>
+    <name>Java Telegram Bot API</name>
+    <description>The Java Telegram Bot API is a wrapper for the Telegram HTTP Bot API</description>
+    <url>http://telegrambotapi.zackpollard.pro</url>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/zackpollard/JavaTelegramBot-API</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
