@@ -35,6 +35,7 @@ public final class TelegramBot {
 	@Getter
 	private final static FileManager fileManager = new FileManager();
 
+	@Getter
 	private final String authToken;
 	private final ListenerRegistry listenerRegistry;
 	private UpdateManager updateManager = null;
