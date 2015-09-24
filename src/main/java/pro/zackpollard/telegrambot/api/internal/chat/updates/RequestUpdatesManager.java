@@ -19,129 +19,132 @@ import pro.zackpollard.telegrambot.api.updates.UpdateManager;
  */
 public class RequestUpdatesManager extends UpdateManager {
 
-	private final ListenerRegistryImpl eventManager;
+    private final ListenerRegistryImpl eventManager;
 
-	public RequestUpdatesManager(TelegramBot telegramBot, boolean getPreviousUpdates) {
+    public RequestUpdatesManager(TelegramBot telegramBot, boolean getPreviousUpdates) {
 
-		super(telegramBot);
+        super(telegramBot);
 
-		eventManager = (ListenerRegistryImpl) telegramBot.getEventsManager();
-		new Thread(new UpdaterRunnable(this, getPreviousUpdates)).start();
-	}
+        eventManager = (ListenerRegistryImpl) telegramBot.getEventsManager();
+        new Thread(new UpdaterRunnable(this, getPreviousUpdates)).start();
+    }
 
-	public UpdateMethod getUpdateMethod() {
+    public UpdateMethod getUpdateMethod() {
 
-		return UpdateMethod.REQUEST_UPDATES;
-	}
+        return UpdateMethod.REQUEST_UPDATES;
+    }
 
-	private class UpdaterRunnable implements Runnable {
+    private class UpdaterRunnable implements Runnable {
 
-		private final RequestUpdatesManager requestUpdatesManager;
-		private boolean getPreviousUpdates;
-		private final long unixTime;
+        private final RequestUpdatesManager requestUpdatesManager;
+        private final long unixTime;
+        private boolean getPreviousUpdates;
 
-		protected UpdaterRunnable(RequestUpdatesManager requestUpdatesManager, boolean getPreviousUpdates) {
+        protected UpdaterRunnable(RequestUpdatesManager requestUpdatesManager, boolean getPreviousUpdates) {
 
-			this.requestUpdatesManager = requestUpdatesManager;
-			this.getPreviousUpdates = getPreviousUpdates;
-			this.unixTime = System.currentTimeMillis() / 1000;
-		}
+            this.requestUpdatesManager = requestUpdatesManager;
+            this.getPreviousUpdates = getPreviousUpdates;
+            this.unixTime = System.currentTimeMillis() / 1000;
+        }
 
-		@Override
-		public void run() {
+        @Override
+        public void run() {
 
-			int offset = 0;
+            int offset = 0;
 
-			while(true) {
+            while (true) {
 
-				try {
-					HttpResponse<JsonNode> response = Unirest.post(requestUpdatesManager.getTelegramBot().getBotAPIUrl() + "getUpdates")
-							.field("offset", offset + 1, "application/json")
-							.field("timeout", 10).asJson();
+                HttpResponse<JsonNode> response = null;
 
-					if(response.getStatus() == 200) {
+                try {
+                    response = Unirest.post(requestUpdatesManager.getTelegramBot().getBotAPIUrl() + "getUpdates")
+                            .field("offset", offset + 1, "application/json")
+                            .field("timeout", 10).asJson();
+                } catch (UnirestException e) {
+                    System.err.println("There was a connection error when trying to retrieve updates, waiting for 1 second and then trying again.");
+                    System.err.println(e.getLocalizedMessage());
 
-						if(response.getBody().getObject().getBoolean("ok")) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                } catch (JSONException e) {
+                    System.err.println("There was a JSON error, suspected API error, waiting for 1 second and then trying again.");
+                    System.err.println(e.getMessage());
 
-							JSONArray updates = response.getBody().getObject().getJSONArray("result");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
 
-							for(int i = 0; i < updates.length(); ++i) {
+                if (response != null && response.getStatus() == 200) {
 
-								Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
+                    if (response.getBody().getObject().getBoolean("ok")) {
 
-								if(!getPreviousUpdates) {
+                        JSONArray updates = response.getBody().getObject().getJSONArray("result");
 
-									if(update.getMessage().getTimeStamp() < unixTime) {
+                        for (int i = 0; i < updates.length(); ++i) {
 
-										break;
-									} else {
+                            Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
 
-										getPreviousUpdates = true;
-									}
-								}
+                            if (!getPreviousUpdates) {
 
-								eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
+                                if (update.getMessage().getTimeStamp() < unixTime) {
 
-								switch(update.getMessage().getContent().getType()) {
+                                    break;
+                                } else {
 
-									case AUDIO: eventManager.callEvent(new AudioMessageReceivedEvent(update.getMessage())); break;
-									case CONTACT: eventManager.callEvent(new ContactMessageReceivedEvent(update.getMessage())); break;
-									case DELETE_CHAT_PHOTO: eventManager.callEvent(new DeleteGroupChatPhotoEvent(update.getMessage())); break;
-									case DOCUMENT: eventManager.callEvent(new DocumentMessageReceivedEvent(update.getMessage())); break;
-									case LOCATION: eventManager.callEvent(new LocationMessageReceivedEvent(update.getMessage())); break;
-									case NEW_CHAT_TITLE: eventManager.callEvent(new NewGroupChatTitleEvent(update.getMessage())); break;
-									case NEW_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage())); break;
-									case PHOTO: eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage())); break;
-									case STICKER: eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage())); break;
-									case TEXT: {
+                                    getPreviousUpdates = true;
+                                }
+                            }
 
-										if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
+                            eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
-											eventManager.callEvent(new CommandMessageReceivedEvent(update.getMessage()));
-										} else {
+                            switch (update.getMessage().getContent().getType()) {
 
-											eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage()));
-										}
+                                case AUDIO: eventManager.callEvent(new AudioMessageReceivedEvent(update.getMessage())); break;
+                                case CONTACT: eventManager.callEvent(new ContactMessageReceivedEvent(update.getMessage())); break;
+                                case DELETE_CHAT_PHOTO: eventManager.callEvent(new DeleteGroupChatPhotoEvent(update.getMessage())); break;
+                                case DOCUMENT: eventManager.callEvent(new DocumentMessageReceivedEvent(update.getMessage())); break;
+                                case LOCATION: eventManager.callEvent(new LocationMessageReceivedEvent(update.getMessage())); break;
+                                case NEW_CHAT_TITLE: eventManager.callEvent(new NewGroupChatTitleEvent(update.getMessage())); break;
+                                case NEW_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage())); break;
+                                case PHOTO: eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage())); break;
+                                case STICKER: eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage())); break;
+                                case TEXT: {
 
-										break;
-									}
-									case VIDEO: eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage())); break;
-									case VOICE: eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage())); break;
-									case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;
-									case LEFT_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage())); break;
-									case NEW_CHAT_PHOTO: eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage())); break;
-								}
-							}
+                                    if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
 
-							if(updates.length() != 0) offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
-						}
-					}
-				} catch (UnirestException e) {
-					System.err.println("There was a connection error when trying to retrieve updates, waiting for 1 second and then trying again.");
-					System.err.println(e.getLocalizedMessage());
+                                        eventManager.callEvent(new CommandMessageReceivedEvent(update.getMessage()));
+                                    } else {
 
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-				} catch (JSONException e) {
-					System.err.println("There was a JSON error, suspected API error, waiting for 1 second and then trying again.");
-					System.err.println(e.getMessage());
+                                        eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage()));
+                                    }
 
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-				}
+                                    break;
+                                }
+                                case VIDEO: eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage())); break;
+                                case VOICE: eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage())); break;
+                                case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;
+                                case LEFT_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage())); break;
+                                case NEW_CHAT_PHOTO: eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage())); break;
+                            }
+                        }
 
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+                        if (updates.length() != 0)
+                            offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
+                    }
+                }
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
