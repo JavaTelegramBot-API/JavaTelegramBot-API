@@ -1,6 +1,6 @@
 # Java Telegram Bot API
 
-This is a Telegram Bot API for Java. At the time of writing it supports all the features of the HTTP API and follows the same specification. This is a work in progress and currently has very minimal error handling and testing. Anything methods or functionality outside of `pro.zackpollard.telegrambot.api.internal` package should remain as they are currently and should work as expected, anything inside the `internal` package is not guarenteed to work as expected and may yield unexpected results if used in a way that is not intended.
+This is a Telegram Bot API for Java. At the time of writing it supports all the features of the HTTP API and follows the same specification. This is a work in progress and currently has very minimal error handling and testing. Any methods or functionality outside of `pro.zackpollard.telegrambot.api.internal` package should remain as they are currently and should work as expected, anything inside the `internal` package is not guaranteed to work as expected and may yield unexpected results if used in a way that is not intended.
 
 Here is an example of how to use this API:
 
@@ -34,4 +34,4 @@ Maven is used for dependency management and deployment.
 
 ## Licensing
 
-This project is licensed under the GPLv3 licence
+This project is licensed under the GPLv3 licence.
