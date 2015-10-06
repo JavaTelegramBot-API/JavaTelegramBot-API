@@ -14,6 +14,11 @@ public class MyBot {
         TelegramBot telegramBot = TelegramBot.login("APIKey");
         telegramBot.getEventsManager().register(new MyListener());
         
+        //This will tell the API to start polling the servers for updates
+        //If you specify true as the argument you will receive any previous messages before the bot started.
+        //If you specify false the API will discard any messages from before the bot was started.
+        telegramBot.startUpdates(false);
+        
         //Thread would die, do something to keep it alive.
     }
 }
