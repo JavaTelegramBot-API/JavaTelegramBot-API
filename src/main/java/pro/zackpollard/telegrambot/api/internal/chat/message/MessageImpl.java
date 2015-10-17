@@ -28,7 +28,7 @@ public class MessageImpl implements Message {
 		if(!jsonObject.isNull("result")) jsonObject = jsonObject.getJSONObject("result");
 
 		message_id = jsonObject.getInt("message_id");
-		from = UserImpl.createUser(jsonObject.getJSONObject("from"));
+		from = UserImpl.createUser(jsonObject.optJSONObject("from"));
 		date = jsonObject.getInt("date");
 		chat = ChatImpl.createChat(jsonObject.getJSONObject("chat"));
 		forward_from = UserImpl.createUser(jsonObject.optJSONObject("forward_from"));
