@@ -43,9 +43,9 @@ public class IndividualChatImpl implements IndividualChat {
 	}
 
 	@Override
-	public int getId() {
+	public String getId() {
 
-		return partner.getId();
+		return String.valueOf(partner.getId());
 	}
 
 	@Override

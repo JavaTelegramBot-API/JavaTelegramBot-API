@@ -8,4 +8,9 @@ import pro.zackpollard.telegrambot.api.user.User;
 public interface IndividualChat extends Chat {
 
 	User getPartner();
+
+    default ChatType getType() {
+
+        return ChatType.PRIVATE;
+    }
 }

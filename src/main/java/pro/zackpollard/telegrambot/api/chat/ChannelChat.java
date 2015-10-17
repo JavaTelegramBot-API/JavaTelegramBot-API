@@ -3,12 +3,12 @@ package pro.zackpollard.telegrambot.api.chat;
 /**
  * @author Zack Pollard
  */
-public interface GroupChat extends Chat {
+public interface ChannelChat extends Chat {
 
-	String getName();
+    String getName();
 
     default ChatType getType() {
 
-        return ChatType.GROUP;
+        return ChatType.CHANNEL;
     }
 }

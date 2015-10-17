@@ -14,6 +14,7 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.*;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
+import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
@@ -68,6 +69,28 @@ public final class TelegramBot {
 			return IndividualChatImpl.createIndividualChat(chatID);
 		}
 	}
+
+    public static Chat getChat(String chatID) {
+
+        if(chatID.charAt(0) == '@') {
+
+            return ChannelChatImpl.createChannelChat(chatID);
+        } else {
+
+            int intChatID;
+
+            try {
+
+                intChatID = Integer.parseInt(chatID);
+            } catch(NumberFormatException e) {
+
+                System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
+                return null;
+            }
+
+            return getChat(intChatID);
+        }
+    }
 
 	public String getBotAPIUrl() {
 

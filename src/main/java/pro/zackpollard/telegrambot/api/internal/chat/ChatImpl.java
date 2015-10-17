@@ -10,12 +10,15 @@ public class ChatImpl {
 
 	public static Chat createChat(JSONObject jsonObject) {
 
-		if (jsonObject.getInt("id") < 0) {
+        String chatType = jsonObject.getString("type");
 
-			return GroupChatImpl.createGroupChat(jsonObject);
-		} else {
+        switch(chatType) {
 
-			return IndividualChatImpl.createIndividualChat(jsonObject);
-		}
+            case "private": return IndividualChatImpl.createIndividualChat(jsonObject);
+            case "group":   return GroupChatImpl.createGroupChat(jsonObject);
+            case "channel": return ChannelChatImpl.createChannelChat(jsonObject);
+        }
+
+        return null;
 	}
 }
