@@ -1,6 +1,6 @@
 # Java Telegram Bot API
 
-This is a Telegram Bot API for Java. At the time of writing it supports all the features of the HTTP API and follows the same specification. This is a work in progress and currently has very minimal error handling and testing. Anything methods or functionality outside of `pro.zackpollard.telegrambot.api.internal` package should remain as they are currently and should work as expected, anything inside the `internal` package is not guarenteed to work as expected and may yield unexpected results if used in a way that is not intended.
+This is a Telegram Bot API for Java. At the time of writing it supports all the features of the HTTP API and follows the same specification. This is a work in progress and currently has very minimal error handling and testing. Any methods or functionality outside of `pro.zackpollard.telegrambot.api.internal` package should remain as they are currently and should work as expected, anything inside the `internal` package is not guaranteed to work as expected and may yield unexpected results if used in a way that is not intended.
 
 Here is an example of how to use this API:
 
@@ -13,6 +13,11 @@ public class MyBot {
     
         TelegramBot telegramBot = TelegramBot.login("APIKey");
         telegramBot.getEventsManager().register(new MyListener());
+        
+        //This will tell the API to start polling the servers for updates
+        //If you specify true as the argument you will receive any previous messages before the bot started.
+        //If you specify false the API will discard any messages from before the bot was started.
+        telegramBot.startUpdates(false);
         
         //Thread would die, do something to keep it alive.
     }
@@ -30,8 +35,8 @@ public class MyListener implements Listener() {
 ## Deployment
 
 Currently you can get the latest build of the API from [here.](http://ci.zackpollard.pro/job/JavaTelegram-Bot-API/lastSuccessfulBuild/pro.zackpollard.telegrambot.api$jtelegram-botapi/)  
-Maven is used for dependency management and deployment.
+Maven is used for dependency management and deployment, the API will soon be available on maven central for ease of implementation.
 
 ## Licensing
 
-This project is licensed under the GPLv3 licence
+This project is licensed under the GPLv3 licence.
