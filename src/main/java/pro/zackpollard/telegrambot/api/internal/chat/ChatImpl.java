@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 
 /**
- * Created by zackp on 12/09/2015.
+ * @author Zack Pollard
  */
 public class ChatImpl {
 
