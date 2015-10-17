@@ -25,6 +25,13 @@
         <url>https://github.com/zackpollard/JavaTelegramBot-API</url>
     </scm>
 
+    <developers>
+        <developer>
+            <name>Zack Pollard</name>
+            <email>javatelegramapi@zackpollard.pro</email>
+        </developer>
+    </developers>
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
