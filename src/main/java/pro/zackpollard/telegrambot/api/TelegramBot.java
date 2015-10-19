@@ -13,6 +13,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.*;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.*;
+import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
 import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
@@ -24,7 +25,6 @@ import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
-import pro.zackpollard.telegrambot.api.chat.message.send.*;
 
 /**
  * @author Zack Pollard
