@@ -1,4 +1,4 @@
-package pro.zackpollard.telegrambot.api.internal.chat.updates;
+package pro.zackpollard.telegrambot.api.internal.updates;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.message.Message;

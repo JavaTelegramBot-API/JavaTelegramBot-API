@@ -19,7 +19,7 @@ import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
-import pro.zackpollard.telegrambot.api.internal.chat.updates.RequestUpdatesManager;
+import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;

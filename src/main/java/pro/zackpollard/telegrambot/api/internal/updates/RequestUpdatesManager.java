@@ -1,4 +1,4 @@
-package pro.zackpollard.telegrambot.api.internal.chat.updates;
+package pro.zackpollard.telegrambot.api.internal.updates;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
