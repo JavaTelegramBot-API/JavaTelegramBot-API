@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.2.2
+* Fixed ChannelChat#sendMessage() always returning null and not sending the message.
+
 #### Version 0.2.1
 * Made the from field in the Message type optional due to channels not providing that field.
   * Thanks for mentioning you were changing that in your changelog Telegram.
