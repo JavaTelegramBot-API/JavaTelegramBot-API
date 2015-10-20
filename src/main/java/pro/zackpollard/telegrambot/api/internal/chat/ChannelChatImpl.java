@@ -48,6 +48,7 @@ public class ChannelChatImpl implements ChannelChat {
 
     @Override
     public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
-        return null;
+
+        return telegramBot.sendMessage(this, message);
     }
 }
