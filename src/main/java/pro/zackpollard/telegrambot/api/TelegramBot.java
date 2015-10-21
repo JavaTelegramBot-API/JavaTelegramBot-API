@@ -73,24 +73,29 @@ public final class TelegramBot {
 
     public static Chat getChat(String chatID) {
 
-        if(chatID.charAt(0) == '@') {
+		if(chatID != null && chatID.length() > 0) {
 
-            return ChannelChatImpl.createChannelChat(chatID);
-        } else {
+			if (chatID.charAt(0) == '@') {
 
-            int intChatID;
+				return ChannelChatImpl.createChannelChat(chatID);
+			} else {
 
-            try {
+				int intChatID;
 
-                intChatID = Integer.parseInt(chatID);
-            } catch(NumberFormatException e) {
+				try {
 
-                System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
-                return null;
-            }
+					intChatID = Integer.parseInt(chatID);
+				} catch (NumberFormatException e) {
 
-            return getChat(intChatID);
-        }
+					System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
+					return null;
+				}
+
+				return getChat(intChatID);
+			}
+		}
+
+		return null;
     }
 
 	public String getBotAPIUrl() {
