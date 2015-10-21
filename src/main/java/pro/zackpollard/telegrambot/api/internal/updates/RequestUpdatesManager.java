@@ -136,7 +136,10 @@ public class RequestUpdatesManager extends UpdateManager {
 
                         if (updates.length() != 0)
                             offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
-                    }
+                    } else {
+
+						System.err.println("The API returned the following error: " + response.getBody().getObject().getString("description"));
+					}
                 }
 
                 try {
