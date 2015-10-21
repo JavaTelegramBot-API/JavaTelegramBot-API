@@ -8,6 +8,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
+import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -382,7 +383,20 @@ public final class TelegramBot {
 			default:
 		}
 
-		return messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
+		if(jsonResponse != null) {
+
+			JSONObject jsonObject = jsonResponse.getObject();
+
+			if(jsonObject.getBoolean("ok")) {
+
+				return messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse.getObject());
+			} else {
+
+				System.err.println("The API returned the following error: " + jsonObject.getString("description"));
+			}
+		}
+
+		return null;
 	}
 
 	public void startUpdates(boolean getPreviousUpdates) {
