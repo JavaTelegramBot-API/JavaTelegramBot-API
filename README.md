@@ -38,7 +38,7 @@ public class MyListener implements Listener() {
 ```
 ## Deployment
 
-Currently you can get the latest build of the API from [here.](http://ci.zackpollard.pro/job/JavaTelegram-Bot-API/lastSuccessfulBuild/pro.zackpollard.telegrambot.api$jtelegram-botapi/)  
+Currently you can get the latest build of the API from [here.](http://www.zackpollard.pro/at-file-uploads/jtelegram-botapi-0.2.3.jar)  
 Maven is used for dependency management and deployment, the API will soon be available on maven central for ease of implementation.
 
 ## Licensing
