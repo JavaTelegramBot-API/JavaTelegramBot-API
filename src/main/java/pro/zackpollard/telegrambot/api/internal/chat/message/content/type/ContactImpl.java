@@ -18,7 +18,7 @@ public class ContactImpl implements Contact {
 		this.phone_number = jsonObject.getString("phone_number");
 		this.first_name = jsonObject.getString("first_name");
 		this.last_name = jsonObject.optString("last_name");
-		this.user_id = jsonObject.getInt("user_id");
+		this.user_id = jsonObject.optInt("user_id");
 	}
 
 	public static Contact createContact(JSONObject jsonObject) {
