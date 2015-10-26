@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.2.5
+* Added in more error handling to stop Exceptions being thrown when sending Photo/Audio/Document/Sticker/Video/Voice message types and the sending fails for some reason.
+
 #### Version 0.2.4
 * Bugfix: Made user_if optional in Contact content type to fix an error when a user_id is not included in the reply due to the contact not being a Telegram contact.
 
