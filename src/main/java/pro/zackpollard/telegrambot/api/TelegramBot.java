@@ -169,7 +169,7 @@ public final class TelegramBot {
 					e.printStackTrace();
 				}
 
-				messageResponse = MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
+				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null)) : null;
 
 				//Photo cacheing to FileManager
 				if (photoMessage.getPhoto().getFile() != null && messageResponse != null) {
@@ -218,7 +218,7 @@ public final class TelegramBot {
 					e.printStackTrace();
 				}
 
-				messageResponse = MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
+				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null)) : null;
 
 				//Audio cacheing to FileManager
 				if (audioMessage.getAudio().getFile() != null && messageResponse != null) {
@@ -254,7 +254,7 @@ public final class TelegramBot {
 					e.printStackTrace();
 				}
 
-				messageResponse = MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
+				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null)) : null;
 
 				//Document cacheing to FileManager
 				if (documentMessage.getDocument().getFile() != null && messageResponse != null) {
@@ -282,7 +282,7 @@ public final class TelegramBot {
 					e.printStackTrace();
 				}
 
-				messageResponse = MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
+				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null)) : null;
 
 				//Sticker cacheing to FileManager
 				if (stickerMessage.getSticker().getFile() != null && messageResponse != null) {
@@ -313,7 +313,7 @@ public final class TelegramBot {
 					e.printStackTrace();
 				}
 
-				messageResponse = MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
+				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null)) : null;
 
 				//Video cacheing to FileManager
 				if (videoMessage.getVideo().getFile() != null && messageResponse != null) {
@@ -340,7 +340,7 @@ public final class TelegramBot {
 					e.printStackTrace();
 				}
 
-				messageResponse = MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null);
+				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse.getObject() : null)) : null;
 
 				//Voice cacheing to FileManager
 				if (voiceMessage.getVoice().getFile() != null && messageResponse != null) {
@@ -385,23 +385,9 @@ public final class TelegramBot {
 				}
 
 				return null;
-			default:
 		}
 
-		if(jsonResponse != null) {
-
-			JSONObject jsonObject = jsonResponse.getObject();
-
-			if(jsonObject.getBoolean("ok")) {
-
-				return messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse.getObject());
-			} else {
-
-				System.err.println("The API returned the following error: " + jsonObject.getString("description"));
-			}
-		}
-
-		return null;
+		return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse.getObject())) : null;
 	}
 
 	public void startUpdates(boolean getPreviousUpdates) {
@@ -433,5 +419,26 @@ public final class TelegramBot {
 					break;
 			}
 		}
+	}
+
+	private boolean checkResponseStatus(JsonNode jsonResponse) {
+
+		if(jsonResponse != null) {
+
+			JSONObject jsonObject = jsonResponse.getObject();
+
+			if(jsonObject.getBoolean("ok")) {
+
+				return true;
+			} else {
+
+				System.err.println("The API returned the following error: " + jsonObject.getString("description"));
+			}
+		} else {
+
+			System.err.println("JSON Response was null, something went wrong...");
+		}
+
+		return false;
 	}
 }
