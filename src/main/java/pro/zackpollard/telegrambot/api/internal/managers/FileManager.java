@@ -1,10 +1,15 @@
 package pro.zackpollard.telegrambot.api.internal.managers;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,11 +19,14 @@ import java.util.Map;
 public class FileManager {
 
 	private static MessageDigest md5Digest;
+	private static File tmpDirectory;
 	private final Map<String, String> checksumIDs;
+	private final Map<String, String> urlCache;
 
 	public FileManager() {
 
 		this.checksumIDs = new HashMap<>();
+		this.urlCache = new HashMap<>();
 
 		if (md5Digest == null) {
 
@@ -92,5 +100,34 @@ public class FileManager {
 		}
 
 		return checksum;
+	}
+
+	public File getFile(URL url) {
+
+        String path = this.urlCache.get(url.getPath());
+
+        return path != null ? new File(path) : null;
+	}
+
+	public void cacheUrl(URL url, File file) {
+		this.urlCache.put(url.getPath(), file.getAbsolutePath());
+	}
+
+	public static File getTemporaryFolder() {
+		return tmpDirectory;
+	}
+
+	static {
+		try {
+			File jarDir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+			tmpDirectory = new File(jarDir, "tmp");
+			tmpDirectory.mkdirs();
+
+			File[] contents = tmpDirectory.listFiles();
+			if (contents != null) {
+				Arrays.stream(contents).forEach(FileUtils::deleteQuietly);
+			}
+		} catch (URISyntaxException ignored) {
+		}
 	}
 }
