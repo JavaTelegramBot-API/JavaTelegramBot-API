@@ -118,6 +118,7 @@ public class FileManager {
 		try {
 			File jarDir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
 			tmpDirectory = new File(jarDir, "tmp");
+			tmpDirectory.mkdirs();
 			// In case the JVM is not nice enough to delete our files
 			File[] contents = tmpDirectory.listFiles();
 			if (contents != null) {
