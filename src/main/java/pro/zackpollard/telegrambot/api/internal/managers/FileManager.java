@@ -103,7 +103,10 @@ public class FileManager {
 	}
 
 	public File getFile(URL url) {
-		return new File(this.urlCache.get(url.getPath()));
+
+        String path = this.urlCache.get(url.getPath());
+
+        return path != null ? new File(path) : null;
 	}
 
 	public void cacheUrl(URL url, File file) {
