@@ -49,6 +49,6 @@ public enum FileExtension {
         if (index > 0) {
             mimeType = mimeType.substring(0, index);
         }
-        return Optional.of(FileExtension.byMimeType.get(mimeType)).map(FileExtension::getExtension).orElse(null);
+        return Optional.ofNullable(FileExtension.byMimeType.get(mimeType)).map(FileExtension::getExtension).orElse(null);
     }
 }
