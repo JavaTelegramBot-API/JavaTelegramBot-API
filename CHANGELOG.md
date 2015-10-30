@@ -1,4 +1,8 @@
 # Changelog
+#### Version 0.3.0
+* Supported downloading files from URL for sending in messages.
+  * Added InputFile(URL url) to support this.
+  * Automatic cacheing of downloaded files is implemented.
 #### Version 0.2.5
 * Added in more error handling to stop Exceptions being thrown when sending Photo/Audio/Document/Sticker/Video/Voice message types and the sending fails for some reason.
 
