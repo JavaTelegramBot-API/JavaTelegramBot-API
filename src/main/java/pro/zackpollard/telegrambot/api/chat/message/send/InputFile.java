@@ -12,7 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 /**
  * @author Zack Pollard
@@ -38,10 +40,10 @@ public class InputFile {
 						extension = null; // Default to .tmp if there was no valid extension
 					}
 				}
-				file = File.createTempFile("jtb-"+System.currentTimeMillis(), extension, FileManager.getTemporaryFolder());
+				file = File.createTempFile("jtb-"+System.currentTimeMillis(), "." + extension, FileManager.getTemporaryFolder());
 				file.deleteOnExit();
 				TelegramBot.getFileManager().cacheUrl(url, file);
-				Files.copy(response.getRawBody(), file.toPath());
+				Files.copy(response.getRawBody(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			} catch (UnirestException | IOException ex) {
 				ex.printStackTrace();
 			}
