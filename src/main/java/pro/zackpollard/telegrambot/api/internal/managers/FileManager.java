@@ -21,7 +21,7 @@ public class FileManager {
 	private static MessageDigest md5Digest;
 	private static File tmpDirectory;
 	private final Map<String, String> checksumIDs;
-	private final Map<URL, File> urlCache;
+	private final Map<String, String> urlCache;
 
 	public FileManager() {
 
@@ -103,11 +103,11 @@ public class FileManager {
 	}
 
 	public File getFile(URL url) {
-		return this.urlCache.get(url);
+		return new File(this.urlCache.get(url.getPath()));
 	}
 
 	public void cacheUrl(URL url, File file) {
-		this.urlCache.put(url, file);
+		this.urlCache.put(url.getPath(), file.getAbsolutePath());
 	}
 
 	public static File getTemporaryFolder() {
@@ -119,7 +119,7 @@ public class FileManager {
 			File jarDir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
 			tmpDirectory = new File(jarDir, "tmp");
 			tmpDirectory.mkdirs();
-			// In case the JVM is not nice enough to delete our files
+
 			File[] contents = tmpDirectory.listFiles();
 			if (contents != null) {
 				Arrays.stream(contents).forEach(FileUtils::deleteQuietly);
