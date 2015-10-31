@@ -101,36 +101,43 @@ public class RequestUpdatesManager extends UpdateManager {
                                 }
                             }
 
-                            eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
+                            try {
 
-                            switch (update.getMessage().getContent().getType()) {
+                                eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
-                                case AUDIO: eventManager.callEvent(new AudioMessageReceivedEvent(update.getMessage())); break;
-                                case CONTACT: eventManager.callEvent(new ContactMessageReceivedEvent(update.getMessage())); break;
-                                case DELETE_CHAT_PHOTO: eventManager.callEvent(new DeleteGroupChatPhotoEvent(update.getMessage())); break;
-                                case DOCUMENT: eventManager.callEvent(new DocumentMessageReceivedEvent(update.getMessage())); break;
-                                case LOCATION: eventManager.callEvent(new LocationMessageReceivedEvent(update.getMessage())); break;
-                                case NEW_CHAT_TITLE: eventManager.callEvent(new NewGroupChatTitleEvent(update.getMessage())); break;
-                                case NEW_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage())); break;
-                                case PHOTO: eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage())); break;
-                                case STICKER: eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage())); break;
-                                case TEXT: {
+                                switch (update.getMessage().getContent().getType()) {
 
-                                    if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
+                                    case AUDIO: eventManager.callEvent(new AudioMessageReceivedEvent(update.getMessage())); break;
+                                    case CONTACT: eventManager.callEvent(new ContactMessageReceivedEvent(update.getMessage())); break;
+                                    case DELETE_CHAT_PHOTO: eventManager.callEvent(new DeleteGroupChatPhotoEvent(update.getMessage())); break;
+                                    case DOCUMENT: eventManager.callEvent(new DocumentMessageReceivedEvent(update.getMessage())); break;
+                                    case LOCATION: eventManager.callEvent(new LocationMessageReceivedEvent(update.getMessage())); break;
+                                    case NEW_CHAT_TITLE: eventManager.callEvent(new NewGroupChatTitleEvent(update.getMessage())); break;
+                                    case NEW_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage())); break;
+                                    case PHOTO: eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage())); break;
+                                    case STICKER: eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage())); break;
+                                    case TEXT: {
 
-                                        eventManager.callEvent(new CommandMessageReceivedEvent(update.getMessage()));
-                                    } else {
+                                        if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
 
-                                        eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage()));
+                                            eventManager.callEvent(new CommandMessageReceivedEvent(update.getMessage()));
+                                        } else {
+
+                                            eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage()));
+                                        }
+
+                                        break;
                                     }
-
-                                    break;
+                                    case VIDEO: eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage())); break;
+                                    case VOICE: eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage())); break;
+                                    case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;
+                                    case LEFT_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage())); break;
+                                    case NEW_CHAT_PHOTO: eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage())); break;
                                 }
-                                case VIDEO: eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage())); break;
-                                case VOICE: eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage())); break;
-                                case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;
-                                case LEFT_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage())); break;
-                                case NEW_CHAT_PHOTO: eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage())); break;
+                            } catch (Exception e) {
+
+                                System.err.println("An error occurred during an event, check the stacktrace below for a more detailed error.");
+                                e.printStackTrace();
                             }
                         }
 
