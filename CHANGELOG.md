@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.3.1
+* Bugfix: Catch any errors that occur during events as to not break incoming updates.
+
 #### Version 0.3.0
 * Supported downloading files from URL for sending in messages.
   * Added InputFile(URL url) to support this.
