@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.Getter;
+import org.apache.commons.io.FilenameUtils;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.internal.FileExtension;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
@@ -25,6 +26,8 @@ public class InputFile {
 	private final String fileID;
 	@Getter
 	private final File file;
+    @Getter
+    private final String fileName;
 
 	public InputFile(URL url) {
 
@@ -48,19 +51,22 @@ public class InputFile {
 				ex.printStackTrace();
 			}
 		}
-		this.file = file;
+        this.fileName = FilenameUtils.getBaseName(url.toString()) + "." + FilenameUtils.getExtension(url.toString());
+        this.file = file;
 		this.fileID = TelegramBot.getFileManager().getFileID(file);
 	}
 
 	public InputFile(File file) {
 
 		this.file = file;
+        this.fileName = file.getName();
 		this.fileID = TelegramBot.getFileManager().getFileID(file);
 	}
 
 	public InputFile(String fileID) {
 
 		this.file = null;
+        this.fileName = null;
 		this.fileID = fileID;
 	}
 }

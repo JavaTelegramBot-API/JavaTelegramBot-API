@@ -20,6 +20,7 @@ import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
+import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
@@ -154,7 +155,7 @@ public final class TelegramBot {
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendPhoto")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("photo", photoMessage.getPhoto().getFileID() != null ? photoMessage.getPhoto().getFileID() : photoMessage.getPhoto().getFile(), photoMessage.getPhoto().getFileID() == null);
+							.field("photo", photoMessage.getPhoto().getFileID() != null ? photoMessage.getPhoto().getFileID() : new FileContainer(photoMessage.getPhoto()), photoMessage.getPhoto().getFileID() == null);
 
 					if (photoMessage.getCaption() != null)
 						request.field("caption", photoMessage.getCaption(), "application/json");
@@ -202,7 +203,7 @@ public final class TelegramBot {
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendAudio")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : audioMessage.getAudio().getFile(), audioMessage.getAudio().getFileID() == null);
+							.field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
 
 					processReplyContent(request, audioMessage);
 
@@ -245,7 +246,7 @@ public final class TelegramBot {
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendDocument")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : documentMessage.getDocument().getFile(), documentMessage.getDocument().getFileID() == null);
+							.field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
 
 					processReplyContent(request, documentMessage);
 
@@ -273,7 +274,7 @@ public final class TelegramBot {
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendSticker")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : stickerMessage.getSticker().getFile(), stickerMessage.getSticker().getFileID() == null);
+							.field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
 
 					processReplyContent(request, stickerMessage);
 
@@ -301,7 +302,7 @@ public final class TelegramBot {
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVideo")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : videoMessage.getVideo().getFile(), videoMessage.getVideo().getFileID() == null);
+							.field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : new FileContainer(videoMessage.getVideo()), videoMessage.getVideo().getFileID() == null);
 
 					if (videoMessage.getCaption() != null)
 						request.field("caption", videoMessage.getCaption(), "application/json");
@@ -331,7 +332,7 @@ public final class TelegramBot {
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVoice")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : voiceMessage.getVoice().getFile(), voiceMessage.getVoice().getFileID() == null);
+							.field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
 
 					processReplyContent(request, voiceMessage);
 
