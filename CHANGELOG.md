@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.3.2
+* Bugfix: Force telegram to use the correct filename for files downloaded through this API.
+
 #### Version 0.3.1
 * Bugfix: Catch any errors that occur during events as to not break incoming updates.
 
