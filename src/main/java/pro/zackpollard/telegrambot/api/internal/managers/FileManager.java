@@ -118,16 +118,7 @@ public class FileManager {
 	}
 
 	static {
-		try {
-			File jarDir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-			tmpDirectory = new File(jarDir, "tmp");
-			tmpDirectory.mkdirs();
-
-			File[] contents = tmpDirectory.listFiles();
-			if (contents != null) {
-				Arrays.stream(contents).forEach(FileUtils::deleteQuietly);
-			}
-		} catch (URISyntaxException ignored) {
-		}
+        tmpDirectory = new File(System.getProperty("java.io.tmpdir"), "jtelegrambot-" + System.currentTimeMillis());
+        tmpDirectory.mkdirs();
 	}
 }
