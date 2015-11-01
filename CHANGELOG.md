@@ -1,4 +1,8 @@
 # Changelog
+#### Version 0.3.3
+* Bugfix: Change URL InputFiles download location to the system temporary file directory to fix issues with detecting jar folder when using the API.
+  * Will make the temp folder configurable in future versions.
+
 #### Version 0.3.2
 * Bugfix: Force telegram to use the correct filename for files downloaded through this API.
 
