@@ -1,4 +1,9 @@
 # Changelog
+#### Version 0.4.0
+* Feature: Added ability to use markdown in messages as specified in the API here https://core.telegram.org/bots/api#using-markdown
+  * You can do this for SendableTextMessage's by setting the parse mode to ParseMode.MARKDOWN.
+  * This feature is currently only supported by a few clients such as the android client, desktop client does not have support just yet.
+
 #### Version 0.3.3
 * Bugfix: Change URL InputFiles download location to the system temporary file directory to fix issues with detecting jar folder when using the API.
   * Will make the temp folder configurable in future versions.
