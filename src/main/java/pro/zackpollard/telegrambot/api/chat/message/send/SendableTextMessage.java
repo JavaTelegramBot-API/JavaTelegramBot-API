@@ -24,6 +24,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions {
 	private final boolean disableWebPagePreview;
 	@Getter
 	private final ReplyMarkup replyMarkup;
+    @Getter
+    private final ParseMode parseMode;
 
 	@Override
 	public MessageType getType() {

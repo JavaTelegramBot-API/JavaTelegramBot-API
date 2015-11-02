@@ -119,7 +119,8 @@ public final class TelegramBot {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendMessage")
 							.field("chat_id", chat.getId(), "application/json")
 							.field("text", textMessage.getMessage(), "application/json")
-							.field("disable_web_page_preview", textMessage.isDisableWebPagePreview());
+							.field("disable_web_page_preview", textMessage.isDisableWebPagePreview())
+                            .field("parse_mode", textMessage.getParseMode().getModeName());
 
 					processReplyContent(request, textMessage);
 
