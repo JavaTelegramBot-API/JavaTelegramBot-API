@@ -120,7 +120,7 @@ public final class TelegramBot {
 							.field("chat_id", chat.getId(), "application/json")
 							.field("text", textMessage.getMessage(), "application/json")
 							.field("disable_web_page_preview", textMessage.isDisableWebPagePreview())
-                            .field("parse_mode", textMessage.getParseMode().getModeName());
+                            .field("parse_mode", textMessage.getParseMode() != null ? textMessage.getParseMode().getModeName() : ParseMode.NONE);
 
 					processReplyContent(request, textMessage);
 
