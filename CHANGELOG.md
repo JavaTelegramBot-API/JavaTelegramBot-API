@@ -1,6 +1,7 @@
 # Changelog
 #### Version 0.4.1
 * Bugfix: In version 0.4.0 sending any messages without specifying the parse mode would result in a NullPointerException, this has now been corrected.
+
 #### Version 0.4.0
 * Feature: Added ability to use markdown in messages as specified in the API here https://core.telegram.org/bots/api#using-markdown
   * You can do this for SendableTextMessage's by setting the parse mode to ParseMode.MARKDOWN.
