@@ -29,7 +29,7 @@ public class MyBot {
 }
 
 //Listener class
-public class MyListener implements Listener() {
+public class MyListener implements Listener {
 
     public void onTextMessageReceived(TextMessageReceivedEvent event) {
 
