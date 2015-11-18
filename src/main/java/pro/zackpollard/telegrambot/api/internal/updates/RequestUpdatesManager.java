@@ -6,6 +6,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.event.chat.*;
@@ -54,12 +55,12 @@ public class RequestUpdatesManager extends UpdateManager {
 
             while (true) {
 
-                HttpResponse<JsonNode> response = null;
+                HttpResponse<String> response = null;
 
                 try {
                     response = Unirest.post(requestUpdatesManager.getTelegramBot().getBotAPIUrl() + "getUpdates")
                             .field("offset", offset + 1, "application/json")
-                            .field("timeout", 10).asJson();
+                            .field("timeout", 10).asString();
                 } catch (UnirestException e) {
                     System.err.println("There was a connection error when trying to retrieve updates, waiting for 1 second and then trying again.");
                     System.err.println(e.getLocalizedMessage());
@@ -82,9 +83,20 @@ public class RequestUpdatesManager extends UpdateManager {
 
                 if (response != null && response.getStatus() == 200) {
 
-                    if (response.getBody().getObject().getBoolean("ok")) {
+                    JSONObject jsonResponse;
 
-                        JSONArray updates = response.getBody().getObject().getJSONArray("result");
+                    try {
+
+                        jsonResponse = new JSONObject(response.getBody());
+                    } catch (JSONException e) {
+
+                        System.err.println("API didn't return a JSON response. Response content was: " + response.getBody());
+                        continue;
+                    }
+
+                    if (jsonResponse.getBoolean("ok")) {
+
+                        JSONArray updates = jsonResponse.getJSONArray("result");
 
                         for (int i = 0; i < updates.length(); ++i) {
 
@@ -145,8 +157,8 @@ public class RequestUpdatesManager extends UpdateManager {
                             offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
                     } else {
 
-						System.err.println("The API returned the following error: " + response.getBody().getObject().getString("description"));
-					}
+                        System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
+                    }
                 }
 
                 try {

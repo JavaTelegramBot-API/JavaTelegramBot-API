@@ -38,7 +38,7 @@ public class InputFile {
 				HttpResponse<InputStream> response = Unirest.get(stringifiedUrl).asBinary();
 				String extension = FileExtension.getByMimeType(response.getHeaders().getFirst("content-type"));
 				if (extension == null) {
-					extension = stringifiedUrl.substring(stringifiedUrl.lastIndexOf('.') + 1);
+					extension = FilenameUtils.getExtension(url.toString());
 					if (extension.length() > 4) {
 						extension = null; // Default to .tmp if there was no valid extension
 					}
