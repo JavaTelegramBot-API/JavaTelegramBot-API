@@ -1,4 +1,8 @@
 # Changelog
+#### Version 0.4.3
+* Bugfix: Proper handling for occasions were the API returns non-json responses.
+* Bugfix: Fixed an issue where URL InputFiles would not send correctly due to variables at the end of the URL.
+
 #### Version 0.4.1
 * Bugfix: In version 0.4.0 sending any messages without specifying the parse mode would result in a NullPointerException, this has now been corrected.
 
