@@ -32,13 +32,15 @@ public class InputFile {
 	public InputFile(URL url) {
 
 		File file = TelegramBot.getFileManager().getFile(url);
+        String extension = null;
 		if (file == null) {
 			try {
 				String stringifiedUrl = url.toExternalForm();
 				HttpResponse<InputStream> response = Unirest.get(stringifiedUrl).asBinary();
-				String extension = FileExtension.getByMimeType(response.getHeaders().getFirst("content-type"));
+				extension = FileExtension.getByMimeType(response.getHeaders().getFirst("content-type"));
 				if (extension == null) {
-					extension = FilenameUtils.getExtension(url.toString());
+					extension = stringifiedUrl.substring(stringifiedUrl.lastIndexOf('.') + 1);
+                    extension = extension.substring(0, extension.indexOf('?'));
 					if (extension.length() > 4) {
 						extension = null; // Default to .tmp if there was no valid extension
 					}
@@ -51,7 +53,7 @@ public class InputFile {
 				ex.printStackTrace();
 			}
 		}
-        this.fileName = FilenameUtils.getBaseName(url.toString()) + "." + FilenameUtils.getExtension(url.toString());
+        this.fileName = FilenameUtils.getBaseName(url.toString()) + "." + extension;
         this.file = file;
 		this.fileID = TelegramBot.getFileManager().getFileID(file);
 	}
