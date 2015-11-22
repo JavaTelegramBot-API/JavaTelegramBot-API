@@ -226,17 +226,23 @@ public final class TelegramBot {
 				//Audio cacheing to FileManager
 				if (audioMessage.getAudio().getFile() != null && messageResponse != null) {
 
-					if (messageResponse.getContent().getType().equals(ContentType.AUDIO)) {
+                    String fileID;
 
-						Audio audio = ((AudioContent) messageResponse.getContent()).getContent();
+					switch (messageResponse.getContent().getType()) {
 
-						fileManager.cacheFileID(audioMessage.getAudio().getFile(), audio.getFileId());
-					} else if (messageResponse.getContent().getType().equals(ContentType.VOICE)) {
+                        case AUDIO:
+                            fileID = ((AudioContent) messageResponse.getContent()).getContent().getFileId();
+                            break;
+                        case VOICE:
 
-						Voice voice = ((VoiceContent) messageResponse.getContent()).getContent();
+                            fileID = ((VoiceContent) messageResponse.getContent()).getContent().getFileId();
+                            break;
+                        default:
+                            System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when an audio type was sent, this is not supported by this API, please create an issue on github or message @zackpollard on telegram.");
+                            return null;
+                    }
 
-						fileManager.cacheFileID(audioMessage.getAudio().getFile(), voice.getFileId());
-					}
+                    fileManager.cacheFileID(audioMessage.getAudio().getFile(), fileID);
 				}
 
 				break;
@@ -263,9 +269,22 @@ public final class TelegramBot {
 				//Document cacheing to FileManager
 				if (documentMessage.getDocument().getFile() != null && messageResponse != null) {
 
-					Document document = ((DocumentContent) messageResponse.getContent()).getContent();
+                    String fileID;
 
-					fileManager.cacheFileID(documentMessage.getDocument().getFile(), document.getFileId());
+                    switch(messageResponse.getContent().getType()) {
+
+                        case AUDIO:
+                            fileID = ((AudioContent) messageResponse.getContent()).getContent().getFileId();
+                            break;
+                        case DOCUMENT:
+                            fileID = ((DocumentContent) messageResponse.getContent()).getContent().getFileId();
+                            break;
+                        default:
+                            System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a document type was sent, this is not supported by this API, please create an issue on github or message @zackpollard on telegram.");
+                            return null;
+                    }
+
+					fileManager.cacheFileID(documentMessage.getDocument().getFile(), fileID);
 				}
 
 				break;
