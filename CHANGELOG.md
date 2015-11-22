@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.4.4
+* Bugfix: Sometimes when sending a document, the API will return an audio message if it detects the sent file was MPEG-3 format.
+
 #### Version 0.4.3
 * Bugfix: Proper handling for occasions were the API returns non-json responses.
 * Bugfix: Fixed an issue where URL InputFiles would not send correctly due to variables at the end of the URL.
