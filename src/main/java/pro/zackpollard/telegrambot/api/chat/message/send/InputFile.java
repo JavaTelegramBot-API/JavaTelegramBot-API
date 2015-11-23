@@ -40,7 +40,10 @@ public class InputFile {
 				extension = FileExtension.getByMimeType(response.getHeaders().getFirst("content-type"));
 				if (extension == null) {
 					extension = stringifiedUrl.substring(stringifiedUrl.lastIndexOf('.') + 1);
-                    extension = extension.substring(0, extension.indexOf('?'));
+
+                    int variableIndex = extension.indexOf('?');
+                    if(variableIndex > 0) extension = extension.substring(0, variableIndex);
+
 					if (extension.length() > 4) {
 						extension = null; // Default to .tmp if there was no valid extension
 					}
