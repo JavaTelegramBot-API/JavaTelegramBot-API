@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.4.5
+* Bugfix: When sending a file via URL without GET variables in the URL, the API would throw an error.
+
 #### Version 0.4.4
 * Bugfix: Sometimes when sending a document, the API will return an audio message if it detects the sent file was MPEG-3 format.
 
