@@ -61,6 +61,21 @@ public final class TelegramBot {
 
 		return new TelegramBot(authToken);
 	}
+	
+	/**
+	 * Use this method to get a new TelegramBot instance with the selected auth token that automatically starts listening to messages.
+	 *
+	 * @param authToken The bots auth token.
+	 * @param startUpdates Process old messages or not.
+	 * @return A new TelegramBot instance to base your bot around.
+	 */
+	public static TelegramBot login (String authToken, boolean startUpdates) {
+		
+		TelegramBot bot = new TelegramBot(authToken);
+		bot.startUpdates(startUpdates);
+		
+		return bot;
+	}
 
 	public static Chat getChat(int chatID) {
 
