@@ -17,6 +17,10 @@ public class MyBot {
     public MyBot() {
     
         TelegramBot telegramBot = TelegramBot.login("APIKey");
+       
+        The API key was invalid, an error will have also been printed into the console.
+        if(telegramBot == null) System.exit(-1);
+        
         telegramBot.getEventsManager().register(new MyListener());
         
         //This will tell the API to start polling the servers for updates

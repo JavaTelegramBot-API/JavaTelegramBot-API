@@ -3,9 +3,9 @@ package pro.zackpollard.telegrambot.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.HttpRequestWithBody;
 import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
 import org.json.JSONException;
@@ -14,7 +14,10 @@ import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.*;
-import pro.zackpollard.telegrambot.api.chat.message.content.type.*;
+import pro.zackpollard.telegrambot.api.chat.message.content.type.PhotoSize;
+import pro.zackpollard.telegrambot.api.chat.message.content.type.Sticker;
+import pro.zackpollard.telegrambot.api.chat.message.content.type.Video;
+import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
 import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
@@ -22,9 +25,9 @@ import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
-import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
+import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
@@ -44,9 +47,20 @@ public final class TelegramBot {
 	private final ListenerRegistry listenerRegistry;
 	private UpdateManager updateManager = null;
 
-	private TelegramBot(String authToken) {
+    @Getter
+    private final int botID;
+    @Getter
+    private final String botName;
+    @Getter
+    private final String botUsername;
+
+	private TelegramBot(String authToken, int botID, String botName, String botUsername) {
 
 		this.authToken = authToken;
+        this.botID = botID;
+        this.botName = botName;
+        this.botUsername = botUsername;
+
 		listenerRegistry = ListenerRegistryImpl.getNewInstance();
 	}
 
@@ -59,7 +73,23 @@ public final class TelegramBot {
 
 	public static TelegramBot login(String authToken) {
 
-		return new TelegramBot(authToken);
+        try {
+
+            HttpRequestWithBody request = Unirest.post(API_URL + "bot" + authToken + "/getMe");
+            HttpResponse<String> response = request.asString();
+            JSONObject jsonResponse = processResponse(response);
+
+            if(jsonResponse != null && checkResponseStatus(jsonResponse)) {
+
+                JSONObject result = jsonResponse.getJSONObject("result");
+
+                return new TelegramBot(authToken, result.getInt("id"), result.getString("first_name"), result.getString("username"));
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return null;
 	}
 
 	public static Chat getChat(int chatID) {
@@ -427,7 +457,7 @@ public final class TelegramBot {
 		return listenerRegistry;
 	}
 
-    private JSONObject processResponse(HttpResponse<String> response) {
+    private static JSONObject processResponse(HttpResponse<String> response) {
 
         if(response != null) {
 
@@ -442,14 +472,28 @@ public final class TelegramBot {
                 }
             } else {
 
-                System.err.println("The API returned error code " + response.getStatus());
+                JSONObject jsonResponse = null;
+
+                try {
+
+                    jsonResponse = new JSONObject(response.getBody());
+                } catch(JSONException e) {
+                }
+
+                if(jsonResponse != null) {
+
+                    System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
+                } else {
+
+                    System.err.println("The API returned error code " + response.getStatus());
+                }
             }
         }
 
         return null;
     }
 
-	private void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
+	private static void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
 
 		if (replyingOptions.getReplyTo() != null)
 			multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo().getMessageId());
@@ -470,7 +514,7 @@ public final class TelegramBot {
 		}
 	}
 
-	private boolean checkResponseStatus(JSONObject jsonResponse) {
+	private static boolean checkResponseStatus(JSONObject jsonResponse) {
 
 		if(jsonResponse != null) {
 
