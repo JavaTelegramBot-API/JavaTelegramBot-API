@@ -1,4 +1,9 @@
 # Changelog
+#### Version 0.5
+* Provided API key is now checked to see if it's invalid.
+  * TelegramBot.login(String key) will return null if the key is invalid and will print an error to the console.
+* Bugfix: When the API returns a status code other than 200, the bot will print out a more detailed error if one is available.
+
 #### Version 0.4.5
 * Bugfix: When sending a file via URL without GET variables in the URL, the API would throw an error.
 
