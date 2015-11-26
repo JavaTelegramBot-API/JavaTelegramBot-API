@@ -56,6 +56,7 @@ Maven is used for dependency management and deployment.
 </dependencies>
 ```
 ### CI Builds
+You shouldn't use this, you should be using maven, but if you really need to it is there. Any build there would have however been pushed to maven central already.
 Latest Release Build [![Build Status](http://ci.zackpollard.pro/job/JavaTelegramBot-API/badge/icon)](http://ci.zackpollard.pro/job/JavaTelegram-Bot-API/)
 
 ## Licensing
