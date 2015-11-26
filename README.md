@@ -56,8 +56,7 @@ Maven is used for dependency management and deployment.
 </dependencies>
 ```
 ### CI Builds
-Latest Release Build [![Build Status](http://ci.zackpollard.pro/job/JavaTelegramBot-API/badge/icon)](http://ci.zackpollard.pro/job/JavaTelegram-Bot-API/)   
-Latest Development Build [![Build Status](http://ci.zackpollard.pro/job/JavaTelegramBot-API%20Development%20Builds/badge/icon)](http://ci.zackpollard.pro/job/JavaTelegramBot-API%20Development%20Builds/)
+Latest Release Build [![Build Status](http://ci.zackpollard.pro/job/JavaTelegramBot-API/badge/icon)](http://ci.zackpollard.pro/job/JavaTelegram-Bot-API/)
 
 ## Licensing
 
