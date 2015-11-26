@@ -121,7 +121,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
 		 */
 		public ReplyKeyboardMarkupBuilder addRow(List<String> cellValues) {
 
-			keyboard.add(cellValues);
+			keyboard.add(new LinkedList<>(cellValues));
 			return this;
 		}
 
