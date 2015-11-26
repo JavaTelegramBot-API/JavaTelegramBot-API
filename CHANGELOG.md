@@ -1,4 +1,8 @@
 # Changelog
+#### Version 0.5.1
+* Bugfix: If you used ReplyKeyboardMarkup.builder().addRow(List<String> cellValues) duplication of values could occur.
+  * This would happen if the same list was used and cleared for each addRow(List<String>) call that was made.
+  
 #### Version 0.5
 * Provided API key is now checked to see if it's invalid.
   * TelegramBot.login(String key) will return null if the key is invalid and will print an error to the console.
