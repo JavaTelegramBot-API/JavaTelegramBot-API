@@ -1,4 +1,9 @@
 # Changelog
+#### Version 0.6
+* Added support for supergroups.
+  * Extra ChatType in Chat object.
+  * Extra fields (Content Types) in the Message object.
+  
 #### Version 0.5.1
 * Bugfix: If you used ReplyKeyboardMarkup.builder().addRow(List<String> cellValues) duplication of values could occur.
   * This would happen if the same list was used and cleared for each addRow(List<String>) call that was made.
