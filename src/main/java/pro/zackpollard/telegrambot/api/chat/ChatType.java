@@ -7,5 +7,6 @@ public enum ChatType {
 
     PRIVATE,
     GROUP,
-    CHANNEL
+    CHANNEL,
+    SUPERGROUP
 }

@@ -35,9 +35,9 @@ public class MessageImpl implements Message {
 		forward_date = jsonObject.optInt("forward_date");
 		reply_to_message = MessageImpl.createMessage(jsonObject.optJSONObject("reply_to_message"));
 		content = ContentImpl.createContent(jsonObject);
-	}
+    }
 
-	public static Message createMessage(JSONObject jsonObject) {
+    public static Message createMessage(JSONObject jsonObject) {
 
 		return jsonObject != null ? new MessageImpl(jsonObject) : null;
 	}

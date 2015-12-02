@@ -12,7 +12,8 @@ public class ContentImpl {
 			"text", "audio", "document", "photo", "sticker",
 			"video", "voice", "contact", "location", "new_chat_participant",
 			"left_chat_participant", "new_chat_title", "new_chat_photo",
-			"delete_chat_photo", "group_chat_created"
+			"delete_chat_photo", "group_chat_created", "supergroup_chat_created",
+            "channel_chat_created", "migrate_to_chat_id", "migrate_from_chat_id"
 	};
 
 	public static Content createContent(JSONObject jsonObject) {
@@ -76,6 +77,18 @@ public class ContentImpl {
 				case "group_chat_created":
 
 					return GroupChatCreatedContentImpl.createGroupChatCreatedContent();
+                case "supergroup_chat_created":
+
+                    return SuperGroupChatCreatedContentImpl.createSuperGroupChatCreatedContent();
+                case "channel_chat_created":
+
+                    return ChannelChatCreatedContentImpl.createChannelChatCreatedContent();
+                case "migrate_to_chat_id":
+
+                    return MigrateToChatIDContentImpl.createMigrateToChatIDContent(jsonObject.getLong("migrate_to_chat_id"));
+                case "migrate_from_chat_id":
+
+                    return MigrateFromChatIDContentImpl.createMigrateFromChatIDContent(jsonObject.getLong("migrate_from_chat_id"));
 			}
 		}
 
