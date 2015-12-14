@@ -1,4 +1,12 @@
 # Changelog
+#### Version 0.6.1
+* Added events for new Message types that were implemented
+  * ChannelChatCreatedEvent
+  * MigrateFromChatEvent
+  * MigrateToChatEvent
+  * SuperGroupChatCreatedEvent
+* Added in TelegramBot.getChat(long chatID) to replace TelegramBot.getChat(int chatID) which has now been deprecated
+
 #### Version 0.6
 * Added support for supergroups.
   * Extra ChatType in Chat object.
