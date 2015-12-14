@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>pro.zackpollard.telegrambot.api</groupId>
     <artifactId>jtelegram-botapi</artifactId>
-    <version>0.6.1</version>
+    <version>0.6.2</version>
     <packaging>jar</packaging>
 
     <name>Java Telegram Bot API</name>

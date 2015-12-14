@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.6.2
+* Bugfix: SuperGrouChat objects were broken when receiving messages due to hitting the integer limit at one point down the chain
+
 #### Version 0.6.1
 * Added events for new Message types that were implemented
   * ChannelChatCreatedEvent
