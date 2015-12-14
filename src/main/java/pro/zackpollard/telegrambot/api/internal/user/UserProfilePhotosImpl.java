@@ -47,7 +47,7 @@ public class UserProfilePhotosImpl implements UserProfilePhotos {
 				.toArray(PhotoSize[][]::new);
 	}
 
-	public static UserProfilePhotos createUserProfilePhotos(int user_id, TelegramBot telegramBot) {
+	public static UserProfilePhotos createUserProfilePhotos(long user_id, TelegramBot telegramBot) {
 
 		try {
 			return new UserProfilePhotosImpl(Unirest.post(TelegramBot.API_URL + "getUserProfilePhotos")

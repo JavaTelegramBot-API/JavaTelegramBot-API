@@ -11,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
  */
 public class SuperGroupChatImpl implements GroupChat {
 
-	private final int id;
+	private final long id;
 	private final String title;
 
 	private SuperGroupChatImpl(JSONObject jsonObject) {
@@ -20,7 +20,7 @@ public class SuperGroupChatImpl implements GroupChat {
 		this.title = jsonObject.getString("title");
 	}
 
-	private SuperGroupChatImpl(int chatID) {
+	private SuperGroupChatImpl(long chatID) {
 
 		this.id = chatID;
 		this.title = null;
@@ -31,7 +31,7 @@ public class SuperGroupChatImpl implements GroupChat {
 		return new SuperGroupChatImpl(jsonObject);
 	}
 
-	public static GroupChat createSuperGroupChat(int chatID) {
+	public static GroupChat createSuperGroupChat(long chatID) {
 
 		return new SuperGroupChatImpl(chatID);
 	}

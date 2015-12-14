@@ -23,6 +23,7 @@ import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
 import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
+import pro.zackpollard.telegrambot.api.internal.chat.SuperGroupChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
@@ -92,6 +93,7 @@ public final class TelegramBot {
         return null;
 	}
 
+    @Deprecated
 	public static Chat getChat(int chatID) {
 
 		if (chatID < 0) {
@@ -102,6 +104,24 @@ public final class TelegramBot {
 			return IndividualChatImpl.createIndividualChat(chatID);
 		}
 	}
+
+    public static Chat getChat(long chatID) {
+
+        if(chatID < 0) {
+
+            /** This is a guess of the starting value of supergroups **/
+            if(chatID > -999999999) {
+
+                return GroupChatImpl.createGroupChat((int) chatID);
+            } else {
+
+                return SuperGroupChatImpl.createSuperGroupChat(chatID);
+            }
+        } else {
+
+            return IndividualChatImpl.createIndividualChat((int) chatID);
+        }
+    }
 
     public static Chat getChat(String chatID) {
 

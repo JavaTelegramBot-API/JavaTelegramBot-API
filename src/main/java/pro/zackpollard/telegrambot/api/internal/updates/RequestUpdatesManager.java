@@ -145,6 +145,10 @@ public class RequestUpdatesManager extends UpdateManager {
                                     case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;
                                     case LEFT_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage())); break;
                                     case NEW_CHAT_PHOTO: eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage())); break;
+                                    case CHANNEL_CHAT_CREATED: eventManager.callEvent(new ChannelChatCreatedEvent(update.getMessage())); break;
+                                    case MIGRATE_FROM_CHAT_ID: eventManager.callEvent(new MigrateFromChatEvent(update.getMessage())); break;
+                                    case MIGRATE_TO_CHAT_ID: eventManager.callEvent(new MigrateToChatEvent(update.getMessage())); break;
+                                    case SUPER_GROUP_CHAT_CREATED: eventManager.callEvent(new SuperGroupChatCreatedEvent(update.getMessage())); break;
                                 }
                             } catch (Exception e) {
 
