@@ -3,20 +3,21 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.GroupChat;
+import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 
 /**
  * @author Zack Pollard
  */
-public class SuperGroupChatImpl implements GroupChat {
+public class SuperGroupChatImpl implements SuperGroupChat {
 
 	private final long id;
 	private final String title;
 
 	private SuperGroupChatImpl(JSONObject jsonObject) {
 
-		this.id = jsonObject.getInt("id");
+		this.id = jsonObject.getLong("id");
 		this.title = jsonObject.getString("title");
 	}
 
@@ -26,12 +27,12 @@ public class SuperGroupChatImpl implements GroupChat {
 		this.title = null;
 	}
 
-	public static GroupChat createSuperGroupChat(JSONObject jsonObject) {
+	public static SuperGroupChat createSuperGroupChat(JSONObject jsonObject) {
 
 		return new SuperGroupChatImpl(jsonObject);
 	}
 
-	public static GroupChat createSuperGroupChat(long chatID) {
+	public static SuperGroupChat createSuperGroupChat(long chatID) {
 
 		return new SuperGroupChatImpl(chatID);
 	}
