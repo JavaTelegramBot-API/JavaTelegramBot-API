@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.6.4
+* Bugfix: Replies would not work on un-cached files
+
 #### Version 0.6.3
 * Adding replies to SendableMessages and ForwardedMessage can be done with IDs as well as with Message objects now
 
