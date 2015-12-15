@@ -1,6 +1,5 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
@@ -8,7 +7,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 public interface ReplyingOptions {
 
-	Message getReplyTo();
+	int getReplyTo();
 
 	ReplyMarkup getReplyMarkup();
 }
