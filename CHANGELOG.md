@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.6.3
+* Adding replies to SendableMessages and ForwardedMessage can be done with IDs as well as with Message objects now
+
 #### Version 0.6.2
 * Bugfix: SuperGrouChat objects were broken when receiving messages due to hitting the integer limit at one point down the chain
 
