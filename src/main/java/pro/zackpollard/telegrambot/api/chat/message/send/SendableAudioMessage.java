@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
+@RequiredArgsConstructor
 public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
 
 	@NonNull
@@ -25,16 +26,6 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
-
-    public SendableAudioMessage(InputFile audio, int duration, String performer, String title, int replyTo, ReplyMarkup replyMarkup) {
-
-        this.audio = audio;
-        this.duration = duration;
-        this.performer = performer;
-        this.title = title;
-        this.replyTo = replyTo;
-        this.replyMarkup = replyMarkup;
-    }
 
     public SendableAudioMessage(InputFile audio, int duration, String performer, String title, Message replyTo, ReplyMarkup replyMarkup) {
 

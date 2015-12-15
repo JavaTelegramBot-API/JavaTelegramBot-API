@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
+@RequiredArgsConstructor
 public class SendableLocationMessage implements SendableMessage, ReplyingOptions {
 
 	@Getter
@@ -22,14 +23,6 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
-
-    public SendableLocationMessage(double latitude, double longitude, int replyTo, ReplyMarkup replyMarkup) {
-
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.replyTo = replyTo;
-        this.replyMarkup = replyMarkup;
-    }
 
     public SendableLocationMessage(double latitude, double longitude, Message replyTo, ReplyMarkup replyMarkup) {
 

@@ -9,6 +9,8 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 /**
  * @author Zack Pollard
  */
+
+@RequiredArgsConstructor
 public class SendableVoiceMessage implements SendableMessage, ReplyingOptions {
 
 	@NonNull
@@ -20,14 +22,6 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions {
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
-
-    SendableVoiceMessage(InputFile voice, int duration, int replyTo, ReplyMarkup replyMarkup) {
-
-        this.voice = voice;
-        this.duration = duration;
-        this.replyTo = replyTo;
-        this.replyMarkup = replyMarkup;
-    }
 
     SendableVoiceMessage(InputFile voice, int duration, Message replyTo, ReplyMarkup replyMarkup) {
 

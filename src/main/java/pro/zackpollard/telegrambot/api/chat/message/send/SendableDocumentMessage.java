@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
+@RequiredArgsConstructor
 public class SendableDocumentMessage implements SendableMessage, ReplyingOptions {
 
 	@NonNull
@@ -19,13 +20,6 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
-
-    public SendableDocumentMessage(InputFile document, int replyTo, ReplyMarkup replyMarkup) {
-
-        this.document = document;
-        this.replyTo = replyTo;
-        this.replyMarkup = replyMarkup;
-    }
 
     public SendableDocumentMessage(InputFile document, Message replyTo, ReplyMarkup replyMarkup) {
 

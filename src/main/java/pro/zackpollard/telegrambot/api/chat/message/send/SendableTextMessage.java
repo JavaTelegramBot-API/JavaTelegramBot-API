@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
+@RequiredArgsConstructor
 public class SendableTextMessage implements SendableMessage, ReplyingOptions {
 
 	@NonNull
@@ -23,15 +24,6 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions {
 	private final ReplyMarkup replyMarkup;
     @Getter
     private final ParseMode parseMode;
-
-    public SendableTextMessage(String message, int replyTo, boolean disableWebPagePreview, ReplyMarkup replyMarkup, ParseMode parseMode) {
-
-        this.message = message;
-        this.replyTo = replyTo;
-        this.disableWebPagePreview = disableWebPagePreview;
-        this.replyMarkup = replyMarkup;
-        this.parseMode = parseMode;
-    }
 
     public SendableTextMessage(String message, Message replyTo, boolean disableWebPagePreview, ReplyMarkup replyMarkup, ParseMode parseMode) {
 

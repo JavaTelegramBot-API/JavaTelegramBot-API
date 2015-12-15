@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
+@RequiredArgsConstructor
 public class SendableVideoMessage implements SendableMessage, ReplyingOptions {
 
 	@NonNull
@@ -23,15 +24,6 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions {
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
-
-    SendableVideoMessage(InputFile video, int duration, String caption, int replyTo, ReplyMarkup replyMarkup) {
-
-        this.video = video;
-        this.duration = duration;
-        this.caption = caption;
-        this.replyTo = replyTo;
-        this.replyMarkup = replyMarkup;
-    }
 
     SendableVideoMessage(InputFile video, int duration, String caption, Message replyTo, ReplyMarkup replyMarkup) {
 

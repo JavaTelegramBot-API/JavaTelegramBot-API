@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
+@RequiredArgsConstructor
 public class SendableStickerMessage implements SendableMessage, ReplyingOptions {
 
 	@NonNull
@@ -19,13 +20,6 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions 
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
-
-    public SendableStickerMessage(InputFile sticker, int replyTo, ReplyMarkup replyMarkup) {
-
-        this.sticker = sticker;
-        this.replyTo = replyTo;
-        this.replyMarkup = replyMarkup;
-    }
 
     public SendableStickerMessage(InputFile sticker, Message replyTo, ReplyMarkup replyMarkup) {
 
