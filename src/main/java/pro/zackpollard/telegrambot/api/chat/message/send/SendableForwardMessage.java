@@ -14,16 +14,14 @@ public class SendableForwardMessage implements SendableMessage {
 
 	@NonNull
 	@Getter
-	private final Integer forwardedMessage;
-
-    SendableForwardMessage(int forwardedMessage) {
-
-        this.forwardedMessage = forwardedMessage;
-    }
+	private final Integer messageID;
+    @NonNull
+    @Getter
+    private final String chatID;
 
     SendableForwardMessage(Message forwardedMessage) {
 
-        this(forwardedMessage != null ? forwardedMessage.getMessageId() : null);
+        this(forwardedMessage != null ? forwardedMessage.getMessageId() : null, forwardedMessage != null ? forwardedMessage.getChat().getId() : null);
     }
 
     public static SendableForwardMessageBuilder builder() {
@@ -37,27 +35,34 @@ public class SendableForwardMessage implements SendableMessage {
 
     public static class SendableForwardMessageBuilder {
 
-        private int forwardedMessage;
+        private Integer messageID;
+        private String chatID;
 
         SendableForwardMessageBuilder() {
         }
 
         public SendableForwardMessage.SendableForwardMessageBuilder forwardedMessage(Message forwardedMessage) {
-            this.forwardedMessage = forwardedMessage != null ? forwardedMessage.getMessageId() : null;
+            this.messageID = forwardedMessage != null ? forwardedMessage.getMessageId() : null;
+            this.chatID = forwardedMessage != null ? forwardedMessage.getChat().getId() : null;
             return this;
         }
 
-        public SendableForwardMessage.SendableForwardMessageBuilder forwardedMessage(Integer forwardedMessage) {
-            this.forwardedMessage = forwardedMessage;
+        public SendableForwardMessage.SendableForwardMessageBuilder messageID(Integer messageID) {
+            this.messageID = messageID;
+            return this;
+        }
+
+        public SendableForwardMessage.SendableForwardMessageBuilder chatID(String chatID) {
+            this.chatID = chatID;
             return this;
         }
 
         public SendableForwardMessage build() {
-            return new SendableForwardMessage(forwardedMessage);
+            return new SendableForwardMessage(messageID, chatID);
         }
 
         public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableForwardMessage.SendableForwardMessageBuilder(forwardedMessage=" + this.forwardedMessage + ")";
+            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableForwardMessage.SendableForwardMessageBuilder(messageID=" + this.messageID + ", chatID=" + this.chatID + ")";
         }
     }
 }

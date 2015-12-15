@@ -191,8 +191,8 @@ public final class TelegramBot {
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "forwardMessage")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("from_chat_id", forwardMessage.getForwardedMessage().getChat().getId())
-							.field("message_id", forwardMessage.getForwardedMessage().getMessageId());
+							.field("from_chat_id", forwardMessage.getChatID())
+							.field("message_id", forwardMessage.getMessageID());
 
 					response = request.asString();
                     jsonResponse = processResponse(response);
