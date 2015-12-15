@@ -515,8 +515,8 @@ public final class TelegramBot {
 
 	private static void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
 
-		if (replyingOptions.getReplyTo() != null)
-			multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo().getMessageId());
+		if (replyingOptions.getReplyTo() != 0)
+			multipartBody.field("reply_to_message_id", replyingOptions.getReplyTo());
 		if (replyingOptions.getReplyMarkup() != null) {
 
 			switch (replyingOptions.getReplyMarkup().getType()) {
