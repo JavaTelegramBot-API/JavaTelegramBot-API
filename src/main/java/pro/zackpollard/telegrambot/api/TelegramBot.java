@@ -132,18 +132,18 @@ public final class TelegramBot {
 				return ChannelChatImpl.createChannelChat(chatID);
 			} else {
 
-				int intChatID;
+				long longChatID;
 
 				try {
 
-					intChatID = Integer.parseInt(chatID);
+					longChatID = Long.parseLong(chatID);
 				} catch (NumberFormatException e) {
 
 					System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
 					return null;
 				}
 
-				return getChat(intChatID);
+				return getChat(longChatID);
 			}
 		}
 
