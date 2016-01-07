@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.api.chat.message.send;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import pro.zackpollard.telegrambot.api.chat.ParseMode;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 

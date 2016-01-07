@@ -1,4 +1,4 @@
-package pro.zackpollard.telegrambot.api.chat.message.send;
+package pro.zackpollard.telegrambot.api.chat;
 
 /**
  * @author Zack Pollard
