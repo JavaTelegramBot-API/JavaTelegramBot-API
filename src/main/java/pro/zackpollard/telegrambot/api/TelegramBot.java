@@ -11,7 +11,7 @@ import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
-import pro.zackpollard.telegrambot.api.chat.ParseMode;
+import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;

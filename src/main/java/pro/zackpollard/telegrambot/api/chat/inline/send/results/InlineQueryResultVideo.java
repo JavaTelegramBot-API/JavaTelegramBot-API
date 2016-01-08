@@ -2,7 +2,7 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import pro.zackpollard.telegrambot.api.chat.ParseMode;
+import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.net.URL;
