@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.event.chat.*;
+import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.updates.Update;
@@ -104,9 +105,12 @@ public class RequestUpdatesManager extends UpdateManager {
 
                             if (!getPreviousUpdates) {
 
-                                if (update.getMessage().getTimeStamp() < unixTime) {
+                                if (update.getType() == Update.UpdateType.MESSAGE) {
 
-                                    break;
+                                    if(update.getMessage().getTimeStamp() < unixTime) {
+
+                                        break;
+                                    }
                                 } else {
 
                                     getPreviousUpdates = true;
@@ -117,38 +121,86 @@ public class RequestUpdatesManager extends UpdateManager {
 
                                 eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
-                                switch (update.getMessage().getContent().getType()) {
+                                switch (update.getType()) {
 
-                                    case AUDIO: eventManager.callEvent(new AudioMessageReceivedEvent(update.getMessage())); break;
-                                    case CONTACT: eventManager.callEvent(new ContactMessageReceivedEvent(update.getMessage())); break;
-                                    case DELETE_CHAT_PHOTO: eventManager.callEvent(new DeleteGroupChatPhotoEvent(update.getMessage())); break;
-                                    case DOCUMENT: eventManager.callEvent(new DocumentMessageReceivedEvent(update.getMessage())); break;
-                                    case LOCATION: eventManager.callEvent(new LocationMessageReceivedEvent(update.getMessage())); break;
-                                    case NEW_CHAT_TITLE: eventManager.callEvent(new NewGroupChatTitleEvent(update.getMessage())); break;
-                                    case NEW_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage())); break;
-                                    case PHOTO: eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage())); break;
-                                    case STICKER: eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage())); break;
-                                    case TEXT: {
+                                    case MESSAGE:{
 
-                                        if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
+                                        switch (update.getMessage().getContent().getType()) {
 
-                                            eventManager.callEvent(new CommandMessageReceivedEvent(update.getMessage()));
-                                        } else {
+                                            case AUDIO:
+                                                eventManager.callEvent(new AudioMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case CONTACT:
+                                                eventManager.callEvent(new ContactMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case DELETE_CHAT_PHOTO:
+                                                eventManager.callEvent(new DeleteGroupChatPhotoEvent(update.getMessage()));
+                                                break;
+                                            case DOCUMENT:
+                                                eventManager.callEvent(new DocumentMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case LOCATION:
+                                                eventManager.callEvent(new LocationMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case NEW_CHAT_TITLE:
+                                                eventManager.callEvent(new NewGroupChatTitleEvent(update.getMessage()));
+                                                break;
+                                            case NEW_CHAT_PARTICIPANT:
+                                                eventManager.callEvent(new ParticipantJoinGroupChatEvent(update.getMessage()));
+                                                break;
+                                            case PHOTO:
+                                                eventManager.callEvent(new PhotoMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case STICKER:
+                                                eventManager.callEvent(new StickerMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case TEXT: {
 
-                                            eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage()));
+                                                if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
+
+                                                    eventManager.callEvent(new CommandMessageReceivedEvent(update.getMessage()));
+                                                } else {
+
+                                                    eventManager.callEvent(new TextMessageReceivedEvent(update.getMessage()));
+                                                }
+
+                                                break;
+                                            }
+                                            case VIDEO:
+                                                eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case VOICE:
+                                                eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage()));
+                                                break;
+                                            case GROUP_CHAT_CREATED:
+                                                eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage()));
+                                                break;
+                                            case LEFT_CHAT_PARTICIPANT:
+                                                eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage()));
+                                                break;
+                                            case NEW_CHAT_PHOTO:
+                                                eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage()));
+                                                break;
+                                            case CHANNEL_CHAT_CREATED:
+                                                eventManager.callEvent(new ChannelChatCreatedEvent(update.getMessage()));
+                                                break;
+                                            case MIGRATE_FROM_CHAT_ID:
+                                                eventManager.callEvent(new MigrateFromChatEvent(update.getMessage()));
+                                                break;
+                                            case MIGRATE_TO_CHAT_ID:
+                                                eventManager.callEvent(new MigrateToChatEvent(update.getMessage()));
+                                                break;
+                                            case SUPER_GROUP_CHAT_CREATED:
+                                                eventManager.callEvent(new SuperGroupChatCreatedEvent(update.getMessage()));
+                                                break;
                                         }
-
                                         break;
                                     }
-                                    case VIDEO: eventManager.callEvent(new VideoMessageReceivedEvent(update.getMessage())); break;
-                                    case VOICE: eventManager.callEvent(new VoiceMessageReceivedEvent(update.getMessage())); break;
-                                    case GROUP_CHAT_CREATED: eventManager.callEvent(new GroupChatCreatedEvent(update.getMessage())); break;
-                                    case LEFT_CHAT_PARTICIPANT: eventManager.callEvent(new ParticipantLeaveGroupChatEvent(update.getMessage())); break;
-                                    case NEW_CHAT_PHOTO: eventManager.callEvent(new NewGroupChatPhotoEvent(update.getMessage())); break;
-                                    case CHANNEL_CHAT_CREATED: eventManager.callEvent(new ChannelChatCreatedEvent(update.getMessage())); break;
-                                    case MIGRATE_FROM_CHAT_ID: eventManager.callEvent(new MigrateFromChatEvent(update.getMessage())); break;
-                                    case MIGRATE_TO_CHAT_ID: eventManager.callEvent(new MigrateToChatEvent(update.getMessage())); break;
-                                    case SUPER_GROUP_CHAT_CREATED: eventManager.callEvent(new SuperGroupChatCreatedEvent(update.getMessage())); break;
+
+                                    case INLINE_QUERY: {
+
+                                        eventManager.callEvent(new InlineQueryReceivedEvent(update.getInlineQuery()));
+                                    }
                                 }
                             } catch (Exception e) {
 

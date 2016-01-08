@@ -11,6 +11,8 @@ import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
+import pro.zackpollard.telegrambot.api.chat.ParseMode;
+import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.*;
@@ -466,6 +468,34 @@ public final class TelegramBot {
 
 		return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse)) : null;
 	}
+
+    public boolean answerInlineQuery(String inlineQueryId, InlineQueryResponse inlineQueryResponse) {
+
+        if(inlineQueryId != null && inlineQueryResponse != null) {
+
+            HttpResponse<String> response;
+            JSONObject jsonResponse = null;
+            boolean answerResponse = false;
+
+            try {
+                MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerInlineQuery")
+                        .field("inline_query_id", inlineQueryId)
+                        .field("results", GSON.toJson(inlineQueryResponse.getResults()))
+                        .field("cache_time", inlineQueryResponse.getCacheTime())
+                        .field("is_personal", inlineQueryResponse.isPersonal())
+                        .field("next_offset", inlineQueryResponse.getNextOffset());
+
+                response = requests.asString();
+                jsonResponse = processResponse(response);
+
+                System.out.println(jsonResponse.toString());
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
 
 	public void startUpdates(boolean getPreviousUpdates) {
 

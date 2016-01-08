@@ -1,7 +1,11 @@
 package pro.zackpollard.telegrambot.api.internal.updates;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.chat.inline.ChosenInlineResult;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineQuery;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
+import pro.zackpollard.telegrambot.api.internal.chat.inline.ChosenInlineResultImpl;
+import pro.zackpollard.telegrambot.api.internal.chat.inline.InlineQueryImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.updates.Update;
 
@@ -12,11 +16,21 @@ public class UpdateImpl implements Update {
 
 	private final int update_id;
 	private final Message message;
+    private final InlineQuery inline_query;
+    private final ChosenInlineResult chosen_inline_result;
+    private UpdateType updateType;
 
 	private UpdateImpl(JSONObject jsonObject) {
 
 		this.update_id = jsonObject.getInt("update_id");
-		this.message = MessageImpl.createMessage(jsonObject.getJSONObject("message"));
+		this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"));
+        if(message != null) updateType = UpdateType.MESSAGE;
+        this.inline_query = InlineQueryImpl.createInlineQuery(jsonObject.optJSONObject("inline_query"));
+        if(inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
+        this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
+        if(chosen_inline_result != null && updateType == null) updateType = UpdateType.CHOSEN_INLINE_RESULT;
+
+        System.out.println(updateType);
 	}
 
 	public static Update createUpdate(JSONObject jsonObject) {
@@ -35,4 +49,21 @@ public class UpdateImpl implements Update {
 
 		return message;
 	}
+
+    @Override
+    public InlineQuery getInlineQuery() {
+
+        return inline_query;
+    }
+
+    @Override
+    public ChosenInlineResult getChosenInlineResult() {
+
+        return chosen_inline_result;
+    }
+
+    @Override
+    public UpdateType getType() {
+        return updateType;
+    }
 }
