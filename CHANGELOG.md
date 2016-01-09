@@ -1,4 +1,10 @@
 # Changelog
+#### Version 0.7.0
+* Implemented Inline Bot functionality
+  * Implementing this has two simple steps
+    * 1.) Listen to the InlineQueryReceivedEvent
+    * 2.) Use the answer method within this event to reply to the request
+
 #### Version 0.6.5
 * Bugfix: TelegramBot.getChat(String chatID) wasn't accepting supergroup IDs as they are to long for Integer conversion
 
