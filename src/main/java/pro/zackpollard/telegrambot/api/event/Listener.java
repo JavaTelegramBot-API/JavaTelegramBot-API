@@ -2,7 +2,6 @@ package pro.zackpollard.telegrambot.api.event;
 
 import pro.zackpollard.telegrambot.api.event.chat.*;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
-import pro.zackpollard.telegrambot.api.event.chat.inline.InlineResultChosenEvent;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
 
 /**
@@ -47,7 +46,5 @@ public interface Listener {
 	}
 
     default void onInlineQueryReceived(InlineQueryReceivedEvent event) {
-    }
-    default void onInlineResultChosen(InlineResultChosenEvent event) {
     }
 }
