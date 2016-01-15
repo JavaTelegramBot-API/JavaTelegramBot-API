@@ -1,4 +1,9 @@
 # Changelog
+#### Version 0.7.1
+* Implemented extra Inline Bot functionality
+  * Re-implemented the ChosenInlineResult function that was removed from the API spec originally
+    * To use this functionality you must enable it from @BotFather by typing /setinlinefeedback
+
 #### Version 0.7.0
 * Implemented Inline Bot functionality
   * Implementing this has two simple steps
