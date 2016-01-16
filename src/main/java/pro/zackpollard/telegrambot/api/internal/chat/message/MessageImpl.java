@@ -14,6 +14,8 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class MessageImpl implements Message {
 
+    private final JSONObject jsonMessage;
+
 	private final int message_id;
 	private final User from;
 	private final int date;
@@ -26,6 +28,8 @@ public class MessageImpl implements Message {
 	private MessageImpl(JSONObject jsonObject) {
 
 		if(!jsonObject.isNull("result")) jsonObject = jsonObject.getJSONObject("result");
+
+        jsonMessage = jsonObject;
 
 		message_id = jsonObject.getInt("message_id");
 		from = UserImpl.createUser(jsonObject.optJSONObject("from"));
@@ -121,4 +125,14 @@ public class MessageImpl implements Message {
 	public Content getContent() {
 		return content;
 	}
+
+    /**
+     * Gets the JSON object provided by the Telegram API
+     *
+     * @return The JSON provided by the Telegram API
+     */
+    @Override
+    public JSONObject asJson() {
+        return jsonMessage;
+    }
 }

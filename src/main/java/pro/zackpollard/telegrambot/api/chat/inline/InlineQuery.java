@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat.inline;
 
+import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResult;
@@ -17,6 +18,8 @@ public interface InlineQuery {
     String getQuery();
 
     String getOffset();
+
+    JSONObject asJson();
 
     default boolean answer(TelegramBot telegramBot, InlineQueryResult... results) {
 

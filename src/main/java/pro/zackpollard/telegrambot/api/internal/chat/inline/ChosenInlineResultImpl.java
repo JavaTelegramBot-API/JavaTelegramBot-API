@@ -11,11 +11,15 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class ChosenInlineResultImpl implements ChosenInlineResult {
 
+    private final JSONObject jsonChosenInlineResult;
+
     private final String result_id;
     private final User from;
     private final String query;
 
     private ChosenInlineResultImpl(JSONObject jsonObject) {
+
+        this.jsonChosenInlineResult = jsonObject;
 
         this.result_id = jsonObject.getString("result_id");
         this.from = UserImpl.createUser(jsonObject.getJSONObject("from"));
@@ -40,5 +44,10 @@ public class ChosenInlineResultImpl implements ChosenInlineResult {
     @Override
     public String getQuery() {
         return query;
+    }
+
+    @Override
+    public JSONObject asJson() {
+        return jsonChosenInlineResult;
     }
 }

@@ -12,12 +12,16 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class InlineQueryImpl implements InlineQuery {
 
+    private final JSONObject jsonQuery;
+
     private final String id;
     private final User from;
     private final String query;
     private final String offset;
 
     private InlineQueryImpl(JSONObject jsonObject) {
+
+        this.jsonQuery = jsonObject;
 
         this.id = jsonObject.getString("id");
         this.from = UserImpl.createUser(jsonObject.getJSONObject("from"));
@@ -47,7 +51,11 @@ public class InlineQueryImpl implements InlineQuery {
 
     @Override
     public String getOffset() {
-
         return offset;
+    }
+
+    @Override
+    public JSONObject asJson() {
+        return jsonQuery;
     }
 }
