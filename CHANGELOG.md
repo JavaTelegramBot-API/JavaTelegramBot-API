@@ -1,4 +1,8 @@
 # Changelog
+#### Version 0.7.2
+* Added Message#asJson(), InlineQuery#asJson() and ChosenInlineResult#asJson()
+  * These methods simply return a JSONObject of the json data that the TelegramAPI originally sent to the API
+
 #### Version 0.7.1
 * Implemented extra Inline Bot functionality
   * Re-implemented the ChosenInlineResult function that was removed from the API spec originally
