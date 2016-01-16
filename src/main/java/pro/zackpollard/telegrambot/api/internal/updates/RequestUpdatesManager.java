@@ -99,23 +99,22 @@ public class RequestUpdatesManager extends UpdateManager {
 
                         JSONArray updates = jsonResponse.getJSONArray("result");
 
+                        if (updates.length() != 0)
+                            offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
+
+                        if(!getPreviousUpdates) {
+
+                            if(updates.length() < 100) {
+
+                                getPreviousUpdates = true;
+                            }
+
+                            continue;
+                        }
+
                         for (int i = 0; i < updates.length(); ++i) {
 
                             Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
-
-                            if (!getPreviousUpdates) {
-
-                                if (update.getType() == Update.UpdateType.MESSAGE) {
-
-                                    if(update.getMessage().getTimeStamp() < unixTime) {
-
-                                        break;
-                                    }
-                                } else {
-
-                                    getPreviousUpdates = true;
-                                }
-                            }
 
                             try {
 
@@ -208,9 +207,6 @@ public class RequestUpdatesManager extends UpdateManager {
                                 e.printStackTrace();
                             }
                         }
-
-                        if (updates.length() != 0)
-                            offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
                     } else {
 
                         System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
