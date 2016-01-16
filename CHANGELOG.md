@@ -1,4 +1,9 @@
 # Changelog
+#### Version 0.7.3
+* Fixed an issue with ignoring previous updates when doing TelegramBot#startUpdates(false)
+  * The issue was due to an inconsistency between the unix time on the server and telegrams servers which meant either some messages weren't ignored or messages were ignored long after startup
+    * The clearing method no longer uses unix time so this is no longer an issue
+    
 #### Version 0.7.2
 * Added Message#asJson(), InlineQuery#asJson() and ChosenInlineResult#asJson()
   * These methods simply return a JSONObject of the json data that the TelegramAPI originally sent to the API
