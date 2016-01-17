@@ -11,6 +11,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.event.chat.*;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
+import pro.zackpollard.telegrambot.api.event.chat.inline.InlineResultChosenEvent;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.updates.Update;
@@ -122,7 +123,7 @@ public class RequestUpdatesManager extends UpdateManager {
 
                                 switch (update.getType()) {
 
-                                    case MESSAGE:{
+                                    case MESSAGE: {
 
                                         switch (update.getMessage().getContent().getType()) {
 
@@ -199,6 +200,11 @@ public class RequestUpdatesManager extends UpdateManager {
                                     case INLINE_QUERY: {
 
                                         eventManager.callEvent(new InlineQueryReceivedEvent(update.getInlineQuery()));
+                                    }
+
+                                    case CHOSEN_INLINE_RESULT: {
+
+                                        eventManager.callEvent(new InlineResultChosenEvent(update.getChosenInlineResult()));
                                     }
                                 }
                             } catch (Exception e) {
