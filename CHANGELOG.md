@@ -1,4 +1,9 @@
 # Changelog
+#### Version 0.7.4
+* Bugfixes:
+  * TelegramBot#sendInlineQuery() would always return false, even if sending succeeded
+  * InlineResultChosenEvent was never called and so the Chosen Result functionality was broken
+
 #### Version 0.7.3
 * Fixed an issue with ignoring previous updates when doing TelegramBot#startUpdates(false)
   * The issue was due to an inconsistency between the unix time on the server and telegrams servers which meant either some messages weren't ignored or messages were ignored long after startup
