@@ -474,8 +474,7 @@ public final class TelegramBot {
         if(inlineQueryId != null && inlineQueryResponse != null) {
 
             HttpResponse<String> response;
-            JSONObject jsonResponse = null;
-            boolean answerResponse = false;
+            JSONObject jsonResponse;
 
             try {
                 MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerInlineQuery")
@@ -488,7 +487,10 @@ public final class TelegramBot {
                 response = requests.asString();
                 jsonResponse = processResponse(response);
 
-                System.out.println(jsonResponse.toString());
+                if(jsonResponse != null) {
+
+                    if(jsonResponse.getBoolean("result")) return true;
+                }
             } catch (UnirestException e) {
                 e.printStackTrace();
             }
