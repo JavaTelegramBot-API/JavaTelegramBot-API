@@ -29,8 +29,6 @@ public class UpdateImpl implements Update {
         if(inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
         this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
         if(chosen_inline_result != null && updateType == null) updateType = UpdateType.CHOSEN_INLINE_RESULT;
-
-        System.out.println(updateType);
 	}
 
 	public static Update createUpdate(JSONObject jsonObject) {
