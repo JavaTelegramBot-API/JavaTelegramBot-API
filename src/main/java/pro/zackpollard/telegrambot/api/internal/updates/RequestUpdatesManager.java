@@ -200,11 +200,13 @@ public class RequestUpdatesManager extends UpdateManager {
                                     case INLINE_QUERY: {
 
                                         eventManager.callEvent(new InlineQueryReceivedEvent(update.getInlineQuery()));
+                                        break;
                                     }
 
                                     case CHOSEN_INLINE_RESULT: {
 
                                         eventManager.callEvent(new InlineResultChosenEvent(update.getChosenInlineResult()));
+                                        break;
                                     }
                                 }
                             } catch (Exception e) {
