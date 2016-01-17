@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.7.5
+* Removed random debug messages
+
 #### Version 0.7.4
 * Bugfixes:
   * TelegramBot#sendInlineQuery() would always return false, even if sending succeeded
