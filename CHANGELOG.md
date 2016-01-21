@@ -1,4 +1,8 @@
 # Changelog
+#### Version 0.7.6
+* Added support for the new HTML parse mode 
+  * You can find information about it here https://core.telegram.org/bots/api#html-style
+
 #### Version 0.7.5
 * Removed random debug messages
 
