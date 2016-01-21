@@ -6,7 +6,8 @@ package pro.zackpollard.telegrambot.api.chat.message.send;
 public enum ParseMode {
 
     NONE(""),
-    MARKDOWN("Markdown");
+    MARKDOWN("Markdown"),
+    HTML("HTML");
 
     private final String modeName;
 
