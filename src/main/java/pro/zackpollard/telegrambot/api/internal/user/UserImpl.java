@@ -10,7 +10,7 @@ import pro.zackpollard.telegrambot.api.user.UserProfilePhotos;
  */
 public class UserImpl implements User {
 
-	private final int id;
+	private final long id;
 	private final String first_name;
 	private final String last_name;
 	private final String username;
@@ -42,7 +42,7 @@ public class UserImpl implements User {
 	}
 
 	@Override
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

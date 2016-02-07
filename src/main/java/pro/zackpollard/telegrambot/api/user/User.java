@@ -7,7 +7,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
  */
 public interface User {
 
-	int getId();
+	long getId();
 
 	/**
 	 * Gets the first name of the user.
