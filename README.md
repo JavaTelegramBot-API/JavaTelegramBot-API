@@ -7,8 +7,11 @@ If you need help in Persian(فارسی) you can contact https://telegram.me/aaom
 
 This is a Telegram Bot API for Java. At the time of writing it supports all the features of the HTTP API and follows the same specification. This is a work in progress and currently has very minimal error handling and testing. Any methods or functionality outside of `pro.zackpollard.telegrambot.api.internal` package should remain as they are currently and should work as expected, anything inside the `internal` package is not guaranteed to work as expected and may yield unexpected results if used in a way that is not intended.
 
-Here is an example of how to use this API:
-
+## Example Usage
+You can find fully working examples of bots in the following repository   
+https://github.com/zackpollard/JavaTelegramBot-API-Examples   
+   
+The following is a simple overview of how the API works as a kind of quick start guide:
 ```java
 
 //Main Class
