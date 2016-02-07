@@ -11,6 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 public interface Chat {
 
     String getId();
+    String getName();
     ChatType getType();
 
 	default Message sendMessage(String message, TelegramBot telegramBot) {

@@ -48,7 +48,12 @@ public class IndividualChatImpl implements IndividualChat {
 		return String.valueOf(partner.getId());
 	}
 
-	@Override
+    @Override
+    public String getName() {
+        return partner.getFullName();
+    }
+
+    @Override
 	public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
 
 		return telegramBot.sendMessage(this, message);

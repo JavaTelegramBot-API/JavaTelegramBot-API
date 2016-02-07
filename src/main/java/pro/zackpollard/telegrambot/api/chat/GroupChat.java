@@ -5,8 +5,6 @@ package pro.zackpollard.telegrambot.api.chat;
  */
 public interface GroupChat extends Chat {
 
-	String getName();
-
     default ChatType getType() {
 
         return ChatType.GROUP;
