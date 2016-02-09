@@ -1,4 +1,9 @@
 # Changelog
+#### Version 0.7.7
+* Added a Chat#getName() method, for groups it returns the group name, for private chats it returns the users full name
+* Bugfix:
+  * Change User#getId() to return a long instead of an int
+
 #### Version 0.7.6
 * Added support for the new HTML parse mode 
   * You can find information about it here https://core.telegram.org/bots/api#html-style

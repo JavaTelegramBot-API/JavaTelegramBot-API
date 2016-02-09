@@ -54,7 +54,7 @@ Maven is used for dependency management and deployment.
     <dependency>
         <groupId>pro.zackpollard.telegrambot.api</groupId>
         <artifactId>jtelegram-botapi</artifactId>
-        <version>0.7.6</version>
+        <version>0.7.7</version>
     </dependency>
 </dependencies>
 ```
