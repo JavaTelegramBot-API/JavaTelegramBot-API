@@ -119,11 +119,11 @@ public class RequestUpdatesManager extends UpdateManager {
 
                             try {
 
-                                eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
-
                                 switch (update.getType()) {
 
                                     case MESSAGE: {
+
+                                        eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
                                         switch (update.getMessage().getContent().getType()) {
 
