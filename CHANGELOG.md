@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.7.8
+* Changed MessageReceivedEvent so that it only fires when a "Message" is received, not when inline queries are received
+
 #### Version 0.7.7
 * Added a Chat#getName() method, for groups it returns the group name, for private chats it returns the users full name
 * Bugfix:
