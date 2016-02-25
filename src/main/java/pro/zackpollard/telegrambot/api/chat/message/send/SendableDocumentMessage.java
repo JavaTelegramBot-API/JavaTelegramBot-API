@@ -22,10 +22,12 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
 	private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
+    @Getter
+    private final String caption;
 
-    public SendableDocumentMessage(InputFile document, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification) {
+    public SendableDocumentMessage(InputFile document, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification, String caption) {
 
-        this(document, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification);
+        this(document, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification, caption);
     }
 
     public static SendableDocumentMessageBuilder builder() {
@@ -43,6 +45,7 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
         private int replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
+        private String caption;
 
         SendableDocumentMessageBuilder() {
         }
@@ -73,8 +76,13 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
             return this;
         }
 
+        public SendableDocumentMessage.SendableDocumentMessageBuilder caption(String caption) {
+            this.caption = caption;
+            return this;
+        }
+
         public SendableDocumentMessage build() {
-            return new SendableDocumentMessage(document, replyTo, replyMarkup, disableNotification);
+            return new SendableDocumentMessage(document, replyTo, replyMarkup, disableNotification, caption);
         }
 
         public String toString() {

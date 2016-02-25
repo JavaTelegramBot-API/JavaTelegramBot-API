@@ -313,6 +313,9 @@ public final class TelegramBot {
 							.field("chat_id", chat.getId(), "application/json")
 							.field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
 
+					if (documentMessage.getCaption() != null)
+						request.field("caption", documentMessage.getCaption(), "application/json");
+
 					processReplyContent(request, documentMessage);
                     processNotificationContent(request, documentMessage);
 
