@@ -11,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 
 @RequiredArgsConstructor
-public class SendablePhotoMessage implements SendableMessage, ReplyingOptions {
+public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@NonNull
 	@Getter
@@ -22,10 +22,12 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions {
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
+    @Getter
+    private final boolean disableNotification;
 
-    public SendablePhotoMessage(InputFile photo, String caption, Message replyTo, ReplyMarkup replyMarkup) {
+    public SendablePhotoMessage(InputFile photo, String caption, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification) {
 
-        this(photo, caption, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup);
+        this(photo, caption, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification);
     }
 
     public static SendablePhotoMessageBuilder builder() {
@@ -43,6 +45,7 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions {
         private String caption;
         private int replyTo;
         private ReplyMarkup replyMarkup;
+        private boolean disableNotification;
 
         SendablePhotoMessageBuilder() {
         }
@@ -72,8 +75,14 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions {
             return this;
         }
 
+        public SendablePhotoMessage.SendablePhotoMessageBuilder disableNotification(boolean disableNotification) {
+
+            this.disableNotification = disableNotification;
+            return this;
+        }
+
         public SendablePhotoMessage build() {
-            return new SendablePhotoMessage(photo, caption, replyTo, replyMarkup);
+            return new SendablePhotoMessage(photo, caption, replyTo, replyMarkup, disableNotification);
         }
 
         public String toString() {

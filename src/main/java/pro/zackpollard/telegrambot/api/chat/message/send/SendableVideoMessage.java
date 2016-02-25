@@ -11,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 
 @RequiredArgsConstructor
-public class SendableVideoMessage implements SendableMessage, ReplyingOptions {
+public class SendableVideoMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@NonNull
 	@Getter
@@ -24,10 +24,12 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions {
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
+    @Getter
+    private final boolean disableNotification;
 
-    SendableVideoMessage(InputFile video, int duration, String caption, Message replyTo, ReplyMarkup replyMarkup) {
+    SendableVideoMessage(InputFile video, int duration, String caption, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification) {
 
-        this(video, duration, caption, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup);
+        this(video, duration, caption, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification);
     }
 
     public static SendableVideoMessageBuilder builder() {
@@ -46,6 +48,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions {
         private String caption;
         private int replyTo;
         private ReplyMarkup replyMarkup;
+        private boolean disableNotification;
 
         SendableVideoMessageBuilder() {
         }
@@ -80,8 +83,14 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions {
             return this;
         }
 
+        public SendableVideoMessage.SendableVideoMessageBuilder disableNotification(boolean disableNotification) {
+
+            this.disableNotification = disableNotification;
+            return this;
+        }
+
         public SendableVideoMessage build() {
-            return new SendableVideoMessage(video, duration, caption, replyTo, replyMarkup);
+            return new SendableVideoMessage(video, duration, caption, replyTo, replyMarkup, disableNotification);
         }
 
         public String toString() {

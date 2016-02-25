@@ -11,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 
 @RequiredArgsConstructor
-public class SendableTextMessage implements SendableMessage, ReplyingOptions {
+public class SendableTextMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@NonNull
 	@Getter
@@ -24,10 +24,12 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions {
 	private final ReplyMarkup replyMarkup;
     @Getter
     private final ParseMode parseMode;
+    @Getter
+    private final boolean disableNotification;
 
-    public SendableTextMessage(String message, Message replyTo, boolean disableWebPagePreview, ReplyMarkup replyMarkup, ParseMode parseMode) {
+    public SendableTextMessage(String message, Message replyTo, boolean disableWebPagePreview, ReplyMarkup replyMarkup, ParseMode parseMode, boolean disableNotification) {
 
-        this(message, replyTo != null ? replyTo.getMessageId() : 0, disableWebPagePreview, replyMarkup, parseMode);
+        this(message, replyTo != null ? replyTo.getMessageId() : 0, disableWebPagePreview, replyMarkup, parseMode, disableNotification);
     }
 
     public static SendableTextMessageBuilder builder() {
@@ -46,6 +48,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions {
         private boolean disableWebPagePreview;
         private ReplyMarkup replyMarkup;
         private ParseMode parseMode;
+        private boolean disableNotification;
 
         SendableTextMessageBuilder() {
         }
@@ -80,8 +83,14 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions {
             return this;
         }
 
+        public SendableTextMessage.SendableTextMessageBuilder disableNotification(boolean disableNotification) {
+
+            this.disableNotification = disableNotification;
+            return this;
+        }
+
         public SendableTextMessage build() {
-            return new SendableTextMessage(message, replyTo, disableWebPagePreview, replyMarkup, parseMode);
+            return new SendableTextMessage(message, replyTo, disableWebPagePreview, replyMarkup, parseMode, disableNotification);
         }
 
         public String toString() {

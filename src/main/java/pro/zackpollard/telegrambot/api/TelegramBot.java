@@ -177,6 +177,7 @@ public final class TelegramBot {
                             .field("parse_mode", textMessage.getParseMode() != null ? textMessage.getParseMode().getModeName() : ParseMode.NONE);
 
 					processReplyContent(request, textMessage);
+                    processNotificationContent(request, textMessage);
 
 					response = request.asString();
                     jsonResponse = processResponse(response);
@@ -195,6 +196,8 @@ public final class TelegramBot {
 							.field("chat_id", chat.getId(), "application/json")
 							.field("from_chat_id", forwardMessage.getChatID())
 							.field("message_id", forwardMessage.getMessageID());
+
+                    processNotificationContent(request, forwardMessage);
 
 					response = request.asString();
                     jsonResponse = processResponse(response);
@@ -217,6 +220,7 @@ public final class TelegramBot {
 						request.field("caption", photoMessage.getCaption(), "application/json");
 
 					processReplyContent(request, photoMessage);
+                    processNotificationContent(request, photoMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
@@ -260,6 +264,7 @@ public final class TelegramBot {
 							.field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
 
 					processReplyContent(request, audioMessage);
+                    processNotificationContent(request, audioMessage);
 
 					if (audioMessage.getDuration() != 0) request.field("duration", audioMessage.getDuration());
 					if (audioMessage.getPerformer() != null)
@@ -309,6 +314,7 @@ public final class TelegramBot {
 							.field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
 
 					processReplyContent(request, documentMessage);
+                    processNotificationContent(request, documentMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
@@ -351,6 +357,7 @@ public final class TelegramBot {
 							.field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
 
 					processReplyContent(request, stickerMessage);
+                    processNotificationContent(request, stickerMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
@@ -383,6 +390,7 @@ public final class TelegramBot {
 						request.field("caption", videoMessage.getCaption(), "application/json");
 
 					processReplyContent(request, videoMessage);
+                    processNotificationContent(request, videoMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
@@ -411,6 +419,7 @@ public final class TelegramBot {
 							.field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
 
 					processReplyContent(request, voiceMessage);
+                    processNotificationContent(request, voiceMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
@@ -432,15 +441,16 @@ public final class TelegramBot {
 
 			case LOCATION:
 
-				SendableLocationMessage sendableLocationMessage = (SendableLocationMessage) message;
+				SendableLocationMessage locationMessage = (SendableLocationMessage) message;
 
 				try {
 					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
 							.field("chat_id", chat.getId(), "application/json")
-							.field("latitude", sendableLocationMessage.getLatitude())
-							.field("longitude", sendableLocationMessage.getLongitude());
+							.field("latitude", locationMessage.getLatitude())
+							.field("longitude", locationMessage.getLongitude());
 
-					processReplyContent(request, sendableLocationMessage);
+					processReplyContent(request, locationMessage);
+                    processNotificationContent(request, locationMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
@@ -565,6 +575,11 @@ public final class TelegramBot {
 			}
 		}
 	}
+
+    private static void processNotificationContent(MultipartBody multipartBody, NotificationOptions notificationOptions) {
+
+        multipartBody.field("disable_notification", notificationOptions.isDisableNotification());
+    }
 
 	private static boolean checkResponseStatus(JSONObject jsonResponse) {
 

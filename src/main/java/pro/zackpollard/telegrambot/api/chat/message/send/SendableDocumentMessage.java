@@ -11,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 
 @RequiredArgsConstructor
-public class SendableDocumentMessage implements SendableMessage, ReplyingOptions {
+public class SendableDocumentMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@NonNull
 	@Getter
@@ -20,10 +20,12 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
+    @Getter
+    private final boolean disableNotification;
 
-    public SendableDocumentMessage(InputFile document, Message replyTo, ReplyMarkup replyMarkup) {
+    public SendableDocumentMessage(InputFile document, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification) {
 
-        this(document, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup);
+        this(document, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification);
     }
 
     public static SendableDocumentMessageBuilder builder() {
@@ -40,6 +42,7 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
         private InputFile document;
         private int replyTo;
         private ReplyMarkup replyMarkup;
+        private boolean disableNotification;
 
         SendableDocumentMessageBuilder() {
         }
@@ -64,8 +67,14 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
             return this;
         }
 
+        public SendableDocumentMessage.SendableDocumentMessageBuilder disableNotification(boolean disableNotification) {
+
+            this.disableNotification = disableNotification;
+            return this;
+        }
+
         public SendableDocumentMessage build() {
-            return new SendableDocumentMessage(document, replyTo, replyMarkup);
+            return new SendableDocumentMessage(document, replyTo, replyMarkup, disableNotification);
         }
 
         public String toString() {

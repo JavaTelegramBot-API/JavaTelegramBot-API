@@ -11,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 
 @RequiredArgsConstructor
-public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
+public class SendableAudioMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@NonNull
 	@Getter
@@ -26,10 +26,12 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
+    @Getter
+    private final boolean disableNotification;
 
-    public SendableAudioMessage(InputFile audio, int duration, String performer, String title, Message replyTo, ReplyMarkup replyMarkup) {
+    public SendableAudioMessage(InputFile audio, int duration, String performer, String title, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification) {
 
-        this(audio, duration, performer, title, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup);
+        this(audio, duration, performer, title, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification);
     }
 
     public static SendableAudioMessageBuilder builder() {
@@ -49,6 +51,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
         private String title;
         private int replyTo;
         private ReplyMarkup replyMarkup;
+        private boolean disableNotification;
 
         SendableAudioMessageBuilder() {
         }
@@ -90,8 +93,14 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions {
             return this;
         }
 
+        public SendableAudioMessage.SendableAudioMessageBuilder disableNotification(boolean disableNotification) {
+
+            this.disableNotification = disableNotification;
+            return this;
+        }
+
         public SendableAudioMessage build() {
-            return new SendableAudioMessage(audio, duration, performer, title, replyTo, replyMarkup);
+            return new SendableAudioMessage(audio, duration, performer, title, replyTo, replyMarkup, disableNotification);
         }
 
         public String toString() {

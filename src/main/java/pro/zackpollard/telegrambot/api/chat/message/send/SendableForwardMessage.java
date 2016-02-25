@@ -10,7 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
  */
 
 @RequiredArgsConstructor
-public class SendableForwardMessage implements SendableMessage {
+public class SendableForwardMessage implements SendableMessage, NotificationOptions {
 
 	@NonNull
 	@Getter
@@ -18,10 +18,12 @@ public class SendableForwardMessage implements SendableMessage {
     @NonNull
     @Getter
     private final String chatID;
+    @Getter
+    private final boolean disableNotification;
 
-    SendableForwardMessage(Message forwardedMessage) {
+    SendableForwardMessage(Message forwardedMessage, boolean disableNotification) {
 
-        this(forwardedMessage != null ? forwardedMessage.getMessageId() : null, forwardedMessage != null ? forwardedMessage.getChat().getId() : null);
+        this(forwardedMessage != null ? forwardedMessage.getMessageId() : null, forwardedMessage != null ? forwardedMessage.getChat().getId() : null, disableNotification);
     }
 
     public static SendableForwardMessageBuilder builder() {
@@ -37,6 +39,7 @@ public class SendableForwardMessage implements SendableMessage {
 
         private Integer messageID;
         private String chatID;
+        private boolean disableNotification;
 
         SendableForwardMessageBuilder() {
         }
@@ -57,8 +60,14 @@ public class SendableForwardMessage implements SendableMessage {
             return this;
         }
 
+        public SendableForwardMessage.SendableForwardMessageBuilder disableNotification(boolean disableNotification) {
+
+            this.disableNotification = disableNotification;
+            return this;
+        }
+
         public SendableForwardMessage build() {
-            return new SendableForwardMessage(messageID, chatID);
+            return new SendableForwardMessage(messageID, chatID, disableNotification);
         }
 
         public String toString() {

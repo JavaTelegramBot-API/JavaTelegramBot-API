@@ -11,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 
 @RequiredArgsConstructor
-public class SendableLocationMessage implements SendableMessage, ReplyingOptions {
+public class SendableLocationMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@Getter
 	@NonNull
@@ -23,10 +23,12 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
 	private final int replyTo;
 	@Getter
 	private final ReplyMarkup replyMarkup;
+    @Getter
+    private final boolean disableNotification;
 
-    public SendableLocationMessage(double latitude, double longitude, Message replyTo, ReplyMarkup replyMarkup) {
+    public SendableLocationMessage(double latitude, double longitude, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification) {
 
-        this(latitude, longitude, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup);
+        this(latitude, longitude, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification);
     }
 
     public static SendableLocationMessageBuilder builder() {
@@ -44,6 +46,7 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
         private double longitude;
         private int replyTo;
         private ReplyMarkup replyMarkup;
+        private boolean disableNotification;
 
         SendableLocationMessageBuilder() {
         }
@@ -73,8 +76,14 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
             return this;
         }
 
+        public SendableLocationMessage.SendableLocationMessageBuilder disableNotification(boolean disableNotification) {
+
+            this.disableNotification = disableNotification;
+            return this;
+        }
+
         public SendableLocationMessage build() {
-            return new SendableLocationMessage(latitude, longitude, replyTo, replyMarkup);
+            return new SendableLocationMessage(latitude, longitude, replyTo, replyMarkup, disableNotification);
         }
 
         public String toString() {
