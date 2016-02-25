@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.8.0
+* Added support for disabling notifications for  receivers when sending messages
+
 #### Version 0.7.8
 * Changed MessageReceivedEvent so that it only fires when a "Message" is received, not when inline queries are received
 
