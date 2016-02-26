@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.8.1
+* Added support for giving documents captions as this is now supported in the Telegram API
+
 #### Version 0.8.0
 * Added support for disabling notifications for  receivers when sending messages
 
