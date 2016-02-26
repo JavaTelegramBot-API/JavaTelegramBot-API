@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
@@ -10,7 +11,7 @@ import java.net.URL;
 /**
  * @author Zack Pollard
  */
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResultVideo implements InlineQueryResult {
 
     private final InlineQueryResultType type = InlineQueryResultType.VIDEO;
