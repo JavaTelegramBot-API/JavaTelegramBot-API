@@ -233,6 +233,12 @@ public final class TelegramBot {
 				//Photo cacheing to FileManager
 				if (photoMessage.getPhoto().getFile() != null && messageResponse != null) {
 
+					if(!messageResponse.getContent().getType().equals(ContentType.PHOTO)) {
+
+						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+						break;
+					}
+
 					PhotoSize[] photoSizes = ((PhotoContent) messageResponse.getContent()).getContent();
 
 					int largestPhotoSize = 0;
@@ -373,6 +379,12 @@ public final class TelegramBot {
 				//Sticker cacheing to FileManager
 				if (stickerMessage.getSticker().getFile() != null && messageResponse != null) {
 
+					if(!messageResponse.getContent().getType().equals(ContentType.STICKER)) {
+
+						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+						break;
+					}
+
 					Sticker sticker = ((StickerContent) messageResponse.getContent()).getContent();
 
 					fileManager.cacheFileID(stickerMessage.getSticker().getFile(), sticker.getFileId());
@@ -406,6 +418,12 @@ public final class TelegramBot {
 				//Video cacheing to FileManager
 				if (videoMessage.getVideo().getFile() != null && messageResponse != null) {
 
+					if(!messageResponse.getContent().getType().equals(ContentType.VIDEO)) {
+
+						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+						break;
+					}
+
 					Video video = ((VideoContent) messageResponse.getContent()).getContent();
 
 					fileManager.cacheFileID(videoMessage.getVideo().getFile(), video.getFileId());
@@ -434,6 +452,12 @@ public final class TelegramBot {
 
 				//Voice cacheing to FileManager
 				if (voiceMessage.getVoice().getFile() != null && messageResponse != null) {
+
+					if(!messageResponse.getContent().getType().equals(ContentType.VOICE)) {
+
+						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+						break;
+					}
 
 					Voice voice = ((VoiceContent) messageResponse.getContent()).getContent();
 
