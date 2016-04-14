@@ -1,15 +1,12 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 /**
  * @author Zack Pollard
  */
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class SendableChatAction implements SendableMessage {
 

@@ -24,14 +24,6 @@ public class ReplyKeyboardMarkup implements Keyboard {
 		this.selective = builder.selective;
 	}
 
-	public ReplyKeyboardMarkup(List<List<String>> keyboard, boolean resize_keyboard, boolean one_time_keyboard, boolean selective) {
-
-		this.keyboard = keyboard;
-		this.resize_keyboard = resize_keyboard;
-		this.one_time_keyboard = one_time_keyboard;
-		this.selective = selective;
-	}
-
 	public static ReplyKeyboardMarkupBuilder builder() {
 
 		return new ReplyKeyboardMarkupBuilder();

@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableTextMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@NonNull
@@ -26,11 +27,6 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
     private final ParseMode parseMode;
     @Getter
     private final boolean disableNotification;
-
-    public SendableTextMessage(String message, Message replyTo, boolean disableWebPagePreview, ReplyMarkup replyMarkup, ParseMode parseMode, boolean disableNotification) {
-
-        this(message, replyTo != null ? replyTo.getMessageId() : 0, disableWebPagePreview, replyMarkup, parseMode, disableNotification);
-    }
 
     public static SendableTextMessageBuilder builder() {
         return new SendableTextMessageBuilder();

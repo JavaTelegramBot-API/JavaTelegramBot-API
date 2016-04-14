@@ -14,14 +14,6 @@ public class ForceReply implements ReplyMarkup {
 		this.selective = builder.selective;
 	}
 
-	public ForceReply() {
-	}
-
-	public ForceReply(boolean selective) {
-
-		this.selective = selective;
-	}
-
 	public static ForceReplyBuilder builder() {
 
 		return new ForceReplyBuilder();

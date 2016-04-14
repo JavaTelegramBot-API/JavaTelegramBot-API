@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
  * @author Zack Pollard
  */
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableForwardMessage implements SendableMessage, NotificationOptions {
 
 	@NonNull
@@ -20,11 +21,6 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
     private final String chatID;
     @Getter
     private final boolean disableNotification;
-
-    SendableForwardMessage(Message forwardedMessage, boolean disableNotification) {
-
-        this(forwardedMessage != null ? forwardedMessage.getMessageId() : null, forwardedMessage != null ? forwardedMessage.getChat().getId() : null, disableNotification);
-    }
 
     public static SendableForwardMessageBuilder builder() {
         return new SendableForwardMessageBuilder();

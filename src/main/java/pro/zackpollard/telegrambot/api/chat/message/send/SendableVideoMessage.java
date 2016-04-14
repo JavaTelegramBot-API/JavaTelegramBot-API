@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  * @author Zack Pollard
  */
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableVideoMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
 	@NonNull
@@ -26,11 +27,6 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
 	private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
-
-    SendableVideoMessage(InputFile video, int duration, String caption, Message replyTo, ReplyMarkup replyMarkup, boolean disableNotification) {
-
-        this(video, duration, caption, replyTo != null ? replyTo.getMessageId() : 0, replyMarkup, disableNotification);
-    }
 
     public static SendableVideoMessageBuilder builder() {
         return new SendableVideoMessageBuilder();

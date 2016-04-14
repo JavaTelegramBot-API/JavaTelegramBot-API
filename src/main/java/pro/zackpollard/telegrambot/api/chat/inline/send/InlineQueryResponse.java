@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat.inline.send;
 
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResult;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author Zack Pollard
  */
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResponse {
 
     @NonNull
