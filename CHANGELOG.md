@@ -1,4 +1,8 @@
 # Changelog
+#### Version 0.8.2
+* Fixed a bug where the ChannelChatCreatedEvent wasn't ever fired
+* Changed all public Constructors with Builder counterparts to private to reduce the amount of breaking changes in future updates 
+
 #### Version 0.8.1
 * Added support for giving documents captions as this is now supported in the Telegram API
 
