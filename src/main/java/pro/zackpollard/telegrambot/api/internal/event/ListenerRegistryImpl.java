@@ -32,6 +32,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
 
 		register(DeleteGroupChatPhotoEvent.class, Listener::onDeleteGroupChatPhoto);
 		register(GroupChatCreatedEvent.class, Listener::onGroupChatCreated);
+		register(ChannelChatCreatedEvent.class, Listener::onChannelChatCreated);
 		register(NewGroupChatPhotoEvent.class, Listener::onNewGroupChatPhoto);
 		register(NewGroupChatTitleEvent.class, Listener::onNewGroupChatTitle);
 		register(ParticipantJoinGroupChatEvent.class, Listener::onParticipantJoinGroupChat);

@@ -37,6 +37,8 @@ public interface Listener {
 	}
 	default void onGroupChatCreated(GroupChatCreatedEvent event) {
 	}
+	default void onChannelChatCreated(ChannelChatCreatedEvent event) {
+	}
 	default void onNewGroupChatPhoto(NewGroupChatPhotoEvent event) {
 	}
 	default void onNewGroupChatTitle(NewGroupChatTitleEvent event) {
