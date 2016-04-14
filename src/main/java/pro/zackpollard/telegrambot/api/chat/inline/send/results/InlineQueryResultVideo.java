@@ -37,7 +37,7 @@ public class InlineQueryResultVideo implements InlineQueryResult {
 
     @Override
     public InlineQueryResultType getType() {
-        return InlineQueryResultType.VIDEO;
+        return this.type;
     }
 
     @NonNull
