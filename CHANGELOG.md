@@ -1,4 +1,7 @@
 # Changelog
+#### Version 0.8.3
+* Added checks to avoid errors with cacheing if the servers responds with an unexpected content type
+
 #### Version 0.8.2
 * Fixed a bug where the ChannelChatCreatedEvent wasn't ever fired
 * Changed all public Constructors with Builder counterparts to private to reduce the amount of breaking changes in future updates 
