@@ -78,7 +78,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendableAudioMessage.SendableAudioMessageBuilder reployTo(int replyTo) {
+        public SendableAudioMessage.SendableAudioMessageBuilder replyTo(int replyTo) {
 
             this.replyTo = replyTo;
             return this;
