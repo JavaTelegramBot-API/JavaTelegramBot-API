@@ -10,8 +10,8 @@ public class ContentImpl {
 
 	private final static String[] CONTENT_TYPE_NAMES = new String[]{
 			"text", "audio", "document", "photo", "sticker",
-			"video", "voice", "contact", "location", "new_chat_participant",
-			"left_chat_participant", "new_chat_title", "new_chat_photo",
+			"video", "voice", "contact", "location", "new_chat_member",
+			"left_chat_member", "new_chat_title", "new_chat_photo",
 			"delete_chat_photo", "group_chat_created", "supergroup_chat_created",
             "channel_chat_created", "migrate_to_chat_id", "migrate_from_chat_id"
 	};
@@ -59,12 +59,12 @@ public class ContentImpl {
 				case "location":
 
 					return LocationContentImpl.createLocationContent(jsonObject.getJSONObject("location"));
-				case "new_chat_participant":
+				case "new_chat_member":
 
-					return NewParticipantContentImpl.createNewParticipantContent(jsonObject.getJSONObject("new_chat_participant"));
-				case "left_chat_participant":
+					return NewParticipantContentImpl.createNewParticipantContent(jsonObject.getJSONObject("new_chat_member"));
+				case "left_chat_member":
 
-					return LeftChatParticipantContentImpl.createLeftChatParticipantContent(jsonObject.getJSONObject("left_chat_participant"));
+					return LeftChatParticipantContentImpl.createLeftChatParticipantContent(jsonObject.getJSONObject("left_chat_member"));
 				case "new_chat_title":
 
 					return NewChatTitleContentImpl.createNewChatTitleContent(jsonObject.getString("new_chat_title"));
