@@ -40,7 +40,7 @@ public class ContentImpl {
 					return AudioContentImpl.createAudioContent(jsonObject.getJSONObject("audio"));
 				case "document":
 
-					return DocumentContentImpl.createDocumentContent(jsonObject.getJSONObject("document"));
+					return DocumentContentImpl.createDocumentContent(jsonObject.getJSONObject("document"), jsonObject.optString("caption"));
 				case "photo":
 
 					return PhotoContentImpl.createPhotoContent(jsonObject.getJSONArray("photo"), jsonObject.optString("caption"));

@@ -11,15 +11,17 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.content.type.Docume
 public class DocumentContentImpl implements DocumentContent {
 
 	private final Document content;
+	private final String caption;
 
-	private DocumentContentImpl(JSONObject jsonObject) {
+	private DocumentContentImpl(JSONObject jsonObject, String caption) {
 
 		this.content = DocumentImpl.createDocument(jsonObject);
+        this.caption = caption;
 	}
 
-	public static DocumentContent createDocumentContent(JSONObject jsonObject) {
+	public static DocumentContent createDocumentContent(JSONObject jsonObject, String caption) {
 
-		return jsonObject != null ? new DocumentContentImpl(jsonObject) : null;
+		return jsonObject != null ? new DocumentContentImpl(jsonObject, caption) : null;
 	}
 
 	@Override
