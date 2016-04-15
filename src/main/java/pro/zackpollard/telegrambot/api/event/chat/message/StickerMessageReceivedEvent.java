@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.StickerContent;
  */
 public class StickerMessageReceivedEvent extends MessageReceivedEvent {
 
-	public StickerMessageReceivedEvent(Message message) {
+    public StickerMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public StickerContent getContent() {
+    @Override
+    public StickerContent getContent() {
 
-		return (StickerContent) getMessage().getContent();
-	}
+        return (StickerContent) getMessage().getContent();
+    }
 }

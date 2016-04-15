@@ -8,19 +8,19 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
  */
 public abstract class UpdateManager {
 
-	@Getter
-	private final TelegramBot telegramBot;
+    @Getter
+    private final TelegramBot telegramBot;
 
-	protected UpdateManager(TelegramBot telegramBot) {
+    protected UpdateManager(TelegramBot telegramBot) {
 
-		this.telegramBot = telegramBot;
-	}
+        this.telegramBot = telegramBot;
+    }
 
-	public enum UpdateMethod {
+    public enum UpdateMethod {
 
-		REQUEST_UPDATES,
-		WEBHOOK
-	}
+        REQUEST_UPDATES,
+        WEBHOOK
+    }
 
-	public abstract UpdateMethod getUpdateMethod();
+    public abstract UpdateMethod getUpdateMethod();
 }

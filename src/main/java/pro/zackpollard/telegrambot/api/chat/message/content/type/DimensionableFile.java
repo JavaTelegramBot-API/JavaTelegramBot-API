@@ -5,17 +5,17 @@ package pro.zackpollard.telegrambot.api.chat.message.content.type;
  */
 public interface DimensionableFile extends File {
 
-	/**
-	 * Gets the width in pixels of the file
-	 *
-	 * @return The file width
-	 */
-	int getWidth();
+    /**
+     * Gets the width in pixels of the file
+     *
+     * @return The file width
+     */
+    int getWidth();
 
-	/**
-	 * Gets the height in pixels of the file
-	 *
-	 * @return The file height
-	 */
-	int getHeight();
+    /**
+     * Gets the height in pixels of the file
+     *
+     * @return The file height
+     */
+    int getHeight();
 }

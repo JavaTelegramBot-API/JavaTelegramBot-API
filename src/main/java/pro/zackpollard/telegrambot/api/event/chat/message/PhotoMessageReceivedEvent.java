@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.PhotoContent;
  */
 public class PhotoMessageReceivedEvent extends MessageReceivedEvent {
 
-	public PhotoMessageReceivedEvent(Message message) {
+    public PhotoMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public PhotoContent getContent() {
+    @Override
+    public PhotoContent getContent() {
 
-		return (PhotoContent) getMessage().getContent();
-	}
+        return (PhotoContent) getMessage().getContent();
+    }
 }

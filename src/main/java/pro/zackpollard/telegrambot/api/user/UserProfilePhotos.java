@@ -7,12 +7,12 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.PhotoSize;
  */
 public interface UserProfilePhotos {
 
-	/**
-	 * Get the total amount of photos this user has
-	 *
-	 * @return Amount of photos
-	 */
-	int getTotalCount();
+    /**
+     * Get the total amount of photos this user has
+     *
+     * @return Amount of photos
+     */
+    int getTotalCount();
 
-	PhotoSize[][] getPhotos();
+    PhotoSize[][] getPhotos();
 }

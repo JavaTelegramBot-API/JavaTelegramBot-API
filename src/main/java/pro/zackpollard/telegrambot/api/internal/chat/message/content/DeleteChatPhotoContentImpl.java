@@ -7,11 +7,11 @@ import pro.zackpollard.telegrambot.api.chat.message.content.DeleteChatPhotoConte
  */
 public class DeleteChatPhotoContentImpl implements DeleteChatPhotoContent {
 
-	private DeleteChatPhotoContentImpl() {
-	}
+    private DeleteChatPhotoContentImpl() {
+    }
 
-	public static DeleteChatPhotoContent createDeleteChatPhotoContent() {
+    public static DeleteChatPhotoContent createDeleteChatPhotoContent() {
 
-		return new DeleteChatPhotoContentImpl();
-	}
+        return new DeleteChatPhotoContentImpl();
+    }
 }

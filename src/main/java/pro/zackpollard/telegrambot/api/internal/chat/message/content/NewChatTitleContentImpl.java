@@ -8,25 +8,25 @@ import pro.zackpollard.telegrambot.api.chat.message.content.NewChatTitleContent;
  */
 public class NewChatTitleContentImpl implements NewChatTitleContent {
 
-	private final String content;
+    private final String content;
 
-	private NewChatTitleContentImpl(String content) {
+    private NewChatTitleContentImpl(String content) {
 
-		this.content = content;
-	}
+        this.content = content;
+    }
 
-	public static Content createNewChatTitleContent(String content) {
+    public static Content createNewChatTitleContent(String content) {
 
-		return new NewChatTitleContentImpl(content);
-	}
+        return new NewChatTitleContentImpl(content);
+    }
 
-	/**
-	 * Gets the new chat title
-	 *
-	 * @return The new chat title
-	 */
-	@Override
-	public String getContent() {
-		return content;
-	}
+    /**
+     * Gets the new chat title
+     *
+     * @return The new chat title
+     */
+    @Override
+    public String getContent() {
+        return content;
+    }
 }

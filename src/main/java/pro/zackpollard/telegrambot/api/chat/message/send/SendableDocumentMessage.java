@@ -14,13 +14,13 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableDocumentMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile document;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile document;
+    @Getter
+    private final int replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
     @Getter
@@ -31,9 +31,9 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.DOCUMENT;
-	}
+    public MessageType getType() {
+        return MessageType.DOCUMENT;
+    }
 
     public static class SendableDocumentMessageBuilder {
 

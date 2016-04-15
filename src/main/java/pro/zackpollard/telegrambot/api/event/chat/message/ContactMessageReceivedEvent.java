@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.ContactContent;
  */
 public class ContactMessageReceivedEvent extends MessageReceivedEvent {
 
-	public ContactMessageReceivedEvent(Message message) {
+    public ContactMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public ContactContent getContent() {
+    @Override
+    public ContactContent getContent() {
 
-		return (ContactContent) getMessage().getContent();
-	}
+        return (ContactContent) getMessage().getContent();
+    }
 }

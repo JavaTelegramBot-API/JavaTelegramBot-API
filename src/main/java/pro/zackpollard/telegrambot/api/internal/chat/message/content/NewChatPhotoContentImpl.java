@@ -14,34 +14,34 @@ import java.util.List;
  */
 public class NewChatPhotoContentImpl implements NewChatPhotoContent {
 
-	private final PhotoSize[] content;
+    private final PhotoSize[] content;
 
-	private NewChatPhotoContentImpl(JSONArray jsonArray) {
+    private NewChatPhotoContentImpl(JSONArray jsonArray) {
 
-		List<PhotoSize> photoSizeList = new ArrayList<>();
+        List<PhotoSize> photoSizeList = new ArrayList<>();
 
-		for (int i = 0; i < jsonArray.length(); ++i) {
+        for (int i = 0; i < jsonArray.length(); ++i) {
 
-			JSONObject photoObject = jsonArray.getJSONObject(i);
-			photoSizeList.add(PhotoSizeImpl.createPhotoSize(photoObject));
-		}
+            JSONObject photoObject = jsonArray.getJSONObject(i);
+            photoSizeList.add(PhotoSizeImpl.createPhotoSize(photoObject));
+        }
 
-		content = photoSizeList.stream()
-				.toArray(PhotoSize[]::new);
-	}
+        content = photoSizeList.stream()
+                .toArray(PhotoSize[]::new);
+    }
 
-	public static NewChatPhotoContent createNewChatPhotoContent(JSONArray jsonArray) {
+    public static NewChatPhotoContent createNewChatPhotoContent(JSONArray jsonArray) {
 
-		return new NewChatPhotoContentImpl(jsonArray);
-	}
+        return new NewChatPhotoContentImpl(jsonArray);
+    }
 
-	/**
-	 * Gets the new photo for the chat
-	 *
-	 * @return The new photo.
-	 */
-	@Override
-	public PhotoSize[] getContent() {
-		return content;
-	}
+    /**
+     * Gets the new photo for the chat
+     *
+     * @return The new photo.
+     */
+    @Override
+    public PhotoSize[] getContent() {
+        return content;
+    }
 }

@@ -13,9 +13,9 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableForwardMessage implements SendableMessage, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final Integer messageID;
+    @NonNull
+    @Getter
+    private final Integer messageID;
     @NonNull
     @Getter
     private final String chatID;
@@ -27,9 +27,9 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.FORWARDED;
-	}
+    public MessageType getType() {
+        return MessageType.FORWARDED;
+    }
 
     public static class SendableForwardMessageBuilder {
 

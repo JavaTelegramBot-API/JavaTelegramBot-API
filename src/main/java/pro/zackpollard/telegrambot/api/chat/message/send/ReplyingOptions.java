@@ -7,7 +7,7 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 public interface ReplyingOptions {
 
-	int getReplyTo();
+    int getReplyTo();
 
-	ReplyMarkup getReplyMarkup();
+    ReplyMarkup getReplyMarkup();
 }

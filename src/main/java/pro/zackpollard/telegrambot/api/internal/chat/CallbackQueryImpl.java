@@ -30,12 +30,12 @@ public class CallbackQueryImpl implements CallbackQuery {
     public static CallbackQuery createCallbackQuery(JSONObject jsonObject) {
 
         CallbackQuery callbackQuery = null;
-        if(jsonObject != null) {
+        if (jsonObject != null) {
 
-            if(!jsonObject.isNull("message")) {
+            if (!jsonObject.isNull("message")) {
 
                 callbackQuery = MessageCallbackQueryImpl.createMessageCallbackQuery(jsonObject);
-            } else if(!jsonObject.isNull("inline_message_id")) {
+            } else if (!jsonObject.isNull("inline_message_id")) {
 
                 callbackQuery = InlineCallbackQueryImpl.createInlineCallbackQuery(jsonObject);
             } else {

@@ -10,11 +10,14 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
  */
 public interface Update {
 
-	int getId();
+    int getId();
 
-	Message getMessage();
+    Message getMessage();
+
     InlineQuery getInlineQuery();
+
     ChosenInlineResult getChosenInlineResult();
+
     CallbackQuery getCallbackQuery();
 
     UpdateType getType();

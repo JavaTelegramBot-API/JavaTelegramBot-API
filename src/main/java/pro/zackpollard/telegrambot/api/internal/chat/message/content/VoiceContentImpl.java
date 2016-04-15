@@ -10,20 +10,20 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.content.type.VoiceI
  */
 public class VoiceContentImpl implements VoiceContent {
 
-	private final Voice content;
+    private final Voice content;
 
-	private VoiceContentImpl(JSONObject jsonObject) {
+    private VoiceContentImpl(JSONObject jsonObject) {
 
-		this.content = VoiceImpl.createVoice(jsonObject);
-	}
+        this.content = VoiceImpl.createVoice(jsonObject);
+    }
 
-	public static VoiceContent createVoiceContent(JSONObject jsonObject) {
+    public static VoiceContent createVoiceContent(JSONObject jsonObject) {
 
-		return jsonObject != null ? new VoiceContentImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new VoiceContentImpl(jsonObject) : null;
+    }
 
-	@Override
-	public Voice getContent() {
-		return content;
-	}
+    @Override
+    public Voice getContent() {
+        return content;
+    }
 }

@@ -10,20 +10,20 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.content.type.Locati
  */
 public class LocationContentImpl implements LocationContent {
 
-	private final Location content;
+    private final Location content;
 
-	private LocationContentImpl(JSONObject jsonObject) {
+    private LocationContentImpl(JSONObject jsonObject) {
 
-		this.content = LocationImpl.createLocation(jsonObject);
-	}
+        this.content = LocationImpl.createLocation(jsonObject);
+    }
 
-	public static LocationContent createLocationContent(JSONObject jsonObject) {
+    public static LocationContent createLocationContent(JSONObject jsonObject) {
 
-		return jsonObject != null ? new LocationContentImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new LocationContentImpl(jsonObject) : null;
+    }
 
-	@Override
-	public Location getContent() {
-		return content;
-	}
+    @Override
+    public Location getContent() {
+        return content;
+    }
 }

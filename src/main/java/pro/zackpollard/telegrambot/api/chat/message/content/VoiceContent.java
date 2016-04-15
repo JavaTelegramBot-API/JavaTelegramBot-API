@@ -7,10 +7,10 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
  */
 public interface VoiceContent extends Content {
 
-	Voice getContent();
+    Voice getContent();
 
-	@Override
-	default ContentType getType() {
-		return ContentType.VOICE;
-	}
+    @Override
+    default ContentType getType() {
+        return ContentType.VOICE;
+    }
 }

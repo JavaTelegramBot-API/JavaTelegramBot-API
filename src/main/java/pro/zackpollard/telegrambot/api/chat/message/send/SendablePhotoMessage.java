@@ -14,15 +14,15 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile photo;
-	@Getter
-	private final String caption;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile photo;
+    @Getter
+    private final String caption;
+    @Getter
+    private final int replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -31,9 +31,9 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.PHOTO;
-	}
+    public MessageType getType() {
+        return MessageType.PHOTO;
+    }
 
     public static class SendablePhotoMessageBuilder {
 

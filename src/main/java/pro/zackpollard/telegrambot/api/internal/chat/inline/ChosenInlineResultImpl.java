@@ -2,7 +2,6 @@ package pro.zackpollard.telegrambot.api.internal.chat.inline;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.inline.ChosenInlineResult;
-import pro.zackpollard.telegrambot.api.chat.inline.InlineQuery;
 import pro.zackpollard.telegrambot.api.internal.user.UserImpl;
 import pro.zackpollard.telegrambot.api.user.User;
 

@@ -5,5 +5,5 @@ package pro.zackpollard.telegrambot.api.chat.message.content;
  */
 public interface Captionable {
 
-	String getCaption();
+    String getCaption();
 }

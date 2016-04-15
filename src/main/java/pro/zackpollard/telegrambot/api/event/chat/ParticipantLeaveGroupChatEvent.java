@@ -11,17 +11,17 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class ParticipantLeaveGroupChatEvent extends MessageEvent {
 
-	public ParticipantLeaveGroupChatEvent(Message message) {
-		super(message);
-	}
+    public ParticipantLeaveGroupChatEvent(Message message) {
+        super(message);
+    }
 
-	public User getParticipant() {
+    public User getParticipant() {
 
-		return ((LeftChatParticipantContent) getMessage().getContent()).getContent();
-	}
+        return ((LeftChatParticipantContent) getMessage().getContent()).getContent();
+    }
 
-	public Chat getChat() {
+    public Chat getChat() {
 
-		return getMessage().getChat();
-	}
+        return getMessage().getChat();
+    }
 }

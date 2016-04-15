@@ -8,27 +8,27 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Location;
  */
 public class LocationImpl implements Location {
 
-	private final double longitude;
-	private final double latitude;
+    private final double longitude;
+    private final double latitude;
 
-	private LocationImpl(JSONObject jsonObject) {
+    private LocationImpl(JSONObject jsonObject) {
 
-		this.longitude = jsonObject.getDouble("longitude");
-		this.latitude = jsonObject.getDouble("latitude");
-	}
+        this.longitude = jsonObject.getDouble("longitude");
+        this.latitude = jsonObject.getDouble("latitude");
+    }
 
-	public static Location createLocation(JSONObject jsonObject) {
+    public static Location createLocation(JSONObject jsonObject) {
 
-		return jsonObject != null ? new LocationImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new LocationImpl(jsonObject) : null;
+    }
 
-	@Override
-	public double getLongitude() {
-		return longitude;
-	}
+    @Override
+    public double getLongitude() {
+        return longitude;
+    }
 
-	@Override
-	public double getLatitude() {
-		return latitude;
-	}
+    @Override
+    public double getLatitude() {
+        return latitude;
+    }
 }

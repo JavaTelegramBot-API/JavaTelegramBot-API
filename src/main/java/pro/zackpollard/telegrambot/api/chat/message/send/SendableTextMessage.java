@@ -14,15 +14,15 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableTextMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final String message;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final boolean disableWebPagePreview;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final String message;
+    @Getter
+    private final int replyTo;
+    @Getter
+    private final boolean disableWebPagePreview;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final ParseMode parseMode;
     @Getter
@@ -33,9 +33,9 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.TEXT;
-	}
+    public MessageType getType() {
+        return MessageType.TEXT;
+    }
 
     public static class SendableTextMessageBuilder {
 

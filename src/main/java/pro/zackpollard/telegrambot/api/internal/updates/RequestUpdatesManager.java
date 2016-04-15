@@ -1,7 +1,6 @@
 package pro.zackpollard.telegrambot.api.internal.updates;
 
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
@@ -106,9 +105,9 @@ public class RequestUpdatesManager extends UpdateManager {
                         if (updates.length() != 0)
                             offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
 
-                        if(!getPreviousUpdates) {
+                        if (!getPreviousUpdates) {
 
-                            if(updates.length() < 100) {
+                            if (updates.length() < 100) {
 
                                 getPreviousUpdates = true;
                             }
@@ -216,7 +215,7 @@ public class RequestUpdatesManager extends UpdateManager {
 
                                         //Make three events, one for callback queries overall, one for message callback queries and one for inline callback queries
                                         eventManager.callEvent(new CallbackQueryReceivedEvent(update.getCallbackQuery()));
-                                        switch(update.getCallbackQuery().getType()) {
+                                        switch (update.getCallbackQuery().getType()) {
                                             case MESSAGE: {
                                                 eventManager.callEvent(new MessageCallbackQueryReceivedEvent((MessageCallbackQuery) update.getCallbackQuery()));
                                                 break;

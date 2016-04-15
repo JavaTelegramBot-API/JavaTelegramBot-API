@@ -14,19 +14,19 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableAudioMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile audio;
-	@Getter
-	private final int duration;
-	@Getter
-	private final String performer;
-	@Getter
-	private final String title;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile audio;
+    @Getter
+    private final int duration;
+    @Getter
+    private final String performer;
+    @Getter
+    private final String title;
+    @Getter
+    private final int replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -35,9 +35,9 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.AUDIO;
-	}
+    public MessageType getType() {
+        return MessageType.AUDIO;
+    }
 
     public static class SendableAudioMessageBuilder {
 

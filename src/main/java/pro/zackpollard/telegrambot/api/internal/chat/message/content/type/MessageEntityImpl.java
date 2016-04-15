@@ -9,42 +9,42 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.MessageEntityTy
  */
 public class MessageEntityImpl implements MessageEntity {
 
-	private final MessageEntityType type;
-	private final int offset;
-	private final int length;
-	private final String url;
+    private final MessageEntityType type;
+    private final int offset;
+    private final int length;
+    private final String url;
 
-	private MessageEntityImpl(JSONObject jsonObject) {
+    private MessageEntityImpl(JSONObject jsonObject) {
 
-		this.type = MessageEntityType.getType(jsonObject.getString("type"));
-		this.offset = jsonObject.getInt("offset");
-		this.length = jsonObject.getInt("length");
-		this.url = jsonObject.optString("url");
-	}
+        this.type = MessageEntityType.getType(jsonObject.getString("type"));
+        this.offset = jsonObject.getInt("offset");
+        this.length = jsonObject.getInt("length");
+        this.url = jsonObject.optString("url");
+    }
 
-	public static MessageEntity createMessageEntity(JSONObject jsonObject) {
+    public static MessageEntity createMessageEntity(JSONObject jsonObject) {
 
-		return jsonObject != null ? new MessageEntityImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new MessageEntityImpl(jsonObject) : null;
+    }
 
 
-	@Override
-	public MessageEntityType getType() {
-		return type;
-	}
+    @Override
+    public MessageEntityType getType() {
+        return type;
+    }
 
-	@Override
-	public int getOffset() {
-		return offset;
-	}
+    @Override
+    public int getOffset() {
+        return offset;
+    }
 
-	@Override
-	public int getLength() {
-		return length;
-	}
+    @Override
+    public int getLength() {
+        return length;
+    }
 
-	@Override
-	public String getUrl() {
-		return url;
-	}
+    @Override
+    public String getUrl() {
+        return url;
+    }
 }

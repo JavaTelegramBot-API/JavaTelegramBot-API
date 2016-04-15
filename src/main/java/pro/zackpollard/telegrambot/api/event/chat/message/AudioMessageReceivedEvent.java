@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.AudioContent;
  */
 public class AudioMessageReceivedEvent extends MessageReceivedEvent {
 
-	public AudioMessageReceivedEvent(Message message) {
+    public AudioMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public AudioContent getContent() {
+    @Override
+    public AudioContent getContent() {
 
-		return (AudioContent) getMessage().getContent();
-	}
+        return (AudioContent) getMessage().getContent();
+    }
 }

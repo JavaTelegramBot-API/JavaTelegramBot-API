@@ -14,16 +14,16 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableLocationMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@Getter
-	@NonNull
-	private final double latitude;
-	@Getter
-	@NonNull
-	private final double longitude;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @Getter
+    @NonNull
+    private final double latitude;
+    @Getter
+    @NonNull
+    private final double longitude;
+    @Getter
+    private final int replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -32,9 +32,9 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.LOCATION;
-	}
+    public MessageType getType() {
+        return MessageType.LOCATION;
+    }
 
     public static class SendableLocationMessageBuilder {
 

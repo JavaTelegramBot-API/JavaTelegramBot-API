@@ -12,20 +12,20 @@ import static java.awt.SystemColor.text;
  */
 public class PinnedMessageContentImpl implements PinnedMessageContent {
 
-	private final Message content;
+    private final Message content;
 
-	private PinnedMessageContentImpl(JSONObject jsonObject) {
+    private PinnedMessageContentImpl(JSONObject jsonObject) {
 
-		this.content = MessageImpl.createMessage(jsonObject);
-	}
+        this.content = MessageImpl.createMessage(jsonObject);
+    }
 
-	public static PinnedMessageContent createPinnedMessageContent(JSONObject jsonObject) {
+    public static PinnedMessageContent createPinnedMessageContent(JSONObject jsonObject) {
 
-		return text != null ? new PinnedMessageContentImpl(jsonObject) : null;
-	}
+        return text != null ? new PinnedMessageContentImpl(jsonObject) : null;
+    }
 
-	@Override
-	public Message getContent() {
-		return content;
-	}
+    @Override
+    public Message getContent() {
+        return content;
+    }
 }

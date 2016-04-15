@@ -9,13 +9,13 @@ import pro.zackpollard.telegrambot.api.event.chat.message.MessageEvent;
  */
 public class MigrateToChatEvent extends MessageEvent {
 
-	public MigrateToChatEvent(Message message) {
-		super(message);
-	}
+    public MigrateToChatEvent(Message message) {
+        super(message);
+    }
 
-	@Override
-	public SuperGroupChat getChat() {
+    @Override
+    public SuperGroupChat getChat() {
 
-		return (SuperGroupChat) getMessage().getChat();
-	}
+        return (SuperGroupChat) getMessage().getChat();
+    }
 }

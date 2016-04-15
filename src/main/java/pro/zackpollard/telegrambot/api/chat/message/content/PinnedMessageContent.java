@@ -7,11 +7,11 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
  */
 public interface PinnedMessageContent extends Content {
 
-	Message getContent();
+    Message getContent();
 
-	@Override
-	default ContentType getType() {
+    @Override
+    default ContentType getType() {
 
-		return ContentType.PINNED_MESSAGE;
-	}
+        return ContentType.PINNED_MESSAGE;
+    }
 }

@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.DocumentContent;
  */
 public class DocumentMessageReceivedEvent extends MessageReceivedEvent {
 
-	public DocumentMessageReceivedEvent(Message message) {
+    public DocumentMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public DocumentContent getContent() {
+    @Override
+    public DocumentContent getContent() {
 
-		return (DocumentContent) getMessage().getContent();
-	}
+        return (DocumentContent) getMessage().getContent();
+    }
 }

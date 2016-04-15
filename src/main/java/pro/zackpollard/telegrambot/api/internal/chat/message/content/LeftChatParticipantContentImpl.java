@@ -10,25 +10,25 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class LeftChatParticipantContentImpl implements LeftChatParticipantContent {
 
-	private final User content;
+    private final User content;
 
-	private LeftChatParticipantContentImpl(JSONObject jsonObject) {
+    private LeftChatParticipantContentImpl(JSONObject jsonObject) {
 
-		this.content = UserImpl.createUser(jsonObject);
-	}
+        this.content = UserImpl.createUser(jsonObject);
+    }
 
-	public static LeftChatParticipantContent createLeftChatParticipantContent(JSONObject jsonObject) {
+    public static LeftChatParticipantContent createLeftChatParticipantContent(JSONObject jsonObject) {
 
-		return jsonObject != null ? new LeftChatParticipantContentImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new LeftChatParticipantContentImpl(jsonObject) : null;
+    }
 
-	/**
-	 * Gets the participant who left the chat
-	 *
-	 * @return The previous participant, or null if there was no participant
-	 */
-	@Override
-	public User getContent() {
-		return content;
-	}
+    /**
+     * Gets the participant who left the chat
+     *
+     * @return The previous participant, or null if there was no participant
+     */
+    @Override
+    public User getContent() {
+        return content;
+    }
 }

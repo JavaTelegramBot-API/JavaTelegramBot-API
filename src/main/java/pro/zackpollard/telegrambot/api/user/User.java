@@ -7,23 +7,23 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
  */
 public interface User {
 
-	long getId();
+    long getId();
 
-	/**
-	 * Gets the first name of the user.
-	 *
-	 * @return The users first name, currently can be null due to chat creation of individual chats by ID with no way of getting the users name from telegram servers.
-	 */
-	String getFirstName();
+    /**
+     * Gets the first name of the user.
+     *
+     * @return The users first name, currently can be null due to chat creation of individual chats by ID with no way of getting the users name from telegram servers.
+     */
+    String getFirstName();
 
-	String getLastName();
+    String getLastName();
 
-	default String getFullName() {
+    default String getFullName() {
 
-		return getFirstName() + " " + getLastName();
-	}
+        return getFirstName() + " " + getLastName();
+    }
 
-	String getUsername();
+    String getUsername();
 
-	UserProfilePhotos getProfilePhotos(TelegramBot telegramBot);
+    UserProfilePhotos getProfilePhotos(TelegramBot telegramBot);
 }

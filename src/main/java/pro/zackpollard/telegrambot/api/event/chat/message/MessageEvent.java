@@ -13,11 +13,11 @@ import pro.zackpollard.telegrambot.api.event.Event;
 @RequiredArgsConstructor
 public abstract class MessageEvent implements Event {
 
-	@Getter
-	private final Message message;
+    @Getter
+    private final Message message;
 
-	public Chat getChat() {
+    public Chat getChat() {
 
-		return message.getChat();
-	}
+        return message.getChat();
+    }
 }

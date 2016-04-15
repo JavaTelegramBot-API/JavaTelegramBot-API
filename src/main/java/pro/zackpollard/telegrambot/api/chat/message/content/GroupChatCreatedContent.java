@@ -5,14 +5,14 @@ package pro.zackpollard.telegrambot.api.chat.message.content;
  */
 public interface GroupChatCreatedContent extends Content {
 
-	default boolean getContent() {
+    default boolean getContent() {
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	default ContentType getType() {
+    @Override
+    default ContentType getType() {
 
-		return ContentType.GROUP_CHAT_CREATED;
-	}
+        return ContentType.GROUP_CHAT_CREATED;
+    }
 }

@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.VoiceContent;
  */
 public class VoiceMessageReceivedEvent extends MessageReceivedEvent {
 
-	public VoiceMessageReceivedEvent(Message message) {
+    public VoiceMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public VoiceContent getContent() {
+    @Override
+    public VoiceContent getContent() {
 
-		return (VoiceContent) getMessage().getContent();
-	}
+        return (VoiceContent) getMessage().getContent();
+    }
 }

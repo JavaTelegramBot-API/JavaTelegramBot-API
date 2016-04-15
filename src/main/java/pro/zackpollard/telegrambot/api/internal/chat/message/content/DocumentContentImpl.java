@@ -10,22 +10,22 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.content.type.Docume
  */
 public class DocumentContentImpl implements DocumentContent {
 
-	private final Document content;
-	private final String caption;
+    private final Document content;
+    private final String caption;
 
-	private DocumentContentImpl(JSONObject jsonObject, String caption) {
+    private DocumentContentImpl(JSONObject jsonObject, String caption) {
 
-		this.content = DocumentImpl.createDocument(jsonObject);
+        this.content = DocumentImpl.createDocument(jsonObject);
         this.caption = caption;
-	}
+    }
 
-	public static DocumentContent createDocumentContent(JSONObject jsonObject, String caption) {
+    public static DocumentContent createDocumentContent(JSONObject jsonObject, String caption) {
 
-		return jsonObject != null ? new DocumentContentImpl(jsonObject, caption) : null;
-	}
+        return jsonObject != null ? new DocumentContentImpl(jsonObject, caption) : null;
+    }
 
-	@Override
-	public Document getContent() {
-		return content;
-	}
+    @Override
+    public Document getContent() {
+        return content;
+    }
 }

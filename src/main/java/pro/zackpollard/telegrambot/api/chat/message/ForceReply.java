@@ -6,51 +6,51 @@ package pro.zackpollard.telegrambot.api.chat.message;
 
 public class ForceReply implements ReplyMarkup {
 
-	private final boolean force_reply = true;
-	private boolean selective = false;
+    private final boolean force_reply = true;
+    private boolean selective = false;
 
-	private ForceReply(ForceReplyBuilder builder) {
+    private ForceReply(ForceReplyBuilder builder) {
 
-		this.selective = builder.selective;
-	}
+        this.selective = builder.selective;
+    }
 
-	public static ForceReplyBuilder builder() {
+    public static ForceReplyBuilder builder() {
 
-		return new ForceReplyBuilder();
-	}
+        return new ForceReplyBuilder();
+    }
 
-	public boolean getSelective() {
+    public boolean getSelective() {
 
-		return selective;
-	}
+        return selective;
+    }
 
-	@Override
-	public void setSelective(boolean selective) {
+    @Override
+    public void setSelective(boolean selective) {
 
-		this.selective = selective;
-	}
+        this.selective = selective;
+    }
 
-	@Override
-	public ReplyMarkupType getType() {
-		return ReplyMarkupType.FORCE_REPLY;
-	}
+    @Override
+    public ReplyMarkupType getType() {
+        return ReplyMarkupType.FORCE_REPLY;
+    }
 
-	public static class ForceReplyBuilder {
+    public static class ForceReplyBuilder {
 
-		private boolean selective = false;
+        private boolean selective = false;
 
-		private ForceReplyBuilder() {
-		}
+        private ForceReplyBuilder() {
+        }
 
-		public ForceReplyBuilder selective(boolean selective) {
+        public ForceReplyBuilder selective(boolean selective) {
 
-			this.selective = selective;
-			return this;
-		}
+            this.selective = selective;
+            return this;
+        }
 
-		public ForceReply build() {
+        public ForceReply build() {
 
-			return new ForceReply(this);
-		}
-	}
+            return new ForceReply(this);
+        }
+    }
 }

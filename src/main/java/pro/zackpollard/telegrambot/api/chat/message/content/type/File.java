@@ -14,21 +14,21 @@ import java.net.URL;
  */
 public interface File {
 
-	/**
-	 * Gets the Unique Identifier for this file
-	 *
-	 * @return The files ID
-	 */
-	String getFileId();
+    /**
+     * Gets the Unique Identifier for this file
+     *
+     * @return The files ID
+     */
+    String getFileId();
 
-	/**
-	 * Gets the size of the file
-	 *
-	 * @return The file size
-	 */
-	int getSize();
+    /**
+     * Gets the size of the file
+     *
+     * @return The file size
+     */
+    int getSize();
 
-	default String getFileDownloadLink(TelegramBot telegramBot) {
+    default String getFileDownloadLink(TelegramBot telegramBot) {
 
         JSONObject jsonObject = null;
 
@@ -40,9 +40,9 @@ public interface File {
             e.printStackTrace();
         }
 
-        if(jsonObject != null) {
+        if (jsonObject != null) {
 
-            if(jsonObject.getBoolean("ok")) {
+            if (jsonObject.getBoolean("ok")) {
 
                 return "https://api.telegram.org/file/bot" + telegramBot.getAuthToken() + "/" + jsonObject.getJSONObject("result").getString("file_path");
             }
@@ -51,11 +51,11 @@ public interface File {
         return null;
     }
 
-	default java.io.File downloadFile(TelegramBot telegramBot, java.io.File downloadLocation) {
+    default java.io.File downloadFile(TelegramBot telegramBot, java.io.File downloadLocation) {
 
         String downloadLink = getFileDownloadLink(telegramBot);
 
-        if(downloadLink != null) {
+        if (downloadLink != null) {
 
             try {
                 FileUtils.copyURLToFile(new URL(downloadLink), downloadLocation);
@@ -66,5 +66,5 @@ public interface File {
         }
 
         return downloadLocation;
-	}
+    }
 }

@@ -10,29 +10,29 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.content.type.VideoI
  */
 public class VideoContentImpl implements VideoContent {
 
-	private final Video content;
-	private final String caption;
+    private final Video content;
+    private final String caption;
 
-	private VideoContentImpl(JSONObject jsonObject, String caption) {
+    private VideoContentImpl(JSONObject jsonObject, String caption) {
 
-		this.content = VideoImpl.createVideo(jsonObject);
-		this.caption = caption;
-	}
+        this.content = VideoImpl.createVideo(jsonObject);
+        this.caption = caption;
+    }
 
-	public static VideoContent createVideoContent(JSONObject jsonObject, String caption) {
+    public static VideoContent createVideoContent(JSONObject jsonObject, String caption) {
 
-		return jsonObject != null ? new VideoContentImpl(jsonObject, caption) : null;
-	}
+        return jsonObject != null ? new VideoContentImpl(jsonObject, caption) : null;
+    }
 
-	@Override
-	public Video getContent() {
+    @Override
+    public Video getContent() {
 
-		return content;
-	}
+        return content;
+    }
 
-	@Override
-	public String getCaption() {
+    @Override
+    public String getCaption() {
 
-		return caption;
-	}
+        return caption;
+    }
 }

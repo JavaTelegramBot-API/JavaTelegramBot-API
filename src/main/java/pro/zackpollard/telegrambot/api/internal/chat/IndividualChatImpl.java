@@ -14,39 +14,39 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class IndividualChatImpl implements IndividualChat {
 
-	private final User partner;
+    private final User partner;
 
-	private IndividualChatImpl(JSONObject jsonObject) {
+    private IndividualChatImpl(JSONObject jsonObject) {
 
-		this.partner = UserImpl.createUser(jsonObject);
-	}
+        this.partner = UserImpl.createUser(jsonObject);
+    }
 
-	private IndividualChatImpl(int userID) {
+    private IndividualChatImpl(int userID) {
 
-		this.partner = UserImpl.createUser(userID);
-	}
+        this.partner = UserImpl.createUser(userID);
+    }
 
-	public static IndividualChat createIndividualChat(JSONObject jsonObject) {
+    public static IndividualChat createIndividualChat(JSONObject jsonObject) {
 
-		return new IndividualChatImpl(jsonObject);
-	}
+        return new IndividualChatImpl(jsonObject);
+    }
 
-	public static Chat createIndividualChat(int chatID) {
+    public static Chat createIndividualChat(int chatID) {
 
-		return new IndividualChatImpl(chatID);
-	}
+        return new IndividualChatImpl(chatID);
+    }
 
-	@Override
-	public User getPartner() {
+    @Override
+    public User getPartner() {
 
-		return partner;
-	}
+        return partner;
+    }
 
-	@Override
-	public String getId() {
+    @Override
+    public String getId() {
 
-		return String.valueOf(partner.getId());
-	}
+        return String.valueOf(partner.getId());
+    }
 
     @Override
     public String getName() {
@@ -54,8 +54,8 @@ public class IndividualChatImpl implements IndividualChat {
     }
 
     @Override
-	public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
+    public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
 
-		return telegramBot.sendMessage(this, message);
-	}
+        return telegramBot.sendMessage(this, message);
+    }
 }

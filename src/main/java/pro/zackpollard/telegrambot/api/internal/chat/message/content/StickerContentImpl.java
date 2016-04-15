@@ -10,20 +10,20 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.content.type.Sticke
  */
 public class StickerContentImpl implements StickerContent {
 
-	private final Sticker content;
+    private final Sticker content;
 
-	private StickerContentImpl(JSONObject jsonObject) {
+    private StickerContentImpl(JSONObject jsonObject) {
 
-		this.content = StickerImpl.createSticker(jsonObject);
-	}
+        this.content = StickerImpl.createSticker(jsonObject);
+    }
 
-	public static StickerContent createStickerContent(JSONObject jsonObject) {
+    public static StickerContent createStickerContent(JSONObject jsonObject) {
 
-		return jsonObject != null ? new StickerContentImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new StickerContentImpl(jsonObject) : null;
+    }
 
-	@Override
-	public Sticker getContent() {
-		return content;
-	}
+    @Override
+    public Sticker getContent() {
+        return content;
+    }
 }

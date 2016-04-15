@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface TextContent extends Content {
 
-	String getContent();
+    String getContent();
 
-	List<MessageEntity> getEntities();
+    List<MessageEntity> getEntities();
 
-	@Override
-	default ContentType getType() {
+    @Override
+    default ContentType getType() {
 
-		return ContentType.TEXT;
-	}
+        return ContentType.TEXT;
+    }
 }

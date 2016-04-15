@@ -16,42 +16,42 @@ import pro.zackpollard.telegrambot.api.updates.Update;
  */
 public class UpdateImpl implements Update {
 
-	private final int update_id;
-	private final Message message;
+    private final int update_id;
+    private final Message message;
     private final InlineQuery inline_query;
     private final ChosenInlineResult chosen_inline_result;
     private final CallbackQuery callbackQuery;
     private UpdateType updateType;
 
-	private UpdateImpl(JSONObject jsonObject) {
+    private UpdateImpl(JSONObject jsonObject) {
 
-		this.update_id = jsonObject.getInt("update_id");
-		this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"));
-        if(message != null) updateType = UpdateType.MESSAGE;
+        this.update_id = jsonObject.getInt("update_id");
+        this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"));
+        if (message != null) updateType = UpdateType.MESSAGE;
         this.inline_query = InlineQueryImpl.createInlineQuery(jsonObject.optJSONObject("inline_query"));
-        if(inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
+        if (inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
         this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
-        if(chosen_inline_result != null && updateType == null) updateType = UpdateType.CHOSEN_INLINE_RESULT;
+        if (chosen_inline_result != null && updateType == null) updateType = UpdateType.CHOSEN_INLINE_RESULT;
         this.callbackQuery = CallbackQueryImpl.createCallbackQuery(jsonObject.optJSONObject("callback_query"));
-        if(callbackQuery != null && updateType == null) updateType = UpdateType.CALLBACK_QUERY;
-	}
+        if (callbackQuery != null && updateType == null) updateType = UpdateType.CALLBACK_QUERY;
+    }
 
-	public static Update createUpdate(JSONObject jsonObject) {
+    public static Update createUpdate(JSONObject jsonObject) {
 
-		return new UpdateImpl(jsonObject);
-	}
+        return new UpdateImpl(jsonObject);
+    }
 
-	@Override
-	public int getId() {
+    @Override
+    public int getId() {
 
-		return update_id;
-	}
+        return update_id;
+    }
 
-	@Override
-	public Message getMessage() {
+    @Override
+    public Message getMessage() {
 
-		return message;
-	}
+        return message;
+    }
 
     @Override
     public InlineQuery getInlineQuery() {

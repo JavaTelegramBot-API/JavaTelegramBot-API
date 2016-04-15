@@ -14,13 +14,13 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableStickerMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile sticker;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile sticker;
+    @Getter
+    private final int replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -29,9 +29,9 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.STICKER;
-	}
+    public MessageType getType() {
+        return MessageType.STICKER;
+    }
 
     public static class SendableStickerMessageBuilder {
 
