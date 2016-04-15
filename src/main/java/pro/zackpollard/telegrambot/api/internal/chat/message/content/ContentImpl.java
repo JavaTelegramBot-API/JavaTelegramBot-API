@@ -10,10 +10,11 @@ public class ContentImpl {
 
 	private final static String[] CONTENT_TYPE_NAMES = new String[]{
 			"text", "audio", "document", "photo", "sticker",
-			"video", "voice", "contact", "location", "venue", "new_chat_member",
-			"left_chat_member", "new_chat_title", "new_chat_photo",
-			"delete_chat_photo", "group_chat_created", "supergroup_chat_created",
-            "channel_chat_created", "migrate_to_chat_id", "migrate_from_chat_id"
+			"video", "voice", "contact", "location", "venue",
+            "new_chat_member", "left_chat_member", "new_chat_title",
+            "new_chat_photo", "delete_chat_photo", "group_chat_created",
+            "supergroup_chat_created", "channel_chat_created",
+            "migrate_to_chat_id", "migrate_from_chat_id", "pinned_message"
 	};
 
 	public static Content createContent(JSONObject jsonObject) {
@@ -92,6 +93,8 @@ public class ContentImpl {
                 case "migrate_from_chat_id":
 
                     return MigrateFromChatIDContentImpl.createMigrateFromChatIDContent(jsonObject.getLong("migrate_from_chat_id"));
+                case "pinned_message":
+                    return PinnedMessageContentImpl.createPinnedMessageContent(jsonObject.getJSONObject("pinned_message"));
 			}
 		}
 
