@@ -34,7 +34,7 @@ public class ContentImpl {
 
 				case "text":
 
-					return TextContentImpl.createTextContent(jsonObject.getString("text"));
+					return TextContentImpl.createTextContent(jsonObject.getString("text"), jsonObject.optJSONArray("entities"));
 				case "audio":
 
 					return AudioContentImpl.createAudioContent(jsonObject.getJSONObject("audio"));
