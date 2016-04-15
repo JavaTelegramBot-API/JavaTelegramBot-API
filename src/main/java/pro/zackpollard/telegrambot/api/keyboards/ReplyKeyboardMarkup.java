@@ -66,14 +66,8 @@ public class ReplyKeyboardMarkup implements Keyboard {
      *
      * @return Selective option, default false
      */
-    @Override
     public boolean getSelective() {
         return selective;
-    }
-
-    @Override
-    public void setSelective(boolean selective) {
-        this.selective = selective;
     }
 
     @Override

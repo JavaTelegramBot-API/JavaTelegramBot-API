@@ -25,12 +25,6 @@ public class ForceReply implements ReplyMarkup {
     }
 
     @Override
-    public void setSelective(boolean selective) {
-
-        this.selective = selective;
-    }
-
-    @Override
     public ReplyMarkupType getType() {
         return ReplyMarkupType.FORCE_REPLY;
     }
