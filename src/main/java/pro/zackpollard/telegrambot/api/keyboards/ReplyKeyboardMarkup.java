@@ -44,7 +44,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
      *
      * @return Resize option, default false
      */
-    public boolean getResize_keyboard() {
+    public boolean getResizeKeyboard() {
 
         return resize_keyboard;
     }
@@ -73,7 +73,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
 
     @Override
     public void setSelective(boolean selective) {
-
+        this.selective = selective;
     }
 
     @Override
