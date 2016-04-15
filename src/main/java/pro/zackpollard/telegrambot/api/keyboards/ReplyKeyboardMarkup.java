@@ -2,7 +2,7 @@ package pro.zackpollard.telegrambot.api.keyboards;
 
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkupType;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ReplyKeyboardMarkup implements Keyboard {
 
-    private final List<List<String>> keyboard;
+    private final List<List<KeyboardButton>> keyboard;
     private final boolean resize_keyboard;
     private final boolean one_time_keyboard;
     private boolean selective;
@@ -34,7 +34,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
      *
      * @return Button rows
      */
-    public List<List<String>> getButtons() {
+    public List<List<KeyboardButton>> getButtons() {
 
         return keyboard;
     }
@@ -83,7 +83,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
 
     public static class ReplyKeyboardMarkupBuilder {
 
-        private final List<List<String>> keyboard = new LinkedList<>();
+        private final List<List<KeyboardButton>> keyboard = new LinkedList<>();
         private boolean resize_keyboard = false;
         private boolean one_time_keyboard = false;
         private boolean selective = false;
@@ -97,23 +97,39 @@ public class ReplyKeyboardMarkup implements Keyboard {
          * @param cellValues The values for the new row
          * @return The keyboard builder
          */
+        @Deprecated
         public ReplyKeyboardMarkupBuilder addRow(String... cellValues) {
 
-            List<String> list = new LinkedList<>();
+            List<KeyboardButton> list = new LinkedList<>();
 
-            Collections.addAll(list, cellValues);
+            for(String cellValue : cellValues) {
+
+                list.add(KeyboardButton.builder().text(cellValue).build());
+            }
+
             return addRow(list);
         }
 
         /**
          * Add a new row to the keyboard
          *
-         * @param cellValues The values for the new row
+         * @param buttons The buttons for the new row
          * @return The keyboard builder
          */
-        public ReplyKeyboardMarkupBuilder addRow(List<String> cellValues) {
+        public ReplyKeyboardMarkupBuilder addRow(KeyboardButton... buttons) {
 
-            keyboard.add(new LinkedList<>(cellValues));
+            return addRow(Arrays.asList(buttons));
+        }
+
+        /**
+         * Add a new row to the keyboard
+         *
+         * @param buttons The buttons for the new row
+         * @return The keyboard builder
+         */
+        public ReplyKeyboardMarkupBuilder addRow(List<KeyboardButton> buttons) {
+
+            keyboard.add(new LinkedList<>(buttons));
             return this;
         }
 
@@ -124,26 +140,43 @@ public class ReplyKeyboardMarkup implements Keyboard {
          * @return The keyboard builder
          * @throws IndexOutOfBoundsException if the row is out of range
          */
+        @Deprecated
         public ReplyKeyboardMarkupBuilder setRow(int row, String... cellValues) {
 
-            List<String> list = new LinkedList<>();
+            List<KeyboardButton> list = new LinkedList<>();
 
-            Collections.addAll(list, cellValues);
+            for(String cellValue : cellValues) {
+
+                list.add(KeyboardButton.builder().text(cellValue).build());
+            }
+
             return setRow(row, list);
         }
 
         /**
          * Sets a row of the keyboard
          *
-         * @param row        The index of the row
-         * @param cellValues The values for the row
+         * @param buttons The buttons for the row
          * @return The keyboard builder
          * @throws IndexOutOfBoundsException if the row is out of range
          */
-        public ReplyKeyboardMarkupBuilder setRow(int row, List<String> cellValues) {
+        public ReplyKeyboardMarkupBuilder setRow(int row, KeyboardButton... buttons) {
+
+            return setRow(row, Arrays.asList(buttons));
+        }
+
+        /**
+         * Sets a row of the keyboard
+         *
+         * @param row        The index of the row
+         * @param buttons    The buttons for the row
+         * @return The keyboard builder
+         * @throws IndexOutOfBoundsException if the row is out of range
+         */
+        public ReplyKeyboardMarkupBuilder setRow(int row, List<KeyboardButton> buttons) {
 
             keyboard.get(row).clear();
-            keyboard.get(row).addAll(cellValues);
+            keyboard.get(row).addAll(buttons);
             return this;
         }
 
@@ -156,9 +189,25 @@ public class ReplyKeyboardMarkup implements Keyboard {
          * @return The keyboard builder
          * @throws IndexOutOfBoundsException if the row or column is out of range
          */
+        @Deprecated
         public ReplyKeyboardMarkupBuilder setCell(int row, int column, String cellValue) {
 
-            keyboard.get(row).set(column, cellValue);
+            keyboard.get(row).set(column, KeyboardButton.builder().text(cellValue).build());
+            return this;
+        }
+
+        /**
+         * Sets a cell of the keyboard
+         *
+         * @param row       The index of the row
+         * @param column    The index of the column
+         * @param button The value for the cell
+         * @return The keyboard builder
+         * @throws IndexOutOfBoundsException if the row or column is out of range
+         */
+        public ReplyKeyboardMarkupBuilder setCell(int row, int column, KeyboardButton button) {
+
+            keyboard.get(row).set(column, button);
             return this;
         }
 
@@ -182,7 +231,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
          * Defaults to false.
          *
          * @param oneTime Whether the keyboard is a one time keyboard.
-         * @return
+         * @return The keyboard builder.
          */
         public ReplyKeyboardMarkupBuilder oneTime(boolean oneTime) {
 
@@ -190,12 +239,25 @@ public class ReplyKeyboardMarkup implements Keyboard {
             return this;
         }
 
+        /**
+         * Optional. Use this parameter if you want to show the keyboard to specific users only.
+         * Targets: 1) users that are @mentioned in the text of the Message object;
+         * 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+         *
+         * @param selective Whether the keyboard is a selective keyboard.
+         * @return The keyboard builder.
+         */
         public ReplyKeyboardMarkupBuilder selective(boolean selective) {
 
             this.selective = selective;
             return this;
         }
 
+        /**
+         * Builds the ReplyKeyboardMarkup object from the specified options.
+         *
+         * @return A new ReplyKeyboardMarkup.
+         */
         public ReplyKeyboardMarkup build() {
 
             return new ReplyKeyboardMarkup(this);
