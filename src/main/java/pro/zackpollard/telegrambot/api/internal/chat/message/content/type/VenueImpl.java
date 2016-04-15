@@ -29,21 +29,21 @@ public class VenueImpl implements Venue {
 
 	@Override
 	public Location getLocation() {
-		return null;
+		return location;
 	}
 
 	@Override
 	public String getTitle() {
-		return null;
+		return title;
 	}
 
 	@Override
 	public String getAddress() {
-		return null;
+		return address;
 	}
 
 	@Override
 	public String getFoursquareId() {
-		return null;
+		return foursquare_id;
 	}
 }
