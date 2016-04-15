@@ -1,9 +1,11 @@
 package pro.zackpollard.telegrambot.api.internal.updates;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.inline.ChosenInlineResult;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineQuery;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
+import pro.zackpollard.telegrambot.api.internal.chat.CallbackQueryImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.inline.ChosenInlineResultImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.inline.InlineQueryImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
@@ -18,6 +20,7 @@ public class UpdateImpl implements Update {
 	private final Message message;
     private final InlineQuery inline_query;
     private final ChosenInlineResult chosen_inline_result;
+    private final CallbackQuery callbackQuery;
     private UpdateType updateType;
 
 	private UpdateImpl(JSONObject jsonObject) {
@@ -29,6 +32,8 @@ public class UpdateImpl implements Update {
         if(inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
         this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
         if(chosen_inline_result != null && updateType == null) updateType = UpdateType.CHOSEN_INLINE_RESULT;
+        this.callbackQuery = CallbackQueryImpl.createCallbackQuery(jsonObject.optJSONObject("callback_query"));
+        if(callbackQuery != null && updateType == null) updateType = UpdateType.CALLBACK_QUERY;
 	}
 
 	public static Update createUpdate(JSONObject jsonObject) {
@@ -58,6 +63,11 @@ public class UpdateImpl implements Update {
     public ChosenInlineResult getChosenInlineResult() {
 
         return chosen_inline_result;
+    }
+
+    @Override
+    public CallbackQuery getCallbackQuery() {
+        return callbackQuery;
     }
 
     @Override

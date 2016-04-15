@@ -8,8 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineCallbackQuery;
+import pro.zackpollard.telegrambot.api.chat.message.MessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.event.chat.*;
+import pro.zackpollard.telegrambot.api.event.chat.inline.InlineCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineResultChosenEvent;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
@@ -206,6 +209,23 @@ public class RequestUpdatesManager extends UpdateManager {
                                     case CHOSEN_INLINE_RESULT: {
 
                                         eventManager.callEvent(new InlineResultChosenEvent(update.getChosenInlineResult()));
+                                        break;
+                                    }
+
+                                    case CALLBACK_QUERY: {
+
+                                        //Make three events, one for callback queries overall, one for message callback queries and one for inline callback queries
+                                        eventManager.callEvent(new CallbackQueryReceivedEvent(update.getCallbackQuery()));
+                                        switch(update.getCallbackQuery().getType()) {
+                                            case MESSAGE: {
+                                                eventManager.callEvent(new MessageCallbackQueryReceivedEvent((MessageCallbackQuery) update.getCallbackQuery()));
+                                                break;
+                                            }
+                                            case INLINE_MESSAGE: {
+                                                eventManager.callEvent(new InlineCallbackQueryReceivedEvent((InlineCallbackQuery) update.getCallbackQuery()));
+                                                break;
+                                            }
+                                        }
                                         break;
                                     }
                                 }
