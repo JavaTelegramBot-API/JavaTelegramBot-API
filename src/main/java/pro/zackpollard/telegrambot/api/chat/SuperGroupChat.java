@@ -11,4 +11,6 @@ public interface SuperGroupChat extends Chat {
     }
 
     boolean kickChatMember(int userId);
+
+    boolean unbanChatMember(int userId);
 }

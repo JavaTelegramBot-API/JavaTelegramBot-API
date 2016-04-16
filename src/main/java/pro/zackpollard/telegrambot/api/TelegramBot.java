@@ -578,6 +578,30 @@ public final class TelegramBot {
         return false;
     }
 
+    public boolean unbanChatMember(String chatId, int userId) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "unbanChatMember")
+                    .field("chat_id", chatId, "application/json")
+                    .field("user_id", userId);
+
+            response = request.asString();
+            jsonResponse = TelegramBot.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public void startUpdates(boolean getPreviousUpdates) {
 
         updateManager = new RequestUpdatesManager(this, getPreviousUpdates);

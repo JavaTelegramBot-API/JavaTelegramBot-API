@@ -71,4 +71,10 @@ public class SuperGroupChatImpl implements SuperGroupChat {
 
         return telegramBot.kickChatMember(this.getId(), userId);
     }
+
+    @Override
+    public boolean unbanChatMember(int userId) {
+
+        return telegramBot.unbanChatMember(this.getId(), userId);
+    }
 }
