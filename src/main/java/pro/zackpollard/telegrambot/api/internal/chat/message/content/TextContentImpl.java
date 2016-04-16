@@ -21,13 +21,17 @@ public class TextContentImpl implements TextContent {
         this.entities = new LinkedList<>();
 
         this.content = text;
-        for (int i = 0; i < entities.length(); ++i) {
 
-            MessageEntity messageEntity = MessageEntityImpl.createMessageEntity(entities.getJSONObject(i));
+        if(entities != null) {
 
-            if (messageEntity != null) {
+            for (int i = 0; i < entities.length(); ++i) {
 
-                this.entities.add(messageEntity);
+                MessageEntity messageEntity = MessageEntityImpl.createMessageEntity(entities.getJSONObject(i));
+
+                if (messageEntity != null) {
+
+                    this.entities.add(messageEntity);
+                }
             }
         }
     }
