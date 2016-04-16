@@ -17,7 +17,7 @@ public interface Message {
      *
      * @return The ID of the message
      */
-    int getMessageId();
+    long getMessageId();
 
     /**
      * Get the UNIX timestamp of when this message was sent/received at

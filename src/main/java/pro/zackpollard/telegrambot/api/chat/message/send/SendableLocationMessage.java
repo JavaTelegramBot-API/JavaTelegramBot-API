@@ -21,7 +21,7 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
     @NonNull
     private final double longitude;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -40,7 +40,7 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
 
         private double latitude;
         private double longitude;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -62,7 +62,7 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
             return this;
         }
 
-        public SendableLocationMessage.SendableLocationMessageBuilder replyTo(int replyTo) {
+        public SendableLocationMessage.SendableLocationMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

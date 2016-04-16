@@ -29,7 +29,7 @@ public class SendableVenueMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final String foursquareId;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -50,7 +50,7 @@ public class SendableVenueMessage implements SendableMessage, ReplyingOptions, N
         private String title;
         private String address;
         private String foursquareId;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -87,7 +87,7 @@ public class SendableVenueMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendableVenueMessage.SendableVenueMessageBuilder replyTo(int replyTo) {
+        public SendableVenueMessage.SendableVenueMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

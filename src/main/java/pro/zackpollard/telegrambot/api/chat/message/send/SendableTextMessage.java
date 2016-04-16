@@ -18,7 +18,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
     @Getter
     private final String message;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final boolean disableWebPagePreview;
     @Getter
@@ -40,7 +40,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
     public static class SendableTextMessageBuilder {
 
         private String message;
-        private int replyTo;
+        private long replyTo;
         private boolean disableWebPagePreview;
         private ReplyMarkup replyMarkup;
         private ParseMode parseMode;
@@ -59,7 +59,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
             return this;
         }
 
-        public SendableTextMessage.SendableTextMessageBuilder replyTo(int replyTo) {
+        public SendableTextMessage.SendableTextMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

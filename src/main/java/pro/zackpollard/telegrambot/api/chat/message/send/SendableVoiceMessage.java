@@ -20,7 +20,7 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final int duration;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -40,7 +40,7 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
 
         private InputFile voice;
         private int duration;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -62,7 +62,7 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendableVoiceMessage.SendableVoiceMessageBuilder replyTo(int replyTo) {
+        public SendableVoiceMessage.SendableVoiceMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

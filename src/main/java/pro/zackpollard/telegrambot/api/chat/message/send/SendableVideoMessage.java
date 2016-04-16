@@ -26,7 +26,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final String caption;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -48,7 +48,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
         private int width;
         private int height;
         private String caption;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -85,7 +85,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendableVideoMessage.SendableVideoMessageBuilder replyTo(int replyTo) {
+        public SendableVideoMessage.SendableVideoMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

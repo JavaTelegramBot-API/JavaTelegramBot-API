@@ -24,7 +24,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final String title;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -45,7 +45,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
         private int duration;
         private String performer;
         private String title;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -78,8 +78,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendableAudioMessage.SendableAudioMessageBuilder reployTo(int replyTo) {
-
+        public SendableAudioMessage.SendableAudioMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

@@ -20,7 +20,7 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final String caption;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -39,7 +39,7 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
 
         private InputFile photo;
         private String caption;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -61,7 +61,7 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendablePhotoMessage.SendablePhotoMessageBuilder replyTo(int replyTo) {
+        public SendablePhotoMessage.SendablePhotoMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

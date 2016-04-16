@@ -18,7 +18,7 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
     @Getter
     private final InputFile sticker;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -36,7 +36,7 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
     public static class SendableStickerMessageBuilder {
 
         private InputFile sticker;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -53,7 +53,7 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
             return this;
         }
 
-        public SendableStickerMessage.SendableStickerMessageBuilder replyTo(int replyTo) {
+        public SendableStickerMessage.SendableStickerMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }

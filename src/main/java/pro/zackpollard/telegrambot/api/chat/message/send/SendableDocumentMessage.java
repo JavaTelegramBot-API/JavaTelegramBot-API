@@ -18,7 +18,7 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
     @Getter
     private final InputFile document;
     @Getter
-    private final int replyTo;
+    private final long replyTo;
     @Getter
     private final ReplyMarkup replyMarkup;
     @Getter
@@ -38,7 +38,7 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
     public static class SendableDocumentMessageBuilder {
 
         private InputFile document;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
         private String caption;
@@ -56,7 +56,7 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
             return this;
         }
 
-        public SendableDocumentMessage.SendableDocumentMessageBuilder replyTo(int replyTo) {
+        public SendableDocumentMessage.SendableDocumentMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
