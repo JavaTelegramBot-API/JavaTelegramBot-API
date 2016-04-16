@@ -489,6 +489,31 @@ public final class TelegramBot {
                 }
 
                 break;
+            case VENUE:
+
+                SendableVenueMessage venueMessage = (SendableVenueMessage) message;
+
+                try {
+
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("latitude", venueMessage.getLatitude())
+                            .field("longitude", venueMessage.getLongitude())
+                            .field("title", venueMessage.getTitle())
+                            .field("address", venueMessage.getAddress());
+
+                    if (venueMessage.getFoursquareId() != null) request.field("foursquare_id", venueMessage.getFoursquareId());
+
+                    processReplyContent(request, venueMessage);
+                    processNotificationContent(request, venueMessage);
+
+                    response = request.asString();
+                    jsonResponse = processResponse(response);
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
+
+                break;
             case CHAT_ACTION:
 
                 SendableChatAction sendableChatAction = (SendableChatAction) message;
