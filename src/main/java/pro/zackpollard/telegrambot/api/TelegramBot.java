@@ -30,6 +30,7 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
+import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
@@ -597,6 +598,9 @@ public final class TelegramBot {
                     break;
                 case KEYBOARD_MARKUP:
                     multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json");
+                    break;
+                case INLINE_KEYBOARD_MARKUP:
+                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), InlineKeyboardMarkup.class), "application/json");
                     break;
             }
         }
