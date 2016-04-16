@@ -11,11 +11,11 @@ import java.util.List;
  */
 public class InlineKeyboardMarkup implements InlineKeyboard {
 
-    private final List<List<InlineKeyboardButton>> keyboard;
+    private final List<List<InlineKeyboardButton>> inline_keyboard;
 
     private InlineKeyboardMarkup(InlineKeyboardMarkupBuilder builder) {
 
-        this.keyboard = builder.keyboard;
+        this.inlin_keyboard = builder.inline_keyboard;
     }
 
     public static InlineKeyboardMarkupBuilder builder() {
@@ -30,7 +30,7 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
      */
     public List<List<InlineKeyboardButton>> getButtons() {
 
-        return keyboard;
+        return inline_keyboard;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
 
     public static class InlineKeyboardMarkupBuilder {
 
-        private final List<List<InlineKeyboardButton>> keyboard = new LinkedList<>();
+        private final List<List<InlineKeyboardButton>> inline_keyboard = new LinkedList<>();
 
         private InlineKeyboardMarkupBuilder() {
         }
@@ -64,7 +64,7 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
          */
         public InlineKeyboardMarkupBuilder addRow(List<InlineKeyboardButton> buttons) {
 
-            keyboard.add(new LinkedList<>(buttons));
+            inline_keyboard.add(new LinkedList<>(buttons));
             return this;
         }
 
@@ -90,8 +90,8 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
          */
         public InlineKeyboardMarkupBuilder setRow(int row, List<InlineKeyboardButton> buttons) {
 
-            keyboard.get(row).clear();
-            keyboard.get(row).addAll(buttons);
+            inline_keyboard.get(row).clear();
+            inline_keyboard.get(row).addAll(buttons);
             return this;
         }
 
@@ -106,7 +106,7 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
          */
         public InlineKeyboardMarkupBuilder setCell(int row, int column, InlineKeyboardButton button) {
 
-            keyboard.get(row).set(column, button);
+            inline_keyboard.get(row).set(column, button);
             return this;
         }
 
