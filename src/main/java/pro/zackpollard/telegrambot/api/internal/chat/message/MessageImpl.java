@@ -140,4 +140,9 @@ public class MessageImpl implements Message {
     public JSONObject asJson() {
         return jsonMessage;
     }
+
+    @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
+    }
 }

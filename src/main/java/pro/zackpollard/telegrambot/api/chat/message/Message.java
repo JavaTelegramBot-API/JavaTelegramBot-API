@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.chat.message;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableForwardMessage;
@@ -73,6 +74,8 @@ public interface Message {
      * @return The JSON provided by the Telegram API
      */
     JSONObject asJson();
+
+    TelegramBot getBotInstance();
 
     default Message forwardMessage(Chat chat) {
 
