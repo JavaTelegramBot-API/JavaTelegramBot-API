@@ -57,7 +57,7 @@ public class MessageImpl implements Message {
      * @return The ID of the message
      */
     @Override
-    public int getMessageId() {
+    public long getMessageId() {
         return message_id;
     }
 

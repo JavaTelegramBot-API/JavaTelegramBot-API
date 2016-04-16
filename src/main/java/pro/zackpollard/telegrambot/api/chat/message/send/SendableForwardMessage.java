@@ -15,7 +15,7 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
 
     @NonNull
     @Getter
-    private final Integer messageID;
+    private final Long messageID;
     @NonNull
     @Getter
     private final String chatID;
@@ -33,7 +33,7 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
 
     public static class SendableForwardMessageBuilder {
 
-        private Integer messageID;
+        private Long messageID;
         private String chatID;
         private boolean disableNotification;
 
@@ -46,7 +46,7 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
             return this;
         }
 
-        public SendableForwardMessage.SendableForwardMessageBuilder messageID(Integer messageID) {
+        public SendableForwardMessage.SendableForwardMessageBuilder messageID(Long messageID) {
             this.messageID = messageID;
             return this;
         }
