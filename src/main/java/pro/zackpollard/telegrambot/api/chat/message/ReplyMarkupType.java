@@ -7,5 +7,6 @@ public enum ReplyMarkupType {
 
     KEYBOARD_HIDE,
     KEYBOARD_MARKUP,
-    FORCE_REPLY;
+    FORCE_REPLY,
+    INLINE_KEYBOARD_MARKUP
 }
