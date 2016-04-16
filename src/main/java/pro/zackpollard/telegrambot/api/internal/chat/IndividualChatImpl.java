@@ -16,30 +16,39 @@ public class IndividualChatImpl implements IndividualChat {
 
     private final User partner;
 
-    private IndividualChatImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
+
+    private IndividualChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.partner = UserImpl.createUser(jsonObject);
+        this.telegramBot = telegramBot;
     }
 
-    private IndividualChatImpl(int userID) {
+    private IndividualChatImpl(int userID, TelegramBot telegramBot) {
 
         this.partner = UserImpl.createUser(userID);
+        this.telegramBot = telegramBot;
     }
 
-    public static IndividualChat createIndividualChat(JSONObject jsonObject) {
+    public static IndividualChat createIndividualChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return new IndividualChatImpl(jsonObject);
+        return new IndividualChatImpl(jsonObject, telegramBot);
     }
 
-    public static Chat createIndividualChat(int chatID) {
+    public static Chat createIndividualChat(int chatID, TelegramBot telegramBot) {
 
-        return new IndividualChatImpl(chatID);
+        return new IndividualChatImpl(chatID, telegramBot);
     }
 
     @Override
     public User getPartner() {
 
         return partner;
+    }
+
+    @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class IndividualChatImpl implements IndividualChat {
     }
 
     @Override
-    public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
+    public Message sendMessage(SendableMessage message) {
 
         return telegramBot.sendMessage(this, message);
     }

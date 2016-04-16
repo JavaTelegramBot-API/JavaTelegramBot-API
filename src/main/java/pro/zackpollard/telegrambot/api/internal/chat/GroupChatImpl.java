@@ -14,26 +14,30 @@ public class GroupChatImpl implements GroupChat {
     private final int id;
     private final String title;
 
-    private GroupChatImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
+
+    private GroupChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.id = jsonObject.getInt("id");
         this.title = jsonObject.getString("title");
+        this.telegramBot = telegramBot;
     }
 
-    private GroupChatImpl(int chatID) {
+    private GroupChatImpl(int chatID, TelegramBot telegramBot) {
 
         this.id = chatID;
         this.title = null;
+        this.telegramBot = telegramBot;
     }
 
-    public static GroupChat createGroupChat(JSONObject jsonObject) {
+    public static GroupChat createGroupChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return new GroupChatImpl(jsonObject);
+        return new GroupChatImpl(jsonObject, telegramBot);
     }
 
-    public static GroupChat createGroupChat(int chatID) {
+    public static GroupChat createGroupChat(int chatID, TelegramBot telegramBot) {
 
-        return new GroupChatImpl(chatID);
+        return new GroupChatImpl(chatID, telegramBot);
     }
 
     /**
@@ -47,13 +51,24 @@ public class GroupChatImpl implements GroupChat {
     }
 
     @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
+    }
+
+    @Override
     public String getId() {
         return String.valueOf(id);
     }
 
     @Override
-    public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
+    public Message sendMessage(SendableMessage message) {
 
         return telegramBot.sendMessage(this, message);
+    }
+
+    @Override
+    public boolean kickChatMember(int userId) {
+
+        return telegramBot.kickChatMember(this.getId(), userId);
     }
 }

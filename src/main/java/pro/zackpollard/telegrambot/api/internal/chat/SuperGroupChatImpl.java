@@ -14,26 +14,30 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     private final long id;
     private final String title;
 
-    private SuperGroupChatImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
+
+    private SuperGroupChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.id = jsonObject.getLong("id");
         this.title = jsonObject.getString("title");
+        this.telegramBot = telegramBot;
     }
 
-    private SuperGroupChatImpl(long chatID) {
+    private SuperGroupChatImpl(long chatID, TelegramBot telegramBot) {
 
         this.id = chatID;
         this.title = null;
+        this.telegramBot = telegramBot;
     }
 
-    public static SuperGroupChat createSuperGroupChat(JSONObject jsonObject) {
+    public static SuperGroupChat createSuperGroupChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return new SuperGroupChatImpl(jsonObject);
+        return new SuperGroupChatImpl(jsonObject, telegramBot);
     }
 
-    public static SuperGroupChat createSuperGroupChat(long chatID) {
+    public static SuperGroupChat createSuperGroupChat(long chatID, TelegramBot telegramBot) {
 
-        return new SuperGroupChatImpl(chatID);
+        return new SuperGroupChatImpl(chatID, telegramBot);
     }
 
     /**
@@ -47,13 +51,24 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     }
 
     @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
+    }
+
+    @Override
     public String getId() {
         return String.valueOf(id);
     }
 
     @Override
-    public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
+    public Message sendMessage(SendableMessage message) {
 
         return telegramBot.sendMessage(this, message);
+    }
+
+    @Override
+    public boolean kickChatMember(int userId) {
+
+        return telegramBot.kickChatMember(this.getId(), userId);
     }
 }

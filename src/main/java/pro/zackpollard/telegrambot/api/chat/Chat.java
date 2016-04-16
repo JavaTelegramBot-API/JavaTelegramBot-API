@@ -16,10 +16,12 @@ public interface Chat {
 
     ChatType getType();
 
-    default Message sendMessage(String message, TelegramBot telegramBot) {
+    TelegramBot getBotInstance();
 
-        return this.sendMessage(SendableTextMessage.builder().message(message).build(), telegramBot);
+    default Message sendMessage(String message) {
+
+        return this.sendMessage(SendableTextMessage.builder().message(message).build());
     }
 
-    Message sendMessage(SendableMessage message, TelegramBot telegramBot);
+    Message sendMessage(SendableMessage message);
 }

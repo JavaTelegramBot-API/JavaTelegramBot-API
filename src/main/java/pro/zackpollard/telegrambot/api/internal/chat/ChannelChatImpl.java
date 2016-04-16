@@ -14,26 +14,30 @@ public class ChannelChatImpl implements ChannelChat {
     private final String username;
     private final String title;
 
-    private ChannelChatImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
+
+    private ChannelChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.username = jsonObject.getString("username");
         this.title = jsonObject.getString("title");
+        this.telegramBot = telegramBot;
     }
 
-    private ChannelChatImpl(String username) {
+    private ChannelChatImpl(String username, TelegramBot telegramBot) {
 
         this.username = username;
         this.title = null;
+        this.telegramBot = telegramBot;
     }
 
-    public static ChannelChat createChannelChat(JSONObject jsonObject) {
+    public static ChannelChat createChannelChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return new ChannelChatImpl(jsonObject);
+        return new ChannelChatImpl(jsonObject, telegramBot);
     }
 
-    public static ChannelChat createChannelChat(String username) {
+    public static ChannelChat createChannelChat(String username, TelegramBot telegramBot) {
 
-        return new ChannelChatImpl(username);
+        return new ChannelChatImpl(username, telegramBot);
     }
 
     @Override
@@ -42,12 +46,17 @@ public class ChannelChatImpl implements ChannelChat {
     }
 
     @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
+    }
+
+    @Override
     public String getId() {
         return username;
     }
 
     @Override
-    public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
+    public Message sendMessage(SendableMessage message) {
 
         return telegramBot.sendMessage(this, message);
     }

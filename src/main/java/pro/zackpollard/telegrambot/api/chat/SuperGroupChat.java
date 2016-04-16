@@ -9,4 +9,6 @@ public interface SuperGroupChat extends Chat {
 
         return ChatType.SUPERGROUP;
     }
+
+    boolean kickChatMember(int userId);
 }

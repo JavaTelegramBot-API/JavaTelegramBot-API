@@ -95,43 +95,31 @@ public final class TelegramBot {
         return null;
     }
 
-    @Deprecated
-    public static Chat getChat(int chatID) {
-
-        if (chatID < 0) {
-
-            return GroupChatImpl.createGroupChat(chatID);
-        } else {
-
-            return IndividualChatImpl.createIndividualChat(chatID);
-        }
-    }
-
-    public static Chat getChat(long chatID) {
+    public Chat getChat(long chatID) {
 
         if (chatID < 0) {
 
             /** This is a guess of the starting value of supergroups **/
             if (chatID > -999999999) {
 
-                return GroupChatImpl.createGroupChat((int) chatID);
+                return GroupChatImpl.createGroupChat((int) chatID, this);
             } else {
 
-                return SuperGroupChatImpl.createSuperGroupChat(chatID);
+                return SuperGroupChatImpl.createSuperGroupChat(chatID, this);
             }
         } else {
 
-            return IndividualChatImpl.createIndividualChat((int) chatID);
+            return IndividualChatImpl.createIndividualChat((int) chatID, this);
         }
     }
 
-    public static Chat getChat(String chatID) {
+    public Chat getChat(String chatID) {
 
         if (chatID != null && chatID.length() > 0) {
 
             if (chatID.charAt(0) == '@') {
 
-                return ChannelChatImpl.createChannelChat(chatID);
+                return ChannelChatImpl.createChannelChat(chatID, this);
             } else {
 
                 long longChatID;
@@ -561,6 +549,30 @@ public final class TelegramBot {
             } catch (UnirestException e) {
                 e.printStackTrace();
             }
+        }
+
+        return false;
+    }
+
+    public boolean kickChatMember(String chatId, int userId) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "kickChatMember")
+                    .field("chat_id", chatId, "application/json")
+                    .field("user_id", userId);
+
+            response = request.asString();
+            jsonResponse = TelegramBot.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
         }
 
         return false;
