@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.updates;
 
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.inline.ChosenInlineResult;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineQuery;
@@ -21,6 +22,8 @@ public interface Update {
     CallbackQuery getCallbackQuery();
 
     UpdateType getType();
+
+    TelegramBot getBotInstance();
 
     enum UpdateType {
 

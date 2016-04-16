@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.internal.chat.message.content;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 
 /**
@@ -17,7 +18,7 @@ public class ContentImpl {
             "migrate_to_chat_id", "migrate_from_chat_id", "pinned_message"
     };
 
-    public static Content createContent(JSONObject jsonObject) {
+    public static Content createContent(JSONObject jsonObject, TelegramBot telegramBot) {
 
         String messageType = null;
 
@@ -95,7 +96,7 @@ public class ContentImpl {
                     return MigrateFromChatIDContentImpl.createMigrateFromChatIDContent(jsonObject.getLong("migrate_from_chat_id"));
                 case "pinned_message":
 
-                    return PinnedMessageContentImpl.createPinnedMessageContent(jsonObject.getJSONObject("pinned_message"));
+                    return PinnedMessageContentImpl.createPinnedMessageContent(jsonObject.getJSONObject("pinned_message"), telegramBot);
             }
         }
 

@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.internal.chat.message;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.MessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.internal.chat.CallbackQueryImpl;
@@ -12,16 +13,16 @@ public class MessageCallbackQueryImpl extends CallbackQueryImpl implements Messa
 
     private final Message message;
 
-    private MessageCallbackQueryImpl(JSONObject jsonObject) {
+    private MessageCallbackQueryImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        super(jsonObject);
+        super(jsonObject, telegramBot);
 
-        this.message = MessageImpl.createMessage(jsonObject.getJSONObject("message"));
+        this.message = MessageImpl.createMessage(jsonObject.getJSONObject("message"), getBotInstance());
     }
 
-    public static MessageCallbackQuery createMessageCallbackQuery(JSONObject jsonObject) {
+    public static MessageCallbackQuery createMessageCallbackQuery(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return jsonObject != null ? new MessageCallbackQueryImpl(jsonObject) : null;
+        return jsonObject != null ? new MessageCallbackQueryImpl(jsonObject, telegramBot) : null;
     }
 
     @Override

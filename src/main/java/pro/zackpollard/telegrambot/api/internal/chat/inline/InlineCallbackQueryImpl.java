@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.internal.chat.inline;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineCallbackQuery;
 import pro.zackpollard.telegrambot.api.internal.chat.CallbackQueryImpl;
 
@@ -11,16 +12,16 @@ public class InlineCallbackQueryImpl extends CallbackQueryImpl implements Inline
 
     private final String inline_message_id;
 
-    private InlineCallbackQueryImpl(JSONObject jsonObject) {
+    private InlineCallbackQueryImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        super(jsonObject);
+        super(jsonObject, telegramBot);
 
         this.inline_message_id = jsonObject.getString("inline_message_id");
     }
 
-    public static InlineCallbackQuery createInlineCallbackQuery(JSONObject jsonObject) {
+    public static InlineCallbackQuery createInlineCallbackQuery(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return jsonObject != null ? new InlineCallbackQueryImpl(jsonObject) : null;
+        return jsonObject != null ? new InlineCallbackQueryImpl(jsonObject, telegramBot) : null;
     }
 
     @Override

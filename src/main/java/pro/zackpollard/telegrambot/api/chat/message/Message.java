@@ -1,7 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat.message;
 
 import org.json.JSONObject;
-import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableForwardMessage;
@@ -75,8 +74,8 @@ public interface Message {
      */
     JSONObject asJson();
 
-    default Message forwardMessage(Chat chat, TelegramBot telegramBot) {
+    default Message forwardMessage(Chat chat) {
 
-        return chat.sendMessage(SendableForwardMessage.builder().forwardedMessage(this).build(), telegramBot);
+        return chat.sendMessage(SendableForwardMessage.builder().forwardedMessage(this).build());
     }
 }

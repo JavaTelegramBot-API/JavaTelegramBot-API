@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.internal.chat.message;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.Content;
@@ -25,7 +26,9 @@ public class MessageImpl implements Message {
     private final Message reply_to_message;
     private final Content content;
 
-    private MessageImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
+
+    private MessageImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         if (!jsonObject.isNull("result")) jsonObject = jsonObject.getJSONObject("result");
 
@@ -34,16 +37,18 @@ public class MessageImpl implements Message {
         message_id = jsonObject.getInt("message_id");
         from = UserImpl.createUser(jsonObject.optJSONObject("from"));
         date = jsonObject.getInt("date");
-        chat = ChatImpl.createChat(jsonObject.getJSONObject("chat"));
+        chat = ChatImpl.createChat(jsonObject.getJSONObject("chat"), telegramBot);
         forward_from = UserImpl.createUser(jsonObject.optJSONObject("forward_from"));
         forward_date = jsonObject.optInt("forward_date");
-        reply_to_message = MessageImpl.createMessage(jsonObject.optJSONObject("reply_to_message"));
-        content = ContentImpl.createContent(jsonObject);
+        reply_to_message = MessageImpl.createMessage(jsonObject.optJSONObject("reply_to_message"), telegramBot);
+        content = ContentImpl.createContent(jsonObject, telegramBot);
+
+        this.telegramBot = telegramBot;
     }
 
-    public static Message createMessage(JSONObject jsonObject) {
+    public static Message createMessage(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return jsonObject != null ? new MessageImpl(jsonObject) : null;
+        return jsonObject != null ? new MessageImpl(jsonObject, telegramBot) : null;
     }
 
     /**

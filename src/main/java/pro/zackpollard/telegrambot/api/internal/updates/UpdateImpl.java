@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.internal.updates;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.inline.ChosenInlineResult;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineQuery;
@@ -23,22 +24,26 @@ public class UpdateImpl implements Update {
     private final CallbackQuery callbackQuery;
     private UpdateType updateType;
 
-    private UpdateImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
+
+    private UpdateImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.update_id = jsonObject.getInt("update_id");
-        this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"));
+        this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"), telegramBot);
         if (message != null) updateType = UpdateType.MESSAGE;
         this.inline_query = InlineQueryImpl.createInlineQuery(jsonObject.optJSONObject("inline_query"));
         if (inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
         this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
         if (chosen_inline_result != null && updateType == null) updateType = UpdateType.CHOSEN_INLINE_RESULT;
-        this.callbackQuery = CallbackQueryImpl.createCallbackQuery(jsonObject.optJSONObject("callback_query"));
+        this.callbackQuery = CallbackQueryImpl.createCallbackQuery(jsonObject.optJSONObject("callback_query"), telegramBot);
         if (callbackQuery != null && updateType == null) updateType = UpdateType.CALLBACK_QUERY;
+
+        this.telegramBot = telegramBot;
     }
 
-    public static Update createUpdate(JSONObject jsonObject) {
+    public static Update createUpdate(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return new UpdateImpl(jsonObject);
+        return new UpdateImpl(jsonObject, telegramBot);
     }
 
     @Override
@@ -73,5 +78,10 @@ public class UpdateImpl implements Update {
     @Override
     public UpdateType getType() {
         return updateType;
+    }
+
+    @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
     }
 }

@@ -62,7 +62,7 @@ public class RequestUpdatesManager extends UpdateManager {
                 HttpResponse<String> response = null;
 
                 try {
-                    response = Unirest.post(requestUpdatesManager.getTelegramBot().getBotAPIUrl() + "getUpdates")
+                    response = Unirest.post(requestUpdatesManager.getBotInstance().getBotAPIUrl() + "getUpdates")
                             .field("offset", offset + 1, "application/json")
                             .field("timeout", 10).asString();
                 } catch (UnirestException e) {
@@ -117,7 +117,7 @@ public class RequestUpdatesManager extends UpdateManager {
 
                         for (int i = 0; i < updates.length(); ++i) {
 
-                            Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
+                            Update update = UpdateImpl.createUpdate(updates.getJSONObject(i), getBotInstance());
 
                             try {
 

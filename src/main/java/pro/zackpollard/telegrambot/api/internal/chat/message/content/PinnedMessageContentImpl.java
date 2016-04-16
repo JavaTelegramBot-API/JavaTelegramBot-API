@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.internal.chat.message.content;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.PinnedMessageContent;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
@@ -14,14 +15,14 @@ public class PinnedMessageContentImpl implements PinnedMessageContent {
 
     private final Message content;
 
-    private PinnedMessageContentImpl(JSONObject jsonObject) {
+    private PinnedMessageContentImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        this.content = MessageImpl.createMessage(jsonObject);
+        this.content = MessageImpl.createMessage(jsonObject, telegramBot);
     }
 
-    public static PinnedMessageContent createPinnedMessageContent(JSONObject jsonObject) {
+    public static PinnedMessageContent createPinnedMessageContent(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return text != null ? new PinnedMessageContentImpl(jsonObject) : null;
+        return text != null ? new PinnedMessageContentImpl(jsonObject, telegramBot) : null;
     }
 
     @Override
