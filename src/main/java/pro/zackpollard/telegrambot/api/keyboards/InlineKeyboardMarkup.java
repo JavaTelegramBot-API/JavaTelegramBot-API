@@ -15,7 +15,7 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
 
     private InlineKeyboardMarkup(InlineKeyboardMarkupBuilder builder) {
 
-        this.inlin_keyboard = builder.inline_keyboard;
+        this.inline_keyboard = builder.inline_keyboard;
     }
 
     public static InlineKeyboardMarkupBuilder builder() {
