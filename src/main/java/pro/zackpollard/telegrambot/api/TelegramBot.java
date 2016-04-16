@@ -554,6 +554,34 @@ public final class TelegramBot {
         return false;
     }
 
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
+
+        if(callbackQueryId != null && text != null) {
+
+            HttpResponse<String> response;
+            JSONObject jsonResponse;
+
+            try {
+                MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
+                        .field("callback_query_id", callbackQueryId, "application/json")
+                        .field("text", text, "application/json")
+                        .field("show_alert", showAlert);
+
+                response = requests.asString();
+                jsonResponse = processResponse(response);
+
+                if (jsonResponse != null) {
+
+                    if (jsonResponse.getBoolean("result")) return true;
+                }
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
     public boolean kickChatMember(String chatId, int userId) {
 
         HttpResponse<String> response;

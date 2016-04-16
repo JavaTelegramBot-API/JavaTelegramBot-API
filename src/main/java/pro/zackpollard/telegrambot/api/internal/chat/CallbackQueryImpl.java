@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.internal.chat;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
 import pro.zackpollard.telegrambot.api.internal.chat.inline.InlineCallbackQueryImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageCallbackQueryImpl;
@@ -18,16 +19,20 @@ public class CallbackQueryImpl implements CallbackQuery {
 
     private final JSONObject jsonCallbackQuery;
 
-    protected CallbackQueryImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
+
+    protected CallbackQueryImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.id = jsonObject.getString("id");
         this.from = UserImpl.createUser(jsonObject.getJSONObject("from"));
         this.data = jsonObject.getString("data");
 
         this.jsonCallbackQuery = jsonObject;
+
+        this.telegramBot = telegramBot;
     }
 
-    public static CallbackQuery createCallbackQuery(JSONObject jsonObject) {
+    public static CallbackQuery createCallbackQuery(JSONObject jsonObject, TelegramBot telegramBot) {
 
         CallbackQuery callbackQuery = null;
         if (jsonObject != null) {
@@ -40,7 +45,7 @@ public class CallbackQueryImpl implements CallbackQuery {
                 callbackQuery = InlineCallbackQueryImpl.createInlineCallbackQuery(jsonObject);
             } else {
 
-                callbackQuery = new CallbackQueryImpl(jsonObject);
+                callbackQuery = new CallbackQueryImpl(jsonObject, telegramBot);
 
                 System.err.println("The Telegram Bot API didn't return a Message or Inline Message ID for the CallbackQuery, send @zackpollard the following output or create a github issue.");
                 System.err.println(callbackQuery.asJson().toString(4));
@@ -48,6 +53,11 @@ public class CallbackQueryImpl implements CallbackQuery {
         }
 
         return callbackQuery;
+    }
+
+    @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
     }
 
     @Override

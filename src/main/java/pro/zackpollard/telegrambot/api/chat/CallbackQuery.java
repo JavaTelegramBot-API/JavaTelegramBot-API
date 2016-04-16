@@ -1,12 +1,15 @@
 package pro.zackpollard.telegrambot.api.chat;
 
 import org.json.JSONObject;
+import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.user.User;
 
 /**
  * @author zackp
  */
 public interface CallbackQuery {
+
+    TelegramBot getBotInstance();
 
     String getId();
 
@@ -20,4 +23,9 @@ public interface CallbackQuery {
     String getData();
 
     JSONObject asJson();
+
+    default boolean answerCallbackQuery(String text, boolean showAlert) {
+
+        return getBotInstance().answerCallbackQuery(getId(), text, showAlert);
+    }
 }
