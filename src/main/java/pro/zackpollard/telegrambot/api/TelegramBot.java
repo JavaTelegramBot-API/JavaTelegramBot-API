@@ -563,7 +563,7 @@ public final class TelegramBot {
 
             if (jsonResponse != null) {
 
-                return MessageImpl.createMessage(jsonResponse.getJSONObject("response"), this);
+                return MessageImpl.createMessage(jsonResponse.getJSONObject("result"), this);
             }
         }
 
