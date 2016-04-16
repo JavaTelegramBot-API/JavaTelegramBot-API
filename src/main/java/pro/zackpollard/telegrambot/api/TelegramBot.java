@@ -11,6 +11,7 @@ import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -522,6 +523,66 @@ public final class TelegramBot {
         }
 
         return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
+    }
+
+    private JSONObject editMessageText(String chatId, Long messageId, String inlineMessageId, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse = null;
+
+        try {
+            MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageText")
+                    .field("text", text, "application/json")
+                    .field("disable_web_page_preview", disableWebPagePreview);
+
+            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(messageId != null) requests.field("message_id", messageId);
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
+            if(parseMode != null) requests.field("parse_mode", parseMode, "application/json");
+            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+
+            response = requests.asString();
+            jsonResponse = processResponse(response);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return jsonResponse;
+    }
+
+    public Message editMessageText(Message oldMessage, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        return this.editMessageText(oldMessage.getChat().getId(), oldMessage.getMessageId(), text, parseMode, disableWebPagePreview, inlineReplyMarkup);
+    }
+
+    public Message editMessageText(String chatId, Long messageId, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(chatId != null && messageId != null && text != null) {
+
+            JSONObject jsonResponse = this.editMessageText(chatId, messageId, null, text, parseMode, disableWebPagePreview, inlineReplyMarkup);
+
+            if (jsonResponse != null) {
+
+                return MessageImpl.createMessage(jsonResponse.getJSONObject("response"), this);
+            }
+        }
+
+        return null;
+    }
+
+    public boolean editInlineMessageText(String inlineMessageId, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(inlineMessageId != null && text != null) {
+
+            JSONObject jsonResponse = this.editMessageText(null, null, inlineMessageId, text, parseMode, disableWebPagePreview, inlineReplyMarkup);
+
+            if (jsonResponse != null) {
+
+                if (jsonResponse.getBoolean("result")) return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean answerInlineQuery(String inlineQueryId, InlineQueryResponse inlineQueryResponse) {
