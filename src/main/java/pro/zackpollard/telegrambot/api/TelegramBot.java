@@ -442,6 +442,8 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json")
                             .field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
 
+                    if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
+
                     processReplyContent(request, voiceMessage);
                     processNotificationContent(request, voiceMessage);
 
