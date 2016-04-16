@@ -24,7 +24,7 @@ public interface CallbackQuery {
 
     JSONObject asJson();
 
-    default boolean answerCallbackQuery(String text, boolean showAlert) {
+    default boolean answer(String text, boolean showAlert) {
 
         return getBotInstance().answerCallbackQuery(getId(), text, showAlert);
     }
