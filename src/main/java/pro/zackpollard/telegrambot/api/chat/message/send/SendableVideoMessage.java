@@ -20,6 +20,10 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final int duration;
     @Getter
+    private final int width;
+    @Getter
+    private final int height;
+    @Getter
     private final String caption;
     @Getter
     private final int replyTo;
@@ -41,6 +45,8 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
 
         private InputFile video;
         private int duration;
+        private int width;
+        private int height;
         private String caption;
         private int replyTo;
         private ReplyMarkup replyMarkup;
@@ -56,6 +62,16 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
 
         public SendableVideoMessage.SendableVideoMessageBuilder duration(int duration) {
             this.duration = duration;
+            return this;
+        }
+
+        public SendableVideoMessage.SendableVideoMessageBuilder width(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public SendableVideoMessage.SendableVideoMessageBuilder height(int height) {
+            this.height = height;
             return this;
         }
 
@@ -86,7 +102,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
         }
 
         public SendableVideoMessage build() {
-            return new SendableVideoMessage(video, duration, caption, replyTo, replyMarkup, disableNotification);
+            return new SendableVideoMessage(video, duration, width, height, caption, replyTo, replyMarkup, disableNotification);
         }
 
         public String toString() {

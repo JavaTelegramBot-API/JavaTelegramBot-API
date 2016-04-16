@@ -401,6 +401,9 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json")
                             .field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : new FileContainer(videoMessage.getVideo()), videoMessage.getVideo().getFileID() == null);
 
+                    if (videoMessage.getDuration() > 0) request.field("duration", videoMessage.getDuration());
+                    if (videoMessage.getWidth() > 0) request.field("width", videoMessage.getWidth());
+                    if (videoMessage.getHeight() > 0) request.field("height", videoMessage.getHeight());
                     if (videoMessage.getCaption() != null)
                         request.field("caption", videoMessage.getCaption(), "application/json");
 
