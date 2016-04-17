@@ -585,6 +585,64 @@ public final class TelegramBot {
         return false;
     }
 
+    private JSONObject editMessageCaption(String chatId, Long messageId, String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse = null;
+
+        try {
+            MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageCaption")
+                    .field("caption", caption, "application/json");
+
+            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(messageId != null) requests.field("message_id", messageId);
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
+            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+
+            response = requests.asString();
+            jsonResponse = processResponse(response);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return jsonResponse;
+    }
+
+    public Message editMessageCaption(Message oldMessage, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        return this.editMessageCaption(oldMessage.getChat().getId(), oldMessage.getMessageId(), caption, inlineReplyMarkup);
+    }
+
+    public Message editMessageCaption(String chatId, Long messageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(caption != null && chatId != null && messageId != null) {
+
+            JSONObject jsonResponse = this.editMessageCaption(chatId, messageId, null, caption, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                return MessageImpl.createMessage(jsonResponse.getJSONObject("result"), this);
+            }
+        }
+
+        return null;
+    }
+
+    public boolean editInlineCaption(String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(caption != null && inlineReplyMarkup != null) {
+
+            JSONObject jsonResponse = this.editMessageCaption(null, null, inlineMessageId, caption, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        }
+
+        return false;
+    }
+
     private JSONObject editMessageReplyMarkup(String chatId, Long messageId, String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
 
         HttpResponse<String> response;
