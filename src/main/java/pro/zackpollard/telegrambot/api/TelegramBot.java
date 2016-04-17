@@ -525,7 +525,7 @@ public final class TelegramBot {
         return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
     }
 
-    private JSONObject editMessageText(String chatId, Long messageId, String inlineMessageId, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    private JSONObject editMessageText(String chatId, Long messageId, String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
 
         HttpResponse<String> response;
         JSONObject jsonResponse = null;
@@ -538,7 +538,7 @@ public final class TelegramBot {
             if(chatId != null) requests.field("chat_id", chatId, "application/json");
             if(messageId != null) requests.field("message_id", messageId);
             if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
-            if(parseMode != null) requests.field("parse_mode", parseMode, "application/json");
+            if(parseMode != null) requests.field("parse_mode", parseMode.getModeName(), "application/json");
             if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
 
             response = requests.asString();
@@ -550,12 +550,12 @@ public final class TelegramBot {
         return jsonResponse;
     }
 
-    public Message editMessageText(Message oldMessage, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageText(Message oldMessage, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
 
         return this.editMessageText(oldMessage.getChat().getId(), oldMessage.getMessageId(), text, parseMode, disableWebPagePreview, inlineReplyMarkup);
     }
 
-    public Message editMessageText(String chatId, Long messageId, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageText(String chatId, Long messageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
 
         if(chatId != null && messageId != null && text != null) {
 
@@ -570,7 +570,7 @@ public final class TelegramBot {
         return null;
     }
 
-    public boolean editInlineMessageText(String inlineMessageId, String text, String parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    public boolean editInlineMessageText(String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
 
         if(inlineMessageId != null && text != null) {
 
