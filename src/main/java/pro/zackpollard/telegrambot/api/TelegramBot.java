@@ -585,6 +585,63 @@ public final class TelegramBot {
         return false;
     }
 
+    private JSONObject editMessageReplyMarkup(String chatId, Long messageId, String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse = null;
+
+        try {
+            MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageReplyMarkup")
+                    .field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+
+            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(messageId != null) requests.field("message_id", messageId);
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
+
+            response = requests.asString();
+            jsonResponse = processResponse(response);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return jsonResponse;
+    }
+
+    public Message editMessageReplyMarkup(Message oldMessage, InlineReplyMarkup inlineReplyMarkup) {
+
+        return this.editMessageReplyMarkup(oldMessage.getChat().getId(), oldMessage.getMessageId(), inlineReplyMarkup);
+    }
+
+    public Message editMessageReplyMarkup(String chatId, Long messageId, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(inlineReplyMarkup != null && chatId != null && messageId != null) {
+
+            JSONObject jsonResponse = this.editMessageReplyMarkup(chatId, messageId, null, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                return MessageImpl.createMessage(jsonResponse.getJSONObject("result"), this);
+            }
+        }
+
+        return null;
+    }
+
+    public boolean editInlineMessageText(String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(inlineMessageId != null && inlineReplyMarkup != null) {
+
+            JSONObject jsonResponse = this.editMessageReplyMarkup(null, null, inlineMessageId, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean answerInlineQuery(String inlineQueryId, InlineQueryResponse inlineQueryResponse) {
 
         if (inlineQueryId != null && inlineQueryResponse != null) {
