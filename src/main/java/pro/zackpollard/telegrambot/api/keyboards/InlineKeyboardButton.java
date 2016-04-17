@@ -29,11 +29,23 @@ public class InlineKeyboardButton {
         return this.text;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public String getCallbackData() {
+        return callback_data;
+    }
+
+    public String getSwitchInlineQuery() {
+        return switch_inline_query;
+    }
+
     public static class InlineKeyboardButtonBuilder {
-        private String text;
-        private String url;
-        private String callback_data;
-        private String switch_inline_query;
+        private String text = null;
+        private String url = null;
+        private String callback_data = null;
+        private String switch_inline_query = null;
 
         InlineKeyboardButtonBuilder() {
         }
@@ -45,16 +57,22 @@ public class InlineKeyboardButton {
 
         public InlineKeyboardButton.InlineKeyboardButtonBuilder url(String url) {
             this.url = url;
+            this.callback_data = null;
+            this.switch_inline_query = null;
             return this;
         }
 
         public InlineKeyboardButton.InlineKeyboardButtonBuilder callbackData(String callbackData) {
             this.callback_data = callbackData;
+            this.url = null;
+            this.switch_inline_query = null;
             return this;
         }
 
         public InlineKeyboardButton.InlineKeyboardButtonBuilder switchInlineQuery(String switchInlineQuery) {
             this.switch_inline_query = switchInlineQuery;
+            this.url = null;
+            this.callback_data = null;
             return this;
         }
 

@@ -13,7 +13,6 @@ public class KeyboardButton {
     private final boolean request_contact;
     private final boolean request_location;
 
-    @java.beans.ConstructorProperties({"text", "request_contact", "request_location"})
     private KeyboardButton(String text, boolean request_contact, boolean request_location) {
         this.text = text;
         this.request_contact = request_contact;
@@ -51,11 +50,13 @@ public class KeyboardButton {
 
         public KeyboardButton.KeyboardButtonBuilder requestContact(boolean requestContact) {
             this.request_contact = requestContact;
+            if(requestContact) this.request_location = false;
             return this;
         }
 
         public KeyboardButton.KeyboardButtonBuilder requestLocation(boolean requestLocation) {
             this.request_location = requestLocation;
+            if(requestLocation) this.request_contact = false;
             return this;
         }
 
