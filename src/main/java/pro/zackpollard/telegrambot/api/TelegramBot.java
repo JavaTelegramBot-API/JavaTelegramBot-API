@@ -713,7 +713,9 @@ public final class TelegramBot {
                         .field("results", GSON.toJson(inlineQueryResponse.getResults()))
                         .field("cache_time", inlineQueryResponse.getCacheTime())
                         .field("is_personal", inlineQueryResponse.isPersonal())
-                        .field("next_offset", inlineQueryResponse.getNextOffset());
+                        .field("next_offset", inlineQueryResponse.getNextOffset())
+                        .field("switch_pm_text", inlineQueryResponse.getSwitchPmText())
+                        .field("switch_pm_parameter", inlineQueryResponse.getSwitchPmParameter());
 
                 response = requests.asString();
                 jsonResponse = processResponse(response);

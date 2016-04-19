@@ -19,6 +19,8 @@ public class InlineQueryResponse {
     private final Integer cache_time;
     private final boolean is_personal;
     private final String next_offset;
+    private final String switch_pm_text;
+    private final String switch_pm_parameter;
 
     public static InlineQueryResponseBuilder builder() {
         return new InlineQueryResponseBuilder();
@@ -41,12 +43,22 @@ public class InlineQueryResponse {
         return this.next_offset;
     }
 
+    public String getSwitchPmText() {
+        return switch_pm_text;
+    }
+
+    public String getSwitchPmParameter() {
+        return switch_pm_parameter;
+    }
+
     public static class InlineQueryResponseBuilder {
 
         private List<InlineQueryResult> results;
         private Integer cache_time = 300;
         private boolean is_personal = false;
         private String next_offset = "";
+        private String switch_pm_text;
+        private String switch_pm_parameter;
 
         InlineQueryResponseBuilder() {
         }
@@ -76,8 +88,18 @@ public class InlineQueryResponse {
             return this;
         }
 
+        public InlineQueryResponse.InlineQueryResponseBuilder switch_pm_text(String switch_pm_text) {
+            this.switch_pm_text = switch_pm_text;
+            return this;
+        }
+
+        public InlineQueryResponse.InlineQueryResponseBuilder switch_pm_parameter(String switch_pm_parameter) {
+            this.switch_pm_parameter = switch_pm_parameter;
+            return this;
+        }
+
         public InlineQueryResponse build() {
-            return new InlineQueryResponse(results, cache_time, is_personal, next_offset);
+            return new InlineQueryResponse(results, cache_time, is_personal, next_offset, switch_pm_text, switch_pm_parameter);
         }
 
         public String toString() {
