@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResult;
+import pro.zackpollard.telegrambot.api.chat.message.content.type.Location;
 import pro.zackpollard.telegrambot.api.user.User;
 
 /**
@@ -14,6 +15,8 @@ public interface InlineQuery {
     String getQueryId();
 
     User getSender();
+
+    Location getLocation();
 
     String getQuery();
 
