@@ -3,10 +3,12 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.content;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author zackp
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InputContactMessageContent implements InputMessageContent {
 
@@ -39,6 +41,7 @@ public class InputContactMessageContent implements InputMessageContent {
         return this.last_name;
     }
 
+    @ToString
     public static class InputContactMessageContentBuilder {
 
         private String phone_number;
@@ -65,10 +68,6 @@ public class InputContactMessageContent implements InputMessageContent {
 
         public InputContactMessageContent build() {
             return new InputContactMessageContent(phone_number, first_name, last_name);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.content.InputContactMessageContent.InputContactMessageContentBuilder(phone_number=" + this.phone_number + ", first_name=" + this.first_name + ", last_name=" + this.last_name + ")";
         }
     }
 }

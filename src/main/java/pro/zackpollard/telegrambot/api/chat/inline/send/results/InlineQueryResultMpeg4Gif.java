@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.content.InputMessageContent;
 import pro.zackpollard.telegrambot.api.utils.Utils;
@@ -12,6 +13,7 @@ import java.net.URL;
 /**
  * @author Zack Pollard
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
 
@@ -76,6 +78,7 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
         return this.input_message_content;
     }
 
+    @ToString
     public static class InlineQueryResultMpeg4GifBuilder {
         private String id = Utils.generateRandomString(32);
         private URL mpeg4_url;
@@ -137,10 +140,6 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
 
         public InlineQueryResultMpeg4Gif build() {
             return new InlineQueryResultMpeg4Gif(id, mpeg4_url, mpeg4_width, mpeg4_height, thumb_url, title, caption, reply_markup, input_message_content);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder(id=" + this.id + ", mpeg4_url=" + this.mpeg4_url + ", mpeg4_width=" + this.mpeg4_width + ", mpeg4_height=" + this.mpeg4_height + ", thumb_url=" + this.thumb_url + ", title=" + this.title + ", caption=" + this.caption + ")";
         }
     }
 }

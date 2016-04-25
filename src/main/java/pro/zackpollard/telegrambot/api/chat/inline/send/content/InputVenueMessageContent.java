@@ -3,10 +3,12 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.content;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author zackp
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InputVenueMessageContent implements InputMessageContent {
 
@@ -53,6 +55,7 @@ public class InputVenueMessageContent implements InputMessageContent {
         return InputMessageContentType.VENUE;
     }
 
+    @ToString
     public static class InputVenueMessageContentBuilder {
 
         private double latitude;
@@ -91,10 +94,6 @@ public class InputVenueMessageContent implements InputMessageContent {
 
         public InputVenueMessageContent build() {
             return new InputVenueMessageContent(latitude, longitude, title, address, foursquare_id);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.content.InputVenueMessageContent.InputVenueMessageContentBuilder(latitude=" + this.latitude + ", longitude=" + this.longitude + ", title=" + this.title + ", address=" + this.address + ", foursquare_id=" + this.foursquare_id + ")";
         }
     }
 }

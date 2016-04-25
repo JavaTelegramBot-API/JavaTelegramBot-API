@@ -1,16 +1,13 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableStickerMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
@@ -33,6 +30,7 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
         return MessageType.STICKER;
     }
 
+    @ToString
     public static class SendableStickerMessageBuilder {
 
         private InputFile sticker;
@@ -71,10 +69,6 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
 
         public SendableStickerMessage build() {
             return new SendableStickerMessage(sticker, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableStickerMessage.SendableStickerMessageBuilder(sticker=" + this.sticker + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

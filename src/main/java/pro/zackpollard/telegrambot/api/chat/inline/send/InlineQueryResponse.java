@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.api.chat.inline.send;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResult;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * @author Zack Pollard
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResponse {
 
@@ -51,6 +53,7 @@ public class InlineQueryResponse {
         return switch_pm_parameter;
     }
 
+    @ToString
     public static class InlineQueryResponseBuilder {
 
         private List<InlineQueryResult> results;
@@ -100,10 +103,6 @@ public class InlineQueryResponse {
 
         public InlineQueryResponse build() {
             return new InlineQueryResponse(results, cache_time, is_personal, next_offset, switch_pm_text, switch_pm_parameter);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse.InlineQueryResponseBuilder(results=" + this.results + ", cache_time=" + this.cache_time + ", is_personal=" + this.is_personal + ", next_offset=" + this.next_offset + ")";
         }
     }
 }

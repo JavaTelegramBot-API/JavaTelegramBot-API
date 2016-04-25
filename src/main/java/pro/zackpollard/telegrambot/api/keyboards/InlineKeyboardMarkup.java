@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.keyboards;
 
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkupType;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * @author Zack Pollard
  */
+@ToString
 public class InlineKeyboardMarkup implements InlineKeyboard {
 
     private final List<List<InlineKeyboardButton>> inline_keyboard;
@@ -38,6 +40,7 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
         return ReplyMarkupType.INLINE_KEYBOARD_MARKUP;
     }
 
+    @ToString
     public static class InlineKeyboardMarkupBuilder {
 
         private final List<List<InlineKeyboardButton>> inline_keyboard = new LinkedList<>();

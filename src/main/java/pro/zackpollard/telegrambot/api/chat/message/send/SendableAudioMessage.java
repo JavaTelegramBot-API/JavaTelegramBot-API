@@ -1,16 +1,13 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableAudioMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
@@ -39,6 +36,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
         return MessageType.AUDIO;
     }
 
+    @ToString
     public static class SendableAudioMessageBuilder {
 
         private InputFile audio;
@@ -96,10 +94,6 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
 
         public SendableAudioMessage build() {
             return new SendableAudioMessage(audio, duration, performer, title, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableAudioMessage.SendableAudioMessageBuilder(audio=" + this.audio + ", duration=" + this.duration + ", performer=" + this.performer + ", title=" + this.title + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

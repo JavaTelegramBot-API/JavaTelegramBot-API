@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.content.InputMessageContent;
 import pro.zackpollard.telegrambot.api.utils.Utils;
@@ -12,6 +13,7 @@ import java.net.URL;
 /**
  * @author Zack Pollard
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResultVideo implements InlineQueryResult {
 
@@ -94,6 +96,7 @@ public class InlineQueryResultVideo implements InlineQueryResult {
         return this.input_message_content;
     }
 
+    @ToString
     public static class InlineQueryResultVideoBuilder {
         private String id = Utils.generateRandomString(32);
         private URL video_url;
@@ -173,10 +176,6 @@ public class InlineQueryResultVideo implements InlineQueryResult {
 
         public InlineQueryResultVideo build() {
             return new InlineQueryResultVideo(id, video_url, mime_type, thumb_url, video_width, video_height, title, caption, video_duration, description, reply_markup, input_message_content);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultVideo.InlineQueryResultVideoBuilder(id=" + this.id + ", video_url=" + this.video_url + ", mime_type=" + this.mime_type + ", thumb_url=" + this.thumb_url + ", video_width=" + this.video_width + ", video_height=" + this.video_height + ", title=" + this.title + ", caption=" + this.caption + ")";
         }
     }
 }

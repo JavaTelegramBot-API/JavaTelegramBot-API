@@ -5,7 +5,7 @@ import lombok.*;
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class SendableChatAction implements SendableMessage {

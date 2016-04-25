@@ -1,11 +1,13 @@
 package pro.zackpollard.telegrambot.api.event.chat.message;
 
 import lombok.Getter;
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 
 /**
  * @author Zack Pollard
  */
+@ToString
 public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
 
     @Getter

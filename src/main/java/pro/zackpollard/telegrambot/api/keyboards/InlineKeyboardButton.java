@@ -3,10 +3,12 @@ package pro.zackpollard.telegrambot.api.keyboards;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author zackp
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineKeyboardButton {
 
@@ -36,6 +38,7 @@ public class InlineKeyboardButton {
         return switch_inline_query;
     }
 
+    @ToString
     public static class InlineKeyboardButtonBuilder {
         private String text = null;
         private String url = null;

@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.Getter;
+import lombok.ToString;
 import org.apache.commons.io.FilenameUtils;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.internal.FileExtension;
@@ -19,6 +20,7 @@ import java.nio.file.StandardCopyOption;
 /**
  * @author Zack Pollard
  */
+@ToString
 public class InputFile {
 
     @Getter

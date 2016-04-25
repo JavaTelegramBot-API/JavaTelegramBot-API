@@ -3,11 +3,13 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.content;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
 
 /**
  * @author zackp
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InputTextMessageContent implements InputMessageContent {
 
@@ -38,6 +40,7 @@ public class InputTextMessageContent implements InputMessageContent {
         return InputMessageContentType.TEXT;
     }
 
+    @ToString
     public static class InputTextMessageContentBuilder {
 
         private String message_text;
@@ -64,10 +67,6 @@ public class InputTextMessageContent implements InputMessageContent {
 
         public InputTextMessageContent build() {
             return new InputTextMessageContent(message_text, parse_mode, disable_web_page_preview);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.content.InputTextMessageContent.InputTextMessageContentBuilder(message_text=" + this.message_text + ", parse_mode=" + this.parse_mode + ", disable_web_page_preview=" + this.disable_web_page_preview + ")";
         }
     }
 }

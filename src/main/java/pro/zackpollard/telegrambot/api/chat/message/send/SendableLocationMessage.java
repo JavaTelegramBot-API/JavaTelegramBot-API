@@ -1,16 +1,13 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableLocationMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
@@ -36,6 +33,7 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
         return MessageType.LOCATION;
     }
 
+    @ToString
     public static class SendableLocationMessageBuilder {
 
         private double latitude;
@@ -80,10 +78,6 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
 
         public SendableLocationMessage build() {
             return new SendableLocationMessage(latitude, longitude, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableLocationMessage.SendableLocationMessageBuilder(latitude=" + this.latitude + ", longitude=" + this.longitude + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

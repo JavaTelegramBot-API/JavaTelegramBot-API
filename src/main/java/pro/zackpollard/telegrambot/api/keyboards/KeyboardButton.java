@@ -3,10 +3,12 @@ package pro.zackpollard.telegrambot.api.keyboards;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author zackp
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class KeyboardButton {
 
@@ -31,6 +33,7 @@ public class KeyboardButton {
         return this.request_location;
     }
 
+    @ToString
     public static class KeyboardButtonBuilder {
         private String text;
         private boolean request_contact = false;

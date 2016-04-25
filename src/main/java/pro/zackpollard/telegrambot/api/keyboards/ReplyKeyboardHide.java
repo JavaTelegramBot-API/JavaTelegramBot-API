@@ -1,10 +1,12 @@
 package pro.zackpollard.telegrambot.api.keyboards;
 
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkupType;
 
 /**
  * @author Zack Pollard
  */
+@ToString
 public class ReplyKeyboardHide implements Keyboard {
 
     private final boolean hide_keyboard = true;
@@ -41,6 +43,7 @@ public class ReplyKeyboardHide implements Keyboard {
         return ReplyMarkupType.KEYBOARD_HIDE;
     }
 
+    @ToString
     public static class ReplyKeyboardHideBuilder {
 
         private boolean selective = false;

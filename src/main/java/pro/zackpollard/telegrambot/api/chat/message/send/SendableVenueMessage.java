@@ -1,16 +1,13 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableVenueMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
@@ -44,6 +41,7 @@ public class SendableVenueMessage implements SendableMessage, ReplyingOptions, N
         return MessageType.VENUE;
     }
 
+    @ToString
     public static class SendableVenueMessageBuilder {
         private double latitude;
         private double longitude;
@@ -104,10 +102,6 @@ public class SendableVenueMessage implements SendableMessage, ReplyingOptions, N
 
         public SendableVenueMessage build() {
             return new SendableVenueMessage(latitude, longitude, title, address, foursquareId, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableVenueMessage.SendableVenueMessageBuilder(latitude=" + this.latitude + ", longitude=" + this.longitude + ", title=" + this.title + ", address=" + this.address + ", foursquareId=" + this.foursquareId + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ", disableNotification=" + this.disableNotification + ")";
         }
     }
 }

@@ -3,10 +3,12 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.content;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author zackp
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InputLocationMessageContent implements InputMessageContent {
 
@@ -34,6 +36,7 @@ public class InputLocationMessageContent implements InputMessageContent {
         return InputMessageContentType.LOCATION;
     }
 
+    @ToString
     public static class InputLocationMessageContentBuilder {
 
         private double latitude;
@@ -54,10 +57,6 @@ public class InputLocationMessageContent implements InputMessageContent {
 
         public InputLocationMessageContent build() {
             return new InputLocationMessageContent(latitude, longitude);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.content.InputLocationMessageContent.InputLocationMessageContentBuilder(latitude=" + this.latitude + ", longitude=" + this.longitude + ")";
         }
     }
 }

@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.content.InputMessageContent;
 import pro.zackpollard.telegrambot.api.utils.Utils;
@@ -12,6 +13,7 @@ import java.net.URL;
 /**
  * @author Zack Pollard
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResultPhoto implements InlineQueryResult {
 
@@ -81,6 +83,7 @@ public class InlineQueryResultPhoto implements InlineQueryResult {
         return this.reply_markup;
     }
 
+    @ToString
     public static class InlineQueryResultPhotoBuilder {
         private String id = Utils.generateRandomString(32);
         private URL photo_url;
@@ -148,10 +151,6 @@ public class InlineQueryResultPhoto implements InlineQueryResult {
 
         public InlineQueryResultPhoto build() {
             return new InlineQueryResultPhoto(id, photo_url, photo_width, photo_height, thumb_url, title, description, caption, reply_markup, input_message_content);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultPhoto.InlineQueryResultPhotoBuilder(id=" + this.id + ", photo_url=" + this.photo_url + ", photo_width=" + this.photo_width + ", photo_height=" + this.photo_height + ", thumb_url=" + this.thumb_url + ", title=" + this.title + ", caption=" + this.caption + ")";
         }
     }
 }

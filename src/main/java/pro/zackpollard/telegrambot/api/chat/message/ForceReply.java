@@ -1,9 +1,12 @@
 package pro.zackpollard.telegrambot.api.chat.message;
 
+import lombok.ToString;
+
 /**
  * @author Zack Pollard
  */
 
+@ToString
 public class ForceReply implements ReplyMarkup {
 
     private final boolean force_reply = true;
@@ -29,6 +32,7 @@ public class ForceReply implements ReplyMarkup {
         return ReplyMarkupType.FORCE_REPLY;
     }
 
+    @ToString
     public static class ForceReplyBuilder {
 
         private boolean selective = false;
