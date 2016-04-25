@@ -1,23 +1,19 @@
 package pro.zackpollard.telegrambot.api.keyboards;
 
+import lombok.AccessLevel;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author zackp
  */
-
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class KeyboardButton {
 
     @NonNull
     private final String text;
     private final boolean request_contact;
     private final boolean request_location;
-
-    private KeyboardButton(String text, boolean request_contact, boolean request_location) {
-        this.text = text;
-        this.request_contact = request_contact;
-        this.request_location = request_location;
-    }
 
     public static KeyboardButtonBuilder builder() {
         return new KeyboardButtonBuilder();
