@@ -3,7 +3,7 @@ package pro.zackpollard.telegrambot.api.chat;
 /**
  * @author Zack Pollard
  */
-public interface SuperGroupChat extends Chat {
+public interface SuperGroupChat extends GroupChat {
 
     default ChatType getType() {
 
