@@ -3,7 +3,8 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
+import pro.zackpollard.telegrambot.api.chat.inline.send.content.InputMessageContent;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.net.URL;
@@ -25,9 +26,8 @@ public class InlineQueryResultGif implements InlineQueryResult {
     private final URL thumb_url;
     private final String title;
     private final String caption;
-    private final String message_text;
-    private final ParseMode parse_mode;
-    private final boolean disable_web_page_preview;
+    private final InlineReplyMarkup reply_markup;
+    private final InputMessageContent input_message_content;
 
     public static InlineQueryResultGifBuilder builder() {
         return new InlineQueryResultGifBuilder();
@@ -68,16 +68,12 @@ public class InlineQueryResultGif implements InlineQueryResult {
         return this.caption;
     }
 
-    public String getMessageText() {
-        return this.message_text;
+    public InlineReplyMarkup getReplyMarkup() {
+        return this.reply_markup;
     }
 
-    public ParseMode getParseMode() {
-        return this.parse_mode;
-    }
-
-    public boolean isDisableWebPagePreview() {
-        return this.disable_web_page_preview;
+    public InputMessageContent getInputMessageContent() {
+        return this.input_message_content;
     }
 
     public static class InlineQueryResultGifBuilder {
@@ -88,9 +84,8 @@ public class InlineQueryResultGif implements InlineQueryResult {
         private URL thumb_url;
         private String title;
         private String caption;
-        private String message_text;
-        private ParseMode parse_mode;
-        private boolean disable_web_page_preview;
+        private InlineReplyMarkup reply_markup;
+        private InputMessageContent input_message_content;
 
         InlineQueryResultGifBuilder() {
         }
@@ -130,27 +125,22 @@ public class InlineQueryResultGif implements InlineQueryResult {
             return this;
         }
 
-        public InlineQueryResultGif.InlineQueryResultGifBuilder messageText(String messageText) {
-            this.message_text = messageText;
+        public InlineQueryResultGif.InlineQueryResultGifBuilder replyMarkup(InlineReplyMarkup inlineReplyMarkup) {
+            this.reply_markup = inlineReplyMarkup;
             return this;
         }
 
-        public InlineQueryResultGif.InlineQueryResultGifBuilder parseMode(ParseMode parseMode) {
-            this.parse_mode = parseMode;
-            return this;
-        }
-
-        public InlineQueryResultGif.InlineQueryResultGifBuilder disableWebPagePreview(boolean disableWebPagePreview) {
-            this.disable_web_page_preview = disableWebPagePreview;
+        public InlineQueryResultGif.InlineQueryResultGifBuilder inputMessageContent(InputMessageContent inputMessageContent) {
+            this.input_message_content = inputMessageContent;
             return this;
         }
 
         public InlineQueryResultGif build() {
-            return new InlineQueryResultGif(id, gif_url, gif_width, gif_height, thumb_url, title, caption, message_text, parse_mode, disable_web_page_preview);
+            return new InlineQueryResultGif(id, gif_url, gif_width, gif_height, thumb_url, title, caption, reply_markup, input_message_content);
         }
 
         public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultGif.InlineQueryResultGifBuilder(id=" + this.id + ", gif_url=" + this.gif_url + ", gif_width=" + this.gif_width + ", gif_height=" + this.gif_height + ", thumb_url=" + this.thumb_url + ", title=" + this.title + ", caption=" + this.caption + ", message_text=" + this.message_text + ", parse_mode=" + this.parse_mode + ", disable_web_page_preview=" + this.disable_web_page_preview + ")";
+            return "pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultGif.InlineQueryResultGifBuilder(id=" + this.id + ", gif_url=" + this.gif_url + ", gif_width=" + this.gif_width + ", gif_height=" + this.gif_height + ", thumb_url=" + this.thumb_url + ", title=" + this.title + ", caption=" + this.caption + ")";
         }
     }
 }
