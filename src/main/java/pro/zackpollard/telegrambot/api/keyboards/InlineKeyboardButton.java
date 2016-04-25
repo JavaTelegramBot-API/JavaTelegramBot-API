@@ -1,11 +1,13 @@
 package pro.zackpollard.telegrambot.api.keyboards;
 
+import lombok.AccessLevel;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author zackp
  */
-
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineKeyboardButton {
 
     @NonNull
@@ -13,13 +15,6 @@ public class InlineKeyboardButton {
     private final String url;
     private final String callback_data;
     private final String switch_inline_query;
-
-    private InlineKeyboardButton(String text, String url, String callback_data, String switch_inline_query) {
-        this.text = text;
-        this.url = url;
-        this.callback_data = callback_data;
-        this.switch_inline_query = switch_inline_query;
-    }
 
     public static InlineKeyboardButtonBuilder builder() {
         return new InlineKeyboardButtonBuilder();
