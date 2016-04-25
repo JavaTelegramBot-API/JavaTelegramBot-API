@@ -88,25 +88,6 @@ public class ReplyKeyboardMarkup implements Keyboard {
         /**
          * Add a new row to the keyboard
          *
-         * @param cellValues The values for the new row
-         * @return The keyboard builder
-         */
-        @Deprecated
-        public ReplyKeyboardMarkupBuilder addRow(String... cellValues) {
-
-            List<KeyboardButton> list = new LinkedList<>();
-
-            for(String cellValue : cellValues) {
-
-                list.add(KeyboardButton.builder().text(cellValue).build());
-            }
-
-            return addRow(list);
-        }
-
-        /**
-         * Add a new row to the keyboard
-         *
          * @param buttons The buttons for the new row
          * @return The keyboard builder
          */
@@ -125,26 +106,6 @@ public class ReplyKeyboardMarkup implements Keyboard {
 
             keyboard.add(new LinkedList<>(buttons));
             return this;
-        }
-
-        /**
-         * Sets a row of the keyboard
-         *
-         * @param cellValues The values for the row
-         * @return The keyboard builder
-         * @throws IndexOutOfBoundsException if the row is out of range
-         */
-        @Deprecated
-        public ReplyKeyboardMarkupBuilder setRow(int row, String... cellValues) {
-
-            List<KeyboardButton> list = new LinkedList<>();
-
-            for(String cellValue : cellValues) {
-
-                list.add(KeyboardButton.builder().text(cellValue).build());
-            }
-
-            return setRow(row, list);
         }
 
         /**
@@ -171,22 +132,6 @@ public class ReplyKeyboardMarkup implements Keyboard {
 
             keyboard.get(row).clear();
             keyboard.get(row).addAll(buttons);
-            return this;
-        }
-
-        /**
-         * Sets a cell of the keyboard
-         *
-         * @param row       The index of the row
-         * @param column    The index of the column
-         * @param cellValue The value for the cell
-         * @return The keyboard builder
-         * @throws IndexOutOfBoundsException if the row or column is out of range
-         */
-        @Deprecated
-        public ReplyKeyboardMarkupBuilder setCell(int row, int column, String cellValue) {
-
-            keyboard.get(row).set(column, KeyboardButton.builder().text(cellValue).build());
             return this;
         }
 
