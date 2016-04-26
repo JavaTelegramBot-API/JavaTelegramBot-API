@@ -28,6 +28,7 @@ public class InlineQueryResultVideo implements InlineQueryResult {
     private final URL thumb_url;
     private final int video_width;
     private final int video_height;
+    @NonNull
     private final String title;
     private final String caption;
     private final int video_duration;

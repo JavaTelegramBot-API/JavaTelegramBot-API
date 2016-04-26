@@ -9,5 +9,12 @@ public enum InlineQueryResultType {
     PHOTO,
     GIF,
     MPEG4_GIF,
-    VIDEO
+    VIDEO,
+    AUDIO,
+    VOICE,
+    DOCUMENT,
+    LOCATION,
+    VENUE,
+    CONTACT,
+    STICKER
 }
