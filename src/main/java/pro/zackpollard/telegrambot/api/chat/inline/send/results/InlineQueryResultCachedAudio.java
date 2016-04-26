@@ -23,8 +23,8 @@ public class InlineQueryResultCachedAudio implements InlineQueryResult {
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
 
-    public static InlineQueryResultAudioBuilder builder() {
-        return new InlineQueryResultAudioBuilder();
+    public static InlineQueryResultCachedAudioBuilder builder() {
+        return new InlineQueryResultCachedAudioBuilder();
     }
 
     @Override
@@ -51,31 +51,31 @@ public class InlineQueryResultCachedAudio implements InlineQueryResult {
     }
 
     @ToString
-    public static class InlineQueryResultAudioBuilder {
+    public static class InlineQueryResultCachedAudioBuilder {
         private String id = Utils.generateRandomString(32);
         private String audio_file_id;
         private InlineReplyMarkup reply_markup;
         private InputMessageContent input_message_content;
 
-        InlineQueryResultAudioBuilder() {
+        InlineQueryResultCachedAudioBuilder() {
         }
 
-        public InlineQueryResultCachedAudio.InlineQueryResultAudioBuilder id(String id) {
+        public InlineQueryResultCachedAudioBuilder id(String id) {
             this.id = id;
             return this;
         }
 
-        public InlineQueryResultCachedAudio.InlineQueryResultAudioBuilder audioFileId(String audioFileId) {
+        public InlineQueryResultCachedAudioBuilder audioFileId(String audioFileId) {
             this.audio_file_id = audioFileId;
             return this;
         }
 
-        public InlineQueryResultCachedAudio.InlineQueryResultAudioBuilder replyMarkup(InlineReplyMarkup replyMarkup) {
+        public InlineQueryResultCachedAudioBuilder replyMarkup(InlineReplyMarkup replyMarkup) {
             this.reply_markup = replyMarkup;
             return this;
         }
 
-        public InlineQueryResultCachedAudio.InlineQueryResultAudioBuilder inputMessageContent(InputMessageContent inputMessageContent) {
+        public InlineQueryResultCachedAudioBuilder inputMessageContent(InputMessageContent inputMessageContent) {
             this.input_message_content = inputMessageContent;
             return this;
         }
