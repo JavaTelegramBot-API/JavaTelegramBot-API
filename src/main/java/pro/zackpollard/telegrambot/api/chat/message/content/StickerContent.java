@@ -7,11 +7,11 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Sticker;
  */
 public interface StickerContent extends Content {
 
-	Sticker getContent();
+    Sticker getContent();
 
-	@Override
-	default ContentType getType() {
+    @Override
+    default ContentType getType() {
 
-		return ContentType.STICKER;
-	}
+        return ContentType.STICKER;
+    }
 }

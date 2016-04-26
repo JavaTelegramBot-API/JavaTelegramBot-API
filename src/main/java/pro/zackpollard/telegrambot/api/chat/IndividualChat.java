@@ -7,7 +7,7 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public interface IndividualChat extends Chat {
 
-	User getPartner();
+    User getPartner();
 
     default ChatType getType() {
 

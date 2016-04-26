@@ -14,39 +14,48 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class IndividualChatImpl implements IndividualChat {
 
-	private final User partner;
+    private final User partner;
 
-	private IndividualChatImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
 
-		this.partner = UserImpl.createUser(jsonObject);
-	}
+    private IndividualChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
-	private IndividualChatImpl(int userID) {
+        this.partner = UserImpl.createUser(jsonObject);
+        this.telegramBot = telegramBot;
+    }
 
-		this.partner = UserImpl.createUser(userID);
-	}
+    private IndividualChatImpl(int userID, TelegramBot telegramBot) {
 
-	public static IndividualChat createIndividualChat(JSONObject jsonObject) {
+        this.partner = UserImpl.createUser(userID);
+        this.telegramBot = telegramBot;
+    }
 
-		return new IndividualChatImpl(jsonObject);
-	}
+    public static IndividualChat createIndividualChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-	public static Chat createIndividualChat(int chatID) {
+        return new IndividualChatImpl(jsonObject, telegramBot);
+    }
 
-		return new IndividualChatImpl(chatID);
-	}
+    public static Chat createIndividualChat(int chatID, TelegramBot telegramBot) {
 
-	@Override
-	public User getPartner() {
+        return new IndividualChatImpl(chatID, telegramBot);
+    }
 
-		return partner;
-	}
+    @Override
+    public User getPartner() {
 
-	@Override
-	public String getId() {
+        return partner;
+    }
 
-		return String.valueOf(partner.getId());
-	}
+    @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
+    }
+
+    @Override
+    public String getId() {
+
+        return String.valueOf(partner.getId());
+    }
 
     @Override
     public String getName() {
@@ -54,8 +63,8 @@ public class IndividualChatImpl implements IndividualChat {
     }
 
     @Override
-	public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
+    public Message sendMessage(SendableMessage message) {
 
-		return telegramBot.sendMessage(this, message);
-	}
+        return telegramBot.sendMessage(this, message);
+    }
 }

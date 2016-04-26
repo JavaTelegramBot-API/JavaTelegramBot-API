@@ -2,7 +2,6 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
-import pro.zackpollard.telegrambot.api.chat.GroupChat;
 import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
@@ -12,49 +11,70 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
  */
 public class SuperGroupChatImpl implements SuperGroupChat {
 
-	private final long id;
-	private final String title;
+    private final long id;
+    private final String title;
 
-	private SuperGroupChatImpl(JSONObject jsonObject) {
+    private final TelegramBot telegramBot;
 
-		this.id = jsonObject.getLong("id");
-		this.title = jsonObject.getString("title");
-	}
+    private SuperGroupChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
-	private SuperGroupChatImpl(long chatID) {
+        this.id = jsonObject.getLong("id");
+        this.title = jsonObject.getString("title");
+        this.telegramBot = telegramBot;
+    }
 
-		this.id = chatID;
-		this.title = null;
-	}
+    private SuperGroupChatImpl(long chatID, TelegramBot telegramBot) {
 
-	public static SuperGroupChat createSuperGroupChat(JSONObject jsonObject) {
+        this.id = chatID;
+        this.title = null;
+        this.telegramBot = telegramBot;
+    }
 
-		return new SuperGroupChatImpl(jsonObject);
-	}
+    public static SuperGroupChat createSuperGroupChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-	public static SuperGroupChat createSuperGroupChat(long chatID) {
+        return new SuperGroupChatImpl(jsonObject, telegramBot);
+    }
 
-		return new SuperGroupChatImpl(chatID);
-	}
+    public static SuperGroupChat createSuperGroupChat(long chatID, TelegramBot telegramBot) {
 
-	/**
-	 * Gets the name of the group chat.
-	 *
-	 * @return The group chat name, currently can be null due to chat creation by ID with no way of getting the group chats name from telegram servers.
-	 */
-	@Override
-	public String getName() {
-		return title;
-	}
+        return new SuperGroupChatImpl(chatID, telegramBot);
+    }
 
-	@Override
-	public String getId() {
-		return String.valueOf(id);
-	}
+    /**
+     * Gets the name of the group chat.
+     *
+     * @return The group chat name, currently can be null due to chat creation by ID with no way of getting the group chats name from telegram servers.
+     */
+    @Override
+    public String getName() {
+        return title;
+    }
 
-	@Override
-	public Message sendMessage(SendableMessage message, TelegramBot telegramBot) {
+    @Override
+    public TelegramBot getBotInstance() {
+        return telegramBot;
+    }
 
-		return telegramBot.sendMessage(this, message);
-	}
+    @Override
+    public String getId() {
+        return String.valueOf(id);
+    }
+
+    @Override
+    public Message sendMessage(SendableMessage message) {
+
+        return telegramBot.sendMessage(this, message);
+    }
+
+    @Override
+    public boolean kickChatMember(int userId) {
+
+        return telegramBot.kickChatMember(this.getId(), userId);
+    }
+
+    @Override
+    public boolean unbanChatMember(int userId) {
+
+        return telegramBot.unbanChatMember(this.getId(), userId);
+    }
 }

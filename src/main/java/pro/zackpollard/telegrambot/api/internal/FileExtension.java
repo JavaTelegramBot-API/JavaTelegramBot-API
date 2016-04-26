@@ -2,7 +2,10 @@ package pro.zackpollard.telegrambot.api.internal;
 
 import lombok.Getter;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public enum FileExtension {
 
@@ -25,7 +28,7 @@ public enum FileExtension {
 
     private static final Map<String, FileExtension> byMimeType;
 
-    FileExtension(String extension, String...mimeTypes) {
+    FileExtension(String extension, String... mimeTypes) {
         this.extension = extension;
         this.mimeTypes = mimeTypes;
     }

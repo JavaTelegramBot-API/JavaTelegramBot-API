@@ -1,28 +1,25 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableTextMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final String message;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final boolean disableWebPagePreview;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final String message;
+    @Getter
+    private final long replyTo;
+    @Getter
+    private final boolean disableWebPagePreview;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final ParseMode parseMode;
     @Getter
@@ -33,14 +30,15 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.TEXT;
-	}
+    public MessageType getType() {
+        return MessageType.TEXT;
+    }
 
+    @ToString
     public static class SendableTextMessageBuilder {
 
         private String message;
-        private int replyTo;
+        private long replyTo;
         private boolean disableWebPagePreview;
         private ReplyMarkup replyMarkup;
         private ParseMode parseMode;
@@ -59,7 +57,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
             return this;
         }
 
-        public SendableTextMessage.SendableTextMessageBuilder replyTo(int replyTo) {
+        public SendableTextMessage.SendableTextMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -87,10 +85,6 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         public SendableTextMessage build() {
             return new SendableTextMessage(message, replyTo, disableWebPagePreview, replyMarkup, parseMode, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage.SendableTextMessageBuilder(message=" + this.message + ", replyTo=" + this.replyTo + ", disableWebPagePreview=" + this.disableWebPagePreview + ", replyMarkup=" + this.replyMarkup + ", parseMode=" + this.parseMode + ")";
         }
     }
 }

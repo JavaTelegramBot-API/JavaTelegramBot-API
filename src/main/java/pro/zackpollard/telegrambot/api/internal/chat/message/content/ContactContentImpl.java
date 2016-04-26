@@ -10,21 +10,21 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.content.type.Contac
  */
 public class ContactContentImpl implements ContactContent {
 
-	private final Contact content;
+    private final Contact content;
 
-	private ContactContentImpl(JSONObject jsonObject) {
+    private ContactContentImpl(JSONObject jsonObject) {
 
-		this.content = ContactImpl.createContact(jsonObject);
-	}
+        this.content = ContactImpl.createContact(jsonObject);
+    }
 
-	public static ContactContent createContactContent(JSONObject jsonObject) {
+    public static ContactContent createContactContent(JSONObject jsonObject) {
 
-		return jsonObject != null ? new ContactContentImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new ContactContentImpl(jsonObject) : null;
+    }
 
-	@Override
-	public Contact getContent() {
+    @Override
+    public Contact getContent() {
 
-		return content;
-	}
+        return content;
+    }
 }

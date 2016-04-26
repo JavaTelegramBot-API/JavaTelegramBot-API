@@ -9,13 +9,13 @@ import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 
 public class MessageReceivedEvent extends MessageEvent {
 
-	public MessageReceivedEvent(Message message) {
+    public MessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	public Content getContent() {
+    public Content getContent() {
 
-		return getMessage().getContent();
-	}
+        return getMessage().getContent();
+    }
 }

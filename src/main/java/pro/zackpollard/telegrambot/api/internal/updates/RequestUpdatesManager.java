@@ -1,15 +1,17 @@
 package pro.zackpollard.telegrambot.api.internal.updates;
 
 import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineCallbackQuery;
+import pro.zackpollard.telegrambot.api.chat.message.MessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.event.chat.*;
+import pro.zackpollard.telegrambot.api.event.chat.inline.InlineCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineResultChosenEvent;
 import pro.zackpollard.telegrambot.api.event.chat.message.*;
@@ -60,7 +62,7 @@ public class RequestUpdatesManager extends UpdateManager {
                 HttpResponse<String> response = null;
 
                 try {
-                    response = Unirest.post(requestUpdatesManager.getTelegramBot().getBotAPIUrl() + "getUpdates")
+                    response = Unirest.post(requestUpdatesManager.getBotInstance().getBotAPIUrl() + "getUpdates")
                             .field("offset", offset + 1, "application/json")
                             .field("timeout", 10).asString();
                 } catch (UnirestException e) {
@@ -103,9 +105,9 @@ public class RequestUpdatesManager extends UpdateManager {
                         if (updates.length() != 0)
                             offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
 
-                        if(!getPreviousUpdates) {
+                        if (!getPreviousUpdates) {
 
-                            if(updates.length() < 100) {
+                            if (updates.length() < 100) {
 
                                 getPreviousUpdates = true;
                             }
@@ -115,7 +117,7 @@ public class RequestUpdatesManager extends UpdateManager {
 
                         for (int i = 0; i < updates.length(); ++i) {
 
-                            Update update = UpdateImpl.createUpdate(updates.getJSONObject(i));
+                            Update update = UpdateImpl.createUpdate(updates.getJSONObject(i), getBotInstance());
 
                             try {
 
@@ -206,6 +208,23 @@ public class RequestUpdatesManager extends UpdateManager {
                                     case CHOSEN_INLINE_RESULT: {
 
                                         eventManager.callEvent(new InlineResultChosenEvent(update.getChosenInlineResult()));
+                                        break;
+                                    }
+
+                                    case CALLBACK_QUERY: {
+
+                                        //Make three events, one for callback queries overall, one for message callback queries and one for inline callback queries
+                                        eventManager.callEvent(new CallbackQueryReceivedEvent(update.getCallbackQuery()));
+                                        switch (update.getCallbackQuery().getType()) {
+                                            case MESSAGE: {
+                                                eventManager.callEvent(new MessageCallbackQueryReceivedEvent((MessageCallbackQuery) update.getCallbackQuery()));
+                                                break;
+                                            }
+                                            case INLINE_MESSAGE: {
+                                                eventManager.callEvent(new InlineCallbackQueryReceivedEvent((InlineCallbackQuery) update.getCallbackQuery()));
+                                                break;
+                                            }
+                                        }
                                         break;
                                     }
                                 }

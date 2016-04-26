@@ -5,7 +5,8 @@ package pro.zackpollard.telegrambot.api.chat.message;
  */
 public enum ReplyMarkupType {
 
-	KEYBOARD_HIDE,
-	KEYBOARD_MARKUP,
-	FORCE_REPLY;
+    KEYBOARD_HIDE,
+    KEYBOARD_MARKUP,
+    FORCE_REPLY,
+    INLINE_KEYBOARD_MARKUP
 }

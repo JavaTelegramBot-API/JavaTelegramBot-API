@@ -9,18 +9,18 @@ import pro.zackpollard.telegrambot.api.event.chat.message.MessageEvent;
  */
 public class NewGroupChatTitleEvent extends MessageEvent {
 
-	public NewGroupChatTitleEvent(Message message) {
-		super(message);
-	}
+    public NewGroupChatTitleEvent(Message message) {
+        super(message);
+    }
 
-	@Override
-	public GroupChat getChat() {
+    @Override
+    public GroupChat getChat() {
 
-		return (GroupChat) getMessage().getChat();
-	}
+        return (GroupChat) getMessage().getChat();
+    }
 
-	public String getTitle() {
+    public String getTitle() {
 
-		return getChat().getName();
-	}
+        return getChat().getName();
+    }
 }

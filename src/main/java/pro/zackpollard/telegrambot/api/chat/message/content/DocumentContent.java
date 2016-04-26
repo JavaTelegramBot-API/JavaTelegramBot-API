@@ -7,11 +7,11 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Document;
  */
 public interface DocumentContent extends Content {
 
-	Document getContent();
+    Document getContent();
 
-	@Override
-	default ContentType getType() {
+    @Override
+    default ContentType getType() {
 
-		return ContentType.DOCUMENT;
-	}
+        return ContentType.DOCUMENT;
+    }
 }

@@ -10,25 +10,25 @@ import pro.zackpollard.telegrambot.api.user.User;
  */
 public class NewParticipantContentImpl implements NewChatParticipantContent {
 
-	private final User content;
+    private final User content;
 
-	private NewParticipantContentImpl(JSONObject jsonObject) {
+    private NewParticipantContentImpl(JSONObject jsonObject) {
 
-		this.content = UserImpl.createUser(jsonObject);
-	}
+        this.content = UserImpl.createUser(jsonObject);
+    }
 
-	public static NewChatParticipantContent createNewParticipantContent(JSONObject jsonObject) {
+    public static NewChatParticipantContent createNewParticipantContent(JSONObject jsonObject) {
 
-		return jsonObject != null ? new NewParticipantContentImpl(jsonObject) : null;
-	}
+        return jsonObject != null ? new NewParticipantContentImpl(jsonObject) : null;
+    }
 
-	/**
-	 * Gets the new participant in the chat
-	 *
-	 * @return The new participant, or null if there was no new participant
-	 */
-	@Override
-	public User getContent() {
-		return content;
-	}
+    /**
+     * Gets the new participant in the chat
+     *
+     * @return The new participant, or null if there was no new participant
+     */
+    @Override
+    public User getContent() {
+        return content;
+    }
 }

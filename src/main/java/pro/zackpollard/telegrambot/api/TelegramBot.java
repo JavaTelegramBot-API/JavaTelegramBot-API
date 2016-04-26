@@ -11,7 +11,7 @@ import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
-import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -31,6 +31,7 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
+import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
@@ -40,15 +41,15 @@ import pro.zackpollard.telegrambot.api.updates.UpdateManager;
  */
 public final class TelegramBot {
 
-	public static final String API_URL = "https://api.telegram.org/";
-	private static final Gson GSON = new GsonBuilder().create();
-	@Getter
-	private final static FileManager fileManager = new FileManager();
+    public static final String API_URL = "https://api.telegram.org/";
+    private static final Gson GSON = new GsonBuilder().create();
+    @Getter
+    private final static FileManager fileManager = new FileManager();
 
-	@Getter
-	private final String authToken;
-	private final ListenerRegistry listenerRegistry;
-	private UpdateManager updateManager = null;
+    @Getter
+    private final String authToken;
+    private final ListenerRegistry listenerRegistry;
+    private UpdateManager updateManager = null;
 
     @Getter
     private final int botID;
@@ -57,24 +58,24 @@ public final class TelegramBot {
     @Getter
     private final String botUsername;
 
-	private TelegramBot(String authToken, int botID, String botName, String botUsername) {
+    private TelegramBot(String authToken, int botID, String botName, String botUsername) {
 
-		this.authToken = authToken;
+        this.authToken = authToken;
         this.botID = botID;
         this.botName = botName;
         this.botUsername = botUsername;
 
-		listenerRegistry = ListenerRegistryImpl.getNewInstance();
-	}
+        listenerRegistry = ListenerRegistryImpl.getNewInstance();
+    }
 
-	/**
-	 * Use this method to get a new TelegramBot instance with the selected auth token.
-	 *
-	 * @param authToken The bots auth token.
-	 * @return A new TelegramBot instance to base your bot around.
-	 */
+    /**
+     * Use this method to get a new TelegramBot instance with the selected auth token.
+     *
+     * @param authToken The bots auth token.
+     * @return A new TelegramBot instance to base your bot around.
+     */
 
-	public static TelegramBot login(String authToken) {
+    public static TelegramBot login(String authToken) {
 
         try {
 
@@ -82,7 +83,7 @@ public final class TelegramBot {
             HttpResponse<String> response = request.asString();
             JSONObject jsonResponse = processResponse(response);
 
-            if(jsonResponse != null && checkResponseStatus(jsonResponse)) {
+            if (jsonResponse != null && checkResponseStatus(jsonResponse)) {
 
                 JSONObject result = jsonResponse.getJSONObject("result");
 
@@ -93,205 +94,193 @@ public final class TelegramBot {
         }
 
         return null;
-	}
+    }
 
-    @Deprecated
-	public static Chat getChat(int chatID) {
+    public Chat getChat(long chatID) {
 
-		if (chatID < 0) {
-
-			return GroupChatImpl.createGroupChat(chatID);
-		} else {
-
-			return IndividualChatImpl.createIndividualChat(chatID);
-		}
-	}
-
-    public static Chat getChat(long chatID) {
-
-        if(chatID < 0) {
+        if (chatID < 0) {
 
             /** This is a guess of the starting value of supergroups **/
-            if(chatID > -999999999) {
+            if (chatID > -999999999) {
 
-                return GroupChatImpl.createGroupChat((int) chatID);
+                return GroupChatImpl.createGroupChat((int) chatID, this);
             } else {
 
-                return SuperGroupChatImpl.createSuperGroupChat(chatID);
+                return SuperGroupChatImpl.createSuperGroupChat(chatID, this);
             }
         } else {
 
-            return IndividualChatImpl.createIndividualChat((int) chatID);
+            return IndividualChatImpl.createIndividualChat((int) chatID, this);
         }
     }
 
-    public static Chat getChat(String chatID) {
+    public Chat getChat(String chatID) {
 
-		if(chatID != null && chatID.length() > 0) {
+        if (chatID != null && chatID.length() > 0) {
 
-			if (chatID.charAt(0) == '@') {
+            if (chatID.charAt(0) == '@') {
 
-				return ChannelChatImpl.createChannelChat(chatID);
-			} else {
+                return ChannelChatImpl.createChannelChat(chatID, this);
+            } else {
 
-				long longChatID;
+                long longChatID;
 
-				try {
+                try {
 
-					longChatID = Long.parseLong(chatID);
-				} catch (NumberFormatException e) {
+                    longChatID = Long.parseLong(chatID);
+                } catch (NumberFormatException e) {
 
-					System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
-					return null;
-				}
+                    System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
+                    return null;
+                }
 
-				return getChat(longChatID);
-			}
-		}
+                return getChat(longChatID);
+            }
+        }
 
-		return null;
+        return null;
     }
 
-	public String getBotAPIUrl() {
+    public String getBotAPIUrl() {
 
-		return API_URL + "bot" + authToken + "/";
-	}
+        return API_URL + "bot" + authToken + "/";
+    }
 
-	public Message sendMessage(Chat chat, SendableMessage message) {
+    public Message sendMessage(Chat chat, SendableMessage message) {
 
         HttpResponse<String> response;
         JSONObject jsonResponse = null;
-		Message messageResponse = null;
+        Message messageResponse = null;
 
-		switch (message.getType()) {
+        switch (message.getType()) {
 
-			case TEXT: {
+            case TEXT: {
 
-				SendableTextMessage textMessage = (SendableTextMessage) message;
+                SendableTextMessage textMessage = (SendableTextMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendMessage")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("text", textMessage.getMessage(), "application/json")
-							.field("disable_web_page_preview", textMessage.isDisableWebPagePreview())
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendMessage")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("text", textMessage.getMessage(), "application/json")
+                            .field("disable_web_page_preview", textMessage.isDisableWebPagePreview())
                             .field("parse_mode", textMessage.getParseMode() != null ? textMessage.getParseMode().getModeName() : ParseMode.NONE);
 
-					processReplyContent(request, textMessage);
+                    processReplyContent(request, textMessage);
                     processNotificationContent(request, textMessage);
 
-					response = request.asString();
+                    response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				break;
-			}
-			case FORWARDED: {
+                break;
+            }
+            case FORWARDED: {
 
-				SendableForwardMessage forwardMessage = (SendableForwardMessage) message;
+                SendableForwardMessage forwardMessage = (SendableForwardMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "forwardMessage")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("from_chat_id", forwardMessage.getChatID())
-							.field("message_id", forwardMessage.getMessageID());
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "forwardMessage")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("from_chat_id", forwardMessage.getChatID())
+                            .field("message_id", forwardMessage.getMessageID());
 
                     processNotificationContent(request, forwardMessage);
 
-					response = request.asString();
+                    response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				break;
-			}
-			case PHOTO: {
+                break;
+            }
+            case PHOTO: {
 
-				SendablePhotoMessage photoMessage = (SendablePhotoMessage) message;
+                SendablePhotoMessage photoMessage = (SendablePhotoMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendPhoto")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("photo", photoMessage.getPhoto().getFileID() != null ? photoMessage.getPhoto().getFileID() : new FileContainer(photoMessage.getPhoto()), photoMessage.getPhoto().getFileID() == null);
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendPhoto")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("photo", photoMessage.getPhoto().getFileID() != null ? photoMessage.getPhoto().getFileID() : new FileContainer(photoMessage.getPhoto()), photoMessage.getPhoto().getFileID() == null);
 
-					if (photoMessage.getCaption() != null)
-						request.field("caption", photoMessage.getCaption(), "application/json");
+                    if (photoMessage.getCaption() != null)
+                        request.field("caption", photoMessage.getCaption(), "application/json");
 
-					processReplyContent(request, photoMessage);
+                    processReplyContent(request, photoMessage);
                     processNotificationContent(request, photoMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null)) : null;
+                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-				//Photo cacheing to FileManager
-				if (photoMessage.getPhoto().getFile() != null && messageResponse != null) {
+                //Photo cacheing to FileManager
+                if (photoMessage.getPhoto().getFile() != null && messageResponse != null) {
 
-					if(!messageResponse.getContent().getType().equals(ContentType.PHOTO)) {
+                    if (!messageResponse.getContent().getType().equals(ContentType.PHOTO)) {
 
-						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-						break;
-					}
+                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+                        break;
+                    }
 
-					PhotoSize[] photoSizes = ((PhotoContent) messageResponse.getContent()).getContent();
+                    PhotoSize[] photoSizes = ((PhotoContent) messageResponse.getContent()).getContent();
 
-					int largestPhotoSize = 0;
-					int largestPhotoID = 0;
+                    int largestPhotoSize = 0;
+                    int largestPhotoID = 0;
 
-					for (int i = 0; i < photoSizes.length; ++i) {
+                    for (int i = 0; i < photoSizes.length; ++i) {
 
-						int size = photoSizes[i].getHeight() * photoSizes[i].getWidth();
+                        int size = photoSizes[i].getHeight() * photoSizes[i].getWidth();
 
-						if (largestPhotoSize < size) {
+                        if (largestPhotoSize < size) {
 
-							largestPhotoSize = size;
-							largestPhotoID = i;
-						}
-					}
+                            largestPhotoSize = size;
+                            largestPhotoID = i;
+                        }
+                    }
 
-					fileManager.cacheFileID(photoMessage.getPhoto().getFile(), photoSizes[largestPhotoID].getFileId());
-				}
+                    fileManager.cacheFileID(photoMessage.getPhoto().getFile(), photoSizes[largestPhotoID].getFileId());
+                }
 
-				break;
-			}
-			case AUDIO: {
+                break;
+            }
+            case AUDIO: {
 
-				SendableAudioMessage audioMessage = (SendableAudioMessage) message;
+                SendableAudioMessage audioMessage = (SendableAudioMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendAudio")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendAudio")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
 
-					processReplyContent(request, audioMessage);
+                    processReplyContent(request, audioMessage);
                     processNotificationContent(request, audioMessage);
 
-					if (audioMessage.getDuration() != 0) request.field("duration", audioMessage.getDuration());
-					if (audioMessage.getPerformer() != null)
-						request.field("performer", audioMessage.getPerformer(), "application/json");
-					if (audioMessage.getTitle() != null)
-						request.field("title", audioMessage.getTitle(), "application/json");
+                    if (audioMessage.getDuration() != 0) request.field("duration", audioMessage.getDuration());
+                    if (audioMessage.getPerformer() != null)
+                        request.field("performer", audioMessage.getPerformer(), "application/json");
+                    if (audioMessage.getTitle() != null)
+                        request.field("title", audioMessage.getTitle(), "application/json");
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null)) : null;
+                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-				//Audio cacheing to FileManager
-				if (audioMessage.getAudio().getFile() != null && messageResponse != null) {
+                //Audio cacheing to FileManager
+                if (audioMessage.getAudio().getFile() != null && messageResponse != null) {
 
                     String fileID;
 
-					switch (messageResponse.getContent().getType()) {
+                    switch (messageResponse.getContent().getType()) {
 
                         case AUDIO:
                             fileID = ((AudioContent) messageResponse.getContent()).getContent().getFileId();
@@ -306,39 +295,39 @@ public final class TelegramBot {
                     }
 
                     fileManager.cacheFileID(audioMessage.getAudio().getFile(), fileID);
-				}
+                }
 
-				break;
-			}
-			case DOCUMENT: {
+                break;
+            }
+            case DOCUMENT: {
 
-				SendableDocumentMessage documentMessage = (SendableDocumentMessage) message;
+                SendableDocumentMessage documentMessage = (SendableDocumentMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendDocument")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendDocument")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
 
-					if (documentMessage.getCaption() != null)
-						request.field("caption", documentMessage.getCaption(), "application/json");
+                    if (documentMessage.getCaption() != null)
+                        request.field("caption", documentMessage.getCaption(), "application/json");
 
-					processReplyContent(request, documentMessage);
+                    processReplyContent(request, documentMessage);
                     processNotificationContent(request, documentMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null)) : null;
+                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-				//Document cacheing to FileManager
-				if (documentMessage.getDocument().getFile() != null && messageResponse != null) {
+                //Document cacheing to FileManager
+                if (documentMessage.getDocument().getFile() != null && messageResponse != null) {
 
                     String fileID;
 
-                    switch(messageResponse.getContent().getType()) {
+                    switch (messageResponse.getContent().getType()) {
 
                         case AUDIO:
                             fileID = ((AudioContent) messageResponse.getContent()).getContent().getFileId();
@@ -351,164 +340,369 @@ public final class TelegramBot {
                             return null;
                     }
 
-					fileManager.cacheFileID(documentMessage.getDocument().getFile(), fileID);
-				}
+                    fileManager.cacheFileID(documentMessage.getDocument().getFile(), fileID);
+                }
 
-				break;
-			}
-			case STICKER:
+                break;
+            }
+            case STICKER:
 
-				SendableStickerMessage stickerMessage = (SendableStickerMessage) message;
+                SendableStickerMessage stickerMessage = (SendableStickerMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendSticker")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendSticker")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
 
-					processReplyContent(request, stickerMessage);
+                    processReplyContent(request, stickerMessage);
                     processNotificationContent(request, stickerMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null)) : null;
+                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-				//Sticker cacheing to FileManager
-				if (stickerMessage.getSticker().getFile() != null && messageResponse != null) {
+                //Sticker cacheing to FileManager
+                if (stickerMessage.getSticker().getFile() != null && messageResponse != null) {
 
-					if(!messageResponse.getContent().getType().equals(ContentType.STICKER)) {
+                    if (!messageResponse.getContent().getType().equals(ContentType.STICKER)) {
 
-						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-						break;
-					}
+                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+                        break;
+                    }
 
-					Sticker sticker = ((StickerContent) messageResponse.getContent()).getContent();
+                    Sticker sticker = ((StickerContent) messageResponse.getContent()).getContent();
 
-					fileManager.cacheFileID(stickerMessage.getSticker().getFile(), sticker.getFileId());
-				}
+                    fileManager.cacheFileID(stickerMessage.getSticker().getFile(), sticker.getFileId());
+                }
 
-				break;
+                break;
 
-			case VIDEO:
+            case VIDEO:
 
-				SendableVideoMessage videoMessage = (SendableVideoMessage) message;
+                SendableVideoMessage videoMessage = (SendableVideoMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVideo")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : new FileContainer(videoMessage.getVideo()), videoMessage.getVideo().getFileID() == null);
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVideo")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : new FileContainer(videoMessage.getVideo()), videoMessage.getVideo().getFileID() == null);
 
-					if (videoMessage.getCaption() != null)
-						request.field("caption", videoMessage.getCaption(), "application/json");
+                    if (videoMessage.getDuration() > 0) request.field("duration", videoMessage.getDuration());
+                    if (videoMessage.getWidth() > 0) request.field("width", videoMessage.getWidth());
+                    if (videoMessage.getHeight() > 0) request.field("height", videoMessage.getHeight());
+                    if (videoMessage.getCaption() != null)
+                        request.field("caption", videoMessage.getCaption(), "application/json");
 
-					processReplyContent(request, videoMessage);
+                    processReplyContent(request, videoMessage);
                     processNotificationContent(request, videoMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null)) : null;
+                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-				//Video cacheing to FileManager
-				if (videoMessage.getVideo().getFile() != null && messageResponse != null) {
+                //Video cacheing to FileManager
+                if (videoMessage.getVideo().getFile() != null && messageResponse != null) {
 
-					if(!messageResponse.getContent().getType().equals(ContentType.VIDEO)) {
+                    if (!messageResponse.getContent().getType().equals(ContentType.VIDEO)) {
 
-						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-						break;
-					}
+                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+                        break;
+                    }
 
-					Video video = ((VideoContent) messageResponse.getContent()).getContent();
+                    Video video = ((VideoContent) messageResponse.getContent()).getContent();
 
-					fileManager.cacheFileID(videoMessage.getVideo().getFile(), video.getFileId());
-				}
+                    fileManager.cacheFileID(videoMessage.getVideo().getFile(), video.getFileId());
+                }
 
-				break;
-			case VOICE:
+                break;
+            case VOICE:
 
-				SendableVoiceMessage voiceMessage = (SendableVoiceMessage) message;
+                SendableVoiceMessage voiceMessage = (SendableVoiceMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVoice")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVoice")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
 
-					processReplyContent(request, voiceMessage);
+                    if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
+
+                    processReplyContent(request, voiceMessage);
                     processNotificationContent(request, voiceMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null)) : null;
+                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-				//Voice cacheing to FileManager
-				if (voiceMessage.getVoice().getFile() != null && messageResponse != null) {
+                //Voice cacheing to FileManager
+                if (voiceMessage.getVoice().getFile() != null && messageResponse != null) {
 
-					if(!messageResponse.getContent().getType().equals(ContentType.VOICE)) {
+                    if (!messageResponse.getContent().getType().equals(ContentType.VOICE)) {
 
-						System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-						break;
-					}
+                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+                        break;
+                    }
 
-					Voice voice = ((VoiceContent) messageResponse.getContent()).getContent();
+                    Voice voice = ((VoiceContent) messageResponse.getContent()).getContent();
 
-					fileManager.cacheFileID(voiceMessage.getVoice().getFile(), voice.getFileId());
-				}
+                    fileManager.cacheFileID(voiceMessage.getVoice().getFile(), voice.getFileId());
+                }
 
-				break;
+                break;
 
-			case LOCATION:
+            case LOCATION:
 
-				SendableLocationMessage locationMessage = (SendableLocationMessage) message;
+                SendableLocationMessage locationMessage = (SendableLocationMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("latitude", locationMessage.getLatitude())
-							.field("longitude", locationMessage.getLongitude());
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("latitude", locationMessage.getLatitude())
+                            .field("longitude", locationMessage.getLongitude());
 
-					processReplyContent(request, locationMessage);
+                    processReplyContent(request, locationMessage);
                     processNotificationContent(request, locationMessage);
 
                     response = request.asString();
                     jsonResponse = processResponse(response);
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				break;
-			case CHAT_ACTION:
+                break;
+            case VENUE:
 
-				SendableChatAction sendableChatAction = (SendableChatAction) message;
+                SendableVenueMessage venueMessage = (SendableVenueMessage) message;
 
-				try {
-					MultipartBody request = Unirest.post(getBotAPIUrl() + "sendChatAction")
-							.field("chat_id", chat.getId(), "application/json")
-							.field("action", sendableChatAction.getChatAction().getName());
+                try {
+
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("latitude", venueMessage.getLatitude())
+                            .field("longitude", venueMessage.getLongitude())
+                            .field("title", venueMessage.getTitle())
+                            .field("address", venueMessage.getAddress());
+
+                    if (venueMessage.getFoursquareId() != null) request.field("foursquare_id", venueMessage.getFoursquareId());
+
+                    processReplyContent(request, venueMessage);
+                    processNotificationContent(request, venueMessage);
 
                     response = request.asString();
-				} catch (UnirestException e) {
-					e.printStackTrace();
-				}
+                    jsonResponse = processResponse(response);
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
 
-				return null;
-		}
+                break;
+            case CHAT_ACTION:
 
-		return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse)) : null;
-	}
+                SendableChatAction sendableChatAction = (SendableChatAction) message;
+
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendChatAction")
+                            .field("chat_id", chat.getId(), "application/json")
+                            .field("action", sendableChatAction.getChatAction().getName());
+
+                    response = request.asString();
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+        }
+
+        return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
+    }
+
+    private JSONObject editMessageText(String chatId, Long messageId, String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse = null;
+
+        try {
+            MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageText")
+                    .field("text", text, "application/json")
+                    .field("disable_web_page_preview", disableWebPagePreview);
+
+            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(messageId != null) requests.field("message_id", messageId);
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
+            if(parseMode != null) requests.field("parse_mode", parseMode.getModeName(), "application/json");
+            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+
+            response = requests.asString();
+            jsonResponse = processResponse(response);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return jsonResponse;
+    }
+
+    public Message editMessageText(Message oldMessage, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        return this.editMessageText(oldMessage.getChat().getId(), oldMessage.getMessageId(), text, parseMode, disableWebPagePreview, inlineReplyMarkup);
+    }
+
+    public Message editMessageText(String chatId, Long messageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(chatId != null && messageId != null && text != null) {
+
+            JSONObject jsonResponse = this.editMessageText(chatId, messageId, null, text, parseMode, disableWebPagePreview, inlineReplyMarkup);
+
+            if (jsonResponse != null) {
+
+                return MessageImpl.createMessage(jsonResponse.getJSONObject("result"), this);
+            }
+        }
+
+        return null;
+    }
+
+    public boolean editInlineMessageText(String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(inlineMessageId != null && text != null) {
+
+            JSONObject jsonResponse = this.editMessageText(null, null, inlineMessageId, text, parseMode, disableWebPagePreview, inlineReplyMarkup);
+
+            if (jsonResponse != null) {
+
+                if (jsonResponse.getBoolean("result")) return true;
+            }
+        }
+
+        return false;
+    }
+
+    private JSONObject editMessageCaption(String chatId, Long messageId, String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse = null;
+
+        try {
+            MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageCaption")
+                    .field("caption", caption, "application/json");
+
+            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(messageId != null) requests.field("message_id", messageId);
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
+            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+
+            response = requests.asString();
+            jsonResponse = processResponse(response);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return jsonResponse;
+    }
+
+    public Message editMessageCaption(Message oldMessage, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        return this.editMessageCaption(oldMessage.getChat().getId(), oldMessage.getMessageId(), caption, inlineReplyMarkup);
+    }
+
+    public Message editMessageCaption(String chatId, Long messageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(caption != null && chatId != null && messageId != null) {
+
+            JSONObject jsonResponse = this.editMessageCaption(chatId, messageId, null, caption, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                return MessageImpl.createMessage(jsonResponse.getJSONObject("result"), this);
+            }
+        }
+
+        return null;
+    }
+
+    public boolean editInlineCaption(String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(caption != null && inlineReplyMarkup != null) {
+
+            JSONObject jsonResponse = this.editMessageCaption(null, null, inlineMessageId, caption, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        }
+
+        return false;
+    }
+
+    private JSONObject editMessageReplyMarkup(String chatId, Long messageId, String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse = null;
+
+        try {
+            MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageReplyMarkup")
+                    .field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+
+            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(messageId != null) requests.field("message_id", messageId);
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
+
+            response = requests.asString();
+            jsonResponse = processResponse(response);
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return jsonResponse;
+    }
+
+    public Message editMessageReplyMarkup(Message oldMessage, InlineReplyMarkup inlineReplyMarkup) {
+
+        return this.editMessageReplyMarkup(oldMessage.getChat().getId(), oldMessage.getMessageId(), inlineReplyMarkup);
+    }
+
+    public Message editMessageReplyMarkup(String chatId, Long messageId, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(inlineReplyMarkup != null && chatId != null && messageId != null) {
+
+            JSONObject jsonResponse = this.editMessageReplyMarkup(chatId, messageId, null, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                return MessageImpl.createMessage(jsonResponse.getJSONObject("result"), this);
+            }
+        }
+
+        return null;
+    }
+
+    public boolean editInlineMessageText(String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
+
+        if(inlineMessageId != null && inlineReplyMarkup != null) {
+
+            JSONObject jsonResponse = this.editMessageReplyMarkup(null, null, inlineMessageId, inlineReplyMarkup);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        }
+
+        return false;
+    }
 
     public boolean answerInlineQuery(String inlineQueryId, InlineQueryResponse inlineQueryResponse) {
 
-        if(inlineQueryId != null && inlineQueryResponse != null) {
+        if (inlineQueryId != null && inlineQueryResponse != null) {
 
             HttpResponse<String> response;
             JSONObject jsonResponse;
@@ -519,14 +713,16 @@ public final class TelegramBot {
                         .field("results", GSON.toJson(inlineQueryResponse.getResults()))
                         .field("cache_time", inlineQueryResponse.getCacheTime())
                         .field("is_personal", inlineQueryResponse.isPersonal())
-                        .field("next_offset", inlineQueryResponse.getNextOffset());
+                        .field("next_offset", inlineQueryResponse.getNextOffset())
+                        .field("switch_pm_text", inlineQueryResponse.getSwitchPmText())
+                        .field("switch_pm_parameter", inlineQueryResponse.getSwitchPmParameter());
 
                 response = requests.asString();
                 jsonResponse = processResponse(response);
 
-                if(jsonResponse != null) {
+                if (jsonResponse != null) {
 
-                    if(jsonResponse.getBoolean("result")) return true;
+                    if (jsonResponse.getBoolean("result")) return true;
                 }
             } catch (UnirestException e) {
                 e.printStackTrace();
@@ -536,21 +732,97 @@ public final class TelegramBot {
         return false;
     }
 
-	public void startUpdates(boolean getPreviousUpdates) {
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
 
-		updateManager = new RequestUpdatesManager(this, getPreviousUpdates);
-	}
+        if(callbackQueryId != null && text != null) {
 
-	public ListenerRegistry getEventsManager() {
+            HttpResponse<String> response;
+            JSONObject jsonResponse;
 
-		return listenerRegistry;
-	}
+            try {
+                MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
+                        .field("callback_query_id", callbackQueryId, "application/json")
+                        .field("text", text, "application/json")
+                        .field("show_alert", showAlert);
+
+                response = requests.asString();
+                jsonResponse = processResponse(response);
+
+                if (jsonResponse != null) {
+
+                    if (jsonResponse.getBoolean("result")) return true;
+                }
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    public boolean kickChatMember(String chatId, int userId) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "kickChatMember")
+                    .field("chat_id", chatId, "application/json")
+                    .field("user_id", userId);
+
+            response = request.asString();
+            jsonResponse = TelegramBot.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean unbanChatMember(String chatId, int userId) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "unbanChatMember")
+                    .field("chat_id", chatId, "application/json")
+                    .field("user_id", userId);
+
+            response = request.asString();
+            jsonResponse = TelegramBot.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void startUpdates(boolean getPreviousUpdates) {
+
+        updateManager = new RequestUpdatesManager(this, getPreviousUpdates);
+    }
+
+    public ListenerRegistry getEventsManager() {
+
+        return listenerRegistry;
+    }
 
     private static JSONObject processResponse(HttpResponse<String> response) {
 
-        if(response != null) {
+        if (response != null) {
 
-            if(response.getStatus() == 200) {
+            if (response.getStatus() == 200) {
 
                 try {
 
@@ -566,10 +838,10 @@ public final class TelegramBot {
                 try {
 
                     jsonResponse = new JSONObject(response.getBody());
-                } catch(JSONException e) {
+                } catch (JSONException e) {
                 }
 
-                if(jsonResponse != null) {
+                if (jsonResponse != null) {
 
                     System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
                 } else {
@@ -582,48 +854,51 @@ public final class TelegramBot {
         return null;
     }
 
-	private static void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
+    private static void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
 
-		if (replyingOptions.getReplyTo() != 0)
-			multipartBody.field("reply_to_message_id", String.valueOf(replyingOptions.getReplyTo()), "application/json");
-		if (replyingOptions.getReplyMarkup() != null) {
+        if (replyingOptions.getReplyTo() != 0)
+            multipartBody.field("reply_to_message_id", String.valueOf(replyingOptions.getReplyTo()), "application/json");
+        if (replyingOptions.getReplyMarkup() != null) {
 
-			switch (replyingOptions.getReplyMarkup().getType()) {
+            switch (replyingOptions.getReplyMarkup().getType()) {
 
-				case FORCE_REPLY:
-					multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json");
-					break;
-				case KEYBOARD_HIDE:
-					multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json");
-					break;
-				case KEYBOARD_MARKUP:
-					multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json");
-					break;
-			}
-		}
-	}
+                case FORCE_REPLY:
+                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json");
+                    break;
+                case KEYBOARD_HIDE:
+                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json");
+                    break;
+                case KEYBOARD_MARKUP:
+                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json");
+                    break;
+                case INLINE_KEYBOARD_MARKUP:
+                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), InlineKeyboardMarkup.class), "application/json");
+                    break;
+            }
+        }
+    }
 
     private static void processNotificationContent(MultipartBody multipartBody, NotificationOptions notificationOptions) {
 
         multipartBody.field("disable_notification", notificationOptions.isDisableNotification());
     }
 
-	private static boolean checkResponseStatus(JSONObject jsonResponse) {
+    private static boolean checkResponseStatus(JSONObject jsonResponse) {
 
-		if(jsonResponse != null) {
+        if (jsonResponse != null) {
 
-			if(jsonResponse.getBoolean("ok")) {
+            if (jsonResponse.getBoolean("ok")) {
 
-				return true;
-			} else {
+                return true;
+            } else {
 
-				System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
-			}
-		} else {
+                System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
+            }
+        } else {
 
-			System.err.println("JSON Response was null, something went wrong...");
-		}
+            System.err.println("JSON Response was null, something went wrong...");
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

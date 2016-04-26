@@ -1,21 +1,18 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableForwardMessage implements SendableMessage, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final Integer messageID;
+    @NonNull
+    @Getter
+    private final Long messageID;
     @NonNull
     @Getter
     private final String chatID;
@@ -27,13 +24,14 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.FORWARDED;
-	}
+    public MessageType getType() {
+        return MessageType.FORWARDED;
+    }
 
+    @ToString
     public static class SendableForwardMessageBuilder {
 
-        private Integer messageID;
+        private Long messageID;
         private String chatID;
         private boolean disableNotification;
 
@@ -46,7 +44,7 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
             return this;
         }
 
-        public SendableForwardMessage.SendableForwardMessageBuilder messageID(Integer messageID) {
+        public SendableForwardMessage.SendableForwardMessageBuilder messageID(Long messageID) {
             this.messageID = messageID;
             return this;
         }
@@ -64,10 +62,6 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
 
         public SendableForwardMessage build() {
             return new SendableForwardMessage(messageID, chatID, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableForwardMessage.SendableForwardMessageBuilder(messageID=" + this.messageID + ", chatID=" + this.chatID + ")";
         }
     }
 }

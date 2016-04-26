@@ -11,13 +11,17 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 public interface Chat {
 
     String getId();
+
     String getName();
+
     ChatType getType();
 
-	default Message sendMessage(String message, TelegramBot telegramBot) {
+    TelegramBot getBotInstance();
 
-		return this.sendMessage(SendableTextMessage.builder().message(message).build(), telegramBot);
-	}
+    default Message sendMessage(String message) {
 
-	Message sendMessage(SendableMessage message, TelegramBot telegramBot);
+        return this.sendMessage(SendableTextMessage.builder().message(message).build());
+    }
+
+    Message sendMessage(SendableMessage message);
 }

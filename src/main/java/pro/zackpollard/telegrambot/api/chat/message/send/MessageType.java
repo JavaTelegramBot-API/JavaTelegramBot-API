@@ -5,13 +5,15 @@ package pro.zackpollard.telegrambot.api.chat.message.send;
  */
 public enum MessageType {
 
-	TEXT,
-	FORWARDED,
-	PHOTO,
-	AUDIO,
-	DOCUMENT,
-	STICKER,
-	VIDEO,
-	LOCATION,
-	VOICE, CHAT_ACTION
+    TEXT,
+    FORWARDED,
+    PHOTO,
+    AUDIO,
+    DOCUMENT,
+    STICKER,
+    VIDEO,
+    LOCATION,
+    VENUE,
+    VOICE,
+    CHAT_ACTION
 }

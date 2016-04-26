@@ -5,7 +5,7 @@ package pro.zackpollard.telegrambot.api.chat.message.content.type;
  */
 public interface Audio extends DurationableFile, Mimetypeable {
 
-	String getPerformer();
+    String getPerformer();
 
-	String getTitle();
+    String getTitle();
 }

@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.VideoContent;
  */
 public class VideoMessageReceivedEvent extends MessageReceivedEvent {
 
-	public VideoMessageReceivedEvent(Message message) {
+    public VideoMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public VideoContent getContent() {
+    @Override
+    public VideoContent getContent() {
 
-		return (VideoContent) getMessage().getContent();
-	}
+        return (VideoContent) getMessage().getContent();
+    }
 }

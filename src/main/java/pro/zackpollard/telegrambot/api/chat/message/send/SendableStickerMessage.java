@@ -1,26 +1,23 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableStickerMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile sticker;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile sticker;
+    @Getter
+    private final long replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -29,14 +26,15 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.STICKER;
-	}
+    public MessageType getType() {
+        return MessageType.STICKER;
+    }
 
+    @ToString
     public static class SendableStickerMessageBuilder {
 
         private InputFile sticker;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -53,7 +51,7 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
             return this;
         }
 
-        public SendableStickerMessage.SendableStickerMessageBuilder replyTo(int replyTo) {
+        public SendableStickerMessage.SendableStickerMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -71,10 +69,6 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
 
         public SendableStickerMessage build() {
             return new SendableStickerMessage(sticker, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableStickerMessage.SendableStickerMessageBuilder(sticker=" + this.sticker + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

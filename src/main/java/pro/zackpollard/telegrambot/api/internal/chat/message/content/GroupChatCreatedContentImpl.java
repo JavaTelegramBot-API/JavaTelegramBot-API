@@ -7,11 +7,11 @@ import pro.zackpollard.telegrambot.api.chat.message.content.GroupChatCreatedCont
  */
 public class GroupChatCreatedContentImpl implements GroupChatCreatedContent {
 
-	private GroupChatCreatedContentImpl() {
-	}
+    private GroupChatCreatedContentImpl() {
+    }
 
-	public static GroupChatCreatedContent createGroupChatCreatedContent() {
+    public static GroupChatCreatedContent createGroupChatCreatedContent() {
 
-		return new GroupChatCreatedContentImpl();
-	}
+        return new GroupChatCreatedContentImpl();
+    }
 }

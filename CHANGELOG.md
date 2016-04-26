@@ -1,4 +1,46 @@
 # Changelog
+#### Version 1.0.0
+* Bots 2.0 Update
+  * Implemented new CallbackQuery response type in Update object
+    * Three events added for this: CallbackQueryReceivedEvent, InlineCallbackQueryReceivedEvent, MessageCallbackQueryReceivedEvent
+  * Implemented new MessageEntity object type into a received message with TextContent type
+    * You can get access to the MessageEntity's using TextMessageReceivedEvent#getContent()#getEntities()
+  * Changed new_chat_participant and left_chat_participant to new_chat_member and left_chat_member respectively
+  * Implemented new Venue object type and added it as a new content type for received Message's
+  * Implemented new content type pinned_message in Message object
+  * Added KeyboardButton and switched ReplyKeyboardMarkup to use KeyboardButton instead of String
+  * Added InlineKeyboardButton and InlineKeyboardMarkup for the new inline keyboard functionality
+  * Updated TelegramBot#sendMessage to support the new InlineKeyboardMarkup keyboards
+  * Added support for sendVideo to handle width, height and duration
+  * Added SendableVenueMessage to support sending Venue message types
+  * Implemented kickChatMember into GroupChat and SuperGroupChat
+  * Implemented unbanChatMember into SuperGroupChat
+  * Implemented answerCallbackQuery into CallbackQuery
+  * Implemented editMessageText function into TelegramBot for editing inline and normal messages with text content
+  * Implemented editMessageReplyMarkup function into TelegramBot for editing ReplyMarkup for any type of inline or normal message
+  * Implemented editMessageCaption function into TelegramBot for editing captions for any type of inline or normal message
+  * Updated InlineQuery object to add the new Location field
+  * Implemented answerInlinequery changes into the InlineQueryResponse object
+  * Added the new InputMessageContent objects for use when sending inline messages
+  * Updated the current InlineQueryResult objects to follow the new API spec and use the InputMessageContent objects
+  * Implemented all new and changed InlineQueryResult objects
+  * Implemented location and inline_message_id into ChosenInlineResult
+* Bugfix:
+  * Added missing caption to Document content type for received Message's
+  * Fixed an incorrect method name and empty method in ReplyKeyboardMarkup
+  * Fixed a bug where duration was never sent with a voice message, even when it was provided
+* Changes:
+  * Chats now contain an instance of TelegramBot within them
+    * TelegramBot.getChat(long/String) is now TelegramBot#getChat(long/String) and therefore requires an instance of TelegramBot to use
+    * Chat#sendMessage(SendableMessage/String, TelegramBot) is now Chat#sendMessage(SendableMessage/String)
+  * Message IDs are now stored as a long instead of an int
+    * This change is being made solely as a precaution for very large chats where message counts could get very high in the long term
+  * Make SuperGroupChat extend GroupChat instead of Chat
+  * Removed deprecated ReplyKeyboardMarkup String based methods to be replaced with KeyboardButton methods
+  * Added in toString methods to all classes and builders that should have them
+    * This will make debugging easier and allow bug reports to be more informative
+    
+   
 #### Version 0.8.3
 * Added checks to avoid errors with cacheing if the servers responds with an unexpected content type
 

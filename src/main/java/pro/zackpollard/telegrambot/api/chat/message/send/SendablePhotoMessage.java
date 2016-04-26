@@ -1,28 +1,25 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile photo;
-	@Getter
-	private final String caption;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile photo;
+    @Getter
+    private final String caption;
+    @Getter
+    private final long replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -31,15 +28,16 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.PHOTO;
-	}
+    public MessageType getType() {
+        return MessageType.PHOTO;
+    }
 
+    @ToString
     public static class SendablePhotoMessageBuilder {
 
         private InputFile photo;
         private String caption;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -61,7 +59,7 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendablePhotoMessage.SendablePhotoMessageBuilder replyTo(int replyTo) {
+        public SendablePhotoMessage.SendablePhotoMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -79,10 +77,6 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
 
         public SendablePhotoMessage build() {
             return new SendablePhotoMessage(photo, caption, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendablePhotoMessage.SendablePhotoMessageBuilder(photo=" + this.photo + ", caption=" + this.caption + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

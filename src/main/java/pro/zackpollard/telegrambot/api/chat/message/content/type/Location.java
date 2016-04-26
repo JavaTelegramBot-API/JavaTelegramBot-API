@@ -5,7 +5,7 @@ package pro.zackpollard.telegrambot.api.chat.message.content.type;
  */
 public interface Location {
 
-	double getLongitude();
+    double getLongitude();
 
-	double getLatitude();
+    double getLatitude();
 }

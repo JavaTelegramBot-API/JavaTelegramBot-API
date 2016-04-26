@@ -11,18 +11,18 @@ import pro.zackpollard.telegrambot.api.event.chat.message.MessageEvent;
  */
 public class NewGroupChatPhotoEvent extends MessageEvent {
 
-	public NewGroupChatPhotoEvent(Message message) {
-		super(message);
-	}
+    public NewGroupChatPhotoEvent(Message message) {
+        super(message);
+    }
 
-	@Override
-	public GroupChat getChat() {
+    @Override
+    public GroupChat getChat() {
 
-		return (GroupChat) getMessage().getChat();
-	}
+        return (GroupChat) getMessage().getChat();
+    }
 
-	public PhotoSize[] getContent() {
+    public PhotoSize[] getContent() {
 
-		return ((PhotoContent) getMessage().getContent()).getContent();
-	}
+        return ((PhotoContent) getMessage().getContent()).getContent();
+    }
 }

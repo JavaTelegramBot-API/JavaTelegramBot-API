@@ -1,28 +1,25 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile voice;
-	@Getter
-	private final int duration;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile voice;
+    @Getter
+    private final int duration;
+    @Getter
+    private final long replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -31,16 +28,17 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
     }
 
     @Override
-	public MessageType getType() {
+    public MessageType getType() {
 
-		return MessageType.VOICE;
-	}
+        return MessageType.VOICE;
+    }
 
+    @ToString
     public static class SendableVoiceMessageBuilder {
 
         private InputFile voice;
         private int duration;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -62,7 +60,7 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendableVoiceMessage.SendableVoiceMessageBuilder replyTo(int replyTo) {
+        public SendableVoiceMessage.SendableVoiceMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -80,10 +78,6 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
 
         public SendableVoiceMessage build() {
             return new SendableVoiceMessage(voice, duration, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableVoiceMessage.SendableVoiceMessageBuilder(voice=" + this.voice + ", duration=" + this.duration + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

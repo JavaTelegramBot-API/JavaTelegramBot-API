@@ -2,6 +2,7 @@ package pro.zackpollard.telegrambot.api.event.chat;
 
 import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
+import pro.zackpollard.telegrambot.api.chat.message.content.MigrateToChatIDContent;
 import pro.zackpollard.telegrambot.api.event.chat.message.MessageEvent;
 
 /**
@@ -9,13 +10,13 @@ import pro.zackpollard.telegrambot.api.event.chat.message.MessageEvent;
  */
 public class MigrateToChatEvent extends MessageEvent {
 
-	public MigrateToChatEvent(Message message) {
-		super(message);
-	}
+    public MigrateToChatEvent(Message message) {
+        super(message);
+    }
 
-	@Override
-	public SuperGroupChat getChat() {
+    @Override
+    public SuperGroupChat getChat() {
 
-		return (SuperGroupChat) getMessage().getChat();
-	}
+        return (SuperGroupChat) getMessage().getBotInstance().getChat(((MigrateToChatIDContent) getMessage().getContent()).getContent());
+    }
 }

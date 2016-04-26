@@ -9,4 +9,6 @@ public interface GroupChat extends Chat {
 
         return ChatType.GROUP;
     }
+
+    boolean kickChatMember(int userId);
 }

@@ -1,6 +1,5 @@
 package pro.zackpollard.telegrambot.api.updates;
 
-import lombok.Getter;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 
 /**
@@ -8,19 +7,22 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
  */
 public abstract class UpdateManager {
 
-	@Getter
-	private final TelegramBot telegramBot;
+    private final TelegramBot telegramBot;
 
-	protected UpdateManager(TelegramBot telegramBot) {
+    protected UpdateManager(TelegramBot telegramBot) {
 
-		this.telegramBot = telegramBot;
-	}
+        this.telegramBot = telegramBot;
+    }
 
-	public enum UpdateMethod {
+    public TelegramBot getBotInstance() {
+        return telegramBot;
+    }
 
-		REQUEST_UPDATES,
-		WEBHOOK
-	}
+    public enum UpdateMethod {
 
-	public abstract UpdateMethod getUpdateMethod();
+        REQUEST_UPDATES,
+        WEBHOOK
+    }
+
+    public abstract UpdateMethod getUpdateMethod();
 }

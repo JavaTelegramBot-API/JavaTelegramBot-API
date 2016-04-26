@@ -3,7 +3,9 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
+import lombok.ToString;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
+import pro.zackpollard.telegrambot.api.chat.inline.send.content.InputMessageContent;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.net.URL;
@@ -11,6 +13,7 @@ import java.net.URL;
 /**
  * @author Zack Pollard
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResultVideo implements InlineQueryResult {
 
@@ -25,11 +28,13 @@ public class InlineQueryResultVideo implements InlineQueryResult {
     private final URL thumb_url;
     private final int video_width;
     private final int video_height;
+    @NonNull
     private final String title;
     private final String caption;
-    private final String message_text;
-    private final ParseMode parse_mode;
-    private final boolean disable_web_page_preview;
+    private final int video_duration;
+    private final String description;
+    private final InlineReplyMarkup reply_markup;
+    private final InputMessageContent input_message_content;
 
     public static InlineQueryResultVideoBuilder builder() {
         return new InlineQueryResultVideoBuilder();
@@ -76,18 +81,23 @@ public class InlineQueryResultVideo implements InlineQueryResult {
         return this.caption;
     }
 
-    public String getMessageText() {
-        return this.message_text;
+    public int getVideoDuration() {
+        return this.video_duration;
     }
 
-    public ParseMode getParseMode() {
-        return this.parse_mode;
+    public String getDescription() {
+        return this.description;
     }
 
-    public boolean isDisableWebPagePreview() {
-        return this.disable_web_page_preview;
+    public InlineReplyMarkup getReplyMarkup() {
+        return this.reply_markup;
     }
 
+    public InputMessageContent getInputMessageContent() {
+        return this.input_message_content;
+    }
+
+    @ToString
     public static class InlineQueryResultVideoBuilder {
         private String id = Utils.generateRandomString(32);
         private URL video_url;
@@ -97,9 +107,10 @@ public class InlineQueryResultVideo implements InlineQueryResult {
         private int video_height;
         private String title;
         private String caption;
-        private String message_text;
-        private ParseMode parse_mode;
-        private boolean disable_web_page_preview;
+        private int video_duration;
+        private String description;
+        private InlineReplyMarkup reply_markup;
+        private InputMessageContent input_message_content;
 
         InlineQueryResultVideoBuilder() {
         }
@@ -144,27 +155,28 @@ public class InlineQueryResultVideo implements InlineQueryResult {
             return this;
         }
 
-        public InlineQueryResultVideo.InlineQueryResultVideoBuilder messageText(String messageText) {
-            this.message_text = messageText;
+        public InlineQueryResultVideo.InlineQueryResultVideoBuilder videoDuration(int videoDuration) {
+            this.video_duration = videoDuration;
             return this;
         }
 
-        public InlineQueryResultVideo.InlineQueryResultVideoBuilder parseMode(ParseMode parseMode) {
-            this.parse_mode = parseMode;
+        public InlineQueryResultVideo.InlineQueryResultVideoBuilder description(String description) {
+            this.description = description;
             return this;
         }
 
-        public InlineQueryResultVideo.InlineQueryResultVideoBuilder disableWebPagePreview(boolean disableWebPagePreview) {
-            this.disable_web_page_preview = disableWebPagePreview;
+        public InlineQueryResultVideo.InlineQueryResultVideoBuilder replyMarkup(InlineReplyMarkup inlineReplyMarkup) {
+            this.reply_markup = inlineReplyMarkup;
+            return this;
+        }
+
+        public InlineQueryResultVideo.InlineQueryResultVideoBuilder inputMessageContent(InputMessageContent inputMessageContent) {
+            this.input_message_content = inputMessageContent;
             return this;
         }
 
         public InlineQueryResultVideo build() {
-            return new InlineQueryResultVideo(id, video_url, mime_type, thumb_url, video_width, video_height, title, caption, message_text, parse_mode, disable_web_page_preview);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultVideo.InlineQueryResultVideoBuilder(id=" + this.id + ", video_url=" + this.video_url + ", mime_type=" + this.mime_type + ", thumb_url=" + this.thumb_url + ", video_width=" + this.video_width + ", video_height=" + this.video_height + ", title=" + this.title + ", caption=" + this.caption + ", message_text=" + this.message_text + ", parse_mode=" + this.parse_mode + ", disable_web_page_preview=" + this.disable_web_page_preview + ")";
+            return new InlineQueryResultVideo(id, video_url, mime_type, thumb_url, video_width, video_height, title, caption, video_duration, description, reply_markup, input_message_content);
         }
     }
 }

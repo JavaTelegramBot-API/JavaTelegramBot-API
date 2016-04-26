@@ -8,14 +8,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.LocationContent;
  */
 public class LocationMessageReceivedEvent extends MessageReceivedEvent {
 
-	public LocationMessageReceivedEvent(Message message) {
+    public LocationMessageReceivedEvent(Message message) {
 
-		super(message);
-	}
+        super(message);
+    }
 
-	@Override
-	public LocationContent getContent() {
+    @Override
+    public LocationContent getContent() {
 
-		return (LocationContent) getMessage().getContent();
-	}
+        return (LocationContent) getMessage().getContent();
+    }
 }

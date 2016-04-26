@@ -1,56 +1,54 @@
 package pro.zackpollard.telegrambot.api.chat.message;
 
+import lombok.ToString;
+
 /**
  * @author Zack Pollard
  */
 
+@ToString
 public class ForceReply implements ReplyMarkup {
 
-	private final boolean force_reply = true;
-	private boolean selective = false;
+    private final boolean force_reply = true;
+    private boolean selective = false;
 
-	private ForceReply(ForceReplyBuilder builder) {
+    private ForceReply(ForceReplyBuilder builder) {
 
-		this.selective = builder.selective;
-	}
+        this.selective = builder.selective;
+    }
 
-	public static ForceReplyBuilder builder() {
+    public static ForceReplyBuilder builder() {
 
-		return new ForceReplyBuilder();
-	}
+        return new ForceReplyBuilder();
+    }
 
-	public boolean getSelective() {
+    public boolean getSelective() {
 
-		return selective;
-	}
+        return selective;
+    }
 
-	@Override
-	public void setSelective(boolean selective) {
+    @Override
+    public ReplyMarkupType getType() {
+        return ReplyMarkupType.FORCE_REPLY;
+    }
 
-		this.selective = selective;
-	}
+    @ToString
+    public static class ForceReplyBuilder {
 
-	@Override
-	public ReplyMarkupType getType() {
-		return ReplyMarkupType.FORCE_REPLY;
-	}
+        private boolean selective = false;
 
-	public static class ForceReplyBuilder {
+        private ForceReplyBuilder() {
+        }
 
-		private boolean selective = false;
+        public ForceReplyBuilder selective(boolean selective) {
 
-		private ForceReplyBuilder() {
-		}
+            this.selective = selective;
+            return this;
+        }
 
-		public ForceReplyBuilder selective(boolean selective) {
+        public ForceReply build() {
 
-			this.selective = selective;
-			return this;
-		}
-
-		public ForceReply build() {
-
-			return new ForceReply(this);
-		}
-	}
+            return new ForceReply(this);
+        }
+    }
 }

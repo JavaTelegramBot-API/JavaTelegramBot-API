@@ -1,32 +1,29 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableAudioMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@NonNull
-	@Getter
-	private final InputFile audio;
-	@Getter
-	private final int duration;
-	@Getter
-	private final String performer;
-	@Getter
-	private final String title;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @NonNull
+    @Getter
+    private final InputFile audio;
+    @Getter
+    private final int duration;
+    @Getter
+    private final String performer;
+    @Getter
+    private final String title;
+    @Getter
+    private final long replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -35,17 +32,18 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.AUDIO;
-	}
+    public MessageType getType() {
+        return MessageType.AUDIO;
+    }
 
+    @ToString
     public static class SendableAudioMessageBuilder {
 
         private InputFile audio;
         private int duration;
         private String performer;
         private String title;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -78,8 +76,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
-        public SendableAudioMessage.SendableAudioMessageBuilder replyTo(int replyTo) {
-
+        public SendableAudioMessage.SendableAudioMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -97,10 +94,6 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
 
         public SendableAudioMessage build() {
             return new SendableAudioMessage(audio, duration, performer, title, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableAudioMessage.SendableAudioMessageBuilder(audio=" + this.audio + ", duration=" + this.duration + ", performer=" + this.performer + ", title=" + this.title + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

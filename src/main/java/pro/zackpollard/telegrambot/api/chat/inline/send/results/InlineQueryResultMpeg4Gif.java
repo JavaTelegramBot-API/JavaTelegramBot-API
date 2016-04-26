@@ -3,7 +3,9 @@ package pro.zackpollard.telegrambot.api.chat.inline.send.results;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import pro.zackpollard.telegrambot.api.chat.message.send.ParseMode;
+import lombok.ToString;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
+import pro.zackpollard.telegrambot.api.chat.inline.send.content.InputMessageContent;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.net.URL;
@@ -11,6 +13,7 @@ import java.net.URL;
 /**
  * @author Zack Pollard
  */
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
 
@@ -25,9 +28,8 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
     private final URL thumb_url;
     private final String title;
     private final String caption;
-    private final String message_text;
-    private final ParseMode parse_mode;
-    private final boolean disable_web_page_preview;
+    private final InlineReplyMarkup reply_markup;
+    private final InputMessageContent input_message_content;
 
     public static InlineQueryResultMpeg4GifBuilder builder() {
         return new InlineQueryResultMpeg4GifBuilder();
@@ -68,18 +70,15 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
         return this.caption;
     }
 
-    public String getMessageText() {
-        return this.message_text;
+    public InlineReplyMarkup getReplyMarkup() {
+        return this.reply_markup;
     }
 
-    public ParseMode getParseMode() {
-        return this.parse_mode;
+    public InputMessageContent getInputMessageContent() {
+        return this.input_message_content;
     }
 
-    public boolean isDisableWebPagePreview() {
-        return this.disable_web_page_preview;
-    }
-
+    @ToString
     public static class InlineQueryResultMpeg4GifBuilder {
         private String id = Utils.generateRandomString(32);
         private URL mpeg4_url;
@@ -88,9 +87,8 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
         private URL thumb_url;
         private String title;
         private String caption;
-        private String message_text;
-        private ParseMode parse_mode;
-        private boolean disable_web_page_preview;
+        private InlineReplyMarkup reply_markup;
+        private InputMessageContent input_message_content;
 
         InlineQueryResultMpeg4GifBuilder() {
         }
@@ -130,27 +128,18 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
             return this;
         }
 
-        public InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder messageText(String messageText) {
-            this.message_text = messageText;
+        public InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder replyMarkup(InlineReplyMarkup inlineReplyMarkup) {
+            this.reply_markup = inlineReplyMarkup;
             return this;
         }
 
-        public InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder parseMode(ParseMode parseMode) {
-            this.parse_mode = parseMode;
-            return this;
-        }
-
-        public InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder disableWebPagePreview(boolean disableWebPagePreview) {
-            this.disable_web_page_preview = disableWebPagePreview;
+        public InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder inputMessageContent(InputMessageContent inputMessageContent) {
+            this.input_message_content = inputMessageContent;
             return this;
         }
 
         public InlineQueryResultMpeg4Gif build() {
-            return new InlineQueryResultMpeg4Gif(id, mpeg4_url, mpeg4_width, mpeg4_height, thumb_url, title, caption, message_text, parse_mode, disable_web_page_preview);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.inline.send.results.InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder(id=" + this.id + ", mpeg4_url=" + this.mpeg4_url + ", mpeg4_width=" + this.mpeg4_width + ", mpeg4_height=" + this.mpeg4_height + ", thumb_url=" + this.thumb_url + ", title=" + this.title + ", caption=" + this.caption + ", message_text=" + this.message_text + ", parse_mode=" + this.parse_mode + ", disable_web_page_preview=" + this.disable_web_page_preview + ")";
+            return new InlineQueryResultMpeg4Gif(id, mpeg4_url, mpeg4_width, mpeg4_height, thumb_url, title, caption, reply_markup, input_message_content);
         }
     }
 }

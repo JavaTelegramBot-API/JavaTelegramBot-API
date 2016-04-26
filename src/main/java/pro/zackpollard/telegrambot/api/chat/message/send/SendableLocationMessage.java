@@ -1,29 +1,26 @@
 package pro.zackpollard.telegrambot.api.chat.message.send;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
 
 /**
  * @author Zack Pollard
  */
-
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SendableLocationMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
-	@Getter
-	@NonNull
-	private final double latitude;
-	@Getter
-	@NonNull
-	private final double longitude;
-	@Getter
-	private final int replyTo;
-	@Getter
-	private final ReplyMarkup replyMarkup;
+    @Getter
+    @NonNull
+    private final double latitude;
+    @Getter
+    @NonNull
+    private final double longitude;
+    @Getter
+    private final long replyTo;
+    @Getter
+    private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
 
@@ -32,15 +29,16 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
     }
 
     @Override
-	public MessageType getType() {
-		return MessageType.LOCATION;
-	}
+    public MessageType getType() {
+        return MessageType.LOCATION;
+    }
 
+    @ToString
     public static class SendableLocationMessageBuilder {
 
         private double latitude;
         private double longitude;
-        private int replyTo;
+        private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
@@ -62,7 +60,7 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
             return this;
         }
 
-        public SendableLocationMessage.SendableLocationMessageBuilder replyTo(int replyTo) {
+        public SendableLocationMessage.SendableLocationMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -80,10 +78,6 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
 
         public SendableLocationMessage build() {
             return new SendableLocationMessage(latitude, longitude, replyTo, replyMarkup, disableNotification);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.chat.message.send.SendableLocationMessage.SendableLocationMessageBuilder(latitude=" + this.latitude + ", longitude=" + this.longitude + ", replyTo=" + this.replyTo + ", replyMarkup=" + this.replyMarkup + ")";
         }
     }
 }

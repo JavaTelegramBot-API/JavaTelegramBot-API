@@ -9,12 +9,12 @@ import pro.zackpollard.telegrambot.api.event.chat.message.MessageEvent;
  */
 public class DeleteGroupChatPhotoEvent extends MessageEvent {
 
-	public DeleteGroupChatPhotoEvent(Message message) {
-		super(message);
-	}
+    public DeleteGroupChatPhotoEvent(Message message) {
+        super(message);
+    }
 
-	public GroupChat getChat() {
+    public GroupChat getChat() {
 
-		return (GroupChat) getMessage().getChat();
-	}
+        return (GroupChat) getMessage().getChat();
+    }
 }

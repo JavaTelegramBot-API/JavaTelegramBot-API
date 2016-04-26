@@ -7,16 +7,16 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.PhotoSize;
  */
 public interface NewChatPhotoContent extends Content {
 
-	/**
-	 * Gets the new photo for the chat
-	 *
-	 * @return The new photo.
-	 */
-	PhotoSize[] getContent();
+    /**
+     * Gets the new photo for the chat
+     *
+     * @return The new photo.
+     */
+    PhotoSize[] getContent();
 
-	@Override
-	default ContentType getType() {
+    @Override
+    default ContentType getType() {
 
-		return ContentType.NEW_CHAT_PHOTO;
-	}
+        return ContentType.NEW_CHAT_PHOTO;
+    }
 }
