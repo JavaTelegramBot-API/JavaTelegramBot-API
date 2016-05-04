@@ -1,4 +1,8 @@
 # Changelog
+#### Version 1.0.1
+* Bugfix
+  * Edited the builder name in InlineQueryResultCacheAudio to include the Cached keyword
+
 #### Version 1.0.0
 * Bots 2.0 Update
   * Implemented new CallbackQuery response type in Update object
