@@ -13,6 +13,7 @@ public class StickerImpl implements Sticker {
     private final int width;
     private final int height;
     private final PhotoSize thumb;
+    private final String emoji;
     private final int file_size;
 
     private StickerImpl(JSONObject jsonObject) {
@@ -21,6 +22,7 @@ public class StickerImpl implements Sticker {
         this.width = jsonObject.getInt("width");
         this.height = jsonObject.getInt("height");
         this.thumb = PhotoSizeImpl.createPhotoSize(jsonObject.optJSONObject("thumb"));
+        this.emoji = jsonObject.optString("emoji");
         this.file_size = jsonObject.optInt("file_size");
     }
 
@@ -72,5 +74,10 @@ public class StickerImpl implements Sticker {
     @Override
     public PhotoSize getThumbnail() {
         return thumb;
+    }
+
+    @Override
+    public String getEmoji() {
+        return emoji;
     }
 }
