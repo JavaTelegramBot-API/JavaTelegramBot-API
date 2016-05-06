@@ -48,6 +48,13 @@ public interface Message {
     User getForwardedFrom();
 
     /**
+     * Gets the chat the message was forwarded from
+     *
+     * @return The channel from which the message was forwarded, or null if the message wasn't forwarded or wasn't from a channel
+     */
+    Chat getChatForwardedFrom();
+
+    /**
      * Gets the UNIX timestamp of when the original forwarded message was sent
      *
      * @return The forwarded messages timestamp, or 0 if the message wasn't forwarded
