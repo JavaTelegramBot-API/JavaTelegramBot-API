@@ -1,4 +1,8 @@
 # Changelog
+#### Version 1.1.0
+* Added Sticker#getEmoji() to meet new API spec
+* Added Message#getChatForwardedFrom() to meet new API spec
+
 #### Version 1.0.1
 * Bugfix
   * Edited the builder name in InlineQueryResultCacheAudio to include the Cached keyword
