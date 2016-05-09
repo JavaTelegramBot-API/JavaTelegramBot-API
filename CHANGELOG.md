@@ -1,4 +1,7 @@
 # Changelog
+#### Version 1.1.1
+* Fixed forward_from_chat causing an error when it isn't populated
+
 #### Version 1.1.0
 * Added Sticker#getEmoji() to meet new API spec
 * Added Message#getChatForwardedFrom() to meet new API spec
