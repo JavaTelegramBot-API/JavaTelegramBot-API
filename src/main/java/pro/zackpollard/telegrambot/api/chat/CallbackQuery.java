@@ -2,6 +2,7 @@ package pro.zackpollard.telegrambot.api.chat;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.exception.TelegramApiException;
 import pro.zackpollard.telegrambot.api.user.User;
 
 /**
@@ -24,7 +25,7 @@ public interface CallbackQuery {
 
     JSONObject asJson();
 
-    default boolean answer(String text, boolean showAlert) {
+    default boolean answer(String text, boolean showAlert) throws TelegramApiException {
 
         return getBotInstance().answerCallbackQuery(getId(), text, showAlert);
     }

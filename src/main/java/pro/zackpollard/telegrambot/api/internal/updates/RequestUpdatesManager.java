@@ -235,8 +235,7 @@ public class RequestUpdatesManager extends UpdateManager {
                             }
                         }
                     } else {
-
-                        System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
+                        System.err.println("The API returned the following error (code "  + jsonResponse.getInt("error_code") + "): " + jsonResponse.getString("errorDescription"));
                     }
                 }
 
