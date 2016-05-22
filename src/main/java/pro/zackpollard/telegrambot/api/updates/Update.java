@@ -15,6 +15,8 @@ public interface Update {
 
     Message getMessage();
 
+    Message getEditedMessage();
+
     InlineQuery getInlineQuery();
 
     ChosenInlineResult getChosenInlineResult();
@@ -28,6 +30,7 @@ public interface Update {
     enum UpdateType {
 
         MESSAGE,
+        EDITED_MESSAGE,
         INLINE_QUERY,
         CALLBACK_QUERY,
         CHOSEN_INLINE_RESULT

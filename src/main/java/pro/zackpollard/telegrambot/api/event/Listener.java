@@ -29,6 +29,9 @@ public interface Listener {
     default void onMessageReceived(MessageReceivedEvent event) {
     }
 
+    default void onMessageEditReceived(MessageEditReceivedEvent event) {
+    }
+
     default void onPhotoMessageReceived(PhotoMessageReceivedEvent event) {
     }
 

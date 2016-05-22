@@ -26,6 +26,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
             register(DocumentMessageReceivedEvent.class, Listener::onDocumentMessageReceived);
             register(LocationMessageReceivedEvent.class, Listener::onLocationMessageReceived);
             register(MessageReceivedEvent.class, Listener::onMessageReceived);
+            register(MessageEditReceivedEvent.class, Listener::onMessageEditReceived);
             register(PhotoMessageReceivedEvent.class, Listener::onPhotoMessageReceived);
             register(StickerMessageReceivedEvent.class, Listener::onStickerMessageReceived);
             register(TextMessageReceivedEvent.class, Listener::onTextMessageReceived);
