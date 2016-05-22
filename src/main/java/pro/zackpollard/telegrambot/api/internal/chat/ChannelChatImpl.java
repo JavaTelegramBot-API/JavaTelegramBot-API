@@ -5,6 +5,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.ChannelChat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
+import pro.zackpollard.telegrambot.api.exception.TelegramApiException;
 
 /**
  * @author Zack Pollard
@@ -56,7 +57,7 @@ public class ChannelChatImpl implements ChannelChat {
     }
 
     @Override
-    public Message sendMessage(SendableMessage message) {
+    public Message sendMessage(SendableMessage message) throws TelegramApiException {
 
         return telegramBot.sendMessage(this, message);
     }

@@ -53,7 +53,7 @@
     
    
 #### Version 0.8.3
-* Added checks to avoid errors with cacheing if the servers responds with an unexpected content type
+* Added checks to avoid errors with caching if the servers responds with an unexpected content type
 
 #### Version 0.8.2
 * Fixed a bug where the ChannelChatCreatedEvent wasn't ever fired
@@ -170,7 +170,7 @@
 #### Version 0.3.0
 * Supported downloading files from URL for sending in messages.
   * Added InputFile(URL url) to support this.
-  * Automatic cacheing of downloaded files is implemented.
+  * Automatic caching of downloaded files is implemented.
 #### Version 0.2.5
 * Added in more error handling to stop Exceptions being thrown when sending Photo/Audio/Document/Sticker/Video/Voice message types and the sending fails for some reason.
 

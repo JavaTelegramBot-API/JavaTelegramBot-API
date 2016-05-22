@@ -1,5 +1,7 @@
 package pro.zackpollard.telegrambot.api.chat;
 
+import pro.zackpollard.telegrambot.api.exception.TelegramApiException;
+
 /**
  * @author Zack Pollard
  */
@@ -10,5 +12,5 @@ public interface GroupChat extends Chat {
         return ChatType.GROUP;
     }
 
-    boolean kickChatMember(int userId);
+    boolean kickChatMember(int userId) throws TelegramApiException;
 }

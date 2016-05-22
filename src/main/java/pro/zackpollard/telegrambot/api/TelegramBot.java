@@ -22,6 +22,14 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Video;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
+import pro.zackpollard.telegrambot.api.exception.BadRequestException;
+import pro.zackpollard.telegrambot.api.exception.BotCannotMessageException;
+import pro.zackpollard.telegrambot.api.exception.ChatNotFoundException;
+import pro.zackpollard.telegrambot.api.exception.EmptyResponseException;
+import pro.zackpollard.telegrambot.api.exception.InvalidContentTypeException;
+import pro.zackpollard.telegrambot.api.exception.InvalidMessageException;
+import pro.zackpollard.telegrambot.api.exception.TelegramApiException;
+import pro.zackpollard.telegrambot.api.exception.UnknownErrorException;
 import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
@@ -75,7 +83,7 @@ public final class TelegramBot {
      * @return A new TelegramBot instance to base your bot around.
      */
 
-    public static TelegramBot login(String authToken) {
+    public static TelegramBot login(String authToken) throws TelegramApiException {
 
         try {
 
@@ -146,7 +154,16 @@ public final class TelegramBot {
         return API_URL + "bot" + authToken + "/";
     }
 
-    public Message sendMessage(Chat chat, SendableMessage message) {
+    /**
+     * Send a message to a Chat
+     *
+     * @param chat Chat the Chat to send the message to
+     * @param message SendableMessage the message to be sent
+     * @return Message the sent message
+     *
+     * @throws InvalidContentTypeException
+     */
+    public Message sendMessage(Chat chat, SendableMessage message) throws TelegramApiException {
 
         HttpResponse<String> response;
         JSONObject jsonResponse = null;
@@ -219,13 +236,11 @@ public final class TelegramBot {
 
                 messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-                //Photo cacheing to FileManager
+                //Photo caching to FileManager
                 if (photoMessage.getPhoto().getFile() != null && messageResponse != null) {
 
                     if (!messageResponse.getContent().getType().equals(ContentType.PHOTO)) {
-
-                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-                        break;
+                        throw new InvalidContentTypeException("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break caching, please create an issue on github or message @zackpollard on telegram.");
                     }
 
                     PhotoSize[] photoSizes = ((PhotoContent) messageResponse.getContent()).getContent();
@@ -275,7 +290,7 @@ public final class TelegramBot {
 
                 messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-                //Audio cacheing to FileManager
+                //Audio caching to FileManager
                 if (audioMessage.getAudio().getFile() != null && messageResponse != null) {
 
                     String fileID;
@@ -290,8 +305,7 @@ public final class TelegramBot {
                             fileID = ((VoiceContent) messageResponse.getContent()).getContent().getFileId();
                             break;
                         default:
-                            System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when an audio type was sent, this is not supported by this API, please create an issue on github or message @zackpollard on telegram.");
-                            return null;
+                            throw new InvalidContentTypeException("The API returned content type " + messageResponse.getContent().getType().name() + " when an audio type was sent, this is not supported by this API, please create an issue on github or message @zackpollard on telegram.");
                     }
 
                     fileManager.cacheFileID(audioMessage.getAudio().getFile(), fileID);
@@ -322,7 +336,7 @@ public final class TelegramBot {
 
                 messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-                //Document cacheing to FileManager
+                //Document caching to FileManager
                 if (documentMessage.getDocument().getFile() != null && messageResponse != null) {
 
                     String fileID;
@@ -336,8 +350,7 @@ public final class TelegramBot {
                             fileID = ((DocumentContent) messageResponse.getContent()).getContent().getFileId();
                             break;
                         default:
-                            System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a document type was sent, this is not supported by this API, please create an issue on github or message @zackpollard on telegram.");
-                            return null;
+                            throw new InvalidContentTypeException("The API returned content type " + messageResponse.getContent().getType().name() + " when a document type was sent, this is not supported by this API, please create an issue on github or message @zackpollard on telegram.");
                     }
 
                     fileManager.cacheFileID(documentMessage.getDocument().getFile(), fileID);
@@ -365,13 +378,12 @@ public final class TelegramBot {
 
                 messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-                //Sticker cacheing to FileManager
+                //Sticker caching to FileManager
                 if (stickerMessage.getSticker().getFile() != null && messageResponse != null) {
 
                     if (!messageResponse.getContent().getType().equals(ContentType.STICKER)) {
 
-                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-                        break;
+                        throw new InvalidContentTypeException("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break caching, please create an issue on github or message @zackpollard on telegram.");
                     }
 
                     Sticker sticker = ((StickerContent) messageResponse.getContent()).getContent();
@@ -407,13 +419,12 @@ public final class TelegramBot {
 
                 messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-                //Video cacheing to FileManager
+                //Video caching to FileManager
                 if (videoMessage.getVideo().getFile() != null && messageResponse != null) {
 
                     if (!messageResponse.getContent().getType().equals(ContentType.VIDEO)) {
 
-                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-                        break;
+                        throw new InvalidContentTypeException("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break caching, please create an issue on github or message @zackpollard on telegram.");
                     }
 
                     Video video = ((VideoContent) messageResponse.getContent()).getContent();
@@ -444,13 +455,12 @@ public final class TelegramBot {
 
                 messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
-                //Voice cacheing to FileManager
+                //Voice caching to FileManager
                 if (voiceMessage.getVoice().getFile() != null && messageResponse != null) {
 
                     if (!messageResponse.getContent().getType().equals(ContentType.VOICE)) {
 
-                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
-                        break;
+                        throw new InvalidContentTypeException("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break caching, please create an issue on github or message @zackpollard on telegram.");
                     }
 
                     Voice voice = ((VoiceContent) messageResponse.getContent()).getContent();
@@ -525,7 +535,7 @@ public final class TelegramBot {
         return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
     }
 
-    private JSONObject editMessageText(String chatId, Long messageId, String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    private JSONObject editMessageText(String chatId, Long messageId, String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         HttpResponse<String> response;
         JSONObject jsonResponse = null;
@@ -550,12 +560,12 @@ public final class TelegramBot {
         return jsonResponse;
     }
 
-    public Message editMessageText(Message oldMessage, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageText(Message oldMessage, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         return this.editMessageText(oldMessage.getChat().getId(), oldMessage.getMessageId(), text, parseMode, disableWebPagePreview, inlineReplyMarkup);
     }
 
-    public Message editMessageText(String chatId, Long messageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageText(String chatId, Long messageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         if(chatId != null && messageId != null && text != null) {
 
@@ -570,7 +580,7 @@ public final class TelegramBot {
         return null;
     }
 
-    public boolean editInlineMessageText(String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
+    public boolean editInlineMessageText(String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         if(inlineMessageId != null && text != null) {
 
@@ -585,7 +595,7 @@ public final class TelegramBot {
         return false;
     }
 
-    private JSONObject editMessageCaption(String chatId, Long messageId, String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+    private JSONObject editMessageCaption(String chatId, Long messageId, String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         HttpResponse<String> response;
         JSONObject jsonResponse = null;
@@ -608,12 +618,12 @@ public final class TelegramBot {
         return jsonResponse;
     }
 
-    public Message editMessageCaption(Message oldMessage, String caption, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageCaption(Message oldMessage, String caption, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         return this.editMessageCaption(oldMessage.getChat().getId(), oldMessage.getMessageId(), caption, inlineReplyMarkup);
     }
 
-    public Message editMessageCaption(String chatId, Long messageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageCaption(String chatId, Long messageId, String caption, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         if(caption != null && chatId != null && messageId != null) {
 
@@ -628,7 +638,7 @@ public final class TelegramBot {
         return null;
     }
 
-    public boolean editInlineCaption(String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
+    public boolean editInlineCaption(String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         if(caption != null && inlineReplyMarkup != null) {
 
@@ -643,7 +653,7 @@ public final class TelegramBot {
         return false;
     }
 
-    private JSONObject editMessageReplyMarkup(String chatId, Long messageId, String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
+    private JSONObject editMessageReplyMarkup(String chatId, Long messageId, String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         HttpResponse<String> response;
         JSONObject jsonResponse = null;
@@ -665,12 +675,12 @@ public final class TelegramBot {
         return jsonResponse;
     }
 
-    public Message editMessageReplyMarkup(Message oldMessage, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageReplyMarkup(Message oldMessage, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         return this.editMessageReplyMarkup(oldMessage.getChat().getId(), oldMessage.getMessageId(), inlineReplyMarkup);
     }
 
-    public Message editMessageReplyMarkup(String chatId, Long messageId, InlineReplyMarkup inlineReplyMarkup) {
+    public Message editMessageReplyMarkup(String chatId, Long messageId, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         if(inlineReplyMarkup != null && chatId != null && messageId != null) {
 
@@ -685,7 +695,7 @@ public final class TelegramBot {
         return null;
     }
 
-    public boolean editInlineMessageText(String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
+    public boolean editInlineMessageText(String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) throws TelegramApiException {
 
         if(inlineMessageId != null && inlineReplyMarkup != null) {
 
@@ -700,7 +710,7 @@ public final class TelegramBot {
         return false;
     }
 
-    public boolean answerInlineQuery(String inlineQueryId, InlineQueryResponse inlineQueryResponse) {
+    public boolean answerInlineQuery(String inlineQueryId, InlineQueryResponse inlineQueryResponse) throws TelegramApiException {
 
         if (inlineQueryId != null && inlineQueryResponse != null) {
 
@@ -732,7 +742,7 @@ public final class TelegramBot {
         return false;
     }
 
-    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) throws TelegramApiException {
 
         if(callbackQueryId != null && text != null) {
 
@@ -760,7 +770,7 @@ public final class TelegramBot {
         return false;
     }
 
-    public boolean kickChatMember(String chatId, int userId) {
+    public boolean kickChatMember(String chatId, int userId) throws TelegramApiException {
 
         HttpResponse<String> response;
         JSONObject jsonResponse;
@@ -784,7 +794,7 @@ public final class TelegramBot {
         return false;
     }
 
-    public boolean unbanChatMember(String chatId, int userId) {
+    public boolean unbanChatMember(String chatId, int userId) throws TelegramApiException {
 
         HttpResponse<String> response;
         JSONObject jsonResponse;
@@ -818,7 +828,7 @@ public final class TelegramBot {
         return listenerRegistry;
     }
 
-    private static JSONObject processResponse(HttpResponse<String> response) {
+    private static JSONObject processResponse(HttpResponse<String> response) throws TelegramApiException {
 
         if (response != null) {
 
@@ -841,13 +851,7 @@ public final class TelegramBot {
                 } catch (JSONException e) {
                 }
 
-                if (jsonResponse != null) {
-
-                    System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
-                } else {
-
-                    System.err.println("The API returned error code " + response.getStatus());
-                }
+                handleError(jsonResponse);
             }
         }
 
@@ -883,7 +887,7 @@ public final class TelegramBot {
         multipartBody.field("disable_notification", notificationOptions.isDisableNotification());
     }
 
-    private static boolean checkResponseStatus(JSONObject jsonResponse) {
+    private static boolean checkResponseStatus(JSONObject jsonResponse) throws TelegramApiException {
 
         if (jsonResponse != null) {
 
@@ -891,8 +895,7 @@ public final class TelegramBot {
 
                 return true;
             } else {
-
-                System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
+                handleError(jsonResponse);
             }
         } else {
 
@@ -900,5 +903,35 @@ public final class TelegramBot {
         }
 
         return false;
+    }
+
+    private static void handleError(JSONObject jsonResponse) throws TelegramApiException {
+
+        if (jsonResponse == null) {
+            throw new EmptyResponseException("JSONResponse is null");
+        } else {
+            int errorCode = jsonResponse.getInt("error_code");
+            String description = jsonResponse.getString("description");
+
+            switch (errorCode) {
+                // BadRequestException
+                case 400: {
+                    if (description.startsWith("Bad Request: Can't parse message text:")) {
+                        throw new InvalidMessageException(description);
+                    } else if (description.equalsIgnoreCase("Bad Request: chat not found")) {
+                        throw new ChatNotFoundException(description);
+                    } else {
+                        throw new BadRequestException(description);
+                    }
+                }
+                // BotCannotMessageException
+                case 403: {
+                    throw new BotCannotMessageException(description);
+                }
+                default: {
+                    throw new UnknownErrorException(description, errorCode);
+                }
+            }
+        }
     }
 }

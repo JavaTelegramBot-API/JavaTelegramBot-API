@@ -5,6 +5,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
+import pro.zackpollard.telegrambot.api.exception.TelegramApiException;
 
 /**
  * @author Zack Pollard
@@ -61,19 +62,19 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     }
 
     @Override
-    public Message sendMessage(SendableMessage message) {
+    public Message sendMessage(SendableMessage message) throws TelegramApiException {
 
         return telegramBot.sendMessage(this, message);
     }
 
     @Override
-    public boolean kickChatMember(int userId) {
+    public boolean kickChatMember(int userId) throws TelegramApiException {
 
         return telegramBot.kickChatMember(this.getId(), userId);
     }
 
     @Override
-    public boolean unbanChatMember(int userId) {
+    public boolean unbanChatMember(int userId) throws TelegramApiException {
 
         return telegramBot.unbanChatMember(this.getId(), userId);
     }

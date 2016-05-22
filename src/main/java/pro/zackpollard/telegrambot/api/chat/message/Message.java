@@ -5,6 +5,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableForwardMessage;
+import pro.zackpollard.telegrambot.api.exception.TelegramApiException;
 import pro.zackpollard.telegrambot.api.user.User;
 
 /**
@@ -84,7 +85,7 @@ public interface Message {
 
     TelegramBot getBotInstance();
 
-    default Message forwardMessage(Chat chat) {
+    default Message forwardMessage(Chat chat) throws TelegramApiException {
 
         return chat.sendMessage(SendableForwardMessage.builder().forwardedMessage(this).build());
     }
