@@ -10,14 +10,15 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
-import pro.zackpollard.telegrambot.api.internal.chat.ChatMemberImpl;
 import pro.zackpollard.telegrambot.api.user.User;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static pro.zackpollard.telegrambot.api.internal.chat.ChatMemberImpl.createChatMember;
 import static pro.zackpollard.telegrambot.api.utils.Utils.processResponse;
+
 
 /**
  * @author Zack Pollard
@@ -78,7 +79,7 @@ public interface Chat {
 
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    chatAdmins.add(ChatMemberImpl.createChatMember(jsonObject));
+                    chatAdmins.add(createChatMember(jsonObject));
                 }
 
                 return chatAdmins;
@@ -107,7 +108,7 @@ public interface Chat {
 
             if (jsonResponse != null && Utils.checkResponseStatus(jsonResponse)) {
 
-                return ChatMemberImpl.createChatMember(jsonResponse.getJSONObject("result"));
+                return createChatMember(jsonResponse.getJSONObject("result"));
             }
         } catch (UnirestException e) {
             e.printStackTrace();
