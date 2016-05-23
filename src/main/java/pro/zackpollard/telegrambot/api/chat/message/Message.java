@@ -57,7 +57,7 @@ public interface Message {
     /**
      * Gets the UNIX timestamp of when the original forwarded message was sent
      *
-     * @return The forwarded messages timestamp, or 0 if the message wasn't forwarded
+     * @return The forwarded messages timestamp, or null if the message wasn't forwarded
      */
     Long getForwardedDate();
 
