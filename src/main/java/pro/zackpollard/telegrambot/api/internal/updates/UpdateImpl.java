@@ -19,6 +19,7 @@ public class UpdateImpl implements Update {
 
     private final int update_id;
     private final Message message;
+    private final Message edited_message;
     private final InlineQuery inline_query;
     private final ChosenInlineResult chosen_inline_result;
     private final CallbackQuery callbackQuery;
@@ -31,6 +32,8 @@ public class UpdateImpl implements Update {
         this.update_id = jsonObject.getInt("update_id");
         this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"), telegramBot);
         if (message != null) updateType = UpdateType.MESSAGE;
+        this.edited_message = MessageImpl.createMessage(jsonObject.optJSONObject("edited_message"), telegramBot);
+        if (message != null) updateType = UpdateType.EDITED_MESSAGE;
         this.inline_query = InlineQueryImpl.createInlineQuery(jsonObject.optJSONObject("inline_query"));
         if (inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
         this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
@@ -56,6 +59,10 @@ public class UpdateImpl implements Update {
     public Message getMessage() {
 
         return message;
+    }
+
+    public Message getEditedMessage() {
+        return edited_message;
     }
 
     @Override

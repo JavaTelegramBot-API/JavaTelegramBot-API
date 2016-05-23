@@ -199,6 +199,12 @@ public class RequestUpdatesManager extends UpdateManager {
                                         break;
                                     }
 
+                                    case EDITED_MESSAGE: {
+
+                                        eventManager.callEvent(new MessageEditReceivedEvent(update.getEditedMessage()));
+                                        break;
+                                    }
+
                                     case INLINE_QUERY: {
 
                                         eventManager.callEvent(new InlineQueryReceivedEvent(update.getInlineQuery()));

@@ -8,12 +8,10 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
-import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
-import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.*;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.PhotoSize;
@@ -22,19 +20,15 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Video;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
-import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
-import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
-import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
-import pro.zackpollard.telegrambot.api.internal.chat.SuperGroupChatImpl;
+import pro.zackpollard.telegrambot.api.internal.chat.*;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
-import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
-import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
+import pro.zackpollard.telegrambot.api.utils.Utils;
 
 /**
  * @author Zack Pollard
@@ -42,7 +36,7 @@ import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 public final class TelegramBot {
 
     public static final String API_URL = "https://api.telegram.org/";
-    private static final Gson GSON = new GsonBuilder().create();
+    public static final Gson GSON = new GsonBuilder().create();
     @Getter
     private final static FileManager fileManager = new FileManager();
 
@@ -81,9 +75,9 @@ public final class TelegramBot {
 
             HttpRequestWithBody request = Unirest.post(API_URL + "bot" + authToken + "/getMe");
             HttpResponse<String> response = request.asString();
-            JSONObject jsonResponse = processResponse(response);
+            JSONObject jsonResponse = Utils.processResponse(response);
 
-            if (jsonResponse != null && checkResponseStatus(jsonResponse)) {
+            if (jsonResponse != null && Utils.checkResponseStatus(jsonResponse)) {
 
                 JSONObject result = jsonResponse.getJSONObject("result");
 
@@ -98,44 +92,26 @@ public final class TelegramBot {
 
     public Chat getChat(long chatID) {
 
-        if (chatID < 0) {
-
-            /** This is a guess of the starting value of supergroups **/
-            if (chatID > -999999999) {
-
-                return GroupChatImpl.createGroupChat((int) chatID, this);
-            } else {
-
-                return SuperGroupChatImpl.createSuperGroupChat(chatID, this);
-            }
-        } else {
-
-            return IndividualChatImpl.createIndividualChat((int) chatID, this);
-        }
+        return getChat(chatID);
     }
 
     public Chat getChat(String chatID) {
 
-        if (chatID != null && chatID.length() > 0) {
+        try {
 
-            if (chatID.charAt(0) == '@') {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "getChat")
+                    .field("chat_id", chatID, "application/json");
+            HttpResponse<String> response = request.asString();
+            JSONObject jsonResponse = Utils.processResponse(response);
 
-                return ChannelChatImpl.createChannelChat(chatID, this);
-            } else {
+            if (jsonResponse != null && Utils.checkResponseStatus(jsonResponse)) {
 
-                long longChatID;
+                JSONObject result = jsonResponse.getJSONObject("result");
 
-                try {
-
-                    longChatID = Long.parseLong(chatID);
-                } catch (NumberFormatException e) {
-
-                    System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
-                    return null;
-                }
-
-                return getChat(longChatID);
+                return ChatImpl.createChat(result, this);
             }
+        } catch (UnirestException e) {
+            e.printStackTrace();
         }
 
         return null;
@@ -165,11 +141,11 @@ public final class TelegramBot {
                             .field("disable_web_page_preview", textMessage.isDisableWebPagePreview())
                             .field("parse_mode", textMessage.getParseMode() != null ? textMessage.getParseMode().getModeName() : ParseMode.NONE);
 
-                    processReplyContent(request, textMessage);
-                    processNotificationContent(request, textMessage);
+                    Utils.processReplyContent(request, textMessage);
+                    Utils.processNotificationContent(request, textMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
@@ -186,10 +162,10 @@ public final class TelegramBot {
                             .field("from_chat_id", forwardMessage.getChatID())
                             .field("message_id", forwardMessage.getMessageID());
 
-                    processNotificationContent(request, forwardMessage);
+                    Utils.processNotificationContent(request, forwardMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
@@ -208,16 +184,16 @@ public final class TelegramBot {
                     if (photoMessage.getCaption() != null)
                         request.field("caption", photoMessage.getCaption(), "application/json");
 
-                    processReplyContent(request, photoMessage);
-                    processNotificationContent(request, photoMessage);
+                    Utils.processReplyContent(request, photoMessage);
+                    Utils.processNotificationContent(request, photoMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
 
-                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
+                messageResponse = Utils.checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
                 //Photo cacheing to FileManager
                 if (photoMessage.getPhoto().getFile() != null && messageResponse != null) {
@@ -258,8 +234,8 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json")
                             .field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
 
-                    processReplyContent(request, audioMessage);
-                    processNotificationContent(request, audioMessage);
+                    Utils.processReplyContent(request, audioMessage);
+                    Utils.processNotificationContent(request, audioMessage);
 
                     if (audioMessage.getDuration() != 0) request.field("duration", audioMessage.getDuration());
                     if (audioMessage.getPerformer() != null)
@@ -268,12 +244,12 @@ public final class TelegramBot {
                         request.field("title", audioMessage.getTitle(), "application/json");
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
 
-                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
+                messageResponse = Utils.checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
                 //Audio cacheing to FileManager
                 if (audioMessage.getAudio().getFile() != null && messageResponse != null) {
@@ -311,16 +287,16 @@ public final class TelegramBot {
                     if (documentMessage.getCaption() != null)
                         request.field("caption", documentMessage.getCaption(), "application/json");
 
-                    processReplyContent(request, documentMessage);
-                    processNotificationContent(request, documentMessage);
+                    Utils.processReplyContent(request, documentMessage);
+                    Utils.processNotificationContent(request, documentMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
 
-                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
+                messageResponse = Utils.checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
                 //Document cacheing to FileManager
                 if (documentMessage.getDocument().getFile() != null && messageResponse != null) {
@@ -354,16 +330,16 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json")
                             .field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
 
-                    processReplyContent(request, stickerMessage);
-                    processNotificationContent(request, stickerMessage);
+                    Utils.processReplyContent(request, stickerMessage);
+                    Utils.processNotificationContent(request, stickerMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
 
-                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
+                messageResponse = Utils.checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
                 //Sticker cacheing to FileManager
                 if (stickerMessage.getSticker().getFile() != null && messageResponse != null) {
@@ -396,16 +372,16 @@ public final class TelegramBot {
                     if (videoMessage.getCaption() != null)
                         request.field("caption", videoMessage.getCaption(), "application/json");
 
-                    processReplyContent(request, videoMessage);
-                    processNotificationContent(request, videoMessage);
+                    Utils.processReplyContent(request, videoMessage);
+                    Utils.processNotificationContent(request, videoMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
 
-                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
+                messageResponse = Utils.checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
                 //Video cacheing to FileManager
                 if (videoMessage.getVideo().getFile() != null && messageResponse != null) {
@@ -433,16 +409,16 @@ public final class TelegramBot {
 
                     if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
 
-                    processReplyContent(request, voiceMessage);
-                    processNotificationContent(request, voiceMessage);
+                    Utils.processReplyContent(request, voiceMessage);
+                    Utils.processNotificationContent(request, voiceMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
 
-                messageResponse = checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
+                messageResponse = Utils.checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
 
                 //Voice cacheing to FileManager
                 if (voiceMessage.getVoice().getFile() != null && messageResponse != null) {
@@ -470,11 +446,11 @@ public final class TelegramBot {
                             .field("latitude", locationMessage.getLatitude())
                             .field("longitude", locationMessage.getLongitude());
 
-                    processReplyContent(request, locationMessage);
-                    processNotificationContent(request, locationMessage);
+                    Utils.processReplyContent(request, locationMessage);
+                    Utils.processNotificationContent(request, locationMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
@@ -495,11 +471,11 @@ public final class TelegramBot {
 
                     if (venueMessage.getFoursquareId() != null) request.field("foursquare_id", venueMessage.getFoursquareId());
 
-                    processReplyContent(request, venueMessage);
-                    processNotificationContent(request, venueMessage);
+                    Utils.processReplyContent(request, venueMessage);
+                    Utils.processNotificationContent(request, venueMessage);
 
                     response = request.asString();
-                    jsonResponse = processResponse(response);
+                    jsonResponse = Utils.processResponse(response);
                 } catch (UnirestException e) {
                     e.printStackTrace();
                 }
@@ -522,7 +498,7 @@ public final class TelegramBot {
                 return null;
         }
 
-        return checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
+        return Utils.checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
     }
 
     private JSONObject editMessageText(String chatId, Long messageId, String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
@@ -542,7 +518,7 @@ public final class TelegramBot {
             if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
 
             response = requests.asString();
-            jsonResponse = processResponse(response);
+            jsonResponse = Utils.processResponse(response);
         } catch (UnirestException e) {
             e.printStackTrace();
         }
@@ -600,7 +576,7 @@ public final class TelegramBot {
             if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
 
             response = requests.asString();
-            jsonResponse = processResponse(response);
+            jsonResponse = Utils.processResponse(response);
         } catch (UnirestException e) {
             e.printStackTrace();
         }
@@ -657,7 +633,7 @@ public final class TelegramBot {
             if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
 
             response = requests.asString();
-            jsonResponse = processResponse(response);
+            jsonResponse = Utils.processResponse(response);
         } catch (UnirestException e) {
             e.printStackTrace();
         }
@@ -718,7 +694,7 @@ public final class TelegramBot {
                         .field("switch_pm_parameter", inlineQueryResponse.getSwitchPmParameter());
 
                 response = requests.asString();
-                jsonResponse = processResponse(response);
+                jsonResponse = Utils.processResponse(response);
 
                 if (jsonResponse != null) {
 
@@ -746,7 +722,7 @@ public final class TelegramBot {
                         .field("show_alert", showAlert);
 
                 response = requests.asString();
-                jsonResponse = processResponse(response);
+                jsonResponse = Utils.processResponse(response);
 
                 if (jsonResponse != null) {
 
@@ -771,7 +747,7 @@ public final class TelegramBot {
                     .field("user_id", userId);
 
             response = request.asString();
-            jsonResponse = TelegramBot.processResponse(response);
+            jsonResponse = Utils.processResponse(response);
 
             if(jsonResponse != null) {
 
@@ -795,7 +771,7 @@ public final class TelegramBot {
                     .field("user_id", userId);
 
             response = request.asString();
-            jsonResponse = TelegramBot.processResponse(response);
+            jsonResponse = Utils.processResponse(response);
 
             if(jsonResponse != null) {
 
@@ -816,89 +792,5 @@ public final class TelegramBot {
     public ListenerRegistry getEventsManager() {
 
         return listenerRegistry;
-    }
-
-    private static JSONObject processResponse(HttpResponse<String> response) {
-
-        if (response != null) {
-
-            if (response.getStatus() == 200) {
-
-                try {
-
-                    return new JSONObject(response.getBody());
-                } catch (JSONException e) {
-
-                    System.err.println("The API didn't return a JSON response. The actual response was " + response.getBody());
-                }
-            } else {
-
-                JSONObject jsonResponse = null;
-
-                try {
-
-                    jsonResponse = new JSONObject(response.getBody());
-                } catch (JSONException e) {
-                }
-
-                if (jsonResponse != null) {
-
-                    System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
-                } else {
-
-                    System.err.println("The API returned error code " + response.getStatus());
-                }
-            }
-        }
-
-        return null;
-    }
-
-    private static void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
-
-        if (replyingOptions.getReplyTo() != 0)
-            multipartBody.field("reply_to_message_id", String.valueOf(replyingOptions.getReplyTo()), "application/json");
-        if (replyingOptions.getReplyMarkup() != null) {
-
-            switch (replyingOptions.getReplyMarkup().getType()) {
-
-                case FORCE_REPLY:
-                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json");
-                    break;
-                case KEYBOARD_HIDE:
-                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json");
-                    break;
-                case KEYBOARD_MARKUP:
-                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json");
-                    break;
-                case INLINE_KEYBOARD_MARKUP:
-                    multipartBody.field("reply_markup", GSON.toJson(replyingOptions.getReplyMarkup(), InlineKeyboardMarkup.class), "application/json");
-                    break;
-            }
-        }
-    }
-
-    private static void processNotificationContent(MultipartBody multipartBody, NotificationOptions notificationOptions) {
-
-        multipartBody.field("disable_notification", notificationOptions.isDisableNotification());
-    }
-
-    private static boolean checkResponseStatus(JSONObject jsonResponse) {
-
-        if (jsonResponse != null) {
-
-            if (jsonResponse.getBoolean("ok")) {
-
-                return true;
-            } else {
-
-                System.err.println("The API returned the following error: " + jsonResponse.getString("description"));
-            }
-        } else {
-
-            System.err.println("JSON Response was null, something went wrong...");
-        }
-
-        return false;
     }
 }

@@ -24,7 +24,7 @@ public interface Message {
      *
      * @return The timestamp
      */
-    int getTimeStamp();
+    long getTimeStamp();
 
     /**
      * Get the user that sent the message
@@ -57,9 +57,9 @@ public interface Message {
     /**
      * Gets the UNIX timestamp of when the original forwarded message was sent
      *
-     * @return The forwarded messages timestamp, or 0 if the message wasn't forwarded
+     * @return The forwarded messages timestamp, or null if the message wasn't forwarded
      */
-    int getForwardedDate();
+    Long getForwardedDate();
 
     /**
      * Gets the message that this message replied to
@@ -67,6 +67,13 @@ public interface Message {
      * @return The message that was replied to, or null if this message wasn't a reply
      */
     Message getRepliedTo();
+
+    /**
+     * Gets the UNIX timestamp of when the message was edited
+     *
+     * @return The time that this message was edited, or null if it wasn't edited
+     */
+    Long getEditDate();
 
     /**
      * Gets the content of the message

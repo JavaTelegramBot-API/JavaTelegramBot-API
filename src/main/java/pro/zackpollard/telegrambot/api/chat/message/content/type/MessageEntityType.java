@@ -15,6 +15,7 @@ public enum MessageEntityType {
     CODE("code"),
     PRE("pre"),
     TEXT_LINK("text_link"),
+    TEXT_MENTION("text_mention"),
     UNKNOWN("unknown");
 
     private String value;
