@@ -22,10 +22,7 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Video;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
-import pro.zackpollard.telegrambot.api.internal.chat.ChannelChatImpl;
-import pro.zackpollard.telegrambot.api.internal.chat.GroupChatImpl;
-import pro.zackpollard.telegrambot.api.internal.chat.IndividualChatImpl;
-import pro.zackpollard.telegrambot.api.internal.chat.SuperGroupChatImpl;
+import pro.zackpollard.telegrambot.api.internal.chat.*;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
@@ -98,44 +95,26 @@ public final class TelegramBot {
 
     public Chat getChat(long chatID) {
 
-        if (chatID < 0) {
-
-            /** This is a guess of the starting value of supergroups **/
-            if (chatID > -999999999) {
-
-                return GroupChatImpl.createGroupChat((int) chatID, this);
-            } else {
-
-                return SuperGroupChatImpl.createSuperGroupChat(chatID, this);
-            }
-        } else {
-
-            return IndividualChatImpl.createIndividualChat((int) chatID, this);
-        }
+        return getChat(chatID);
     }
 
     public Chat getChat(String chatID) {
 
-        if (chatID != null && chatID.length() > 0) {
+        try {
 
-            if (chatID.charAt(0) == '@') {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "getChat")
+                    .field("chat_id", chatID, "application/json");
+            HttpResponse<String> response = request.asString();
+            JSONObject jsonResponse = processResponse(response);
 
-                return ChannelChatImpl.createChannelChat(chatID, this);
-            } else {
+            if (jsonResponse != null && checkResponseStatus(jsonResponse)) {
 
-                long longChatID;
+                JSONObject result = jsonResponse.getJSONObject("result");
 
-                try {
-
-                    longChatID = Long.parseLong(chatID);
-                } catch (NumberFormatException e) {
-
-                    System.err.println("TelegramBot#getChat(String chatID) was called with invalid ChatID.");
-                    return null;
-                }
-
-                return getChat(longChatID);
+                return ChatImpl.createChat(result, this);
             }
+        } catch (UnirestException e) {
+            e.printStackTrace();
         }
 
         return null;
