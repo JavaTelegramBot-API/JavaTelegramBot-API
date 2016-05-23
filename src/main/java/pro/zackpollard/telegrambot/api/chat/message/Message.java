@@ -24,7 +24,7 @@ public interface Message {
      *
      * @return The timestamp
      */
-    int getTimeStamp();
+    long getTimeStamp();
 
     /**
      * Get the user that sent the message
@@ -59,7 +59,7 @@ public interface Message {
      *
      * @return The forwarded messages timestamp, or 0 if the message wasn't forwarded
      */
-    int getForwardedDate();
+    Long getForwardedDate();
 
     /**
      * Gets the message that this message replied to
