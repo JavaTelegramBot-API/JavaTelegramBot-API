@@ -1,4 +1,22 @@
 # Changelog
+#### Version 1.2.0
+* Added receiving of edited messages
+  * New event MessageEditReceivedEvent
+* Changed TelegramBot#getChat(String chatID) to use new getChat endpoint from the API
+* Implemented Chat#getChatMembersCount()
+* Implemented new ChatMember object type
+* Implemented Chat#getChatAdministrators()
+* Implemented Chat#getChatMember(User/long user)
+* Implemented Chat#leaveChat()
+* Implemented Message#getEditDate()
+* Implemented MessageEntity changes
+  * Added MessageEntityType.TEXT_MENTION
+  * Added MessageEntity#getUser() for when the type is a mention of a user
+* Bugfixes
+  * Fixed an issue with Message#getForwardedDate and Message#getTimeStamp() being an int instead of a long
+* Other changes
+  * Internal restructure of utility methods, they are now in their rightful home, in the Utils class
+
 #### Version 1.1.1
 * Fixed forward_from_chat causing an error when it isn't populated
 
