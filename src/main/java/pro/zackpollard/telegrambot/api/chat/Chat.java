@@ -11,6 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 import pro.zackpollard.telegrambot.api.internal.chat.ChatMemberImpl;
+import pro.zackpollard.telegrambot.api.user.User;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.ArrayList;
@@ -81,6 +82,32 @@ public interface Chat {
                 }
 
                 return chatAdmins;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    default ChatMember getChatMember(User user) {
+
+        return getChatMember(user.getId());
+    }
+
+    default ChatMember getChatMember(long userID) {
+
+        try {
+
+            MultipartBody request = Unirest.post(getBotInstance().getBotAPIUrl() + "getChatMember")
+                    .field("chat_id", getId(), "application/json")
+                    .field("user_id", userID);
+            HttpResponse<String> response = request.asString();
+            JSONObject jsonResponse = processResponse(response);
+
+            if (jsonResponse != null && Utils.checkResponseStatus(jsonResponse)) {
+
+                return ChatMemberImpl.createChatMember(jsonResponse.getJSONObject("result"));
             }
         } catch (UnirestException e) {
             e.printStackTrace();
