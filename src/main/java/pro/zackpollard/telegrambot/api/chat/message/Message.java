@@ -69,6 +69,13 @@ public interface Message {
     Message getRepliedTo();
 
     /**
+     * Gets the UNIX timestamp of when the message was edited
+     *
+     * @return The time that this message was edited, or null if it wasn't edited
+     */
+    Long getEditDate();
+
+    /**
      * Gets the content of the message
      *
      * @return The content of the message

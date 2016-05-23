@@ -25,6 +25,7 @@ public class MessageImpl implements Message {
     private final Chat forward_from_chat;
     private final Long forward_date;
     private final Message reply_to_message;
+    private final Long edit_date;
     private final Content content;
 
     private final TelegramBot telegramBot;
@@ -43,6 +44,7 @@ public class MessageImpl implements Message {
         forward_from_chat = ChatImpl.createChat(jsonObject.optJSONObject("forward_from_chat"), telegramBot);
         forward_date = jsonObject.optLong("forward_date");
         reply_to_message = MessageImpl.createMessage(jsonObject.optJSONObject("reply_to_message"), telegramBot);
+        edit_date = jsonObject.optLong("edit_date");
         content = ContentImpl.createContent(jsonObject, telegramBot);
 
         this.telegramBot = telegramBot;
@@ -131,6 +133,16 @@ public class MessageImpl implements Message {
     @Override
     public Message getRepliedTo() {
         return reply_to_message;
+    }
+
+    /**
+     * Gets the UNIX timestamp of when the message was edited
+     *
+     * @return The time that this message was edited, or null if it wasn't edited
+     */
+    @Override
+    public Long getEditDate() {
+        return edit_date;
     }
 
     /**
