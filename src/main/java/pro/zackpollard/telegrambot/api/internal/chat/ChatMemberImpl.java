@@ -20,7 +20,7 @@ public class ChatMemberImpl implements ChatMember {
         this.status = ChatMemberStatus.valueOf(jsonObject.getString("status"));
     }
 
-    public static ChatMember createChannelChat(JSONObject jsonObject) {
+    public static ChatMember createChatMember(JSONObject jsonObject) {
 
         return new ChatMemberImpl(jsonObject);
     }
