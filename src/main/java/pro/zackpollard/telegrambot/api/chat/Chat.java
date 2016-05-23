@@ -116,4 +116,24 @@ public interface Chat {
 
         return null;
     }
+
+    default boolean leaveChat() {
+
+        try {
+
+            MultipartBody request = Unirest.post(getBotInstance().getBotAPIUrl() + "leaveChat")
+                    .field("chat_id", getId(), "application/json");
+            HttpResponse<String> response = request.asString();
+            JSONObject jsonResponse = processResponse(response);
+
+            if (jsonResponse != null && Utils.checkResponseStatus(jsonResponse)) {
+
+                return jsonResponse.getBoolean("result");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
