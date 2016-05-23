@@ -33,7 +33,7 @@ public class UpdateImpl implements Update {
         this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"), telegramBot);
         if (message != null) updateType = UpdateType.MESSAGE;
         this.edited_message = MessageImpl.createMessage(jsonObject.optJSONObject("edited_message"), telegramBot);
-        if (message != null) updateType = UpdateType.EDITED_MESSAGE;
+        if (edited_message != null) updateType = UpdateType.EDITED_MESSAGE;
         this.inline_query = InlineQueryImpl.createInlineQuery(jsonObject.optJSONObject("inline_query"));
         if (inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
         this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
