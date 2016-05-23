@@ -661,7 +661,7 @@ public final class TelegramBot {
         return null;
     }
 
-    public boolean editInlineMessageText(String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
+    public boolean editInlineMessageReplyMarkup(String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
 
         if(inlineMessageId != null && inlineReplyMarkup != null) {
 
