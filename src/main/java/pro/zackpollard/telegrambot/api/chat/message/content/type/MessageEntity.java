@@ -1,5 +1,7 @@
 package pro.zackpollard.telegrambot.api.chat.message.content.type;
 
+import pro.zackpollard.telegrambot.api.user.User;
+
 /**
  * @author zackp
  */
@@ -12,4 +14,6 @@ public interface MessageEntity {
     int getLength();
 
     String getUrl();
+
+    User getUser();
 }
