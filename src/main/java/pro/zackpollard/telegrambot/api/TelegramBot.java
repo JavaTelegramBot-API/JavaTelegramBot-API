@@ -92,7 +92,7 @@ public final class TelegramBot {
 
     public Chat getChat(long chatID) {
 
-        return getChat(chatID);
+        return getChat(String.valueOf(chatID));
     }
 
     public Chat getChat(String chatID) {
