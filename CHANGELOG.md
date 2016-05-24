@@ -1,4 +1,7 @@
 # Changelog
+#### Version 1.2.1
+* Fixed StackOverflowException with TelegramBot#getChat(long)
+
 #### Version 1.2.0
 * Added receiving of edited messages
   * New event MessageEditReceivedEvent
