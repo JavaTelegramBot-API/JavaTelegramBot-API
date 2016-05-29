@@ -10,6 +10,8 @@ public interface SuperGroupChat extends GroupChat {
         return ChatType.SUPERGROUP;
     }
 
+    String getUsername();
+
     boolean kickChatMember(int userId);
 
     boolean unbanChatMember(int userId);

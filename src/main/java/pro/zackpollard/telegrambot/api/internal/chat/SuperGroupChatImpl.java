@@ -12,6 +12,7 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 public class SuperGroupChatImpl implements SuperGroupChat {
 
     private final long id;
+    private final String username;
     private final String title;
 
     private final TelegramBot telegramBot;
@@ -19,6 +20,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     private SuperGroupChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.id = jsonObject.getLong("id");
+        this.username = jsonObject.optString("username");
         this.title = jsonObject.getString("title");
         this.telegramBot = telegramBot;
     }
@@ -27,6 +29,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
 
         this.id = chatID;
         this.title = null;
+        this.username = null;
         this.telegramBot = telegramBot;
     }
 
@@ -64,6 +67,11 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     public Message sendMessage(SendableMessage message) {
 
         return telegramBot.sendMessage(this, message);
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
     @Override
