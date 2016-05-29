@@ -1,4 +1,8 @@
 # Changelog
+#### Version 1.2.2
+* Fixed issue where the API would error when a message was forwarded from a channel
+* Added SuperGroupChat#getUsername() as it was missing and is in the spec
+
 #### Version 1.2.1
 * Fixed StackOverflowException with TelegramBot#getChat(long)
 
