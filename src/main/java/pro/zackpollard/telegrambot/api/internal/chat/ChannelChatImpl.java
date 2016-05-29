@@ -18,7 +18,7 @@ public class ChannelChatImpl implements ChannelChat {
 
     private ChannelChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        this.username = jsonObject.getString("username");
+        this.username = jsonObject.optString("username");
         this.title = jsonObject.getString("title");
         this.telegramBot = telegramBot;
     }
