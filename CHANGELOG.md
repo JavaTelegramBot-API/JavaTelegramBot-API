@@ -1,4 +1,8 @@
 # Changelog
+#### Version 1.2.3
+* Fix issue where the Telegram Bot API doesn't return an @ in front of usernames for the getChat method
+  * This broke sendMessage when used in conjunction with getChat as it requires the @ in front of usernames
+
 #### Version 1.2.2
 * Fixed issue where the API would error when a message was forwarded from a channel
 * Added SuperGroupChat#getUsername() as it was missing and is in the spec
