@@ -20,7 +20,7 @@ public class UserImpl implements User {
         this.id = jsonObject.getInt("id");
         this.first_name = jsonObject.getString("first_name");
         this.last_name = jsonObject.optString("last_name");
-        this.username = jsonObject.optString("username");
+        this.username = "@" + jsonObject.optString("username");
     }
 
     private UserImpl(int userID) {

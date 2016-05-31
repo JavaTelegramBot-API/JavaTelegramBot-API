@@ -20,7 +20,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     private SuperGroupChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.id = jsonObject.getLong("id");
-        this.username = jsonObject.optString("username");
+        this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
         this.telegramBot = telegramBot;
     }
