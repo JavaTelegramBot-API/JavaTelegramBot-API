@@ -20,7 +20,7 @@ public interface User {
 
     default String getFullName() {
 
-        return getFirstName() + " " + getLastName();
+        return (getFirstName() + " " + getLastName()).trim();
     }
 
     String getUsername();
