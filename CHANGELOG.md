@@ -1,4 +1,8 @@
 # Changelog
+#### Version 1.2.4
+* Fix issue where ChatMemberStatus wasn't populated properly
+* Fix issue where User#getFullName() returns a trailing space when no last name is specified. Thanks @bo0tzz
+
 #### Version 1.2.3
 * Fix issue where the Telegram Bot API doesn't return an @ in front of usernames for the getChat method
   * This broke sendMessage when used in conjunction with getChat as it requires the @ in front of usernames
