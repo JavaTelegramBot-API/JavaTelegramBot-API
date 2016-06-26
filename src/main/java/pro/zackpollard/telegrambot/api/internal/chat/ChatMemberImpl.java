@@ -17,7 +17,7 @@ public class ChatMemberImpl implements ChatMember {
     private ChatMemberImpl(JSONObject jsonObject) {
 
         this.user = UserImpl.createUser(jsonObject.getJSONObject("user"));
-        this.status = ChatMemberStatus.valueOf(jsonObject.getString("status"));
+        this.status = ChatMemberStatus.getType(jsonObject.getString("status"));
     }
 
     public static ChatMember createChatMember(JSONObject jsonObject) {
