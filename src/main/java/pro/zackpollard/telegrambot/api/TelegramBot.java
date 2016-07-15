@@ -100,7 +100,7 @@ public final class TelegramBot {
         try {
 
             MultipartBody request = Unirest.post(getBotAPIUrl() + "getChat")
-                    .field("chat_id", chatID, "application/json");
+                    .field("chat_id", chatID, "application/json; charset=utf8;");
             HttpResponse<String> response = request.asString();
             JSONObject jsonResponse = Utils.processResponse(response);
 
@@ -136,8 +136,8 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendMessage")
-                            .field("chat_id", chat.getId(), "application/json")
-                            .field("text", textMessage.getMessage(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
+                            .field("text", textMessage.getMessage(), "application/json; charset=utf8;")
                             .field("disable_web_page_preview", textMessage.isDisableWebPagePreview())
                             .field("parse_mode", textMessage.getParseMode() != null ? textMessage.getParseMode().getModeName() : ParseMode.NONE);
 
@@ -158,7 +158,7 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "forwardMessage")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("from_chat_id", forwardMessage.getChatID())
                             .field("message_id", forwardMessage.getMessageID());
 
@@ -178,11 +178,11 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendPhoto")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("photo", photoMessage.getPhoto().getFileID() != null ? photoMessage.getPhoto().getFileID() : new FileContainer(photoMessage.getPhoto()), photoMessage.getPhoto().getFileID() == null);
 
                     if (photoMessage.getCaption() != null)
-                        request.field("caption", photoMessage.getCaption(), "application/json");
+                        request.field("caption", photoMessage.getCaption(), "application/json; charset=utf8;");
 
                     Utils.processReplyContent(request, photoMessage);
                     Utils.processNotificationContent(request, photoMessage);
@@ -231,7 +231,7 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendAudio")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
 
                     Utils.processReplyContent(request, audioMessage);
@@ -239,9 +239,9 @@ public final class TelegramBot {
 
                     if (audioMessage.getDuration() != 0) request.field("duration", audioMessage.getDuration());
                     if (audioMessage.getPerformer() != null)
-                        request.field("performer", audioMessage.getPerformer(), "application/json");
+                        request.field("performer", audioMessage.getPerformer(), "application/json; charset=utf8;");
                     if (audioMessage.getTitle() != null)
-                        request.field("title", audioMessage.getTitle(), "application/json");
+                        request.field("title", audioMessage.getTitle(), "application/json; charset=utf8;");
 
                     response = request.asString();
                     jsonResponse = Utils.processResponse(response);
@@ -281,11 +281,11 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendDocument")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
 
                     if (documentMessage.getCaption() != null)
-                        request.field("caption", documentMessage.getCaption(), "application/json");
+                        request.field("caption", documentMessage.getCaption(), "application/json; charset=utf8;");
 
                     Utils.processReplyContent(request, documentMessage);
                     Utils.processNotificationContent(request, documentMessage);
@@ -327,7 +327,7 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendSticker")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
 
                     Utils.processReplyContent(request, stickerMessage);
@@ -363,14 +363,14 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVideo")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : new FileContainer(videoMessage.getVideo()), videoMessage.getVideo().getFileID() == null);
 
                     if (videoMessage.getDuration() > 0) request.field("duration", videoMessage.getDuration());
                     if (videoMessage.getWidth() > 0) request.field("width", videoMessage.getWidth());
                     if (videoMessage.getHeight() > 0) request.field("height", videoMessage.getHeight());
                     if (videoMessage.getCaption() != null)
-                        request.field("caption", videoMessage.getCaption(), "application/json");
+                        request.field("caption", videoMessage.getCaption(), "application/json; charset=utf8;");
 
                     Utils.processReplyContent(request, videoMessage);
                     Utils.processNotificationContent(request, videoMessage);
@@ -404,7 +404,7 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVoice")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
 
                     if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
@@ -442,7 +442,7 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("latitude", locationMessage.getLatitude())
                             .field("longitude", locationMessage.getLongitude());
 
@@ -463,7 +463,7 @@ public final class TelegramBot {
                 try {
 
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendLocation")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("latitude", venueMessage.getLatitude())
                             .field("longitude", venueMessage.getLongitude())
                             .field("title", venueMessage.getTitle())
@@ -487,7 +487,7 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendChatAction")
-                            .field("chat_id", chat.getId(), "application/json")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("action", sendableChatAction.getChatAction().getName());
 
                     response = request.asString();
@@ -508,14 +508,14 @@ public final class TelegramBot {
 
         try {
             MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageText")
-                    .field("text", text, "application/json")
+                    .field("text", text, "application/json; charset=utf8;")
                     .field("disable_web_page_preview", disableWebPagePreview);
 
-            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(chatId != null) requests.field("chat_id", chatId, "application/json; charset=utf8;");
             if(messageId != null) requests.field("message_id", messageId);
-            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
-            if(parseMode != null) requests.field("parse_mode", parseMode.getModeName(), "application/json");
-            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json; charset=utf8;");
+            if(parseMode != null) requests.field("parse_mode", parseMode.getModeName(), "application/json; charset=utf8;");
+            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json; charset=utf8;");
 
             response = requests.asString();
             jsonResponse = Utils.processResponse(response);
@@ -568,12 +568,12 @@ public final class TelegramBot {
 
         try {
             MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageCaption")
-                    .field("caption", caption, "application/json");
+                    .field("caption", caption, "application/json; charset=utf8;");
 
-            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(chatId != null) requests.field("chat_id", chatId, "application/json; charset=utf8;");
             if(messageId != null) requests.field("message_id", messageId);
-            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
-            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json; charset=utf8;");
+            if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json; charset=utf8;");
 
             response = requests.asString();
             jsonResponse = Utils.processResponse(response);
@@ -626,11 +626,11 @@ public final class TelegramBot {
 
         try {
             MultipartBody requests = Unirest.post(getBotAPIUrl() + "editMessageReplyMarkup")
-                    .field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json");
+                    .field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json; charset=utf8;");
 
-            if(chatId != null) requests.field("chat_id", chatId, "application/json");
+            if(chatId != null) requests.field("chat_id", chatId, "application/json; charset=utf8;");
             if(messageId != null) requests.field("message_id", messageId);
-            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json");
+            if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json; charset=utf8;");
 
             response = requests.asString();
             jsonResponse = Utils.processResponse(response);
@@ -717,8 +717,8 @@ public final class TelegramBot {
 
             try {
                 MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
-                        .field("callback_query_id", callbackQueryId, "application/json")
-                        .field("text", text, "application/json")
+                        .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
+                        .field("text", text, "application/json; charset=utf8;")
                         .field("show_alert", showAlert);
 
                 response = requests.asString();
@@ -743,7 +743,7 @@ public final class TelegramBot {
 
         try {
             MultipartBody request = Unirest.post(getBotAPIUrl() + "kickChatMember")
-                    .field("chat_id", chatId, "application/json")
+                    .field("chat_id", chatId, "application/json; charset=utf8;")
                     .field("user_id", userId);
 
             response = request.asString();
@@ -767,7 +767,7 @@ public final class TelegramBot {
 
         try {
             MultipartBody request = Unirest.post(getBotAPIUrl() + "unbanChatMember")
-                    .field("chat_id", chatId, "application/json")
+                    .field("chat_id", chatId, "application/json; charset=utf8;")
                     .field("user_id", userId);
 
             response = request.asString();

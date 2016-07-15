@@ -34,7 +34,7 @@ public interface File {
 
         try {
             jsonObject = Unirest.post(telegramBot.getBotAPIUrl() + "getFile")
-                    .field("file_id", getFileId(), "application/json")
+                    .field("file_id", getFileId(), "application/json; charset=utf8;")
                     .asJson().getBody().getObject();
         } catch (UnirestException e) {
             e.printStackTrace();
