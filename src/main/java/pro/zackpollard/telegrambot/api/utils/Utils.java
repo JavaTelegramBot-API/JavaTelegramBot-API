@@ -71,22 +71,22 @@ public class Utils {
     public static void processReplyContent(MultipartBody multipartBody, ReplyingOptions replyingOptions) {
 
         if (replyingOptions.getReplyTo() != 0)
-            multipartBody.field("reply_to_message_id", String.valueOf(replyingOptions.getReplyTo()), "application/json");
+            multipartBody.field("reply_to_message_id", String.valueOf(replyingOptions.getReplyTo()), "application/json; charset=utf8;");
         if (replyingOptions.getReplyMarkup() != null) {
 
             switch (replyingOptions.getReplyMarkup().getType()) {
 
                 case FORCE_REPLY:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json");
+                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json; charset=utf8;");
                     break;
                 case KEYBOARD_HIDE:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json");
+                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json; charset=utf8;");
                     break;
                 case KEYBOARD_MARKUP:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json");
+                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json; charset=utf8;");
                     break;
                 case INLINE_KEYBOARD_MARKUP:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), InlineKeyboardMarkup.class), "application/json");
+                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), InlineKeyboardMarkup.class), "application/json; charset=utf8;");
                     break;
             }
         }

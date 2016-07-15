@@ -45,7 +45,7 @@ public interface Chat {
         try {
 
             MultipartBody request = Unirest.post(getBotInstance().getBotAPIUrl() + "getChatMembersCount")
-                    .field("chat_id", getId(), "application/json");
+                    .field("chat_id", getId(), "application/json; charset=utf8;");
             HttpResponse<String> response = request.asString();
             JSONObject jsonResponse = processResponse(response);
 
@@ -65,7 +65,7 @@ public interface Chat {
         try {
 
             MultipartBody request = Unirest.post(getBotInstance().getBotAPIUrl() + "getChatAdministrators")
-                    .field("chat_id", getId(), "application/json");
+                    .field("chat_id", getId(), "application/json; charset=utf8;");
             HttpResponse<String> response = request.asString();
             JSONObject jsonResponse = processResponse(response);
 
@@ -101,7 +101,7 @@ public interface Chat {
         try {
 
             MultipartBody request = Unirest.post(getBotInstance().getBotAPIUrl() + "getChatMember")
-                    .field("chat_id", getId(), "application/json")
+                    .field("chat_id", getId(), "application/json; charset=utf8;")
                     .field("user_id", userID);
             HttpResponse<String> response = request.asString();
             JSONObject jsonResponse = processResponse(response);
@@ -122,7 +122,7 @@ public interface Chat {
         try {
 
             MultipartBody request = Unirest.post(getBotInstance().getBotAPIUrl() + "leaveChat")
-                    .field("chat_id", getId(), "application/json");
+                    .field("chat_id", getId(), "application/json; charset=utf8;");
             HttpResponse<String> response = request.asString();
             JSONObject jsonResponse = processResponse(response);
 

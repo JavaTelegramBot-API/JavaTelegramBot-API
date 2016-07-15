@@ -63,7 +63,7 @@ public class RequestUpdatesManager extends UpdateManager {
 
                 try {
                     response = Unirest.post(requestUpdatesManager.getBotInstance().getBotAPIUrl() + "getUpdates")
-                            .field("offset", offset + 1, "application/json")
+                            .field("offset", offset + 1, "application/json; charset=utf8;")
                             .field("timeout", 10).asString();
                 } catch (UnirestException e) {
                     System.err.println("There was a connection error when trying to retrieve updates, waiting for 1 second and then trying again.");
