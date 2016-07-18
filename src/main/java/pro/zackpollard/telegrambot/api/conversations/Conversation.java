@@ -31,6 +31,10 @@ public final class Conversation {
         this.disableGlobalEvents = disableGlobalEvents;
     }
 
+    public static ConversationBuilder builder(TelegramBot bot) {
+        return new ConversationBuilder(bot);
+    }
+
     public Conversation begin() {
         context.bot().getConversationRegistry().registerConversation(this);
 
