@@ -19,14 +19,14 @@ public class ConversationRegistryImpl implements ConversationRegistry {
 
     @Override
     public void registerConversation(Conversation conversation) {
-        activeConversations.put(conversation.forWhom().getId(), conversation);
+        activeConversations.put(conversation.getForWhom().getId(), conversation);
     }
 
     @Override
     public void removeConversation(Conversation conversation) {
-        activeConversations.remove(conversation.forWhom().getId());
+        activeConversations.remove(conversation.getForWhom().getId());
 
-        if (conversation.currentPrompt() != null) {
+        if (conversation.getCurrentPrompt() != null) {
             conversation.end();
         }
     }
@@ -39,8 +39,8 @@ public class ConversationRegistryImpl implements ConversationRegistry {
             return false;
         }
 
-        if (conversation.currentPrompt().type() != message.getContent().getType()) {
-            return conversation.disableGlobalEvents();
+        if (conversation.getCurrentPrompt().type() != message.getContent().getType()) {
+            return conversation.isDisableGlobalEvents();
         }
 
         conversation.accept(message);

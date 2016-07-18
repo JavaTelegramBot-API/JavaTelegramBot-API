@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.conversations;
 
+import lombok.Getter;
 import lombok.Setter;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.Chat;
@@ -12,13 +13,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Conversation {
+    @Getter
     private final ConversationContext context;
+    @Getter
     private final Chat forWhom;
     @Setter
+    @Getter
     private boolean silent;
     @Setter
+    @Getter
     private boolean disableGlobalEvents;
+    @Getter
     private ConversationPrompt currentPrompt;
+    @Getter
     private final ConversationPrompt initialPrompt;
 
     private Conversation(TelegramBot bot, Map<String, Object> sessionData, Chat forWhom, boolean silent,
@@ -36,7 +43,7 @@ public final class Conversation {
     }
 
     public Conversation begin() {
-        context.bot().getConversationRegistry().registerConversation(this);
+        context.getBot().getConversationRegistry().registerConversation(this);
 
         if (!silent) {
             SendableMessage response = currentPrompt.promptMessage(context);
@@ -57,7 +64,7 @@ public final class Conversation {
         }
 
         currentPrompt = currentPrompt.process(context, content);
-        context.history().history.add(message);
+        context.getHistory().history.add(message);
 
         if (currentPrompt == null) {
             end();
@@ -76,31 +83,7 @@ public final class Conversation {
             currentPrompt = null;
         }
 
-        context.bot().getConversationRegistry().removeConversation(this);
-    }
-
-    public ConversationPrompt initialPrompt() {
-        return initialPrompt;
-    }
-
-    public ConversationPrompt currentPrompt() {
-        return currentPrompt;
-    }
-
-    public boolean silent() {
-        return silent;
-    }
-
-    public Chat forWhom() {
-        return forWhom;
-    }
-
-    public ConversationContext context() {
-        return context;
-    }
-
-    public boolean disableGlobalEvents() {
-        return disableGlobalEvents;
+        context.getBot().getConversationRegistry().removeConversation(this);
     }
 
     public static class ConversationBuilder {

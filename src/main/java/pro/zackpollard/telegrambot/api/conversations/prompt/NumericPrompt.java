@@ -14,7 +14,8 @@ public abstract class NumericPrompt extends TextValidatingPrompt {
 
     @Override
     protected boolean validate(ConversationContext context, TextContent input) {
-        return parseNumber(input.getContent()).floatValue() == Float.NaN ;
+        Number number = parseNumber(input.getContent());
+        return number.floatValue() == Float.NaN && validateNumber(context, number);
     }
 
     @Override
@@ -43,6 +44,7 @@ public abstract class NumericPrompt extends TextValidatingPrompt {
         return Float.NaN;
     }
 
+    protected abstract boolean validateNumber(ConversationContext context, Number input);
     protected abstract ConversationPrompt accept(ConversationContext context, Number input);
     protected abstract SendableMessage invalidInputMessage(ConversationContext context, TextContent input);
     protected abstract SendableMessage notNumericMessage(ConversationContext context, TextContent input);

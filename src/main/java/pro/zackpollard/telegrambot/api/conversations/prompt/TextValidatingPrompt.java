@@ -17,7 +17,7 @@ public abstract class TextValidatingPrompt extends TextPrompt {
             SendableMessage message = invalidationMessage(context, input);
 
             if (message != null) {
-                context.from().sendMessage(message);
+                context.getFrom().sendMessage(message);
             }
 
             return this; // try again loser
