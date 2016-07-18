@@ -115,4 +115,20 @@ public class Utils {
 
         return false;
     }
+
+    public static void validateNotNull(Object object) {
+        validateNotNull(object, "");
+    }
+
+    public static void validateNotNull(Object object, String message) {
+        if (object == null) {
+            throw new NullPointerException(message);
+        }
+    }
+
+    public static void validateNotNull(Object... objects) {
+        for (Object o : objects) {
+            validateNotNull(objects);
+        }
+    }
 }

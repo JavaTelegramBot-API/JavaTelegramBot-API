@@ -19,10 +19,12 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Sticker;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.Video;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
+import pro.zackpollard.telegrambot.api.conversations.ConversationRegistry;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
 import pro.zackpollard.telegrambot.api.internal.chat.*;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
+import pro.zackpollard.telegrambot.api.internal.conversations.ConversationRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
@@ -40,6 +42,8 @@ public final class TelegramBot {
     @Getter
     private final static FileManager fileManager = new FileManager();
 
+    @Getter
+    private final ConversationRegistry conversationRegistry;
     @Getter
     private final String authToken;
     private final ListenerRegistry listenerRegistry;
@@ -60,6 +64,7 @@ public final class TelegramBot {
         this.botUsername = botUsername;
 
         listenerRegistry = ListenerRegistryImpl.getNewInstance();
+        conversationRegistry = ConversationRegistryImpl.create();
     }
 
     /**
