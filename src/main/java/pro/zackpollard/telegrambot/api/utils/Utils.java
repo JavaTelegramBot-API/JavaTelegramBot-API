@@ -128,7 +128,7 @@ public class Utils {
 
     public static void validateNotNull(Object... objects) {
         for (Object o : objects) {
-            validateNotNull(objects);
+            validateNotNull(o);
         }
     }
 }

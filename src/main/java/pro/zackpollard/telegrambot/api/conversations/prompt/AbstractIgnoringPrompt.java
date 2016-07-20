@@ -5,14 +5,11 @@ import pro.zackpollard.telegrambot.api.conversations.ConversationContext;
 import pro.zackpollard.telegrambot.api.conversations.ConversationPrompt;
 
 public abstract class AbstractIgnoringPrompt<T extends Content> implements ConversationPrompt<T> {
-    private final ConversationPrompt nextPrompt;
-
-    protected AbstractIgnoringPrompt(ConversationPrompt nextPrompt) {
-        this.nextPrompt = nextPrompt;
+    protected AbstractIgnoringPrompt() {
     }
 
     @Override
-    public ConversationPrompt process(ConversationContext context, T input) {
-        return nextPrompt;
+    public boolean process(ConversationContext context, T input) {
+        return false;
     }
 }

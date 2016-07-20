@@ -5,10 +5,9 @@ import pro.zackpollard.telegrambot.api.chat.message.content.ContentType;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 
 public interface ConversationPrompt<T extends Content> {
-    ConversationPrompt END_CONVERSATION = null;
-
     ContentType type();
-    ConversationPrompt process(ConversationContext context, T input);
+    // return whether or not to repeat the prompt
+    boolean process(ConversationContext context, T input);
     SendableMessage promptMessage(ConversationContext context);
 
     default void conversationEnded(ConversationContext context) {

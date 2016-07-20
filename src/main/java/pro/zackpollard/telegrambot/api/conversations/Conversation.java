@@ -9,10 +9,10 @@ import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class Conversation {
+    private int promptIndex = 0;
     @Getter
     private final ConversationContext context;
     @Getter
@@ -26,14 +26,14 @@ public final class Conversation {
     @Getter
     private ConversationPrompt currentPrompt;
     @Getter
-    private final ConversationPrompt initialPrompt;
+    private final List<ConversationPrompt> prompts;
 
     private Conversation(TelegramBot bot, Map<String, Object> sessionData, Chat forWhom, boolean silent,
-                        boolean disableGlobalEvents, ConversationPrompt currentPrompt, ConversationPrompt initialPrompt) {
-        this.context = new ConversationContext(this, bot, sessionData);
+                        boolean disableGlobalEvents, List<ConversationPrompt> prompts) {
         this.forWhom = forWhom;
-        this.currentPrompt = currentPrompt;
-        this.initialPrompt = initialPrompt;
+        this.context = new ConversationContext(this, bot, sessionData);
+        this.currentPrompt = prompts.get(promptIndex);
+        this.prompts = Collections.unmodifiableList(prompts);
         this.silent = silent;
         this.disableGlobalEvents = disableGlobalEvents;
     }
@@ -63,18 +63,23 @@ public final class Conversation {
             return;
         }
 
-        currentPrompt = currentPrompt.process(context, content);
-        context.getHistory().history.add(message);
 
-        if (currentPrompt == null) {
-            end();
-        } else {
-            SendableMessage promptMessage = currentPrompt.promptMessage(context);
-
-            if (!silent && promptMessage != null) {
-                forWhom.sendMessage(promptMessage);
+        if (!currentPrompt.process(context, content)) {
+            if (promptIndex + 1 == prompts.size()) {
+                end();
+                return;
             }
+
+            currentPrompt = prompts.get(++promptIndex);
         }
+
+        SendableMessage promptMessage = currentPrompt.promptMessage(context);
+
+        if (!silent && promptMessage != null) {
+            forWhom.sendMessage(promptMessage);
+        }
+
+        context.getHistory().history.add(message);
     }
 
     public void end() {
@@ -89,7 +94,7 @@ public final class Conversation {
     public static class ConversationBuilder {
         private final TelegramBot bot;
         private Chat forWhom;
-        private ConversationPrompt initialPrompt;
+        private List<ConversationPrompt> prompts = null;
         private Map<String, Object> sessionData = new HashMap<>();
         private boolean silent;
         private boolean disableGlobalEvents;
@@ -103,9 +108,8 @@ public final class Conversation {
             return this;
         }
 
-        public ConversationBuilder initialPrompt(ConversationPrompt prompt) {
-            this.initialPrompt = prompt;
-            return this;
+        public PromptsBuilder prompts() {
+            return new PromptsBuilder(this);
         }
 
         public ConversationBuilder sessionData(Map<String, Object> data) {
@@ -124,9 +128,38 @@ public final class Conversation {
         }
 
         public Conversation build() {
-            Utils.validateNotNull(bot, forWhom, initialPrompt);
+            Utils.validateNotNull(bot, forWhom, prompts);
             return new Conversation(bot, sessionData, forWhom, silent, disableGlobalEvents,
-                    initialPrompt, initialPrompt);
+                    prompts);
+        }
+    }
+
+    public static class PromptsBuilder {
+        private final List<ConversationPrompt> prompts = new ArrayList<>();
+        private final ConversationBuilder conversationBuilder;
+
+        private PromptsBuilder(ConversationBuilder conversationBuilder) {
+            this.conversationBuilder = conversationBuilder;
+        }
+
+        public PromptsBuilder first(ConversationPrompt prompt) {
+            prompts.clear();
+            return then(prompt);
+        }
+
+        public PromptsBuilder then(ConversationPrompt prompt) {
+            prompts.add(prompt);
+            return this;
+        }
+
+        public ConversationBuilder last(ConversationPrompt prompt) {
+            prompts.add(prompt);
+            return end();
+        }
+
+        public ConversationBuilder end() {
+            conversationBuilder.prompts = prompts;
+            return conversationBuilder;
         }
     }
 }

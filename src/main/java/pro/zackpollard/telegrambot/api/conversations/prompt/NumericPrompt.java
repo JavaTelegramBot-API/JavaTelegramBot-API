@@ -3,7 +3,6 @@ package pro.zackpollard.telegrambot.api.conversations.prompt;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 import pro.zackpollard.telegrambot.api.conversations.ConversationContext;
-import pro.zackpollard.telegrambot.api.conversations.ConversationPrompt;
 
 import java.util.regex.Pattern;
 
@@ -15,16 +14,17 @@ public abstract class NumericPrompt extends TextValidatingPrompt {
     @Override
     protected boolean validate(ConversationContext context, TextContent input) {
         Number number = parseNumber(input.getContent());
-        return number.floatValue() == Float.NaN && validateNumber(context, number);
+        return number != null && validateNumber(context, number);
     }
 
     @Override
     protected SendableMessage invalidationMessage(ConversationContext context, TextContent input) {
-        return validate(null, input) ? notNumericMessage(context, input) : invalidInputMessage(context, input);
+        return parseNumber(input.getContent()) == null ? notNumericMessage(context, input) :
+                invalidInputMessage(context, input);
     }
 
     @Override
-    protected ConversationPrompt accept(ConversationContext context, TextContent input) {
+    protected boolean accept(ConversationContext context, TextContent input) {
         return accept(context, parseNumber(input.getContent()));
     }
 
@@ -41,11 +41,11 @@ public abstract class NumericPrompt extends TextValidatingPrompt {
             return Float.parseFloat(text);
         }
 
-        return Float.NaN;
+        return null;
     }
 
     protected abstract boolean validateNumber(ConversationContext context, Number input);
-    protected abstract ConversationPrompt accept(ConversationContext context, Number input);
+    protected abstract boolean accept(ConversationContext context, Number input);
     protected abstract SendableMessage invalidInputMessage(ConversationContext context, TextContent input);
     protected abstract SendableMessage notNumericMessage(ConversationContext context, TextContent input);
 }
