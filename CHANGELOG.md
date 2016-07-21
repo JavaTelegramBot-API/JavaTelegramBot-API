@@ -1,4 +1,9 @@
 # Changelog
+#### Version 1.3.0
+* Added a Conversation API, courtesy of @MazenK
+  * Examples of what this can do and how to use it can be found here https://github.com/zackpollard/JavaTelegramBot-API/pull/40
+* Fix issue with encoding for certain response types and captions
+
 #### Version 1.2.4
 * Fix issue where ChatMemberStatus wasn't populated properly
 * Fix issue where User#getFullName() returns a trailing space when no last name is specified. Thanks @bo0tzz
