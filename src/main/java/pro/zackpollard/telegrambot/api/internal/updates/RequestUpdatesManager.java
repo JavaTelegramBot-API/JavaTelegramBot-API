@@ -124,6 +124,9 @@ public class RequestUpdatesManager extends UpdateManager {
                                 switch (update.getType()) {
 
                                     case MESSAGE: {
+                                        if (getBotInstance().getConversationRegistry().processMessage(update.getMessage())) {
+                                            break;
+                                        }
 
                                         eventManager.callEvent(new MessageReceivedEvent(update.getMessage()));
 
