@@ -27,12 +27,4 @@ public abstract class UpdateManager {
 
         return this.running;
     }
-
-    public enum UpdateMethod {
-
-        REQUEST_UPDATES,
-        WEBHOOK
-    }
-
-    public abstract UpdateMethod getUpdateMethod();
 }

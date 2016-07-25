@@ -34,11 +34,6 @@ public class RequestUpdatesManager extends UpdateManager {
         this.getPreviousUpdates = getPreviousUpdates;
     }
 
-    public UpdateMethod getUpdateMethod() {
-
-        return UpdateMethod.REQUEST_UPDATES;
-    }
-
     public boolean startUpdates() {
 
         if(this.eventManager == null) this.eventManager = (ListenerRegistryImpl) getBotInstance().getEventsManager();
