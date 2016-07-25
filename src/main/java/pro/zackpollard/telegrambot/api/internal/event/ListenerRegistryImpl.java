@@ -74,11 +74,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
             Class<?>[] classes = m.getParameterTypes();
             if(classes.length == 1) {
 
-                Set<Listener> listeners = listenerByContent.get(classes[0]);
-                if(listeners != null) {
-
-                    listeners.remove(listener);
-                }
+                listenerByContent.computeIfPresent(classes[0], (c, s) -> (s.remove(listener) && s.size() == 0 ? null : s));
             }
         }
     }
