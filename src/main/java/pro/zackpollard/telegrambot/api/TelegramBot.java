@@ -790,8 +790,15 @@ public final class TelegramBot {
     }
 
     public void startUpdates(boolean getPreviousUpdates) {
-
+        if (updateManager != null) {
+            updateManager.finalizeManager();
+        }
+        
         updateManager = new RequestUpdatesManager(this, getPreviousUpdates);
+    }
+
+    public void stopUpdates() {
+        updateManager.finalizeManager();
     }
 
     public ListenerRegistry getEventsManager() {

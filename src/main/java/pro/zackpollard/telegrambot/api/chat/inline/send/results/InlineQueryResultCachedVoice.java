@@ -88,7 +88,7 @@ public class InlineQueryResultCachedVoice implements InlineQueryResult {
             return this;
         }
 
-        public InlineQueryResultCachedVoiceBuilder input_message_content(InputMessageContent inputMessageContent) {
+        public InlineQueryResultCachedVoiceBuilder inputMessageContent(InputMessageContent inputMessageContent) {
             this.input_message_content = inputMessageContent;
             return this;
         }

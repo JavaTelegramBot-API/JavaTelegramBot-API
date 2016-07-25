@@ -25,4 +25,6 @@ public abstract class UpdateManager {
     }
 
     public abstract UpdateMethod getUpdateMethod();
+    
+    public abstract void finalizeManager();
 }

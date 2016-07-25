@@ -76,27 +76,27 @@ public class InlineQueryResponse {
             return this;
         }
 
-        public InlineQueryResponse.InlineQueryResponseBuilder cache_time(Integer cache_time) {
+        public InlineQueryResponse.InlineQueryResponseBuilder cacheTime(Integer cache_time) {
             this.cache_time = cache_time;
             return this;
         }
 
-        public InlineQueryResponse.InlineQueryResponseBuilder is_personal(boolean is_personal) {
+        public InlineQueryResponse.InlineQueryResponseBuilder isPersonal(boolean is_personal) {
             this.is_personal = is_personal;
             return this;
         }
 
-        public InlineQueryResponse.InlineQueryResponseBuilder next_offset(String next_offset) {
+        public InlineQueryResponse.InlineQueryResponseBuilder nextOffset(String next_offset) {
             this.next_offset = next_offset;
             return this;
         }
 
-        public InlineQueryResponse.InlineQueryResponseBuilder switch_pm_text(String switch_pm_text) {
+        public InlineQueryResponse.InlineQueryResponseBuilder switchPMText(String switch_pm_text) {
             this.switch_pm_text = switch_pm_text;
             return this;
         }
 
-        public InlineQueryResponse.InlineQueryResponseBuilder switch_pm_parameter(String switch_pm_parameter) {
+        public InlineQueryResponse.InlineQueryResponseBuilder switchPMParameter(String switch_pm_parameter) {
             this.switch_pm_parameter = switch_pm_parameter;
             return this;
         }

@@ -25,13 +25,27 @@ import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 public class RequestUpdatesManager extends UpdateManager {
 
     private final ListenerRegistryImpl eventManager;
+    private boolean finalized = false;
+    private final Thread updaterThread;
 
     public RequestUpdatesManager(TelegramBot telegramBot, boolean getPreviousUpdates) {
 
         super(telegramBot);
 
         eventManager = (ListenerRegistryImpl) telegramBot.getEventsManager();
-        new Thread(new UpdaterRunnable(this, getPreviousUpdates)).start();
+        updaterThread = new Thread(new UpdaterRunnable(this, getPreviousUpdates));
+        
+        initializeManager();
+    }
+    
+    public final void initializeManager() {
+        updaterThread.start();
+    }
+    
+    public final void finalizeManager() {
+        finalized = true;
+        
+        updaterThread.interrupt();
     }
 
     public UpdateMethod getUpdateMethod() {
@@ -57,7 +71,7 @@ public class RequestUpdatesManager extends UpdateManager {
 
             int offset = 0;
 
-            while (true) {
+            while (!finalized) {
 
                 HttpResponse<String> response = null;
 
