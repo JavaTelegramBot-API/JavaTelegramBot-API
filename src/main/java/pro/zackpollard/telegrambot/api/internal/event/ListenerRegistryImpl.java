@@ -67,6 +67,22 @@ public class ListenerRegistryImpl implements ListenerRegistry {
         }
     }
 
+    public void unregister(Listener listener) {
+
+        for (Method m : listener.getClass().getDeclaredMethods()) {
+
+            Class<?>[] classes = m.getParameterTypes();
+            if(classes.length == 1) {
+
+                Set<Listener> listeners = listenerByContent.get(classes[0]);
+                if(listeners != null) {
+
+                    listeners.remove(listener);
+                }
+            }
+        }
+    }
+
     public void callEvent(Event event) {
         BiConsumer<Listener, Event> invoker = (BiConsumer<Listener, Event>) this.invokers.get(event.getClass());
         listenerByContent.getOrDefault(event.getClass(), Collections.emptySet()).forEach(listener -> invoker.accept(listener, event));

@@ -6,4 +6,6 @@ package pro.zackpollard.telegrambot.api.event;
 public interface ListenerRegistry {
 
     void register(Listener listener);
+
+    void unregister(Listener listener);
 }
