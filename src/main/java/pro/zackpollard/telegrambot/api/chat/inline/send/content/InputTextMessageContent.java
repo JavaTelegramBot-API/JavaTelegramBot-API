@@ -18,6 +18,11 @@ public class InputTextMessageContent implements InputMessageContent {
     private final ParseMode parse_mode;
     private final boolean disable_web_page_preview;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InputTextMessageContentBuilder object used to construct the InputTextMessageContent object
+     */
     public static InputTextMessageContentBuilder builder() {
         return new InputTextMessageContentBuilder();
     }

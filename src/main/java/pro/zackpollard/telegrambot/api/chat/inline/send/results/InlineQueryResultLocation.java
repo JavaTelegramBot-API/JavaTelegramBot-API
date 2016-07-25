@@ -32,6 +32,11 @@ public class InlineQueryResultLocation implements InlineQueryResult {
     private final Integer thumb_width;
     private final Integer thumb_height;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultLocationBuilder object used to construct the InlineQueryResultLocation object
+     */
     public static InlineQueryResultLocationBuilder builder() {
         return new InlineQueryResultLocationBuilder();
     }

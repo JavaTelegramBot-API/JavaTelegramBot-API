@@ -27,6 +27,11 @@ public class InlineQueryResultCachedDocument implements InlineQueryResult {
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultCachedDocumentBuilder object used to construct the InlineQueryResultCachedDocument object
+     */
     public static InlineQueryResultCachedDocumentBuilder builder() {
         return new InlineQueryResultCachedDocumentBuilder();
     }

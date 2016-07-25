@@ -25,6 +25,11 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableTextMessageBuilder object used to construct the SendableTextMessage object
+     */
     public static SendableTextMessageBuilder builder() {
         return new SendableTextMessageBuilder();
     }

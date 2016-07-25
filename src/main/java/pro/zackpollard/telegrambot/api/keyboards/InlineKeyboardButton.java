@@ -18,6 +18,11 @@ public class InlineKeyboardButton {
     private final String callback_data;
     private final String switch_inline_query;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineKeyboardButtonBuilder object used to construct the InlineKeyboardButton object
+     */
     public static InlineKeyboardButtonBuilder builder() {
         return new InlineKeyboardButtonBuilder();
     }

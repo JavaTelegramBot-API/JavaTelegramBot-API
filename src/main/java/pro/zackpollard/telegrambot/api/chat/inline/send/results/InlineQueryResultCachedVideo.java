@@ -27,6 +27,11 @@ public class InlineQueryResultCachedVideo implements InlineQueryResultCached {
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultCachedVideoBuilder object used to construct the InlineQueryResultCachedVideo object
+     */
     public static InlineQueryResultCachedVideoBuilder builder() {
         return new InlineQueryResultCachedVideoBuilder();
     }

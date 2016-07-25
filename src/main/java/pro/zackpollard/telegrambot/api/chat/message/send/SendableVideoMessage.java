@@ -29,6 +29,11 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableVideoMessageBuilder object used to construct the SendableVideoMessage object
+     */
     public static SendableVideoMessageBuilder builder() {
         return new SendableVideoMessageBuilder();
     }

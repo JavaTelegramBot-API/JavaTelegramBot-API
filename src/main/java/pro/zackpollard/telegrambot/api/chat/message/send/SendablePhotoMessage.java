@@ -23,6 +23,11 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendablePhotoMessageBuilder object used to construct the SendablePhotoMessage object
+     */
     public static SendablePhotoMessageBuilder builder() {
         return new SendablePhotoMessageBuilder();
     }

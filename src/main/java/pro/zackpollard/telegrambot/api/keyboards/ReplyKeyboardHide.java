@@ -17,6 +17,11 @@ public class ReplyKeyboardHide implements Keyboard {
         this.selective = builder.selective;
     }
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A ReplyKeyboardHideBuilder object used to construct the ReplyKeyboardHide object
+     */
     public static ReplyKeyboardHideBuilder builder() {
 
         return new ReplyKeyboardHideBuilder();

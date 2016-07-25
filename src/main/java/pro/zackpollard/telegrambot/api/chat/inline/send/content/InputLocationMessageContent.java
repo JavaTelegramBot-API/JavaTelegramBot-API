@@ -17,6 +17,11 @@ public class InputLocationMessageContent implements InputMessageContent {
     @NonNull
     private final double longitude;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InputLocationMessageContentBuilder object used to construct the InputLocationMessageContent object
+     */
     public static InputLocationMessageContentBuilder builder() {
         return new InputLocationMessageContentBuilder();
     }

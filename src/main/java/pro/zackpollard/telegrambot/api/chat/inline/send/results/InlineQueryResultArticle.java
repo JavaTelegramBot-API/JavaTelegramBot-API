@@ -32,6 +32,11 @@ public class InlineQueryResultArticle implements InlineQueryResult {
     private final int thumb_width;
     private final int thumb_height;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultArticleBuilder object used to construct the InlineQueryResultArticle object
+     */
     public static InlineQueryResultArticleBuilder builder() {
         return new InlineQueryResultArticleBuilder();
     }

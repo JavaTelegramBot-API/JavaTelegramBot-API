@@ -27,6 +27,11 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableAudioMessageBuilder object used to construct the SendableAudioMessage object
+     */
     public static SendableAudioMessageBuilder builder() {
         return new SendableAudioMessageBuilder();
     }

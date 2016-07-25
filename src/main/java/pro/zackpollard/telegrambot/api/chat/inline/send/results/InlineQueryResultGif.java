@@ -31,6 +31,11 @@ public class InlineQueryResultGif implements InlineQueryResult {
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultGifBuilder object used to construct the InlineQueryResultGif object
+     */
     public static InlineQueryResultGifBuilder builder() {
         return new InlineQueryResultGifBuilder();
     }

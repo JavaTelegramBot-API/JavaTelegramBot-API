@@ -17,6 +17,11 @@ public class ForceReply implements ReplyMarkup {
         this.selective = builder.selective;
     }
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A ForceReplyBuilder object used to construct the ForceReply object
+     */
     public static ForceReplyBuilder builder() {
 
         return new ForceReplyBuilder();

@@ -21,6 +21,11 @@ public class SendableStickerMessage implements SendableMessage, ReplyingOptions,
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableStickerMessageBuilder object used to construct the SendableStickerMessage object
+     */
     public static SendableStickerMessageBuilder builder() {
         return new SendableStickerMessageBuilder();
     }

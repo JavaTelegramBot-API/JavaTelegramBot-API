@@ -23,6 +23,11 @@ public class SendableDocumentMessage implements SendableMessage, ReplyingOptions
     @Getter
     private final String caption;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableDocumentMessageBuilder object used to construct the SendableDocumentMessage object
+     */
     public static SendableDocumentMessageBuilder builder() {
         return new SendableDocumentMessageBuilder();
     }

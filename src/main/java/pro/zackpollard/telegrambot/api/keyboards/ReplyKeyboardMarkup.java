@@ -26,6 +26,11 @@ public class ReplyKeyboardMarkup implements Keyboard {
         this.selective = builder.selective;
     }
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A ReplyKeyboardMarkupBuilder object used to construct the ReplyKeyboardMarkup object
+     */
     public static ReplyKeyboardMarkupBuilder builder() {
 
         return new ReplyKeyboardMarkupBuilder();

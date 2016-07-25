@@ -24,6 +24,11 @@ public class SendableLocationMessage implements SendableMessage, ReplyingOptions
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableLocationMessageBuilder object used to construct the SendableLocationMessage object
+     */
     public static SendableLocationMessageBuilder builder() {
         return new SendableLocationMessageBuilder();
     }

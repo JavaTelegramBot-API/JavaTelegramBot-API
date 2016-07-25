@@ -22,6 +22,11 @@ public class InputVenueMessageContent implements InputMessageContent {
     private final String address;
     private final String foursquare_id;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InputVenueMessageContentBuilder object used to construct the InputVenueMessageContent object
+     */
     public static InputVenueMessageContentBuilder builder() {
         return new InputVenueMessageContentBuilder();
     }

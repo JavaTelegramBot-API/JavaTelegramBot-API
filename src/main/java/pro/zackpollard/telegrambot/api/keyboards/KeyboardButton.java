@@ -17,6 +17,11 @@ public class KeyboardButton {
     private final boolean request_contact;
     private final boolean request_location;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A KeyboardButtonBuilder object used to construct the KeyboardButton object
+     */
     public static KeyboardButtonBuilder builder() {
         return new KeyboardButtonBuilder();
     }

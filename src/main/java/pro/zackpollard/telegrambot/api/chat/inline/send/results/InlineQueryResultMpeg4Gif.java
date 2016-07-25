@@ -31,6 +31,11 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultMpeg4GifBuilder object used to construct the InlineQueryResultMpeg4Gif object
+     */
     public static InlineQueryResultMpeg4GifBuilder builder() {
         return new InlineQueryResultMpeg4GifBuilder();
     }

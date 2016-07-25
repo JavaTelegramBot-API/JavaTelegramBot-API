@@ -19,6 +19,11 @@ public class SendableForwardMessage implements SendableMessage, NotificationOpti
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableForwardMessageBuilder object used to construct the SendableForwardMessage object
+     */
     public static SendableForwardMessageBuilder builder() {
         return new SendableForwardMessageBuilder();
     }

@@ -32,6 +32,11 @@ public class SendableVenueMessage implements SendableMessage, ReplyingOptions, N
     @Getter
     private final boolean disableNotification;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A SendableVenueMessageBuilder object used to construct the SendableVenueMessage object
+     */
     public static SendableVenueMessageBuilder builder() {
         return new SendableVenueMessageBuilder();
     }

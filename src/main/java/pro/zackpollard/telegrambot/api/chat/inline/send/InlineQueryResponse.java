@@ -24,6 +24,11 @@ public class InlineQueryResponse {
     private final String switch_pm_text;
     private final String switch_pm_parameter;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResponseBuilder object used to construct the InlineQueryResponse object
+     */
     public static InlineQueryResponseBuilder builder() {
         return new InlineQueryResponseBuilder();
     }

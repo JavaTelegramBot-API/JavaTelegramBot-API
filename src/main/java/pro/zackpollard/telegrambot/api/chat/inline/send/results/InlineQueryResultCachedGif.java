@@ -25,6 +25,11 @@ public class InlineQueryResultCachedGif implements InlineQueryResultCached {
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultCachedGifBuilder object used to construct the InlineQueryResultCachedGif object
+     */
     public static InlineQueryResultCachedGifBuilder builder() {
         return new InlineQueryResultCachedGifBuilder();
     }

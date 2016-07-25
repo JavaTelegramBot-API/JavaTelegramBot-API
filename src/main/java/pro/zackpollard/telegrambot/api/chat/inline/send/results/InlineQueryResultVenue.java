@@ -35,6 +35,11 @@ public class InlineQueryResultVenue implements InlineQueryResult {
     private final Integer thumb_width;
     private final Integer thumb_height;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineQueryResultVenueBuilder object used to construct the InlineQueryResultVenue object
+     */
     public static InlineQueryResultVenueBuilder builder() {
         return new InlineQueryResultVenueBuilder();
     }

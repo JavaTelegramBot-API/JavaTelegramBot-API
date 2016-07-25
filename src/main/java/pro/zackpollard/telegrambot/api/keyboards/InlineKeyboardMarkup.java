@@ -20,6 +20,11 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
         this.inline_keyboard = builder.inline_keyboard;
     }
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineKeyboardMarkupBuilder object used to construct the InlineKeyboardMarkup object
+     */
     public static InlineKeyboardMarkupBuilder builder() {
 
         return new InlineKeyboardMarkupBuilder();

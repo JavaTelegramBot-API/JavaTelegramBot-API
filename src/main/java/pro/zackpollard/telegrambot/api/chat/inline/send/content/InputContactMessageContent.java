@@ -18,6 +18,11 @@ public class InputContactMessageContent implements InputMessageContent {
     private final String first_name;
     private final String last_name;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InputContactMessageContentBuilder object used to construct the InputContactMessageContent object
+     */
     public static InputContactMessageContentBuilder builder() {
         return new InputContactMessageContentBuilder();
     }
