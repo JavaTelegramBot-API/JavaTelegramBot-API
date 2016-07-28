@@ -8,6 +8,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 public abstract class UpdateManager {
 
     private final TelegramBot telegramBot;
+    protected boolean running = false;
 
     protected UpdateManager(TelegramBot telegramBot) {
 
@@ -18,11 +19,12 @@ public abstract class UpdateManager {
         return telegramBot;
     }
 
-    public enum UpdateMethod {
+    public abstract void stopUpdates();
 
-        REQUEST_UPDATES,
-        WEBHOOK
+    public abstract boolean startUpdates();
+
+    public boolean isRunning() {
+
+        return this.running;
     }
-
-    public abstract UpdateMethod getUpdateMethod();
 }

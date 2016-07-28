@@ -24,45 +24,59 @@ import pro.zackpollard.telegrambot.api.updates.UpdateManager;
  */
 public class RequestUpdatesManager extends UpdateManager {
 
-    private final ListenerRegistryImpl eventManager;
+    private ListenerRegistryImpl eventManager = null;
+    private Thread updaterThread = null;
+    private boolean getPreviousUpdates = false;
 
     public RequestUpdatesManager(TelegramBot telegramBot, boolean getPreviousUpdates) {
 
         super(telegramBot);
-
-        eventManager = (ListenerRegistryImpl) telegramBot.getEventsManager();
-        new Thread(new UpdaterRunnable(this, getPreviousUpdates)).start();
+        this.getPreviousUpdates = getPreviousUpdates;
     }
 
-    public UpdateMethod getUpdateMethod() {
+    public boolean startUpdates() {
 
-        return UpdateMethod.REQUEST_UPDATES;
+        if(this.eventManager == null) this.eventManager = (ListenerRegistryImpl) getBotInstance().getEventsManager();
+
+        if(updaterThread == null && !this.running) {
+
+            updaterThread = new Thread(new UpdaterRunnable(this.getPreviousUpdates));
+            updaterThread.start();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void stopUpdates() {
+
+        this.running = false;
+        updaterThread.interrupt();
     }
 
     private class UpdaterRunnable implements Runnable {
 
-        private final RequestUpdatesManager requestUpdatesManager;
-        private final long unixTime;
         private boolean getPreviousUpdates;
 
-        protected UpdaterRunnable(RequestUpdatesManager requestUpdatesManager, boolean getPreviousUpdates) {
+        protected UpdaterRunnable(boolean getPreviousUpdates) {
 
-            this.requestUpdatesManager = requestUpdatesManager;
             this.getPreviousUpdates = getPreviousUpdates;
-            this.unixTime = System.currentTimeMillis() / 1000;
         }
 
         @Override
         public void run() {
 
+            running = true;
+
             int offset = 0;
 
-            while (true) {
+            while (running) {
 
                 HttpResponse<String> response = null;
 
                 try {
-                    response = Unirest.post(requestUpdatesManager.getBotInstance().getBotAPIUrl() + "getUpdates")
+                    response = Unirest.post(getBotInstance().getBotAPIUrl() + "getUpdates")
                             .field("offset", offset + 1, "application/json; charset=utf8;")
                             .field("timeout", 10).asString();
                 } catch (UnirestException e) {

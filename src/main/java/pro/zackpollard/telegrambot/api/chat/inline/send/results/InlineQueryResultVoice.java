@@ -106,7 +106,7 @@ public class InlineQueryResultVoice implements InlineQueryResult {
             return this;
         }
 
-        public InlineQueryResultVoice.InlineQueryResultVoiceBuilder input_message_content(InputMessageContent inputMessageContent) {
+        public InlineQueryResultVoice.InlineQueryResultVoiceBuilder inputMessageContent(InputMessageContent inputMessageContent) {
             this.input_message_content = inputMessageContent;
             return this;
         }

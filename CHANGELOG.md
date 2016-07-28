@@ -1,4 +1,9 @@
 # Changelog
+#### Version 1.3.1
+* Added a way to unregister listeners. ListenerRegistery#unregister(Listener)
+* Added a way to stop updates. TelegramBot#stopUpdates();
+* Fixed some inconsistencies in the names of some builder methods
+
 #### Version 1.3.0
 * Added a Conversation API, courtesy of @MazenK
   * Examples of what this can do and how to use it can be found here https://github.com/zackpollard/JavaTelegramBot-API/pull/40

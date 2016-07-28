@@ -789,9 +789,22 @@ public final class TelegramBot {
         return false;
     }
 
-    public void startUpdates(boolean getPreviousUpdates) {
+    public boolean startUpdates(boolean getPreviousUpdates) {
 
-        updateManager = new RequestUpdatesManager(this, getPreviousUpdates);
+        if(updateManager == null) updateManager = new RequestUpdatesManager(this, getPreviousUpdates);
+
+        if(!updateManager.isRunning()) {
+
+            updateManager.startUpdates();
+            return true;
+        }
+
+        return false;
+    }
+
+    public void stopUpdates() {
+
+        updateManager.stopUpdates();
     }
 
     public ListenerRegistry getEventsManager() {
