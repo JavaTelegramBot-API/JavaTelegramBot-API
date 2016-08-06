@@ -235,6 +235,9 @@ public class RequestUpdatesManager extends UpdateManager {
                                     }
 
                                     case CALLBACK_QUERY: {
+                                        if (getBotInstance().getInlineMenuRegistry().process(update.getCallbackQuery())) {
+                                            break;
+                                        }
 
                                         //Make three events, one for callback queries overall, one for message callback queries and one for inline callback queries
                                         eventManager.callEvent(new CallbackQueryReceivedEvent(update.getCallbackQuery()));

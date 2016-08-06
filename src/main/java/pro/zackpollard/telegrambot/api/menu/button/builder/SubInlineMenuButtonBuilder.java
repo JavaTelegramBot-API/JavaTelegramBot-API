@@ -1,0 +1,34 @@
+package pro.zackpollard.telegrambot.api.menu.button.builder;
+
+import pro.zackpollard.telegrambot.api.menu.AbstractInlineMenuBuilder;
+import pro.zackpollard.telegrambot.api.menu.InlineMenu;
+import pro.zackpollard.telegrambot.api.menu.InlineMenuRowBuilder;
+import pro.zackpollard.telegrambot.api.menu.button.AbstractButtonBuilder;
+import pro.zackpollard.telegrambot.api.menu.button.impl.SubInlineMenuButton;
+import pro.zackpollard.telegrambot.api.utils.Utils;
+
+public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
+        extends AbstractButtonBuilder<SubInlineMenuButtonBuilder<T>, T> {
+    private InlineMenu nextMenu;
+
+    public SubInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent, int index) {
+        super(parent, index);
+    }
+
+    @Override
+    protected SubInlineMenuButtonBuilder<T> instance() {
+        return this;
+    }
+
+    public SubInlineMenuButtonBuilder<T> nextMenu(InlineMenu menu) {
+        this.nextMenu = menu;
+        return this;
+    }
+
+    @Override
+    public InlineMenuRowBuilder<T> build() {
+        Utils.validateNotNull(text, nextMenu);
+        parent.internalAddButton(processButton(new SubInlineMenuButton(null, parent.rowIndex(), index, nextMenu, text)));
+        return parent;
+    }
+}
