@@ -21,6 +21,7 @@ public abstract class AbstractInlineMenuBuilder<T extends AbstractInlineMenuBuil
     protected InlineMenu buildMenu(Message base) {
         InlineMenu menu = new InlineMenu(base);
         rows.forEach((row) -> row.buttons.forEach((button) -> button.assignMenu(menu)));
+        menu.userPredicate = userPredicate;
         menu.rows = rows;
         return menu;
     }
