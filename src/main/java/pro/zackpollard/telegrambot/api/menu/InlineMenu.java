@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
+import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.user.User;
@@ -28,6 +29,10 @@ public class InlineMenu {
 
     public static InlineMenuBuilder builder(TelegramBot bot) {
         return new InlineMenuBuilder(bot);
+    }
+
+    public static InlineMenuBuilder builder(TelegramBot bot, Chat forWhom) {
+        return new InlineMenuBuilder(bot).forWhom(forWhom);
     }
 
     public void start() {

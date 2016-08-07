@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.menu.button;
 
 import pro.zackpollard.telegrambot.api.menu.AbstractInlineMenuBuilder;
+import pro.zackpollard.telegrambot.api.menu.InlineMenu;
 import pro.zackpollard.telegrambot.api.menu.InlineMenuRowBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.callback.ButtonCallback;
 
@@ -15,6 +16,12 @@ public abstract class AbstractButtonBuilder<T, E extends AbstractInlineMenuBuild
         this.index = index;
     }
 
+    protected AbstractButtonBuilder(InlineMenuRowBuilder<E> parent, int index, String text) {
+        this.parent = parent;
+        this.index = index;
+        this.text = text;
+    }
+
     protected abstract T instance();
 
     public abstract InlineMenuRowBuilder build();
@@ -27,6 +34,21 @@ public abstract class AbstractButtonBuilder<T, E extends AbstractInlineMenuBuild
     public T buttonCallback(ButtonCallback callback) {
         this.callback = callback;
         return instance();
+    }
+
+    public InlineMenuRowBuilder<E> newRow() {
+        build();
+        return parent.newRow();
+    }
+
+    public E buildRow() {
+        build();
+        return parent.build();
+    }
+
+    public InlineMenu buildMenu() {
+        build();
+        return parent.build().buildMenu();
     }
 
     protected InlineMenuButton processButton(InlineMenuButton button) {

@@ -16,6 +16,10 @@ public class ToggleInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder> 
         super(parent, index);
     }
 
+    public ToggleInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent, int index, String text) {
+        super(parent, index, text);
+    }
+
     @Override
     protected ToggleInlineMenuButtonBuilder<T> instance() {
         return this;

@@ -15,6 +15,10 @@ public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
         super(parent, index);
     }
 
+    public SubInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent, int index, String text) {
+        super(parent, index, text);
+    }
+
     @Override
     protected SubInlineMenuButtonBuilder<T> instance() {
         return this;

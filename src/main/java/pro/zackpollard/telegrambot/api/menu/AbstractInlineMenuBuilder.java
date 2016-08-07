@@ -12,10 +12,11 @@ public abstract class AbstractInlineMenuBuilder<T extends AbstractInlineMenuBuil
     List<InlineMenuRow> rows = new ArrayList<>();
     Predicate<User> userPredicate;
 
-    public InlineMenuRowBuilder<T> row() {
+    public InlineMenuRowBuilder<T> newRow() {
         return new InlineMenuRowBuilder<>(instance(), rows.size());
     }
 
+    public abstract InlineMenu buildMenu();
     protected abstract T instance();
 
     protected InlineMenu buildMenu(Message base) {

@@ -17,6 +17,10 @@ public class UserInputInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilde
         super(parent, index);
     }
 
+    public UserInputInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent, int index, String text) {
+        super(parent, index, text);
+    }
+
     @Override
     protected UserInputInlineMenuButtonBuilder<T> instance() {
         return this;

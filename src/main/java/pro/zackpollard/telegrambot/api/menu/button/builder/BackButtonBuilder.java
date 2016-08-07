@@ -12,6 +12,10 @@ public class BackButtonBuilder<T extends AbstractInlineMenuBuilder>
         super(parent, index);
     }
 
+    public BackButtonBuilder(InlineMenuRowBuilder<T> parent, int index, String text) {
+        super(parent, index, text);
+    }
+
     @Override
     protected BackButtonBuilder<T> instance() {
         return this;

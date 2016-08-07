@@ -12,7 +12,8 @@ public class SubInlineMenuBuilder extends AbstractInlineMenuBuilder<SubInlineMen
         return this;
     }
 
-    public InlineMenu build() {
+    @Override
+    public InlineMenu buildMenu() {
         InlineMenu menu = buildMenu(null);
 
         builder.subs.add(menu);

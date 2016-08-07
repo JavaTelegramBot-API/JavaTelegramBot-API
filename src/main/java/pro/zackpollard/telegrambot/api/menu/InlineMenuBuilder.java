@@ -29,7 +29,9 @@ public class InlineMenuBuilder extends AbstractInlineMenuBuilder<InlineMenuBuild
     }
 
     public SubInlineMenuBuilder subMenu() {
-        return new SubInlineMenuBuilder(this);
+        SubInlineMenuBuilder sub = new SubInlineMenuBuilder(this);
+        sub.userPredicate = userPredicate;
+        return sub;
     }
 
     @Override
@@ -37,7 +39,8 @@ public class InlineMenuBuilder extends AbstractInlineMenuBuilder<InlineMenuBuild
         return this;
     }
 
-    public InlineMenu build() {
+    @Override
+    public InlineMenu buildMenu() {
         Message baseMessage = bot.sendMessage(forWhom, message.build());
         InlineMenu menu = buildMenu(baseMessage);
 

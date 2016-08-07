@@ -34,7 +34,6 @@ public class InlineMenuRow {
         }
 
         buttonAt(button).handlePress(query);
-        System.out.print("pressed");
         return true;
     }
 
