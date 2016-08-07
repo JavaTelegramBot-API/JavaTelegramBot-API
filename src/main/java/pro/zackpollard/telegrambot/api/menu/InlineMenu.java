@@ -6,8 +6,10 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
+import pro.zackpollard.telegrambot.api.user.User;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class InlineMenu {
     @Getter
@@ -17,6 +19,7 @@ public class InlineMenu {
     @Getter
     @Setter
     private InlineMenu parent;
+    Predicate<User> userPredicate;
     List<InlineMenuRow> rows;
 
     InlineMenu(Message baseMessage) {
@@ -53,7 +56,8 @@ public class InlineMenu {
     }
 
     public boolean handle(CallbackQuery query, int row, int button) {
-        return row < rows.size() && rowAt(row).handle(query, button);
+        return (userPredicate == null || userPredicate.test(query.getFrom())) &&
+                row < rows.size() && rowAt(row).handle(query, button);
     }
 
     public void apply() {
