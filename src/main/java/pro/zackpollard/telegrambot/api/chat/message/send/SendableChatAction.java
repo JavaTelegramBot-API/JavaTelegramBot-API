@@ -22,6 +22,11 @@ public class SendableChatAction implements SendableMessage {
         return new SendableChatActionBuilder();
     }
 
+    /**
+     * Gets the MessageType of this SendableMessage object
+     *
+     * @return The MessageType of this object
+     */
     @Override
     public MessageType getType() {
         return MessageType.CHAT_ACTION;
@@ -33,11 +38,24 @@ public class SendableChatAction implements SendableMessage {
         SendableChatActionBuilder() {
         }
 
+        /**
+         * *Required*
+         * Sets the ChatAction that you want to send
+         *
+         * @param chatAction The ChatActio that you want to send
+         *
+         * @return The builder object
+         */
         public SendableChatAction.SendableChatActionBuilder chatAction(ChatAction chatAction) {
             this.chatAction = chatAction;
             return this;
         }
 
+        /**
+         * Builds the SendableChatAction object
+         *
+         * @return A SendableChatAction object based on the previously provided values
+         */
         public SendableChatAction build() {
             return new SendableChatAction(chatAction);
         }

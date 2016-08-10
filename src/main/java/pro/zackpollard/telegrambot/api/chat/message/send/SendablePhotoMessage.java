@@ -32,6 +32,11 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
         return new SendablePhotoMessageBuilder();
     }
 
+    /**
+     * Gets the MessageType of this SendableMessage object
+     *
+     * @return The MessageType of this object
+     */
     @Override
     public MessageType getType() {
         return MessageType.PHOTO;
@@ -49,37 +54,90 @@ public class SendablePhotoMessage implements SendableMessage, ReplyingOptions, N
         SendablePhotoMessageBuilder() {
         }
 
+        /**
+         * *Required*
+         * Sets the photo InputFile to be sent
+         *
+         * @param photo The photo InputFile
+         *
+         * @return The builder object
+         */
         public SendablePhotoMessage.SendablePhotoMessageBuilder photo(InputFile photo) {
             this.photo = photo;
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the caption that you want to send with the Message
+         *
+         * @param caption The caption you want to send with the Message
+         *
+         * @return The builder object
+         */
         public SendablePhotoMessage.SendablePhotoMessageBuilder caption(String caption) {
             this.caption = caption;
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the Message object that you want to reply to
+         *
+         * @param replyTo The Message object you want to reply to
+         *
+         * @return The builder object
+         */
         public SendablePhotoMessage.SendablePhotoMessageBuilder replyTo(Message replyTo) {
             this.replyTo = replyTo != null ? replyTo.getMessageId() : 0;
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the ID of the message you want to reply to
+         *
+         * @param replyTo The ID of the message you want to reply to
+         *
+         * @return The builder object
+         */
         public SendablePhotoMessage.SendablePhotoMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the ReplyMarkup that you want to send with the message
+         *
+         * @param replyMarkup The ReplyMarkup you want to send with the message
+         *
+         * @return The builder object
+         */
         public SendablePhotoMessage.SendablePhotoMessageBuilder replyMarkup(ReplyMarkup replyMarkup) {
             this.replyMarkup = replyMarkup;
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets whether or not to disable any notification this message might usually cause. Defaults to False
+         *
+         * @param disableNotification True to disable notifications for this message, False otherwise
+         *
+         * @return The builder object
+         */
         public SendablePhotoMessage.SendablePhotoMessageBuilder disableNotification(boolean disableNotification) {
 
             this.disableNotification = disableNotification;
             return this;
         }
 
+        /**
+         * Builds the SendablePhotoMessage object
+         *
+         * @return A SendablePhotoMessage object based on the previously provided values
+         */
         public SendablePhotoMessage build() {
             return new SendablePhotoMessage(photo, caption, replyTo, replyMarkup, disableNotification);
         }

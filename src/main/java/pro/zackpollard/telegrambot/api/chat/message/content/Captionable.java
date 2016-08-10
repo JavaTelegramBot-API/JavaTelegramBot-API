@@ -5,5 +5,10 @@ package pro.zackpollard.telegrambot.api.chat.message.content;
  */
 public interface Captionable {
 
+    /**
+     * Gets the caption for the file
+     *
+     * @return The caption for the file
+     */
     String getCaption();
 }

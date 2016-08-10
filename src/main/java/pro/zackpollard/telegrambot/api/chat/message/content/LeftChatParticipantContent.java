@@ -14,6 +14,11 @@ public interface LeftChatParticipantContent extends Content {
      */
     User getContent();
 
+    /**
+     * Gets the ContentType relating to this Content object
+     *
+     * @return The ContentType of this Content object
+     */
     @Override
     default ContentType getType() {
 
