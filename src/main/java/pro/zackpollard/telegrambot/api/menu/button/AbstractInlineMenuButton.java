@@ -31,8 +31,8 @@ public abstract class AbstractInlineMenuButton implements InlineMenuButton {
     }
 
     @Override
-    public void setMessageText(SendableTextMessageBuilder text) {
-        owner.setMessageText(text);
+    public InlineMenu getMenu() {
+        return owner;
     }
 
     @Override
