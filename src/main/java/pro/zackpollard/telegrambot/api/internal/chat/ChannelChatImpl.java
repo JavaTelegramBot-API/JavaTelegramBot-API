@@ -41,6 +41,11 @@ public class ChannelChatImpl implements ChannelChat {
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
     public String getName() {
         return title;
     }
