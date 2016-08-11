@@ -5,7 +5,7 @@ package pro.zackpollard.telegrambot.api.chat;
  */
 public interface ChannelChat extends Chat {
 
-    String getName();
+    String getUsername();
 
     default ChatType getType() {
 
