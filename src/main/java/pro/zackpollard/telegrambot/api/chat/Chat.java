@@ -25,21 +25,60 @@ import static pro.zackpollard.telegrambot.api.utils.Utils.processResponse;
  */
 public interface Chat {
 
+    /**
+     * Gets the ID of this Chat
+     *
+     * @return The ID of this Chat
+     */
     String getId();
 
+    /**
+     * Gets the name of the Chat
+     *
+     * @return The name of the Chat
+     */
     String getName();
 
+    /**
+     * Gets the ChatType of this Chat
+     *
+     * @return The ChatType of this Chat
+     */
     ChatType getType();
 
+    /**
+     * Gets the TelegramBot instance associated with this Chat object
+     *
+     * @return The TelegramBot instance associated with this Chat object
+     */
     TelegramBot getBotInstance();
 
+    /**
+     * Send any type of SendableMessage to this Chat
+     *
+     * @param message The SendableMessage you want to send to the Chat
+     *
+     * @return The Message object associated with the sent message, or null if sending failed
+     */
     Message sendMessage(SendableMessage message);
 
+    /**
+     * Send a String message to this Chat
+     *
+     * @param message The String message you want to send to the chat
+     *
+     * @return The Message object associated with the sent message, or null if sending failed
+     */
     default Message sendMessage(String message) {
 
         return this.sendMessage(SendableTextMessage.builder().message(message).build());
     }
 
+    /**
+     * Gets the amount of people in the chat
+     *
+     * @return The amount of people in the chat
+     */
     default Integer getChatMembersCount() {
 
         try {
@@ -60,6 +99,11 @@ public interface Chat {
         return null;
     }
 
+    /**
+     * Gets a List of ChatMember objects for all the people who are admin in the chat
+     *
+     * @return A List of ChatMember objects for all the people who are admin in the chat
+     */
     default List<ChatMember> getChatAdministrators() {
 
         try {
@@ -91,11 +135,25 @@ public interface Chat {
         return null;
     }
 
+    /**
+     * Gets the ChatMember object for a specific User in respect to this chat
+     *
+     * @param user The User that you want the ChatMember object for
+     *
+     * @return The ChatMember object for this user or Null if the request failed
+     */
     default ChatMember getChatMember(User user) {
 
         return getChatMember(user.getId());
     }
 
+    /**
+     * Gets the ChatMember object for a specific user based on their ID in respect to this chat
+     *
+     * @param userID The ID of the user that you want the ChatMember object for
+     *
+     * @return The ChatMember object for this user or Null if the request failed
+     */
     default ChatMember getChatMember(long userID) {
 
         try {
@@ -117,6 +175,11 @@ public interface Chat {
         return null;
     }
 
+    /**
+     * If you call this method then the bot will leave this Chat if it is currently in it
+     *
+     * @return True if leaving the chat succeeded, otherwise False
+     */
     default boolean leaveChat() {
 
         try {
