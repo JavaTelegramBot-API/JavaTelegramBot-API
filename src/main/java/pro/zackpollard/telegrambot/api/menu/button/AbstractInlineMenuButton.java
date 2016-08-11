@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.api.menu.button;
 
 import lombok.Getter;
 import lombok.Setter;
+import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage.SendableTextMessageBuilder;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardButton;
 import pro.zackpollard.telegrambot.api.menu.InlineMenu;
 import pro.zackpollard.telegrambot.api.menu.button.callback.ButtonCallback;
@@ -27,6 +28,11 @@ public abstract class AbstractInlineMenuButton implements InlineMenuButton {
     protected AbstractInlineMenuButton(InlineMenu owner, int row, int num, String text) {
         this(owner, row, num);
         this.text = text;
+    }
+
+    @Override
+    public void setMessageText(SendableTextMessageBuilder text) {
+        owner.setMessageText(text);
     }
 
     @Override

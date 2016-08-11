@@ -6,6 +6,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
+import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.user.User;
 
@@ -67,6 +68,12 @@ public class InlineMenu {
 
     public void apply() {
         baseMessage.getBotInstance().editMessageReplyMarkup(baseMessage, toKeyboard());
+    }
+
+    public void setMessageText(SendableTextMessage.SendableTextMessageBuilder messageBuilder) {
+        SendableTextMessage message = messageBuilder.build();
+        baseMessage.getBotInstance().editMessageText(baseMessage, message.getMessage(), message.getParseMode(),
+                message.isDisableWebPagePreview(), toKeyboard());
     }
 
     // CALLER DEPENDENT

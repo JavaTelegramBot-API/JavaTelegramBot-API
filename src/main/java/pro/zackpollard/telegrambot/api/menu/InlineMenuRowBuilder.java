@@ -5,7 +5,6 @@ import pro.zackpollard.telegrambot.api.menu.button.builder.BackButtonBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.builder.SubInlineMenuButtonBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.builder.ToggleInlineMenuButtonBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.builder.UserInputInlineMenuButtonBuilder;
-import pro.zackpollard.telegrambot.api.menu.button.impl.ToggleInlineMenuButton;
 
 import java.util.List;
 
