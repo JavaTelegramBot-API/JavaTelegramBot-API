@@ -13,6 +13,11 @@ public class PhotoMessageReceivedEvent extends MessageReceivedEvent {
         super(message);
     }
 
+    /**
+     * Gets the Photo that was received that triggered this Event
+     *
+     * @return The Photo that was received that triggered this Event
+     */
     @Override
     public PhotoContent getContent() {
 

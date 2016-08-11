@@ -17,6 +17,11 @@ public class CallbackQueryReceivedEvent implements Event {
         this.callbackQuery = callbackQuery;
     }
 
+    /**
+     * Gets the CallbackQuery that was received that triggered this Event
+     *
+     * @return The CallbackQuery that was received that triggered this Event
+     */
     public CallbackQuery getCallbackQuery() {
 
         return callbackQuery;

@@ -13,6 +13,11 @@ public class ContactMessageReceivedEvent extends MessageReceivedEvent {
         super(message);
     }
 
+    /**
+     * Gets the Contact that was received that fired this event
+     *
+     * @return The Contanct that was received that fired this event
+     */
     @Override
     public ContactContent getContent() {
 

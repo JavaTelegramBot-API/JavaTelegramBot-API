@@ -13,6 +13,11 @@ public class ChannelChatCreatedEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the ChannelChat that was created that triggered this Event
+     *
+     * @return The ChannelChat that was created that triggered this Event
+     */
     @Override
     public ChannelChat getChat() {
 

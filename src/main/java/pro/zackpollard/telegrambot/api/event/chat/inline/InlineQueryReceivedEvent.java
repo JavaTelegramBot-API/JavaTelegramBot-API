@@ -14,6 +14,11 @@ public class InlineQueryReceivedEvent implements Event {
 
     private final InlineQuery inlineQuery;
 
+    /**
+     * Gets the InlineQuery that fired this Event
+     *
+     * @return The InlineQuery that fired this Event
+     */
     public InlineQuery getQuery() {
 
         return inlineQuery;
