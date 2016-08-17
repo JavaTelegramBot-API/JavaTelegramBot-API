@@ -13,6 +13,11 @@ public class LocationMessageReceivedEvent extends MessageReceivedEvent {
         super(message);
     }
 
+    /**
+     * Gets the Location that was received that fired this Event
+     *
+     * @return The location that was received that fired this Event
+     */
     @Override
     public LocationContent getContent() {
 

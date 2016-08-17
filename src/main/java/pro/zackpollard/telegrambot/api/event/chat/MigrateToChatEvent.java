@@ -14,6 +14,11 @@ public class MigrateToChatEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the Chat that was migrated to that triggered this Event
+     *
+     * @return The Chat that was migrated to that triggred this Event
+     */
     @Override
     public SuperGroupChat getChat() {
 

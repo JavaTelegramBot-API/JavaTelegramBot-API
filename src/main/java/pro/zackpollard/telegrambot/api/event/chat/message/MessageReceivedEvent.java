@@ -14,6 +14,11 @@ public class MessageReceivedEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the content that was received that triggered this Event
+     *
+     * @return The content that was received that triggered this Event
+     */
     public Content getContent() {
 
         return getMessage().getContent();

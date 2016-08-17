@@ -26,6 +26,11 @@ public class ReplyKeyboardMarkup implements Keyboard {
         this.selective = builder.selective;
     }
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return A ReplyKeyboardMarkupBuilder object used to construct the ReplyKeyboardMarkup object
+     */
     public static ReplyKeyboardMarkupBuilder builder() {
 
         return new ReplyKeyboardMarkupBuilder();
@@ -64,7 +69,7 @@ public class ReplyKeyboardMarkup implements Keyboard {
     /**
      * Gets whether the reply markup will only show for selected users
      * Targets: 1) users that are @mentioned in the text of the Message object;
-     * 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+     * 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message
      *
      * @return Selective option, default false
      */
@@ -72,6 +77,11 @@ public class ReplyKeyboardMarkup implements Keyboard {
         return selective;
     }
 
+    /**
+     * Gets the ReplyMarkupType for this ReplyMarkup object
+     *
+     * @return The ReplyMarkupType for this ReplyMarkup object
+     */
     @Override
     public ReplyMarkupType getType() {
         return ReplyMarkupType.KEYBOARD_MARKUP;
@@ -89,9 +99,11 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
+         * *Optional*
          * Add a new row to the keyboard
          *
          * @param buttons The buttons for the new row
+         *
          * @return The keyboard builder
          */
         public ReplyKeyboardMarkupBuilder addRow(KeyboardButton... buttons) {
@@ -100,9 +112,11 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
+         * *Optional*
          * Add a new row to the keyboard
          *
          * @param buttons The buttons for the new row
+         *
          * @return The keyboard builder
          */
         public ReplyKeyboardMarkupBuilder addRow(List<KeyboardButton> buttons) {
@@ -112,10 +126,13 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
+         * *Optional*
          * Sets a row of the keyboard
          *
          * @param buttons The buttons for the row
+         *
          * @return The keyboard builder
+         *
          * @throws IndexOutOfBoundsException if the row is out of range
          */
         public ReplyKeyboardMarkupBuilder setRow(int row, KeyboardButton... buttons) {
@@ -124,11 +141,14 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
+         * *Optional*
          * Sets a row of the keyboard
          *
          * @param row        The index of the row
          * @param buttons    The buttons for the row
+         *
          * @return The keyboard builder
+         *
          * @throws IndexOutOfBoundsException if the row is out of range
          */
         public ReplyKeyboardMarkupBuilder setRow(int row, List<KeyboardButton> buttons) {
@@ -139,12 +159,15 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
+         * *Optional*
          * Sets a cell of the keyboard
          *
          * @param row       The index of the row
          * @param column    The index of the column
-         * @param button The value for the cell
+         * @param button    The value for the cell
+         *
          * @return The keyboard builder
+         *
          * @throws IndexOutOfBoundsException if the row or column is out of range
          */
         public ReplyKeyboardMarkupBuilder setCell(int row, int column, KeyboardButton button) {
@@ -154,13 +177,15 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
-         * Optional. Requests clients to resize the keyboard vertically for optimal fit
+         * *Optional*
+         * Requests clients to resize the keyboard vertically for optimal fit
          * (e.g., make the keyboard smaller if there are just two rows of buttons).
          * Defaults to false, in which case the custom keyboard is always of the
-         * same height as the app's standard keyboard.
+         * same height as the app's standard keyboard
          *
-         * @param resize Whether the client should resize the keyboard.
-         * @return The keyboard builder.
+         * @param resize Whether the client should resize the keyboard
+         *
+         * @return The keyboard builder
          */
         public ReplyKeyboardMarkupBuilder resize(boolean resize) {
 
@@ -169,11 +194,13 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
-         * Optional. Requests clients to hide the keyboard as soon as it's been used.
-         * Defaults to false.
+         * *Optional*
+         * Requests clients to hide the keyboard as soon as it's been used.
+         * Defaults to false
          *
-         * @param oneTime Whether the keyboard is a one time keyboard.
-         * @return The keyboard builder.
+         * @param oneTime Whether the keyboard is a one time keyboard
+         *
+         * @return The keyboard builder
          */
         public ReplyKeyboardMarkupBuilder oneTime(boolean oneTime) {
 
@@ -182,12 +209,14 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
-         * Optional. Use this parameter if you want to show the keyboard to specific users only.
+         * *Optional*
+         * Use this parameter if you want to show the keyboard to specific users only.
          * Targets: 1) users that are @mentioned in the text of the Message object;
-         * 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+         * 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message
          *
-         * @param selective Whether the keyboard is a selective keyboard.
-         * @return The keyboard builder.
+         * @param selective Whether the keyboard is a selective keyboard
+         *
+         * @return The keyboard builder
          */
         public ReplyKeyboardMarkupBuilder selective(boolean selective) {
 
@@ -196,9 +225,9 @@ public class ReplyKeyboardMarkup implements Keyboard {
         }
 
         /**
-         * Builds the ReplyKeyboardMarkup object from the specified options.
+         * Builds the ReplyKeyboardMarkup object
          *
-         * @return A new ReplyKeyboardMarkup.
+         * @return A ReplyKeyboardMarkup object based on the previously provided values
          */
         public ReplyKeyboardMarkup build() {
 

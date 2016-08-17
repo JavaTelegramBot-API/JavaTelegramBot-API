@@ -18,22 +18,48 @@ public class InlineKeyboardButton {
     private final String callback_data;
     private final String switch_inline_query;
 
+    /**
+     * This builder will allow you to progressively construct this object.
+     *
+     * @return An InlineKeyboardButtonBuilder object used to construct the InlineKeyboardButton object
+     */
     public static InlineKeyboardButtonBuilder builder() {
         return new InlineKeyboardButtonBuilder();
     }
 
+    /**
+     * Gets the text that this InlineKeyboardButton will have
+     *
+     * @return The text that this InlineKeyboardButton will have
+     */
     public String getText() {
         return this.text;
     }
 
+    /**
+     * Gets the URL that this InlineKeyboardButton will link to when clicked
+     *
+     * @return The URL that this InlineKeyboardButton will link to when clicked
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Gets the String of callback data that this button will send back when clicked
+     *
+     * @return The String of callback data that this button will send back when clicked
+     */
     public String getCallbackData() {
         return callback_data;
     }
 
+    /**
+     * Gets the String that will be inserted as an inline query when the button is clicked. If blank then the button
+     * won't switch the user to the chat select screena dn then insert the inline query
+     *
+     * @return The String that will be inserted as an inline query
+     */
     public String getSwitchInlineQuery() {
         return switch_inline_query;
     }
@@ -48,11 +74,27 @@ public class InlineKeyboardButton {
         InlineKeyboardButtonBuilder() {
         }
 
+        /**
+         * *Required*
+         * Sets the text that will be displayed on this button
+         *
+         * @param text The text that will be displayed on this button
+         *
+         * @return The builder object
+         */
         public InlineKeyboardButton.InlineKeyboardButtonBuilder text(String text) {
             this.text = text;
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the HTTP url to be opened when button is pressed
+         *
+         * @param url The HTTP url to be opened when button is pressed
+         *
+         * @return The builder object
+         */
         public InlineKeyboardButton.InlineKeyboardButtonBuilder url(String url) {
             this.url = url;
             this.callback_data = null;
@@ -60,6 +102,14 @@ public class InlineKeyboardButton {
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
+         *
+         * @param callbackData The data to be sent in a callbackquery to the bot when button is pressed, 1-64 bytes
+         *
+         * @return The builder object
+         */
         public InlineKeyboardButton.InlineKeyboardButtonBuilder callbackData(String callbackData) {
             this.callback_data = callbackData;
             this.url = null;
@@ -67,6 +117,16 @@ public class InlineKeyboardButton {
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the inline query switch text. If set, pressing the button will prompt the user to select one of their
+         * chats, open that chat and insert the bot‘s username and the specified inline query in the input field.
+         * Can be empty, in which case just the bot’s username will be inserted.
+         *
+         * @param switchInlineQuery The inline query switch text
+         *
+         * @return The builder object
+         */
         public InlineKeyboardButton.InlineKeyboardButtonBuilder switchInlineQuery(String switchInlineQuery) {
             this.switch_inline_query = switchInlineQuery;
             this.url = null;
@@ -74,12 +134,13 @@ public class InlineKeyboardButton {
             return this;
         }
 
+        /**
+         * Builds the InlineKeyboardButton object
+         *
+         * @return A InlineKeyboardButton object based on the previously provided values
+         */
         public InlineKeyboardButton build() {
             return new InlineKeyboardButton(text, url, callback_data, switch_inline_query);
-        }
-
-        public String toString() {
-            return "pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardButton.InlineKeyboardButtonBuilder(text=" + this.text + ", url=" + this.url + ", callbackData=" + this.callback_data + ", switchInlineQuery=" + this.switch_inline_query + ")";
         }
     }
 }

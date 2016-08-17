@@ -30,6 +30,11 @@ public class InputFile {
     @Getter
     private final String fileName;
 
+    /**
+     * Create an InputFile object based on an external URL to be sent within a SendableMessage
+     *
+     * @param url The URL of the file you want this InputFile to point to
+     */
     public InputFile(URL url) {
 
         File file = TelegramBot.getFileManager().getFile(url);
@@ -62,6 +67,11 @@ public class InputFile {
         this.fileID = TelegramBot.getFileManager().getFileID(file);
     }
 
+    /**
+     * Create an InputFile object based on a File object to be sent within a SendableMessage
+     *
+     * @param file A File object relating to the file you want this InputFile to point to
+     */
     public InputFile(File file) {
 
         this.file = file;
@@ -69,6 +79,12 @@ public class InputFile {
         this.fileID = TelegramBot.getFileManager().getFileID(file);
     }
 
+    /**
+     * Creates an InputFile object based on a File ID for a file that is stored on the telegram servers, which can
+     * then be sent within a SendableMessage
+     *
+     * @param fileID The ID of the file stored on the telegram servers
+     */
     public InputFile(String fileID) {
 
         this.file = null;

@@ -13,6 +13,11 @@ public class SuperGroupChatCreatedEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the SuperGroupChat that was created that triggered this Event
+     *
+     * @return
+     */
     @Override
     public SuperGroupChat getChat() {
 

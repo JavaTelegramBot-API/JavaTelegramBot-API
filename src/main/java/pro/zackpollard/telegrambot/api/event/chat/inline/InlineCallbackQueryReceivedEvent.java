@@ -13,6 +13,11 @@ public class InlineCallbackQueryReceivedEvent extends CallbackQueryReceivedEvent
         super(inlineCallbackQuery);
     }
 
+    /**
+     * Gets the InlineCallbackQuery object that fired this Event
+     *
+     * @return The InlineCallbackQuery that fired this Event
+     */
     public InlineCallbackQuery getCallbackQuery() {
 
         return (InlineCallbackQuery) callbackQuery;

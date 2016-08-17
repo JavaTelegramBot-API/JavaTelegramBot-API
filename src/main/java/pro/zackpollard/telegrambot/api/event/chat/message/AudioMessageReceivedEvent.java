@@ -13,6 +13,11 @@ public class AudioMessageReceivedEvent extends MessageReceivedEvent {
         super(message);
     }
 
+    /**
+     * Gets the AudioContent that was received that fired this Event
+     *
+     * @return The AudioContent that was received that fired this Event
+     */
     @Override
     public AudioContent getContent() {
 

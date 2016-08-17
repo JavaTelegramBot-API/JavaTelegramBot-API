@@ -13,6 +13,11 @@ public class DocumentMessageReceivedEvent extends MessageReceivedEvent {
         super(message);
     }
 
+    /**
+     * Gets the Document that was received that fired this Event
+     *
+     * @return The document that was received that fired this Event
+     */
     @Override
     public DocumentContent getContent() {
 

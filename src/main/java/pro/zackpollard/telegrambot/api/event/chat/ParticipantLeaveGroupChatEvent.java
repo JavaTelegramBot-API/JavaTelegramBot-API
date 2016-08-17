@@ -15,11 +15,21 @@ public class ParticipantLeaveGroupChatEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the User that left the GroupChat that triggered this Event
+     *
+     * @return
+     */
     public User getParticipant() {
 
         return ((LeftChatParticipantContent) getMessage().getContent()).getContent();
     }
 
+    /**
+     * Gets the Chat that the User left that triggered this Event
+     *
+     * @return The Chat that the User left that triggered this Event
+     */
     public Chat getChat() {
 
         return getMessage().getChat();

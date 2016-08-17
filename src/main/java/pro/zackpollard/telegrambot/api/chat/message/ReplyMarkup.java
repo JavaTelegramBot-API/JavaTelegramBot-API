@@ -5,5 +5,10 @@ package pro.zackpollard.telegrambot.api.chat.message;
  */
 public interface ReplyMarkup {
 
+    /**
+     * Gets the ReplyMarkupType for this ReplyMarkup object
+     *
+     * @return The ReplyMarkupType for this ReplyMarkup object
+     */
     ReplyMarkupType getType();
 }
