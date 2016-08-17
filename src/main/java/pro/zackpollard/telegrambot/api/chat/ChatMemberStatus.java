@@ -18,10 +18,22 @@ public enum ChatMemberStatus {
         this.value = value;
     }
 
+    /**
+     * Gets the Telegram Bot API version of this enum
+     *
+     * @return The Telegram Bot API version of this enum
+     */
     public String getValue() {
         return value;
     }
 
+    /**
+     * Get a ChatMemberStatus enum based on the provided string value
+     *
+     * @param value The value you want to match a ChatMemberStatus to
+     *
+     * @return The ChatMemberStatus that matches the value provided, ignoring case. UNKNOWN if no matches are found
+     */
     public static ChatMemberStatus getType(String value) {
 
         for (ChatMemberStatus v : values()) {

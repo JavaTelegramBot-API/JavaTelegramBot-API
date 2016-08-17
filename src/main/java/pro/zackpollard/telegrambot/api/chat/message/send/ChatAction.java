@@ -21,6 +21,11 @@ public enum ChatAction {
         this.name = name;
     }
 
+    /**
+     * Gets the version of the name that telegram uses in its API
+     *
+     * @return The telegram API version of the name
+     */
     public String getName() {
 
         return name;

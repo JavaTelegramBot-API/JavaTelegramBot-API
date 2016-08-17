@@ -12,6 +12,11 @@ public interface NewChatTitleContent extends Content {
      */
     String getContent();
 
+    /**
+     * Gets the ContentType relating to this Content object
+     *
+     * @return The ContentType of this Content object
+     */
     @Override
     default ContentType getType() {
 

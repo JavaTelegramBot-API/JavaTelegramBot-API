@@ -37,8 +37,15 @@ import pro.zackpollard.telegrambot.api.utils.Utils;
  */
 public final class TelegramBot {
 
+    /**
+     * The API URL endpoint that is constant for all bots
+     */
     public static final String API_URL = "https://api.telegram.org/";
+    /**
+     * A GSON instance that is used throughout the project wherever GSON is needed
+     */
     public static final Gson GSON = new GsonBuilder().create();
+
     @Getter
     private final static FileManager fileManager = new FileManager();
 
@@ -68,12 +75,12 @@ public final class TelegramBot {
     }
 
     /**
-     * Use this method to get a new TelegramBot instance with the selected auth token.
+     * Use this method to get a new TelegramBot instance with the selected auth token
      *
-     * @param authToken The bots auth token.
-     * @return A new TelegramBot instance to base your bot around.
+     * @param authToken The bots auth token
+     *
+     * @return A new TelegramBot instance or null if something failed
      */
-
     public static TelegramBot login(String authToken) {
 
         try {
@@ -95,11 +102,25 @@ public final class TelegramBot {
         return null;
     }
 
+    /**
+     * A method used to get a Chat object via the chats ID
+     *
+     * @param chatID The Chat ID of the chat you want a Chat object of
+     *
+     * @return A Chat object or null if the chat does not exist or you don't have permission to get this chat
+     */
     public Chat getChat(long chatID) {
 
         return getChat(String.valueOf(chatID));
     }
 
+    /**
+     * A method used to get a Chat object via the chats ID
+     *
+     * @param chatID The Chat ID of the chat you want a Chat object of
+     *
+     * @return A Chat object or null if the chat does not exist or you don't have permission to get this chat
+     */
     public Chat getChat(String chatID) {
 
         try {
@@ -122,11 +143,24 @@ public final class TelegramBot {
         return null;
     }
 
+    /**
+     * This provides the URL used to make all the API calls to the bot API
+     *
+     * @return The URL used to make all the API calls to the bot API
+     */
     public String getBotAPIUrl() {
 
         return API_URL + "bot" + authToken + "/";
     }
 
+    /**
+     * This will send the provided SendableMessage object to the Chat that the Chat object represents
+     *
+     * @param chat      The chat you want to send the message to
+     * @param message   The message you want to send to the chat
+     *
+     * @return A Message object that represents the message you sent, or null if sending failed
+     */
     public Message sendMessage(Chat chat, SendableMessage message) {
 
         HttpResponse<String> response;
@@ -531,11 +565,34 @@ public final class TelegramBot {
         return jsonResponse;
     }
 
+    /**
+     * This allows you to edit the text of a message you have already sent previously
+     *
+     * @param oldMessage                The Message object that represents the message you want to edit
+     * @param text                      The new text you want to display
+     * @param parseMode                 The ParseMode that should be used with this new text
+     * @param disableWebPagePreview     Whether any URLs should be displayed with a preview of their content
+     * @param inlineReplyMarkup         Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return A new Message object representing the edited message
+     */
     public Message editMessageText(Message oldMessage, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
 
         return this.editMessageText(oldMessage.getChat().getId(), oldMessage.getMessageId(), text, parseMode, disableWebPagePreview, inlineReplyMarkup);
     }
 
+    /**
+     * This allows you to edit the text of a message you have already sent previously
+     *
+     * @param chatId                    The chat ID of the chat containing the message you want to edit
+     * @param messageId                 The message ID of the message you want to edit
+     * @param text                      The new text you want to display
+     * @param parseMode                 The ParseMode that should be used with this new text
+     * @param disableWebPagePreview     Whether any URLs should be displayed with a preview of their content
+     * @param inlineReplyMarkup         Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return A new Message object representing the edited message
+     */
     public Message editMessageText(String chatId, Long messageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
 
         if(chatId != null && messageId != null && text != null) {
@@ -551,6 +608,18 @@ public final class TelegramBot {
         return null;
     }
 
+    /**
+     * This allows you to edit the text of an inline message you have sent previously. (The inline message must have an
+     * InlineReplyMarkup object attached in order to be editable)
+     *
+     * @param inlineMessageId           The ID of the inline message you want to edit
+     * @param text                      The new text you want to display
+     * @param parseMode                 The ParseMode that should be used with this new text
+     * @param disableWebPagePreview     Whether any URLs should be displayed with a preview of their content
+     * @param inlineReplyMarkup         Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return True if the edit succeeded, otherwise false
+     */
     public boolean editInlineMessageText(String inlineMessageId, String text, ParseMode parseMode, boolean disableWebPagePreview, InlineReplyMarkup inlineReplyMarkup) {
 
         if(inlineMessageId != null && text != null) {
@@ -589,11 +658,30 @@ public final class TelegramBot {
         return jsonResponse;
     }
 
+    /**
+     * This allows you to edit the caption of any captionable message you have sent previously
+     *
+     * @param oldMessage            The Message object that represents the message you want to edit
+     * @param caption               The new caption you want to display
+     * @param inlineReplyMarkup     Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return A new Message object representing the edited message
+     */
     public Message editMessageCaption(Message oldMessage, String caption, InlineReplyMarkup inlineReplyMarkup) {
 
         return this.editMessageCaption(oldMessage.getChat().getId(), oldMessage.getMessageId(), caption, inlineReplyMarkup);
     }
 
+    /**
+     * This allows you to edit the caption of any captionable message you have sent previously
+     *
+     * @param chatId                The chat ID of the chat containing the message you want to edit
+     * @param messageId             The message ID of the message you want to edit
+     * @param caption               The new caption you want to display
+     * @param inlineReplyMarkup     Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return A new Message object representing the edited message
+     */
     public Message editMessageCaption(String chatId, Long messageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
 
         if(caption != null && chatId != null && messageId != null) {
@@ -609,6 +697,16 @@ public final class TelegramBot {
         return null;
     }
 
+    /**
+     * This allows you to edit the caption of any captionable inline message you have sent previously (The inline
+     * message must have an InlineReplyMarkup object attached in order to be editable)
+     *
+     * @param inlineMessageId       The ID of the inline message you want to edit
+     * @param caption               The new caption you want to display
+     * @param inlineReplyMarkup     Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return True if the edit succeeded, otherwise False
+     */
     public boolean editInlineCaption(String inlineMessageId, String caption, InlineReplyMarkup inlineReplyMarkup) {
 
         if(caption != null && inlineReplyMarkup != null) {
@@ -646,11 +744,28 @@ public final class TelegramBot {
         return jsonResponse;
     }
 
+    /**
+     * This allows you to edit the InlineReplyMarkup of any message that you have sent previously.
+     *
+     * @param oldMessage            The Message object that represents the message you want to edit
+     * @param inlineReplyMarkup     Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return A new Message object representing the edited message
+     */
     public Message editMessageReplyMarkup(Message oldMessage, InlineReplyMarkup inlineReplyMarkup) {
 
         return this.editMessageReplyMarkup(oldMessage.getChat().getId(), oldMessage.getMessageId(), inlineReplyMarkup);
     }
 
+    /**
+     * This allows you to edit the InlineReplyMarkup of any message that you have sent previously.
+     *
+     * @param chatId                The chat ID of the chat containing the message you want to edit
+     * @param messageId             The message ID of the message you want to edit
+     * @param inlineReplyMarkup     Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return A new Message object representing the edited message
+     */
     public Message editMessageReplyMarkup(String chatId, Long messageId, InlineReplyMarkup inlineReplyMarkup) {
 
         if(inlineReplyMarkup != null && chatId != null && messageId != null) {
@@ -666,6 +781,15 @@ public final class TelegramBot {
         return null;
     }
 
+    /**
+     * This allows you to edit the InlineReplyMarkup of any inline message that you have sent previously. (The inline
+     * message must have an InlineReplyMarkup object attached in order to be editable)
+     *
+     * @param inlineMessageId The ID of the inline message you want to edit
+     * @param inlineReplyMarkup Any InlineReplyMarkup object you want to edit into the message
+     *
+     * @return True if the edit succeeded, otherwise False
+     */
     public boolean editInlineMessageReplyMarkup(String inlineMessageId, InlineReplyMarkup inlineReplyMarkup) {
 
         if(inlineMessageId != null && inlineReplyMarkup != null) {
@@ -681,6 +805,14 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * This allows you to respond to an inline query with an InlineQueryResponse object
+     *
+     * @param inlineQueryId         The ID of the inline query you are responding to
+     * @param inlineQueryResponse   The InlineQueryResponse object that you want to send to the user
+     *
+     * @return True if the response was sent successfully, otherwise False
+     */
     public boolean answerInlineQuery(String inlineQueryId, InlineQueryResponse inlineQueryResponse) {
 
         if (inlineQueryId != null && inlineQueryResponse != null) {
@@ -713,6 +845,16 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * This allows you to respond to a callback query with some text as a response. This will either show up as an
+     * alert or as a toast on the telegram client
+     *
+     * @param callbackQueryId   The ID of the callback query you are responding to
+     * @param text              The text you would like to respond with
+     * @param showAlert         True will show the text as an alert, false will show it as a toast notification
+     *
+     * @return True if the response was sent successfully, otherwise False
+     */
     public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
 
         if(callbackQueryId != null && text != null) {
@@ -741,6 +883,16 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * Use this method to kick a user from a group or a supergroup. In the case of supergroups, the user will not be
+     * able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be
+     * an administrator in the group for this to work
+     *
+     * @param chatId    The ID of the chat that you want to kick the user from
+     * @param userId    The ID of the user that you want to kick from the chat
+     *
+     * @return True if the user was kicked successfully, otherwise False
+     */
     public boolean kickChatMember(String chatId, int userId) {
 
         HttpResponse<String> response;
@@ -765,6 +917,16 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * Use this method to unban a previously kicked user in a supergroup. The user will not return to the group
+     * automatically, but will be able to join via link, etc. The bot must be an administrator in the group for
+     * this to work
+     *
+     * @param chatId    The ID of the chat that you want to unban the user from
+     * @param userId    The ID of the user that you want to unban from the chat
+     *
+     * @return True if the user was unbanned, otherwise False
+     */
     public boolean unbanChatMember(String chatId, int userId) {
 
         HttpResponse<String> response;
@@ -789,6 +951,14 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * Use this method to start the update thread which will begin retrieving messages from the API and firing the
+     * relevant events for you to process the data
+     *
+     * @param getPreviousUpdates Whether you want to retrieve any updates that haven't been processed before, but were
+     *                           created prior to calling the startUpdates method
+     * @return True if the updater was started, otherwise False
+     */
     public boolean startUpdates(boolean getPreviousUpdates) {
 
         if(updateManager == null) updateManager = new RequestUpdatesManager(this, getPreviousUpdates);
@@ -802,11 +972,19 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * Calling this method will stop the updater from running and therefore no more events will be fired
+     */
     public void stopUpdates() {
 
         updateManager.stopUpdates();
     }
 
+    /**
+     * This provides access to the events manager which can be used to register and unregister Listeners
+     *
+     * @return The current events manager as a ListenerRegistry object
+     */
     public ListenerRegistry getEventsManager() {
 
         return listenerRegistry;

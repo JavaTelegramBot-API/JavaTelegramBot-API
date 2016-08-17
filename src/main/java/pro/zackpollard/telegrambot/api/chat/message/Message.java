@@ -89,8 +89,20 @@ public interface Message {
      */
     JSONObject asJson();
 
+    /**
+     * Gets the TelegramBot instance associated with this Message object
+     *
+     * @return The TelegramBot instance associated with this Message
+     */
     TelegramBot getBotInstance();
 
+    /**
+     * A simple method which allows you to forward this Message to another chat simply by providing a Chat object
+     *
+     * @param chat The Chat you want to send the Message to
+     *
+     * @return The Message object corresponding to the forwarded version of the original Message
+     */
     default Message forwardMessage(Chat chat) {
 
         return chat.sendMessage(SendableForwardMessage.builder().forwardedMessage(this).build());

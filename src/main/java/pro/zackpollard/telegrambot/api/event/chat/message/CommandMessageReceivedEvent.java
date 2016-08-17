@@ -1,6 +1,5 @@
 package pro.zackpollard.telegrambot.api.event.chat.message;
 
-import lombok.Getter;
 import lombok.ToString;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 
@@ -10,11 +9,8 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
 @ToString
 public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
 
-    @Getter
     private final String[] args;
-    @Getter
     private final String argsString;
-    @Getter
     private final String command;
 
     public CommandMessageReceivedEvent(Message message) {
@@ -34,5 +30,32 @@ public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
             this.args = new String[]{};
             this.argsString = "";
         }
+    }
+
+    /**
+     * Gets the arguments for the received command
+     *
+     * @return An array of the arguments for the received command
+     */
+    public String[] getArgs() {
+        return this.args;
+    }
+
+    /**
+     * Gets a string of all of the arguments as they were entered into the telegram client
+     *
+     * @return A String of all the arguments for the received command
+     */
+    public String getArgsString() {
+        return this.argsString;
+    }
+
+    /**
+     * Gets the command that was received that fired this Event
+     *
+     * @return The command that was receied that fired this Event
+     */
+    public String getCommand() {
+        return this.command;
     }
 }

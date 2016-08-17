@@ -14,5 +14,12 @@ public interface UserProfilePhotos {
      */
     int getTotalCount();
 
+    /**
+     * Gets an array containing all of the Photos that this User has
+     * To download the photo you can get it down to a single PhotoSize object then call
+     * PhotoSize#downloadFile(TelegramBot, File)
+     *
+     * @return An array of arrays of PhotoSize objects
+     */
     PhotoSize[][] getPhotos();
 }
