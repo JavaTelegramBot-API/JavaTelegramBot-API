@@ -16,6 +16,11 @@ public enum ParseMode {
         this.modeName = parseMode;
     }
 
+    /**
+     * Gets the mode name that telegram uses within its API to convert the enum for use with the HTTP API
+     *
+     * @return The telegram HTTP API version of the enum
+     */
     public String getModeName() {
 
         return modeName;

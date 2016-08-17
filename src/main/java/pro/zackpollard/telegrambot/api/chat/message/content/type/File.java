@@ -28,6 +28,13 @@ public interface File {
      */
     int getSize();
 
+    /**
+     * Gets the download link for this file
+     *
+     * @param telegramBot The TelegramBot instance that relates to this file
+     *
+     * @return The URL to download the file in String form
+     */
     default String getFileDownloadLink(TelegramBot telegramBot) {
 
         JSONObject jsonObject = null;
@@ -51,6 +58,14 @@ public interface File {
         return null;
     }
 
+    /**
+     * Downloads the file to a set location on disk
+     *
+     * @param telegramBot       The TelegramBot instance that relates to this file
+     * @param downloadLocation  A File object pointing to the location where you want to download the file
+     *
+     * @return A File object that points to the downloaded file
+     */
     default java.io.File downloadFile(TelegramBot telegramBot, java.io.File downloadLocation) {
 
         String downloadLink = getFileDownloadLink(telegramBot);

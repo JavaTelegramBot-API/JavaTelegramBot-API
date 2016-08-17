@@ -13,6 +13,11 @@ public class DeleteGroupChatPhotoEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the GroupChat that had its photo deleted that triggered this Event
+     *
+     * @return The GroupChat that had its photo deleted that triggered this Event
+     */
     public GroupChat getChat() {
 
         return (GroupChat) getMessage().getChat();

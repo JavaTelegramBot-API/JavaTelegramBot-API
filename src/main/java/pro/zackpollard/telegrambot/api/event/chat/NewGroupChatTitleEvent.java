@@ -13,12 +13,22 @@ public class NewGroupChatTitleEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the Chat that had its title changed that triggered this Event
+     *
+     * @return The Chat that had its title changed that triggered this Event
+     */
     @Override
     public GroupChat getChat() {
 
         return (GroupChat) getMessage().getChat();
     }
 
+    /**
+     * Gets the new title of the GroupChat that had its title changed
+     *
+     * @return The new title of the GroupChat that had its title changed
+     */
     public String getTitle() {
 
         return getChat().getName();

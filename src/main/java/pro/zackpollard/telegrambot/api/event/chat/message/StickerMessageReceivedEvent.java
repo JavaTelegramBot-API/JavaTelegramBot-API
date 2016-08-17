@@ -13,6 +13,11 @@ public class StickerMessageReceivedEvent extends MessageReceivedEvent {
         super(message);
     }
 
+    /**
+     * Gets the Sticker that was received that triggered this Event
+     *
+     * @return The Sticker that was received that triggered this Event
+     */
     @Override
     public StickerContent getContent() {
 

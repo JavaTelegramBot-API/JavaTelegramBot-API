@@ -13,6 +13,11 @@ public class MessageCallbackQueryReceivedEvent extends CallbackQueryReceivedEven
         super(messageCallbackQuery);
     }
 
+    /**
+     * Gets the MessageCallbackQuery that was received that fired this Event
+     *
+     * @return The MessageCallbackQuery that was received that fired this Event
+     */
     public MessageCallbackQuery getCallbackQuery() {
 
         return (MessageCallbackQuery) callbackQuery;

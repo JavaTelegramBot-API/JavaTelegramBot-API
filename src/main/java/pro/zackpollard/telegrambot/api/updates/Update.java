@@ -11,20 +11,62 @@ import pro.zackpollard.telegrambot.api.chat.message.Message;
  */
 public interface Update {
 
+    /**
+     * Gets the The update‘s unique identifier. Update identifiers start from a certain positive number and increase
+     * sequentially.
+     *
+     * @return The ID of this Update
+     */
     int getId();
 
+    /**
+     * Gets the Message that this Update contains. New incoming message of any kind — text, photo, sticker, etc
+     *
+     * @return New incoming message of any kind — text, photo, sticker, etc
+     */
     Message getMessage();
 
+    /**
+     * Gets the Edited Message that this Update contains. New version of a message that is known to the bot and was
+     * edited
+     *
+     * @return New version of a message that is known to the bot and was edited
+     */
     Message getEditedMessage();
 
+    /**
+     * Gets the new incoming inline query
+     *
+     * @return The new incoming inline query
+     */
     InlineQuery getInlineQuery();
 
+    /**
+     * Gets the result of an inline query that was chosen by a user and sent to their chat partner
+     *
+     * @return The result of an inline query that was chosen by a user and sent to their chat partner
+     */
     ChosenInlineResult getChosenInlineResult();
 
+    /**
+     * Gets the new incoming callback query
+     *
+     * @return The new incoming callback query
+     */
     CallbackQuery getCallbackQuery();
 
+    /**
+     * Gets the UpdateType of this Update
+     *
+     * @return The UpdateType of this Update
+     */
     UpdateType getType();
 
+    /**
+     * Gets the TelegramBot instance that is responsible for this Update
+     *
+     * @return The TelegramBot instance that is responsible for this Update
+     */
     TelegramBot getBotInstance();
 
     enum UpdateType {

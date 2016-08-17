@@ -13,6 +13,11 @@ public class MessageEditReceivedEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the message edit that was received that fired this Event
+     *
+     * @return The message edit that was received that fired this Event
+     */
     public Content getContent() {
 
         return getMessage().getContent();

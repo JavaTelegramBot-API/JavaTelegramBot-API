@@ -14,6 +14,11 @@ public class MigrateFromChatEvent extends MessageEvent {
         super(message);
     }
 
+    /**
+     * Gets the Chat that was migrated from that triggered this Event
+     *
+     * @return The Chat that was migrated from that triggered this Event
+     */
     public Chat fromChat() {
 
         return getMessage().getBotInstance().getChat(((MigrateFromChatIDContent) getMessage().getContent()).getContent());
