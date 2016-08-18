@@ -27,8 +27,10 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.conversations.ConversationRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
+import pro.zackpollard.telegrambot.api.internal.menu.InlineMenuRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
+import pro.zackpollard.telegrambot.api.menu.InlineMenuRegistry;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
@@ -52,6 +54,8 @@ public final class TelegramBot {
     @Getter
     private final ConversationRegistry conversationRegistry;
     @Getter
+    private final InlineMenuRegistry inlineMenuRegistry;
+    @Getter
     private final String authToken;
     private final ListenerRegistry listenerRegistry;
     private UpdateManager updateManager = null;
@@ -72,6 +76,7 @@ public final class TelegramBot {
 
         listenerRegistry = ListenerRegistryImpl.getNewInstance();
         conversationRegistry = ConversationRegistryImpl.create();
+        inlineMenuRegistry = InlineMenuRegistryImpl.create();
     }
 
     /**

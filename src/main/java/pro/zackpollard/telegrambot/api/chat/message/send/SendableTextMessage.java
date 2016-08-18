@@ -34,6 +34,18 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
         return new SendableTextMessageBuilder();
     }
 
+    public static SendableTextMessageBuilder markdown(String text) {
+        return builder().message(text).parseMode(ParseMode.MARKDOWN);
+    }
+
+    public static SendableTextMessageBuilder html(String text) {
+        return builder().message(text).parseMode(ParseMode.HTML);
+    }
+
+    public static SendableTextMessageBuilder plain(String text) {
+        return builder().message(text).parseMode(ParseMode.NONE);
+    }
+
     /**
      * Gets the MessageType of this SendableMessage object
      *
