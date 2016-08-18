@@ -1,5 +1,11 @@
 package pro.zackpollard.telegrambot.api.menu;
 
+/**
+ * Menu builder for submenus. Instantiated by InlineMenuBuilder
+ *
+ * @author Mazen Kotb
+ * @see InlineMenuBuilder#subMenu()
+ */
 public class SubInlineMenuBuilder extends AbstractInlineMenuBuilder<SubInlineMenuBuilder> {
     private InlineMenuBuilder builder;
 

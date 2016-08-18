@@ -14,6 +14,11 @@ import pro.zackpollard.telegrambot.api.menu.button.InlineMenuButton;
 
 import java.util.function.BiConsumer;
 
+/**
+ * Button which after being called listens for user input.
+ *
+ * @author Mazen Kotb
+ */
 public class UserInputInlineMenuButton extends AbstractInlineMenuButton {
     @Getter
     private final BiConsumer<InlineMenuButton, String> textCallback;
@@ -34,6 +39,14 @@ public class UserInputInlineMenuButton extends AbstractInlineMenuButton {
         return keyboardBuilder().build();
     }
 
+    /**
+     * Initiates a conversation with the chat awaiting text input
+     * On input executes callback
+     *
+     * @param query unused
+     * @see Conversation
+     * @see TextPrompt
+     */
     @Override
     public void handlePress(CallbackQuery query) {
         executeCallback();

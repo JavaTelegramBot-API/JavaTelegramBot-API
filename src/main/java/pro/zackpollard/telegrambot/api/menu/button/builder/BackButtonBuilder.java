@@ -6,6 +6,12 @@ import pro.zackpollard.telegrambot.api.menu.button.AbstractButtonBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.impl.BackButton;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
+/**
+ * Builder for BackButton
+ * @param <T> menu builder type
+ * @see BackButton
+ * @author Mazen Kotb
+ */
 public class BackButtonBuilder<T extends AbstractInlineMenuBuilder>
         extends AbstractButtonBuilder<BackButtonBuilder<T>, T> {
     public BackButtonBuilder(InlineMenuRowBuilder<T> parent, int index) {

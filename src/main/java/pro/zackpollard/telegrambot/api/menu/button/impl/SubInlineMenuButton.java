@@ -5,6 +5,11 @@ import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardButton;
 import pro.zackpollard.telegrambot.api.menu.InlineMenu;
 import pro.zackpollard.telegrambot.api.menu.button.AbstractInlineMenuButton;
 
+/**
+ * A button which opens a sub menu.
+ *
+ * @author Mazen Kotb
+ */
 public class SubInlineMenuButton extends AbstractInlineMenuButton {
     private final InlineMenu nextMenu;
 

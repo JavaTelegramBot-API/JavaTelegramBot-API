@@ -7,6 +7,11 @@ import pro.zackpollard.telegrambot.api.menu.button.callback.ToggleCallback;
 import pro.zackpollard.telegrambot.api.menu.button.impl.ToggleInlineMenuButton;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
+/**
+ * Builder for Toggle buttons
+ * @param <T> menu builder type
+ * @author Mazen Kotb
+ */
 public class ToggleInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder> extends
         AbstractButtonBuilder<ToggleInlineMenuButtonBuilder<T>, T> {
     private boolean initialValue = false;
@@ -25,11 +30,21 @@ public class ToggleInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder> 
         return this;
     }
 
+    /**
+     * Initial value of the button
+     * @param value initial value
+     * @return this
+     */
     public ToggleInlineMenuButtonBuilder<T> initialValue(boolean value) {
         this.initialValue = value;
         return this;
     }
 
+    /**
+     * Required.
+     * @param callback Callback to be executed when button is pressed
+     * @return this
+     */
     public ToggleInlineMenuButtonBuilder<T> toggleCallback(ToggleCallback callback) {
         this.toggleCallback = callback;
         return this;

@@ -8,6 +8,11 @@ import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardButton;
 import pro.zackpollard.telegrambot.api.menu.InlineMenu;
 import pro.zackpollard.telegrambot.api.menu.button.callback.ButtonCallback;
 
+/**
+ * Abstract implementation of InlineMenuButton
+ *
+ * @author Mazen Kotb
+ */
 public abstract class AbstractInlineMenuButton implements InlineMenuButton {
     protected ButtonCallback buttonCallback;
     protected String text;
@@ -37,8 +42,10 @@ public abstract class AbstractInlineMenuButton implements InlineMenuButton {
 
     @Override
     public void setText(String text) {
-        this.text = text;
-        owner.apply();
+        if (text != null) {
+            this.text = text;
+            owner.apply();
+        }
     }
 
     @Override
@@ -62,6 +69,17 @@ public abstract class AbstractInlineMenuButton implements InlineMenuButton {
         this.owner = owner;
     }
 
+    /**
+     * Sets the text of the button and the callback data to the following.
+     *
+     * im.x.y.z
+     *
+     * Where x is the internal id of the owning menu,
+     *       y is the row index,
+     *       z is the button index.
+     *
+     * @return Premade button builder
+     */
     protected InlineKeyboardButton.InlineKeyboardButtonBuilder keyboardBuilder() {
         return InlineKeyboardButton.builder()
                 .text(text)

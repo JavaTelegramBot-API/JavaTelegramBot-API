@@ -7,6 +7,12 @@ import pro.zackpollard.telegrambot.api.menu.button.AbstractButtonBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.impl.SubInlineMenuButton;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
+/**
+ * Builder for SubMenus
+ * @param <T> menu builder type
+ * @see SubInlineMenuButton
+ * @author Mazen Kotb
+ */
 public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
         extends AbstractButtonBuilder<SubInlineMenuButtonBuilder<T>, T> {
     private InlineMenu nextMenu;
@@ -24,6 +30,11 @@ public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
         return this;
     }
 
+    /**
+     * Required. Set the nextMenu field.
+     * @param menu menu which will open when the button is pressed
+     * @return this
+     */
     public SubInlineMenuButtonBuilder<T> nextMenu(InlineMenu menu) {
         this.nextMenu = menu;
         return this;
