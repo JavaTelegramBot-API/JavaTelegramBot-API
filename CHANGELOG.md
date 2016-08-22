@@ -1,4 +1,7 @@
 # Changelog
+#### Version 1.4.1
+* Fixed issues with JavaDocs
+
 #### Version 1.4.0
 * Added full documentation for the entire API
 * Added an Inline Menu API, courtesy of @MazenK
