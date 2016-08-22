@@ -96,7 +96,8 @@ public class KeyboardButton {
          * Sets whether the button should request the users location information when clicked
          *
          * @param requestLocation True will set the button to request the location information, False is the default
-         * @return
+         *
+         * @return The builder object
          */
         public KeyboardButton.KeyboardButtonBuilder requestLocation(boolean requestLocation) {
             this.request_location = requestLocation;

@@ -89,7 +89,8 @@ public class InlineKeyboardMarkup implements InlineKeyboard {
          * *Optional*
          * Sets a row of the keyboard
          *
-         * @param buttons The buttons for the row
+         * @param row       The row that you want to set the buttons for
+         * @param buttons   The buttons for the row
          *
          * @return The keyboard builder
          *

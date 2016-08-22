@@ -19,7 +19,7 @@ public interface CallbackQuery {
     /**
      * Gets the ID of this CallbackQuery
      *
-     * @return
+     * @return The ID of this CallbackQuery
      */
     String getId();
 
