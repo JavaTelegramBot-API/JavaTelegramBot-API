@@ -42,7 +42,7 @@ public abstract class AbstractInlineMenuBuilder<T extends AbstractInlineMenuBuil
 
     /**
      * Build a menu from message base.
-     * Adds & Registers all buttons.
+     * Adds &amp; Registers all buttons.
      * Applies user predicate.
      * Applies rows.
      *
