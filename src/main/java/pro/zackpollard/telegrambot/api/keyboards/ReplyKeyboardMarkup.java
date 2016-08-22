@@ -129,7 +129,8 @@ public class ReplyKeyboardMarkup implements Keyboard {
          * *Optional*
          * Sets a row of the keyboard
          *
-         * @param buttons The buttons for the row
+         * @param row       The row you want to set the buttons for
+         * @param buttons   The buttons for the row
          *
          * @return The keyboard builder
          *
