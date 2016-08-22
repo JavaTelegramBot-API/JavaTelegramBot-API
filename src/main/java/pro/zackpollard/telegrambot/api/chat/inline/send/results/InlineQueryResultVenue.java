@@ -229,16 +229,25 @@ public class InlineQueryResultVenue implements InlineQueryResult {
 
         /**
          * *Required*
-         * Sets the address
+         * Sets the address of the venue to the provided value
          *
-         * @param address
-         * @return
+         * @param address The address of the venue
+         *
+         * @return The builder object
          */
         public InlineQueryResultVenue.InlineQueryResultVenueBuilder address(String address) {
             this.address = address;
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the foursquare ID of the venue to the provided value
+         *
+         * @param foursquareId The foursquare ID of the venue
+         *
+         * @return The builder object
+         */
         public InlineQueryResultVenue.InlineQueryResultVenueBuilder foursquareId(String foursquareId) {
             this.foursquare_id = foursquareId;
             return this;
