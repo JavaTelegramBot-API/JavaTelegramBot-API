@@ -116,5 +116,6 @@ public class FileManager {
     static {
         tmpDirectory = new File(System.getProperty("java.io.tmpdir"), "jtelegrambot-" + System.currentTimeMillis());
         tmpDirectory.mkdirs();
+        tmpDirectory.deleteOnExit();
     }
 }
