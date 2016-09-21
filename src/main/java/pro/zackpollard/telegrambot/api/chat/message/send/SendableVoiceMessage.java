@@ -137,6 +137,14 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
+        /**
+         * *Optional*
+         * Sets the caption you want to send with the message
+         *
+         * @param caption The caption you want to send with the message
+         *
+         * @return The builder object
+         */
         public SendableVoiceMessage.SendableVoiceMessageBuilder caption(String caption) {
 
             this.caption = caption;
