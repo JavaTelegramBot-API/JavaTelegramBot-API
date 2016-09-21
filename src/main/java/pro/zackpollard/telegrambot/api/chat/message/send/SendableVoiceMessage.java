@@ -22,6 +22,8 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
     private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
+    @Getter
+    private final String caption;
 
     /**
      * This builder will allow you to progressively construct this object.
@@ -51,6 +53,7 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
         private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
+        private String caption;
 
         SendableVoiceMessageBuilder() {
         }
@@ -134,13 +137,19 @@ public class SendableVoiceMessage implements SendableMessage, ReplyingOptions, N
             return this;
         }
 
+        public SendableVoiceMessage.SendableVoiceMessageBuilder caption(String caption) {
+
+            this.caption = caption;
+            return this;
+        }
+
         /**
          * Builds the SendableVoiceMessage object
          *
          * @return A SendableVoiceMessage object based on the previously provided values
          */
         public SendableVoiceMessage build() {
-            return new SendableVoiceMessage(voice, duration, replyTo, replyMarkup, disableNotification);
+            return new SendableVoiceMessage(voice, duration, replyTo, replyMarkup, disableNotification, caption);
         }
     }
 }
