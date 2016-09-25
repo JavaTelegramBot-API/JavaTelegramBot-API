@@ -286,6 +286,8 @@ public final class TelegramBot {
                         request.field("performer", audioMessage.getPerformer(), "application/json; charset=utf8;");
                     if (audioMessage.getTitle() != null)
                         request.field("title", audioMessage.getTitle(), "application/json; charset=utf8;");
+                    if (audioMessage.getCaption() != null)
+                        request.field("caption", audioMessage.getCaption(), "application/json; charset=utf8;");
 
                     response = request.asString();
                     jsonResponse = Utils.processResponse(response);
@@ -452,6 +454,9 @@ public final class TelegramBot {
                             .field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
 
                     if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
+
+                    if (voiceMessage.getCaption() != null)
+                        request.field("caption", voiceMessage.getCaption(), "application/json; charset=utf8;");
 
                     Utils.processReplyContent(request, voiceMessage);
                     Utils.processNotificationContent(request, voiceMessage);
