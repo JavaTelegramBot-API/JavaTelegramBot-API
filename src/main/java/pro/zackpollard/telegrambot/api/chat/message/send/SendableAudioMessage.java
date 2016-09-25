@@ -26,6 +26,8 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
     private final ReplyMarkup replyMarkup;
     @Getter
     private final boolean disableNotification;
+    @Getter
+    private final String caption;
 
     /**
      * This builder will allow you to progressively construct this object.
@@ -56,6 +58,7 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
         private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
+        private String caption;
 
         SendableAudioMessageBuilder() {
         }
@@ -167,12 +170,26 @@ public class SendableAudioMessage implements SendableMessage, ReplyingOptions, N
         }
 
         /**
+         * *Optional*
+         * Sets the caption to be sent with the message
+         *
+         * @param caption The caption to be sent with the message
+         *
+         * @return The builder object
+         */
+        public SendableAudioMessage.SendableAudioMessageBuilder caption(String caption) {
+
+            this.caption = caption;
+            return this;
+        }
+
+        /**
          * Builds the SendableAudioMessage object
          *
          * @return A SendableAudioMessage object based on the previously provided values
          */
         public SendableAudioMessage build() {
-            return new SendableAudioMessage(audio, duration, performer, title, replyTo, replyMarkup, disableNotification);
+            return new SendableAudioMessage(audio, duration, performer, title, replyTo, replyMarkup, disableNotification, caption);
         }
     }
 }
