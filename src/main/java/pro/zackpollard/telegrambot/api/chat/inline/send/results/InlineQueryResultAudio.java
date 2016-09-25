@@ -28,6 +28,7 @@ public class InlineQueryResultAudio implements InlineQueryResult {
     private final Integer audio_duration;
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
+    private final String caption;
 
     /**
      * This builder will allow you to progressively construct this object.
@@ -79,6 +80,15 @@ public class InlineQueryResultAudio implements InlineQueryResult {
     }
 
     /**
+     * Gets the caption of the result
+     *
+     * @return The caption of the result
+     */
+    public String getCaption() {
+        return this.caption;
+    }
+
+    /**
      * Gets the performer of the audio
      *
      * @return The performer of the audio
@@ -123,6 +133,7 @@ public class InlineQueryResultAudio implements InlineQueryResult {
         private Integer audio_duration;
         private InlineReplyMarkup reply_markup;
         private InputMessageContent input_message_content;
+        private String caption;
 
         InlineQueryResultAudioBuilder() {
         }
@@ -219,12 +230,25 @@ public class InlineQueryResultAudio implements InlineQueryResult {
         }
 
         /**
+         * *Optional*
+         * Sets the caption you wat to be sent with this result to the provided String
+         *
+         * @param caption The caption you want to be sent with the result
+         *
+         * @return The builder object
+         */
+        public InlineQueryResultAudio.InlineQueryResultAudioBuilder caption(String caption) {
+            this.caption = caption;
+            return this;
+        }
+
+        /**
          * Builds the InlineQueryResultAudio object
          *
          * @return An InlineQueryResultAudio object based on the previously provided values
          */
         public InlineQueryResultAudio build() {
-            return new InlineQueryResultAudio(id, audio_url, title, performer, audio_duration, reply_markup, input_message_content);
+            return new InlineQueryResultAudio(id, audio_url, title, performer, audio_duration, reply_markup, input_message_content, caption);
         }
     }
 }

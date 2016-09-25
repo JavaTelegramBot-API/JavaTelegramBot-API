@@ -24,6 +24,7 @@ public class InlineQueryResultCachedVoice implements InlineQueryResult {
     private final String title;
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
+    private final String caption;
 
     /**
      * This builder will allow you to progressively construct this object.
@@ -92,6 +93,15 @@ public class InlineQueryResultCachedVoice implements InlineQueryResult {
         return this.input_message_content;
     }
 
+    /**
+     * Gets the caption of the result
+     *
+     * @return The caption of the result
+     */
+    public String getCaption() {
+        return this.caption;
+    }
+
     @ToString
     public static class InlineQueryResultCachedVoiceBuilder {
         private String id = Utils.generateRandomString(32);
@@ -99,6 +109,7 @@ public class InlineQueryResultCachedVoice implements InlineQueryResult {
         private String title;
         private InlineReplyMarkup reply_markup;
         private InputMessageContent input_message_content;
+        private String caption;
 
         InlineQueryResultCachedVoiceBuilder() {
         }
@@ -169,12 +180,25 @@ public class InlineQueryResultCachedVoice implements InlineQueryResult {
         }
 
         /**
+         * *Optional*
+         * Sets the caption you wat to be sent with this result to the provided String
+         *
+         * @param caption The caption you want to be sent with the result
+         *
+         * @return The builder object
+         */
+        public InlineQueryResultCachedVoice.InlineQueryResultCachedVoiceBuilder caption(String caption) {
+            this.caption = caption;
+            return this;
+        }
+
+        /**
          * Builds the InlineQueryResultCachedVoice object
          *
          * @return An InlineQueryResultCachedVoice object based on the previously provided values
          */
         public InlineQueryResultCachedVoice build() {
-            return new InlineQueryResultCachedVoice(id, voice_file_id, title, reply_markup, input_message_content);
+            return new InlineQueryResultCachedVoice(id, voice_file_id, title, reply_markup, input_message_content, caption);
         }
     }
 }
