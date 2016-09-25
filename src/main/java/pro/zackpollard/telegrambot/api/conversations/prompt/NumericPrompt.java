@@ -19,15 +19,15 @@ public abstract class NumericPrompt extends TextValidatingPrompt {
     /**
      * Matches any numbers with 1 to 10 characters in length
      */
-    private static final Pattern INTEGER_PATTERN = Pattern.compile("^[1-9]{1,10}$");
+    private static final Pattern INTEGER_PATTERN = Pattern.compile("^[0-9]{1,10}$");
     /**
      * Matches any numbers with 1 to 309 characters in length with 1 to 2 decimal points
      */
-    private static final Pattern DOUBLE_PATTERN = Pattern.compile("^[1-9]{1,309}\\.[1-9]{1,2}$");
+    private static final Pattern DOUBLE_PATTERN = Pattern.compile("^[0-9]{1,309}\\.[0-9]{1,2}$");
     /**
      * Matches any numbers with 1 to 29 characters in length
      */
-    private static final Pattern FLOAT_PATTERN = Pattern.compile("^[1-9]{1,29}\\.[1-9]{3,9}$");
+    private static final Pattern FLOAT_PATTERN = Pattern.compile("^[0-9]{1,29}\\.[0-9]{3,9}$");
 
     @Override
     protected boolean validate(ConversationContext context, TextContent input) {
