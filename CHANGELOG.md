@@ -1,4 +1,8 @@
 # Changelog
+#### Version 1.4.2
+* Implemented new captions in Inline and normal Audio and Voice objects
+* Fix NumericPrompt regex in the conversation API
+
 #### Version 1.4.1
 * Fixed issues with JavaDocs
 
