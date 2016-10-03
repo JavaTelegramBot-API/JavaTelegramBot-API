@@ -10,7 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 public class ContentImpl {
 
     private final static String[] CONTENT_TYPE_NAMES = new String[]{
-            "text", "audio", "document", "photo", "sticker",
+            "text", "audio", "document", "game", "photo", "sticker",
             "video", "voice", "contact", "location", "venue",
             "new_chat_member", "left_chat_member", "new_chat_title",
             "new_chat_photo", "delete_chat_photo", "group_chat_created",
@@ -43,6 +43,9 @@ public class ContentImpl {
                 case "document":
 
                     return DocumentContentImpl.createDocumentContent(jsonObject.getJSONObject("document"), jsonObject.optString("caption"));
+                case "game":
+
+                    return GameContentImpl.createGameContent(jsonObject.getJSONObject("game"));
                 case "photo":
 
                     return PhotoContentImpl.createPhotoContent(jsonObject.getJSONArray("photo"), jsonObject.optString("caption"));
