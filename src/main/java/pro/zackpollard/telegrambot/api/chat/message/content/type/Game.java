@@ -8,18 +8,38 @@ import java.util.List;
 public interface Game {
 
     /**
-     * Gets the title of the audio file, can be null
+     * Gets the title of the game
      *
-     * @return The title of the audio file or null if no title is set
+     * @return The title of the game
      */
     String getTitle();
 
+    /**
+     * Gets the description of the game
+     *
+     * @return The description of the game
+     */
     String getDescription();
 
+    /**
+     * Gets an array of PhotoSize objects relating to the photo that will be sent with the game message in chats
+     *
+     * @return An array of PhotoSize objects for the photo of the game
+     */
     PhotoSize[] getPhotos();
 
+    /**
+     * Gets the text that was sent with the Game or null if not set
+     *
+     * @return The text that was sent with the Game or null if not set
+     */
     String getText();
 
+    /**
+     * Gets the Animation that was sent with the Game or null if not sent
+     *
+     * @return The Animation that was sent with the Game or null if not set
+     */
     Animation getAnimation();
 
     /**

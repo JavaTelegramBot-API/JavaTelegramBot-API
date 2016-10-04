@@ -5,5 +5,10 @@ package pro.zackpollard.telegrambot.api.chat.message.content.type;
  */
 public interface Animation extends File, Thumbnailable, Mimetypeable {
 
+    /**
+     * Gets the name of the Animation file
+     *
+     * @return The name of the Animation file
+     */
     String getFileName();
 }

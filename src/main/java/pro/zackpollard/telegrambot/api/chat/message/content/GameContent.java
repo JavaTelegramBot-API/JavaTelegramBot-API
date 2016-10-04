@@ -11,9 +11,9 @@ import java.util.List;
 public interface GameContent extends Content {
 
     /**
-     * Gets the String object relating to this TextContent object
+     * Gets the String object relating to this GameContent object
      *
-     * @return The String object
+     * @return The Game object
      */
     Game getContent();
 
