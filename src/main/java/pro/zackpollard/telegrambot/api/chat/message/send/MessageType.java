@@ -15,5 +15,6 @@ public enum MessageType {
     LOCATION,
     VENUE,
     VOICE,
+    GAME,
     CHAT_ACTION
 }

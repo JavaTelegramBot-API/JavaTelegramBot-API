@@ -530,6 +530,26 @@ public final class TelegramBot {
                 }
 
                 break;
+            case GAME: {
+
+                SendableGameMessage gameMessage = (SendableGameMessage) message;
+
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendGame")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
+                            .field("game_short_name", gameMessage.getGameShortName(), "application/json; charset=utf8;");
+
+                    Utils.processReplyContent(request, gameMessage);
+                    Utils.processNotificationContent(request, gameMessage);
+
+                    response = request.asString();
+                    jsonResponse = Utils.processResponse(response);
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
             case CHAT_ACTION:
 
                 SendableChatAction sendableChatAction = (SendableChatAction) message;
