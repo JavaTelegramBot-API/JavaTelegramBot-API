@@ -141,7 +141,7 @@ public final class Conversation {
         if (repliesOnly) {
             Message repliedTo = message.getRepliedTo();
 
-            if (repliedTo == null || !context.getHistory().sentMessages.contains(repliedTo.getMessageId())) {
+            if (repliedTo == null || repliedTo.getSender().getUsername().equals(context.getBot().getBotUsername())) {
                 return false;
             }
         }
