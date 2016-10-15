@@ -7,9 +7,11 @@ import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.Content;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
+import pro.zackpollard.telegrambot.api.user.User;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * This object represents a conversation between the bot and a chat.
@@ -66,15 +68,26 @@ public final class Conversation {
      */
     @Getter
     private final List<ConversationPrompt> prompts;
+    /**
+     * Only listens for certain users based on the predicate
+     */
+    private final Predicate<User> userPredicate;
+    /**
+     * Forces all messages that are processed by the conversation to be replies
+     */
+    private final boolean repliesOnly;
 
     private Conversation(TelegramBot bot, Map<String, Object> sessionData, Chat forWhom, boolean silent,
-                        boolean disableGlobalEvents, List<ConversationPrompt> prompts) {
+                        boolean disableGlobalEvents, List<ConversationPrompt> prompts,
+                         Predicate<User> userPredicate, boolean repliesOnly) {
         this.forWhom = forWhom;
         this.context = new ConversationContext(this, bot, sessionData);
         this.currentPrompt = prompts.get(promptIndex);
         this.prompts = Collections.unmodifiableList(prompts);
         this.silent = silent;
         this.disableGlobalEvents = disableGlobalEvents;
+        this.userPredicate = (userPredicate == null) ? (user) -> true : userPredicate;
+        this.repliesOnly = repliesOnly;
     }
 
     /**
@@ -98,7 +111,7 @@ public final class Conversation {
             SendableMessage response = currentPrompt.promptMessage(context);
 
             if (response != null) {
-                forWhom.sendMessage(response);
+                sendMessage(response);
             }
         }
 
@@ -111,20 +124,32 @@ public final class Conversation {
      * Do not call unless you understand what you're doing.
      *
      * @param message The message to be processed
+     * @return If the message prompted a prompt
      * @see Conversation#end()
      */
-    public void accept(Message message) {
+    public boolean accept(Message message) {
         Content content = message.getContent();
 
         if (content.getType() != currentPrompt.type()) {
-            return;
+            return false;
         }
 
+        if (!userPredicate.test(message.getSender())) {
+            return false;
+        }
+
+        if (repliesOnly) {
+            Message repliedTo = message.getRepliedTo();
+
+            if (repliedTo == null || !context.getHistory().sentMessages.contains(repliedTo.getMessageId())) {
+                return false;
+            }
+        }
 
         if (!currentPrompt.process(context, content)) {
             if (promptIndex + 1 == prompts.size()) {
                 end();
-                return;
+                return true;
             }
 
             currentPrompt = prompts.get(++promptIndex);
@@ -133,10 +158,11 @@ public final class Conversation {
         SendableMessage promptMessage = currentPrompt.promptMessage(context);
 
         if (!silent && promptMessage != null) {
-            forWhom.sendMessage(promptMessage);
+            sendMessage(promptMessage);
         }
 
         context.getHistory().history.add(message);
+        return true;
     }
 
     /**
@@ -154,6 +180,10 @@ public final class Conversation {
         context.getBot().getConversationRegistry().removeConversation(this);
     }
 
+    private void sendMessage(SendableMessage message) {
+        context.getHistory().sentMessages.add(forWhom.sendMessage(message).getMessageId());
+    }
+
     /**
      * The builder used to create conversations. forWhom() and prompts() must be called before building
      *
@@ -168,6 +198,8 @@ public final class Conversation {
         private Map<String, Object> sessionData = new HashMap<>();
         private boolean silent;
         private boolean disableGlobalEvents;
+        private boolean repliesOnly = false;
+        private Predicate<User> userPredicate;
 
         ConversationBuilder(TelegramBot bot) {
             this.bot = bot;
@@ -208,11 +240,79 @@ public final class Conversation {
             this.disableGlobalEvents = disableGlobalEvents;
             return this;
         }
+        
+        public ConversationBuilder repliesOnly(boolean value) {
+            this.repliesOnly = value;
+            return this;
+        }
+
+        /**
+         * Add a user filter to the conversation.
+         * Predicate is called before any prompts are called, if returned true
+         * the prompts will be called, otherwise it won't
+         *
+         * @param predicate user filter
+         * @return this
+         */
+        public ConversationBuilder userFilter(Predicate<User> predicate) {
+            this.userPredicate = predicate;
+            return this;
+        }
+
+        /**
+         * Allow a list of users to be part of this conversation
+         * @param users Allowed users
+         * @return this
+         */
+        public ConversationBuilder allowedUsers(User... users) {
+            List<User> usersList = Arrays.asList(users);
+            this.userPredicate = (user) -> usersList.stream()
+                    .anyMatch((allowedUser) -> allowedUser.getId() == user.getId());
+            return this;
+        }
+
+        /**
+         * Allow a single user to be part of this conversation
+         * @param allowedUser allowed user
+         * @return this
+         */
+        public ConversationBuilder allowedUser(User allowedUser) {
+            this.userPredicate = (user) -> user.getId() == allowedUser.getId();
+            return this;
+        }
+
+        /**
+         * Allow a list of users to be part of this conversation
+         * @param userIds allows user ids
+         * @return this
+         */
+        public ConversationBuilder allowedUsers(long... userIds) {
+            this.userPredicate = (user) -> {
+                for (long id : userIds) {
+                    if (id == user.getId()) {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+            return this;
+        }
+
+        /**
+         * Allow a single user to use be part of conversation
+         * @param userId the id of said user
+         * @return this
+         */
+        public ConversationBuilder allowedUser(long userId) {
+            this.userPredicate = (user) -> user.getId() == userId;
+            return this;
+        }
 
         public Conversation build() {
             Utils.validateNotNull(bot, forWhom, prompts);
             return new Conversation(bot, sessionData, forWhom, silent, disableGlobalEvents,
-                    prompts);
+                    prompts, userPredicate, repliesOnly);
         }
     }
 
