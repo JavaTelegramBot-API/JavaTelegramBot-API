@@ -18,7 +18,7 @@ public class ParticipantLeaveGroupChatEvent extends MessageEvent {
     /**
      * Gets the User that left the GroupChat that triggered this Event
      *
-     * @return
+     * @return The User that left the GroupChat that triggered this Event
      */
     public User getParticipant() {
 

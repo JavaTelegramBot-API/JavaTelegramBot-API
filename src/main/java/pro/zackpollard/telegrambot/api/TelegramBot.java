@@ -27,8 +27,10 @@ import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.conversations.ConversationRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
+import pro.zackpollard.telegrambot.api.internal.menu.InlineMenuRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
+import pro.zackpollard.telegrambot.api.menu.InlineMenuRegistry;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
@@ -52,6 +54,8 @@ public final class TelegramBot {
     @Getter
     private final ConversationRegistry conversationRegistry;
     @Getter
+    private final InlineMenuRegistry inlineMenuRegistry;
+    @Getter
     private final String authToken;
     private final ListenerRegistry listenerRegistry;
     private UpdateManager updateManager = null;
@@ -72,6 +76,7 @@ public final class TelegramBot {
 
         listenerRegistry = ListenerRegistryImpl.getNewInstance();
         conversationRegistry = ConversationRegistryImpl.create();
+        inlineMenuRegistry = InlineMenuRegistryImpl.create();
     }
 
     /**
@@ -281,6 +286,8 @@ public final class TelegramBot {
                         request.field("performer", audioMessage.getPerformer(), "application/json; charset=utf8;");
                     if (audioMessage.getTitle() != null)
                         request.field("title", audioMessage.getTitle(), "application/json; charset=utf8;");
+                    if (audioMessage.getCaption() != null)
+                        request.field("caption", audioMessage.getCaption(), "application/json; charset=utf8;");
 
                     response = request.asString();
                     jsonResponse = Utils.processResponse(response);
@@ -447,6 +454,9 @@ public final class TelegramBot {
                             .field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
 
                     if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
+
+                    if (voiceMessage.getCaption() != null)
+                        request.field("caption", voiceMessage.getCaption(), "application/json; charset=utf8;");
 
                     Utils.processReplyContent(request, voiceMessage);
                     Utils.processNotificationContent(request, voiceMessage);

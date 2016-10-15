@@ -20,8 +20,9 @@ public final class ConversationHistory {
     }
 
     /**
-     * The first message sent by the other member
+     * Gets the first message sent by the other member
      * @throws IndexOutOfBoundsException if there are no messages
+     * @return The first message sent by the other member
      */
     public Message first() {
         return history.get(0);

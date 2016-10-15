@@ -1,4 +1,18 @@
 # Changelog
+#### Version 1.4.2
+* Implemented new captions in Inline and normal Audio and Voice objects
+* Fix NumericPrompt regex in the conversation API
+
+#### Version 1.4.1
+* Fixed issues with JavaDocs
+
+#### Version 1.4.0
+* Added full documentation for the entire API
+* Added an Inline Menu API, courtesy of @MazenK
+* Bugfixes
+  * Added missing ChannelChat#getUsername() method
+  * Temporary directories should now clean themselves up once the JVM quits instead of only at system reboot
+
 #### Version 1.3.1
 * Added a way to unregister listeners. ListenerRegistery#unregister(Listener)
 * Added a way to stop updates. TelegramBot#stopUpdates();

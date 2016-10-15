@@ -22,6 +22,7 @@ public class InlineQueryResultCachedAudio implements InlineQueryResult {
     private final String audio_file_id;
     private final InlineReplyMarkup reply_markup;
     private final InputMessageContent input_message_content;
+    private final String caption;
 
     /**
      * This builder will allow you to progressively construct this object.
@@ -80,12 +81,22 @@ public class InlineQueryResultCachedAudio implements InlineQueryResult {
         return this.input_message_content;
     }
 
+    /**
+     * Gets the caption of the result
+     *
+     * @return The caption of the result
+     */
+    public String getCaption() {
+        return this.caption;
+    }
+
     @ToString
     public static class InlineQueryResultCachedAudioBuilder {
         private String id = Utils.generateRandomString(32);
         private String audio_file_id;
         private InlineReplyMarkup reply_markup;
         private InputMessageContent input_message_content;
+        private String caption;
 
         InlineQueryResultCachedAudioBuilder() {
         }
@@ -143,12 +154,25 @@ public class InlineQueryResultCachedAudio implements InlineQueryResult {
         }
 
         /**
+         * *Optional*
+         * Sets the caption you wat to be sent with this result to the provided String
+         *
+         * @param caption The caption you want to be sent with the result
+         *
+         * @return The builder object
+         */
+        public InlineQueryResultCachedAudio.InlineQueryResultCachedAudioBuilder caption(String caption) {
+            this.caption = caption;
+            return this;
+        }
+
+        /**
          * Builds the InlineQueryResultCachedAudio object
          *
          * @return An InlineQueryResultCachedAudio object based on the previously provided values
          */
         public InlineQueryResultCachedAudio build() {
-            return new InlineQueryResultCachedAudio(id, audio_file_id, reply_markup, input_message_content);
+            return new InlineQueryResultCachedAudio(id, audio_file_id, reply_markup, input_message_content, caption);
         }
     }
 }
