@@ -41,7 +41,7 @@ public interface MessageEntity {
     String getUrl();
 
     /**
-     * Gets the User that the MessageEntity refers to. For “text_mention” only. Can be null
+     * Gets the User that the MessageEntity refers to. For "text_mention" only. Can be null
      *
      * @return The User that the MessageEntity refers to or null if the MessageEntityType isn't TEXT_MENTION
      */
