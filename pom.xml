@@ -4,9 +4,15 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>pro.zackpollard.telegrambot.api</groupId>
-    <artifactId>jtelegram-botapi</artifactId>
+    <artifactId>jtelegram-botapi-parent</artifactId>
     <version>1.4.2</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>core</module>
+        <module>conversations</module>
+        <module>menus</module>
+        <module>all</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>Java Telegram Bot API</name>
     <description>The Java Telegram Bot API is a wrapper for the Telegram HTTP Bot API</description>
@@ -35,34 +41,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.7</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20160212</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.10</version>
+            <version>LATEST</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mashape.unirest</groupId>
-            <artifactId>unirest-java</artifactId>
-            <version>1.4.9</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.5</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
