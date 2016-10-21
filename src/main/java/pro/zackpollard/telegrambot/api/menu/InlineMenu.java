@@ -105,6 +105,10 @@ public class InlineMenu {
      * Handle an inline query sent.
      * Caller dependent, throws exception if called from a class which doesn't implement InlineMenuRegistry
      *
+     * @param query query to be processed
+     * @param row row index
+     * @param button button index
+     *
      * @return Whether the menu handled the request, if not it was due to a user predicate or invalid row or invalid button
      * @see InlineMenuRegistry
      * @see InlineMenuRow#handle(CallbackQuery, int)

@@ -23,7 +23,7 @@ public class InlineMenuRow {
      * Get button at index
      * @param index index
      * @return Found button
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException if provided index is out of bounds
      */
     public InlineMenuButton buttonAt(int index) {
         return buttons.get(index);
