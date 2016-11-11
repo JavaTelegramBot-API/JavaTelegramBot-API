@@ -16,5 +16,6 @@ public enum InlineQueryResultType {
     LOCATION,
     VENUE,
     CONTACT,
-    STICKER
+    STICKER,
+    GAME
 }
