@@ -884,12 +884,16 @@ public final class TelegramBot {
      * @param callbackQueryId   The ID of the callback query you are responding to
      * @param text              The text you would like to respond with
      * @param showAlert         True will show the text as an alert, false will show it as a toast notification
+     * @param url               URL that will be opened by the user's client. If you have created a Game and accepted
+     *                          the conditions via @Botfather, specify the URL that opens your game – note that this
+     *                          will only work if the query comes from a callback_game button. Otherwise, you may use
+     *                           links like telegram.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @return True if the response was sent successfully, otherwise False
      */
     public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert, URL url) {
 
-        if(callbackQueryId != null && text != null) {
+        if(callbackQueryId != null && (text != null || url != null)) {
 
             HttpResponse<String> response;
             JSONObject jsonResponse;
