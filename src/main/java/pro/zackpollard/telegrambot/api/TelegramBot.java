@@ -34,6 +34,8 @@ import pro.zackpollard.telegrambot.api.menu.InlineMenuRegistry;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
+import java.net.URL;
+
 /**
  * @author Zack Pollard
  */
@@ -885,7 +887,7 @@ public final class TelegramBot {
      *
      * @return True if the response was sent successfully, otherwise False
      */
-    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert, URL url) {
 
         if(callbackQueryId != null && text != null) {
 
@@ -896,7 +898,8 @@ public final class TelegramBot {
                 MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
                         .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
                         .field("text", text, "application/json; charset=utf8;")
-                        .field("show_alert", showAlert);
+                        .field("show_alert", showAlert)
+                        .field("url", url != null ? url.toExternalForm() : null, "application/json; charset=utf8;");
 
                 response = requests.asString();
                 jsonResponse = Utils.processResponse(response);
@@ -911,6 +914,12 @@ public final class TelegramBot {
         }
 
         return false;
+    }
+
+    @Deprecated
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
+
+        return this.answerCallbackQuery(callbackQueryId, text, showAlert, null);
     }
 
     /**
