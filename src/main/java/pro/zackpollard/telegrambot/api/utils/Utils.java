@@ -11,6 +11,7 @@ import pro.zackpollard.telegrambot.api.chat.message.send.ReplyingOptions;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
+import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardRemove;
 
 import java.util.Random;
 
@@ -101,6 +102,9 @@ public class Utils {
                     break;
                 case KEYBOARD_HIDE:
                     multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json; charset=utf8;");
+                    break;
+                case KEYBOARD_REMOVE:
+                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardRemove.class), "application/json; charset=utf8;");
                     break;
                 case KEYBOARD_MARKUP:
                     multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json; charset=utf8;");
