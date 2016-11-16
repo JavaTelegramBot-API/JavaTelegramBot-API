@@ -34,14 +34,38 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
         return new SendableTextMessageBuilder();
     }
 
+    /**
+     * This builder will be created with the text you provide already added with markdown formatting enabled.
+     *
+     * @param text The text you would like the builder to be created with
+     *
+     * @return  A SendableTextMessageBuilder object with the text provided already added to it in markdown format. Used
+     *          to construct the SendableTextMessage object
+     */
     public static SendableTextMessageBuilder markdown(String text) {
         return builder().message(text).parseMode(ParseMode.MARKDOWN);
     }
 
+    /**
+     * This builder will be created with the text you provide already added with HTML formatting enabled.
+     *
+     * @param text The text you would like the builder to be created with
+     *
+     * @return  A SendableTextMessageBuilder object with the text provided already added to it in HTML format. Used
+     *          to construct the SendableTextMessage object
+     */
     public static SendableTextMessageBuilder html(String text) {
         return builder().message(text).parseMode(ParseMode.HTML);
     }
 
+    /**
+     * This builder will be created with the text you provide already added with markdown formatting enabled.
+     *
+     * @param text The text you would like the builder to be created with
+     *
+     * @return  A SendableTextMessageBuilder object with the text provided already added to it. Used to construct the
+     *          SendableTextMessage object
+     */
     public static SendableTextMessageBuilder plain(String text) {
         return builder().message(text).parseMode(ParseMode.NONE);
     }
