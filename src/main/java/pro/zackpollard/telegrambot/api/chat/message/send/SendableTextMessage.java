@@ -124,6 +124,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Appends text and makes it bold. Text is escaped.
+         *
          * @param text Text to append
          */
         public SendableTextBuilder bold(String text) {
@@ -132,6 +133,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Appends text and makes it italic. Text is escaped.
+         *
          * @param text Text to append
          */
         public SendableTextBuilder italics(String text) {
@@ -140,6 +142,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Appends an inline URL in the text
+         *
          * @param text Text to link. Text is escaped
          * @param link Link to reference
          */
@@ -149,6 +152,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Appends inline-code to the text
+         *
          * @param text Text to format. Escaped.
          */
         public SendableTextBuilder code(String text) {
@@ -157,6 +161,7 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Appends pre-formatted fixed-width code block.
+         *
          * @param text Text to format. Escaped
          */
         public SendableTextBuilder preformatted(String text) {
