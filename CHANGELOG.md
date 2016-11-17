@@ -1,4 +1,14 @@
 # Changelog
+#### Version 1.5.0
+* Implemented better conversations in groups (#54)
+  * You can now limit the conversation to a single user
+  * Conversations can now have a timeout set to end if they don't complete within the timeout
+  * You can specify an end message to send to the user when the conversation ends
+  * End predicates that if they return true when run, automatically end the conversation
+* Implemented a text builder to easily create formatted text without issues with escaping (#59)
+* Added in ReplyKeyboardRemove and deprecated ReplyKeyboardHide as it has been removed from the API spec
+* The Game update is coming soon, however it is still in the works due to some complications with implementation
+
 #### Version 1.4.2
 * Implemented new captions in Inline and normal Audio and Voice objects
 * Fix NumericPrompt regex in the conversation API
