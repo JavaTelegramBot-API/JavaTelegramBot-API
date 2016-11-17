@@ -32,7 +32,7 @@ public class Utils {
         char[] chars = "abcdefghijklmnopqrstuvwxyz1234567890".toCharArray();
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < length; i++) {
             char c = chars[random.nextInt(chars.length)];
             sb.append(c);
         }
