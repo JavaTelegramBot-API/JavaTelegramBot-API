@@ -2,7 +2,7 @@ package pro.zackpollard.telegrambot.api.conversations;
 
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -10,7 +10,8 @@ import java.util.List;
  * @author Mazen Kotb
  */
 public final class ConversationHistory {
-    final List<Message> history = new ArrayList<>();
+    final List<Long> sentMessages = new LinkedList<>();
+    final List<Message> history = new LinkedList<>();
 
     private ConversationHistory() {
     }
