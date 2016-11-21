@@ -55,11 +55,11 @@ public class ReplyKeyboardRemove implements Keyboard {
      */
     @Override
     public ReplyMarkupType getType() {
-        return ReplyMarkupType.KEYBOARD_HIDE;
+        return ReplyMarkupType.KEYBOARD_REMOVE;
     }
 
     @ToString
-    private static class ReplyKeyboardRemoveBuilder {
+    public static class ReplyKeyboardRemoveBuilder {
 
         private boolean selective = false;
 
