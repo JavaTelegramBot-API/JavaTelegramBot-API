@@ -1,4 +1,7 @@
 # Changelog
+#### Version 1.5.1
+* Fixed an issue with the constructor in the new ReplyKeyboardRemove object being private
+
 #### Version 1.5.0
 * Implemented better conversations in groups (#54)
   * You can now limit the conversation to a single user
