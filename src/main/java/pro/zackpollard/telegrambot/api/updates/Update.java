@@ -35,6 +35,13 @@ public interface Update {
     Message getEditedMessage();
 
     /**
+     * Gets the Channel Post Message that this Update contains.
+     *
+     * @return Channel Post message
+     */
+    Message getChannelPost();
+
+    /**
      * Gets the new incoming inline query
      *
      * @return The new incoming inline query
@@ -75,6 +82,7 @@ public interface Update {
         EDITED_MESSAGE,
         INLINE_QUERY,
         CALLBACK_QUERY,
-        CHOSEN_INLINE_RESULT
+        CHOSEN_INLINE_RESULT,
+        CHANNEL_POST
     }
 }
