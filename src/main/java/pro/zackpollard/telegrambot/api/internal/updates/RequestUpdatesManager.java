@@ -36,9 +36,11 @@ public class RequestUpdatesManager extends UpdateManager {
 
     public boolean startUpdates() {
 
-        if(this.eventManager == null) this.eventManager = (ListenerRegistryImpl) getBotInstance().getEventsManager();
+        if (this.eventManager == null) {
+            this.eventManager = (ListenerRegistryImpl) getBotInstance().getEventsManager();
+        }
 
-        if(updaterThread == null && !this.running) {
+        if (updaterThread == null && !this.running) {
 
             updaterThread = new Thread(new UpdaterRunnable(this.getPreviousUpdates));
             updaterThread.start();
@@ -116,8 +118,9 @@ public class RequestUpdatesManager extends UpdateManager {
 
                         JSONArray updates = jsonResponse.getJSONArray("result");
 
-                        if (updates.length() != 0)
+                        if (updates.length() != 0) {
                             offset = updates.getJSONObject(updates.length() - 1).getInt("update_id");
+                        }
 
                         if (!getPreviousUpdates) {
 
@@ -214,6 +217,29 @@ public class RequestUpdatesManager extends UpdateManager {
                                                 break;
                                         }
                                         break;
+                                    }
+
+                                    case CHANNEL_POST: {
+                                        if (getBotInstance().getConversationRegistry().processMessage(update.getChannelPost())) {
+                                            break;
+                                        }
+
+                                        eventManager.callEvent(new MessageReceivedEvent(update.getChannelPost()));
+
+                                        switch (update.getChannelPost().getContent().getType()) {
+                                            case TEXT: {
+
+                                                if (((TextContent) update.getChannelPost().getContent()).getContent().startsWith("/")) {
+
+                                                    eventManager.callEvent(new CommandMessageReceivedEvent(update.getChannelPost()));
+                                                } else {
+
+                                                    eventManager.callEvent(new ChannelPostReceivedEvent(update.getChannelPost()));
+                                                }
+
+                                                break;
+                                            }
+                                        }
                                     }
 
                                     case EDITED_MESSAGE: {

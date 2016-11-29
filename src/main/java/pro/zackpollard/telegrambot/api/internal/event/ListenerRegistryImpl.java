@@ -30,6 +30,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
             register(PhotoMessageReceivedEvent.class, Listener::onPhotoMessageReceived);
             register(StickerMessageReceivedEvent.class, Listener::onStickerMessageReceived);
             register(TextMessageReceivedEvent.class, Listener::onTextMessageReceived);
+            register(ChannelPostReceivedEvent.class, Listener::onChannelPostReceived);
             register(VideoMessageReceivedEvent.class, Listener::onVideoMessageReceived);
             register(VoiceMessageReceivedEvent.class, Listener::onVoiceMessageReceived);
 

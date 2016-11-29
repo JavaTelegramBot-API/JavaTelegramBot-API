@@ -40,6 +40,9 @@ public interface Listener {
 
     default void onTextMessageReceived(TextMessageReceivedEvent event) {
     }
+    
+    default void onChannelPostReceived(ChannelPostReceivedEvent event) {
+    }
 
     default void onVideoMessageReceived(VideoMessageReceivedEvent event) {
     }
