@@ -9,21 +9,21 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 /**
  * @author Zack Pollard
  */
-public class ChannelChatImpl implements ChannelChat {
+public class PrivateChannelChatImpl implements ChannelChat {
 
     private final String username;
     private final String title;
 
     private final TelegramBot telegramBot;
 
-    private ChannelChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
+    private PrivateChannelChatImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        this.username = "@" + jsonObject.optString("username");
+        this.username = jsonObject.optString("id");
         this.title = jsonObject.getString("title");
         this.telegramBot = telegramBot;
     }
 
-    private ChannelChatImpl(String username, TelegramBot telegramBot) {
+    private PrivateChannelChatImpl(String username, TelegramBot telegramBot) {
 
         this.username = username;
         this.title = null;
@@ -32,12 +32,12 @@ public class ChannelChatImpl implements ChannelChat {
 
     public static ChannelChat createChannelChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        return new ChannelChatImpl(jsonObject, telegramBot);
+        return new PrivateChannelChatImpl(jsonObject, telegramBot);
     }
 
     public static ChannelChat createChannelChat(String username, TelegramBot telegramBot) {
 
-        return new ChannelChatImpl(username, telegramBot);
+        return new PrivateChannelChatImpl(username, telegramBot);
     }
 
     @Override

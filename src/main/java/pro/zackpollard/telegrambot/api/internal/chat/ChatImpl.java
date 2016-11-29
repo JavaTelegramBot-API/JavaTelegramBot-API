@@ -11,7 +11,7 @@ public class ChatImpl {
 
     public static Chat createChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
-        if(jsonObject != null) {
+        if (jsonObject != null) {
 
             String chatType = jsonObject.getString("type");
 
@@ -22,7 +22,11 @@ public class ChatImpl {
                 case "group":
                     return GroupChatImpl.createGroupChat(jsonObject, telegramBot);
                 case "channel":
-                    return ChannelChatImpl.createChannelChat(jsonObject, telegramBot);
+                    if (jsonObject.optString("username") == null || jsonObject.optString("username").isEmpty()) {
+                        return PrivateChannelChatImpl.createChannelChat(jsonObject, telegramBot);
+                    } else {
+                        return ChannelChatImpl.createChannelChat(jsonObject, telegramBot);
+                    }
                 case "supergroup":
                     return SuperGroupChatImpl.createSuperGroupChat(jsonObject, telegramBot);
                 default:
