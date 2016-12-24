@@ -54,6 +54,14 @@ public class InlineMenu {
         return new InlineMenuBuilder(bot).forWhom(forWhom);
     }
 
+    public List<InlineMenuRow> rows() {
+        return Collections.unmodifiableList(rows);
+    }
+
+    public int size() {
+        return rows.size();
+    }
+
     /**
      * Starts the inline menu, applies it's keyboard to the menu.
      * Registers itself as the menu used by the message
