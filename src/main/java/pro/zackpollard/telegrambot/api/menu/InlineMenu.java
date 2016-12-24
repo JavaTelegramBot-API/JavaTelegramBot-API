@@ -87,11 +87,13 @@ public class InlineMenu {
 
     public void deleteRowAt(int index) {
         rows.remove(index);
+        rows.forEach((row) -> row.setIndex(rows.indexOf(row))); // ENFORCE CURRENT ROW INDEX TO ALL BUTTONS
         apply();
     }
 
     public void deleteRow(InlineMenuRow row) {
         rows.remove(row);
+        rows.forEach((menuRow) -> menuRow.setIndex(rows.indexOf(menuRow))); // ENFORCE CURRENT ROW INDEX TO ALL BUTTONS
         apply();
     }
 
