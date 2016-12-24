@@ -85,6 +85,30 @@ public class InlineMenu {
         return rows.get(index);
     }
 
+    public void deleteRowAt(int index) {
+        rows.remove(index);
+        rows.forEach((row) -> row.setIndex(rows.indexOf(row))); // ENFORCE CURRENT ROW INDEX TO ALL BUTTONS
+        apply();
+    }
+
+    public void deleteRow(InlineMenuRow row) {
+        rows.remove(row);
+        rows.forEach((menuRow) -> menuRow.setIndex(rows.indexOf(menuRow))); // ENFORCE CURRENT ROW INDEX TO ALL BUTTONS
+        apply();
+    }
+
+    public void addRow(InlineMenuRow row) {
+        row.setIndex(rows.size());
+        rows.add(row);
+        apply();
+    }
+
+    public void setRow(int index, InlineMenuRow row) {
+        row.setIndex(index);
+        rows.set(index, row);
+        apply();
+    }
+
     /**
      * Converts rows to the inline keyboard markup used by the Telegram API
      * @return keyboard markup

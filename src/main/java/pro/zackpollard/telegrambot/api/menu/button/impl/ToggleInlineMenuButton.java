@@ -3,8 +3,10 @@ package pro.zackpollard.telegrambot.api.menu.button.impl;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardButton;
 import pro.zackpollard.telegrambot.api.menu.InlineMenu;
+import pro.zackpollard.telegrambot.api.menu.InlineMenuBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.AbstractInlineMenuButton;
 import pro.zackpollard.telegrambot.api.menu.button.InlineMenuButton;
+import pro.zackpollard.telegrambot.api.menu.button.builder.ToggleInlineMenuButtonBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.callback.ToggleCallback;
 
 /**
@@ -18,29 +20,58 @@ public class ToggleInlineMenuButton extends AbstractInlineMenuButton {
     private boolean value;
     private final ToggleCallback callback;
 
-    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, ToggleCallback callback) {
-        super(owner, row, num);
+    public ToggleInlineMenuButton(InlineMenu owner, int row, ToggleCallback callback) {
+        super(owner, row);
         this.callback = callback;
     }
 
-    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, ToggleCallback callback, boolean value) {
-        super(owner, row, num);
+    public ToggleInlineMenuButton(InlineMenu owner, int row, ToggleCallback callback, boolean value) {
+        super(owner, row);
         this.callback = callback;
         this.value = value;
     }
 
-    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, String text, ToggleCallback callback) {
-        super(owner, row, num, text);
+    public ToggleInlineMenuButton(InlineMenu owner, int row, String text, ToggleCallback callback) {
+        super(owner, row, text);
         this.callback = callback;
     }
 
-    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, String text, ToggleCallback callback, boolean value) {
-        super(owner, row, num, text);
+    public ToggleInlineMenuButton(InlineMenu owner, int row, String text, ToggleCallback callback, boolean value) {
+        super(owner, row, text);
         this.callback = callback;
         this.value = value;
 
         if (text == null)
             super.text = callback.handleToggle(this, value);
+    }
+
+
+    @Deprecated
+    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, ToggleCallback callback) {
+        this(owner, row, callback);
+    }
+
+    @Deprecated
+    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, ToggleCallback callback, boolean value) {
+        this(owner, row, callback, value);
+    }
+
+    @Deprecated
+    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, String text, ToggleCallback callback) {
+        this(owner, row, text, callback);
+    }
+
+    @Deprecated
+    public ToggleInlineMenuButton(InlineMenu owner, int row, int num, String text, ToggleCallback callback, boolean value) {
+        this(owner, row, text, callback, value);
+    }
+
+    public static ToggleInlineMenuButtonBuilder builder() {
+        return new ToggleInlineMenuButtonBuilder<InlineMenuBuilder>(null);
+    }
+
+    public static ToggleInlineMenuButtonBuilder builder(String text) {
+        return new ToggleInlineMenuButtonBuilder<InlineMenuBuilder>(null, text);
     }
 
     @Override

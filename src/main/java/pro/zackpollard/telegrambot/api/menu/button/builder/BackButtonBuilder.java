@@ -14,10 +14,20 @@ import pro.zackpollard.telegrambot.api.utils.Utils;
  */
 public class BackButtonBuilder<T extends AbstractInlineMenuBuilder>
         extends AbstractButtonBuilder<BackButtonBuilder<T>, T> {
+    public BackButtonBuilder(InlineMenuRowBuilder<T> parent) {
+        super(parent);
+    }
+
+    public BackButtonBuilder(InlineMenuRowBuilder<T> parent, String text) {
+        super(parent, text);
+    }
+
+    @Deprecated
     public BackButtonBuilder(InlineMenuRowBuilder<T> parent, int index) {
         super(parent, index);
     }
 
+    @Deprecated
     public BackButtonBuilder(InlineMenuRowBuilder<T> parent, int index, String text) {
         super(parent, index, text);
     }
@@ -30,7 +40,12 @@ public class BackButtonBuilder<T extends AbstractInlineMenuBuilder>
     @Override
     public InlineMenuRowBuilder<T> build() {
         Utils.validateNotNull(text);
-        parent.internalAddButton(processButton(new BackButton(null, parent.rowIndex(), index, text)));
+        parent.internalAddButton(buildButton());
         return parent;
+    }
+
+    @Override
+    public BackButton buildButton() {
+        return processButton(new BackButton(null, parent.rowIndex(), text));
     }
 }
