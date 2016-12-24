@@ -4,6 +4,7 @@ import pro.zackpollard.telegrambot.api.menu.AbstractInlineMenuBuilder;
 import pro.zackpollard.telegrambot.api.menu.InlineMenu;
 import pro.zackpollard.telegrambot.api.menu.InlineMenuRowBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.AbstractButtonBuilder;
+import pro.zackpollard.telegrambot.api.menu.button.InlineMenuButton;
 import pro.zackpollard.telegrambot.api.menu.button.impl.SubInlineMenuButton;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
@@ -17,10 +18,20 @@ public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
         extends AbstractButtonBuilder<SubInlineMenuButtonBuilder<T>, T> {
     private InlineMenu nextMenu;
 
+    public SubInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent) {
+        super(parent);
+    }
+
+    public SubInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent, String text) {
+        super(parent, text);
+    }
+
+    @Deprecated
     public SubInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent, int index) {
         super(parent, index);
     }
 
+    @Deprecated
     public SubInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent, int index, String text) {
         super(parent, index, text);
     }
@@ -43,7 +54,12 @@ public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
     @Override
     public InlineMenuRowBuilder<T> build() {
         Utils.validateNotNull(text, nextMenu);
-        parent.internalAddButton(processButton(new SubInlineMenuButton(null, parent.rowIndex(), index, nextMenu, text)));
+        parent.internalAddButton(buildButton());
         return parent;
+    }
+
+    @Override
+    public SubInlineMenuButton buildButton() {
+        return processButton(new SubInlineMenuButton(null, parent.rowIndex(), nextMenu, text));
     }
 }

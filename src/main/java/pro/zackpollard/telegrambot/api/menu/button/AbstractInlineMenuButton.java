@@ -3,7 +3,6 @@ package pro.zackpollard.telegrambot.api.menu.button;
 
 import lombok.Getter;
 import lombok.Setter;
-import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage.SendableTextMessageBuilder;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardButton;
 import pro.zackpollard.telegrambot.api.menu.InlineMenu;
 import pro.zackpollard.telegrambot.api.menu.button.callback.ButtonCallback;
@@ -17,22 +16,30 @@ public abstract class AbstractInlineMenuButton implements InlineMenuButton {
     protected ButtonCallback buttonCallback;
     protected String text;
     @Getter
-    protected final int row;
-    @Getter
-    protected final int num;
+    protected int row;
     @Getter
     @Setter
     protected InlineMenu owner;
 
-    protected AbstractInlineMenuButton(InlineMenu owner, int row, int num) {
+    protected AbstractInlineMenuButton(InlineMenu owner, int row) {
         this.owner = owner;
         this.row = row;
-        this.num = num;
     }
 
-    protected AbstractInlineMenuButton(InlineMenu owner, int row, int num, String text) {
-        this(owner, row, num);
+    @Deprecated
+    protected AbstractInlineMenuButton(InlineMenu owner, int row, int num) {
+        this(owner, row);
+    }
+
+
+    protected AbstractInlineMenuButton(InlineMenu owner, int row, String text) {
+        this(owner, row);
         this.text = text;
+    }
+
+    @Deprecated
+    protected AbstractInlineMenuButton(InlineMenu owner, int row, int num, String text) {
+        this(owner, row, text);
     }
 
     @Override
@@ -69,6 +76,16 @@ public abstract class AbstractInlineMenuButton implements InlineMenuButton {
         this.owner = owner;
     }
 
+    @Deprecated
+    public int getNum() {
+        return owner.rowAt(row).indexOf(this);
+    }
+
+    @Override
+    public void updateRow(int row) {
+        this.row = row;
+    }
+
     /**
      * Sets the text of the button and the callback data to the following.
      *
@@ -83,6 +100,6 @@ public abstract class AbstractInlineMenuButton implements InlineMenuButton {
     protected InlineKeyboardButton.InlineKeyboardButtonBuilder keyboardBuilder() {
         return InlineKeyboardButton.builder()
                 .text(text)
-                .callbackData("im." + owner.getInternalId() + "." + row + "." + num);
+                .callbackData("im." + owner.getInternalId() + "." + row + "." + owner.rowAt(row).indexOf(this));
     }
 }

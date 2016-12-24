@@ -19,6 +19,26 @@ public class InlineMenuRow {
     InlineMenuRow() {
     }
 
+    public static InlineMenuRowBuilder builder() {
+        return new InlineMenuRowBuilder<InlineMenuBuilder>(null, -1);
+    }
+
+    void setIndex(int index) {
+        buttons.forEach((button) -> button.updateRow(index));
+    }
+
+    public void addButton(InlineMenuButton button) {
+        buttons.add(button);
+    }
+
+    public void setButton(int index, InlineMenuButton button) {
+        buttons.set(index, button);
+    }
+
+    public int indexOf(InlineMenuButton button) {
+        return buttons.indexOf(button);
+    }
+
     /**
      * Get button at index
      * @param index index
@@ -36,6 +56,10 @@ public class InlineMenuRow {
      */
     public InlineMenuButton removeButton(int index) {
         return buttons.remove(index);
+    }
+
+    public void removeButton(InlineMenuButton button) {
+        buttons.remove(button);
     }
 
     /**

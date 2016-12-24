@@ -39,7 +39,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
      * @see pro.zackpollard.telegrambot.api.menu.button.impl.ToggleInlineMenuButton
      */
     public ToggleInlineMenuButtonBuilder<T> toggleButton() {
-        return new ToggleInlineMenuButtonBuilder<>(this, buttons().size());
+        return new ToggleInlineMenuButtonBuilder<>(this);
     }
 
     /**
@@ -49,7 +49,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
      * @see pro.zackpollard.telegrambot.api.menu.button.impl.ToggleInlineMenuButton
      */
     public ToggleInlineMenuButtonBuilder<T> toggleButton(String text) {
-        return new ToggleInlineMenuButtonBuilder<>(this, buttons().size(), text);
+        return new ToggleInlineMenuButtonBuilder<>(this, text);
     }
 
     /**
@@ -58,7 +58,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
      * @see pro.zackpollard.telegrambot.api.menu.button.impl.UserInputInlineMenuButton
      */
     public UserInputInlineMenuButtonBuilder<T> inputButton() {
-        return new UserInputInlineMenuButtonBuilder<>(this, buttons().size());
+        return new UserInputInlineMenuButtonBuilder<>(this);
     }
 
     /**
@@ -68,7 +68,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
      * @see pro.zackpollard.telegrambot.api.menu.button.impl.UserInputInlineMenuButton
      */
     public UserInputInlineMenuButtonBuilder<T> inputButton(String text) {
-        return new UserInputInlineMenuButtonBuilder<>(this, buttons().size(), text);
+        return new UserInputInlineMenuButtonBuilder<>(this, text);
     }
 
     /**
@@ -77,7 +77,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
      * @see pro.zackpollard.telegrambot.api.menu.button.impl.SubInlineMenuButton
      */
     public SubInlineMenuButtonBuilder<T> menuButton() {
-        return new SubInlineMenuButtonBuilder<>(this, buttons().size());
+        return new SubInlineMenuButtonBuilder<>(this);
     }
 
     /**
@@ -87,7 +87,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
      * @see pro.zackpollard.telegrambot.api.menu.button.impl.SubInlineMenuButton
      */
     public SubInlineMenuButtonBuilder<T> menuButton(String text) {
-        return new SubInlineMenuButtonBuilder<>(this, buttons().size(), text);
+        return new SubInlineMenuButtonBuilder<>(this, text);
     }
 
     /**
@@ -99,7 +99,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
             throw new UnsupportedOperationException("Back buttons are only allowed for sub menus!");
         }
 
-        return new BackButtonBuilder<>(this, buttons().size());
+        return new BackButtonBuilder<>(this);
     }
 
     /**
@@ -112,7 +112,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
             throw new UnsupportedOperationException("Back buttons are only allowed for sub menus!");
         }
 
-        return new BackButtonBuilder<>(this, buttons().size(), text);
+        return new BackButtonBuilder<>(this, text);
     }
 
     /**
@@ -137,6 +137,10 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
 
     private List<InlineMenuButton> buttons() {
         return row.buttons;
+    }
+
+    public InlineMenuRow buildRow() {
+        return row;
     }
 
     /**
