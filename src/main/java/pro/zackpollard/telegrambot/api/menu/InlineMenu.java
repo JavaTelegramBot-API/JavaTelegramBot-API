@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.user.User;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -64,6 +65,14 @@ public class InlineMenu {
     public void start() {
         apply();
         baseMessage.getBotInstance().getInlineMenuRegistry().register(this);
+    }
+
+    public List<InlineMenuRow> rows() {
+        return Collections.unmodifiableList(rows);
+    }
+
+    public int rowsSize() {
+        return rows.size();
     }
 
     /**
