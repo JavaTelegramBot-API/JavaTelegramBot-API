@@ -29,6 +29,8 @@ public class InputFile {
     private final File file;
     @Getter
     private final String fileName;
+    @Getter
+    private final InputStream inputStream;
 
     /**
      * Create an InputFile object based on an external URL to be sent within a SendableMessage
@@ -65,6 +67,7 @@ public class InputFile {
         this.fileName = FilenameUtils.getBaseName(url.toString()) + "." + extension;
         this.file = file;
         this.fileID = TelegramBot.getFileManager().getFileID(file);
+        this.inputStream = null;
     }
 
     /**
@@ -77,6 +80,7 @@ public class InputFile {
         this.file = file;
         this.fileName = file.getName();
         this.fileID = TelegramBot.getFileManager().getFileID(file);
+        this.inputStream = null;
     }
 
     /**
@@ -90,5 +94,21 @@ public class InputFile {
         this.file = null;
         this.fileName = null;
         this.fileID = fileID;
+        this.inputStream = null;
     }
+
+    /**
+     * Creates an InputFile object based on an InputStream object to be sent within a SendableMessage
+     *
+     * @param inputStream The input stream
+     * @param fileName The file name
+     */
+    public InputFile(InputStream inputStream, String fileName) {
+
+        this.file = null;
+        this.fileID = null;
+        this.fileName = fileName;
+        this.inputStream = inputStream;
+    }
+
 }

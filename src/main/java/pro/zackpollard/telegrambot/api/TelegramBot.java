@@ -8,6 +8,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
@@ -222,8 +223,17 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendPhoto")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("photo", photoMessage.getPhoto().getFileID() != null ? photoMessage.getPhoto().getFileID() : new FileContainer(photoMessage.getPhoto()), photoMessage.getPhoto().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = photoMessage.getPhoto();
+                    String fileId = inputFile.getFileID();
+                    if (fileId != null) {
+                        request.field("photo", fileId, false);
+                    } else if (inputFile.getInputStream() != null) {
+                        request.field("photo", new InputStreamBody(inputFile.getInputStream(), inputFile.getFileName()), true);
+                    } else { // assume file is not null (this is existing behaviour as of 1.5.1)
+                        request.field("photo", new FileContainer(inputFile), true);
+                    }
 
                     if (photoMessage.getCaption() != null)
                         request.field("caption", photoMessage.getCaption(), "application/json; charset=utf8;");
@@ -275,8 +285,17 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendAudio")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = audioMessage.getAudio();
+                    String fileId = inputFile.getFileID();
+                    if (fileId != null) {
+                        request.field("audio", fileId, false);
+                    } else if (inputFile.getInputStream() != null) {
+                        request.field("audio", new InputStreamBody(inputFile.getInputStream(), inputFile.getFileName()), true);
+                    } else { // assume file is not null (this is existing behaviour as of 1.5.1)
+                        request.field("audio", new FileContainer(inputFile), true);
+                    }
 
                     Utils.processReplyContent(request, audioMessage);
                     Utils.processNotificationContent(request, audioMessage);
@@ -327,8 +346,17 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendDocument")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = documentMessage.getDocument();
+                    String fileId = inputFile.getFileID();
+                    if (fileId != null) {
+                        request.field("document", fileId, false);
+                    } else if (inputFile.getInputStream() != null) {
+                        request.field("document", new InputStreamBody(inputFile.getInputStream(), inputFile.getFileName()), true);
+                    } else { // assume file is not null (this is existing behaviour as of 1.5.1)
+                        request.field("document", new FileContainer(inputFile), true);
+                    }
 
                     if (documentMessage.getCaption() != null)
                         request.field("caption", documentMessage.getCaption(), "application/json; charset=utf8;");
@@ -367,14 +395,23 @@ public final class TelegramBot {
 
                 break;
             }
-            case STICKER:
+            case STICKER: {
 
                 SendableStickerMessage stickerMessage = (SendableStickerMessage) message;
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendSticker")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = stickerMessage.getSticker();
+                    String fileId = inputFile.getFileID();
+                    if (fileId != null) {
+                        request.field("sticker", fileId, false);
+                    } else if (inputFile.getInputStream() != null) {
+                        request.field("sticker", new InputStreamBody(inputFile.getInputStream(), inputFile.getFileName()), true);
+                    } else { // assume file is not null (this is existing behaviour as of 1.5.1)
+                        request.field("sticker", new FileContainer(inputFile), true);
+                    }
 
                     Utils.processReplyContent(request, stickerMessage);
                     Utils.processNotificationContent(request, stickerMessage);
@@ -402,15 +439,24 @@ public final class TelegramBot {
                 }
 
                 break;
-
-            case VIDEO:
+            }
+            case VIDEO: {
 
                 SendableVideoMessage videoMessage = (SendableVideoMessage) message;
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVideo")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : new FileContainer(videoMessage.getVideo()), videoMessage.getVideo().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = videoMessage.getVideo();
+                    String fileId = inputFile.getFileID();
+                    if (fileId != null) {
+                        request.field("video", fileId, false);
+                    } else if (inputFile.getInputStream() != null) {
+                        request.field("video", new InputStreamBody(inputFile.getInputStream(), inputFile.getFileName()), true);
+                    } else { // assume file is not null (this is existing behaviour as of 1.5.1)
+                        request.field("video", new FileContainer(inputFile), true);
+                    }
 
                     if (videoMessage.getDuration() > 0) request.field("duration", videoMessage.getDuration());
                     if (videoMessage.getWidth() > 0) request.field("width", videoMessage.getWidth());
@@ -444,14 +490,24 @@ public final class TelegramBot {
                 }
 
                 break;
-            case VOICE:
+            }
+            case VOICE: {
 
                 SendableVoiceMessage voiceMessage = (SendableVoiceMessage) message;
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVoice")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = voiceMessage.getVoice();
+                    String fileId = inputFile.getFileID();
+                    if (fileId != null) {
+                        request.field("voice", fileId, false);
+                    } else if (inputFile.getInputStream() != null) {
+                        request.field("voice", new InputStreamBody(inputFile.getInputStream(), inputFile.getFileName()), true);
+                    } else { // assume file is not null (this is existing behaviour as of 1.5.1)
+                        request.field("voice", new FileContainer(inputFile), true);
+                    }
 
                     if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
 
@@ -484,8 +540,8 @@ public final class TelegramBot {
                 }
 
                 break;
-
-            case LOCATION:
+            }
+            case LOCATION: {
 
                 SendableLocationMessage locationMessage = (SendableLocationMessage) message;
 
@@ -505,7 +561,8 @@ public final class TelegramBot {
                 }
 
                 break;
-            case VENUE:
+            }
+            case VENUE: {
 
                 SendableVenueMessage venueMessage = (SendableVenueMessage) message;
 
@@ -518,7 +575,8 @@ public final class TelegramBot {
                             .field("title", venueMessage.getTitle())
                             .field("address", venueMessage.getAddress());
 
-                    if (venueMessage.getFoursquareId() != null) request.field("foursquare_id", venueMessage.getFoursquareId());
+                    if (venueMessage.getFoursquareId() != null)
+                        request.field("foursquare_id", venueMessage.getFoursquareId());
 
                     Utils.processReplyContent(request, venueMessage);
                     Utils.processNotificationContent(request, venueMessage);
@@ -530,7 +588,8 @@ public final class TelegramBot {
                 }
 
                 break;
-            case CHAT_ACTION:
+            }
+            case CHAT_ACTION: {
 
                 SendableChatAction sendableChatAction = (SendableChatAction) message;
 
@@ -545,6 +604,7 @@ public final class TelegramBot {
                 }
 
                 return null;
+            }
         }
 
         return Utils.checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
