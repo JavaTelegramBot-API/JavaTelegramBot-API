@@ -226,7 +226,7 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json; charset=utf8;");
 
                     InputFile inputFile = photoMessage.getPhoto();
-                    Utils.field(request, "photo", inputFile);
+                    Utils.processInputFileField(request, "photo", inputFile);
 
                     if (photoMessage.getCaption() != null)
                         request.field("caption", photoMessage.getCaption(), "application/json; charset=utf8;");
@@ -281,7 +281,7 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json; charset=utf8;");
 
                     InputFile inputFile = audioMessage.getAudio();
-                    Utils.field(request, "audio", inputFile);
+                    Utils.processInputFileField(request, "audio", inputFile);
 
                     Utils.processReplyContent(request, audioMessage);
                     Utils.processNotificationContent(request, audioMessage);
@@ -335,7 +335,7 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json; charset=utf8;");
 
                     InputFile inputFile = documentMessage.getDocument();
-                    Utils.field(request, "document", inputFile);
+                    Utils.processInputFileField(request, "document", inputFile);
 
                     if (documentMessage.getCaption() != null)
                         request.field("caption", documentMessage.getCaption(), "application/json; charset=utf8;");
@@ -383,7 +383,7 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json; charset=utf8;");
 
                     InputFile inputFile = stickerMessage.getSticker();
-                    Utils.field(request, "sticker", inputFile);
+                    Utils.processInputFileField(request, "sticker", inputFile);
 
                     Utils.processReplyContent(request, stickerMessage);
                     Utils.processNotificationContent(request, stickerMessage);
@@ -421,7 +421,7 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json; charset=utf8;");
 
                     InputFile inputFile = videoMessage.getVideo();
-                    Utils.field(request, "video", inputFile);
+                    Utils.processInputFileField(request, "video", inputFile);
 
                     if (videoMessage.getDuration() > 0) request.field("duration", videoMessage.getDuration());
                     if (videoMessage.getWidth() > 0) request.field("width", videoMessage.getWidth());
@@ -465,7 +465,7 @@ public final class TelegramBot {
                             .field("chat_id", chat.getId(), "application/json; charset=utf8;");
 
                     InputFile inputFile = voiceMessage.getVoice();
-                    Utils.field(request, "voice", inputFile);
+                    Utils.processInputFileField(request, "voice", inputFile);
 
                     if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
 

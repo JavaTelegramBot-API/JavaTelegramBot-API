@@ -163,7 +163,7 @@ public class Utils {
      * @param fieldName The name of the field.
      * @param inputFile The input file.
      */
-    public static void field(MultipartBody request, String fieldName, InputFile inputFile) {
+    public static void processInputFileField(MultipartBody request, String fieldName, InputFile inputFile) {
         String fileId = inputFile.getFileID();
         if (fileId != null) {
             request.field(fieldName, fileId, false);
