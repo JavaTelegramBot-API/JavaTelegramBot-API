@@ -2,12 +2,15 @@ package pro.zackpollard.telegrambot.api.utils;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.request.body.MultipartBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.message.ForceReply;
+import pro.zackpollard.telegrambot.api.chat.message.send.InputFile;
 import pro.zackpollard.telegrambot.api.chat.message.send.NotificationOptions;
 import pro.zackpollard.telegrambot.api.chat.message.send.ReplyingOptions;
+import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
@@ -151,6 +154,24 @@ public class Utils {
         }
 
         return false;
+    }
+
+    /**
+     * Adds an input file to a request, with the given field name.
+     *
+     * @param request The request to be added to.
+     * @param fieldName The name of the field.
+     * @param inputFile The input file.
+     */
+    public static void processInputFileField(MultipartBody request, String fieldName, InputFile inputFile) {
+        String fileId = inputFile.getFileID();
+        if (fileId != null) {
+            request.field(fieldName, fileId, false);
+        } else if (inputFile.getInputStream() != null) {
+            request.field(fieldName, new InputStreamBody(inputFile.getInputStream(), inputFile.getFileName()), true);
+        } else { // assume file is not null (this is existing behaviour as of 1.5.1)
+            request.field(fieldName, new FileContainer(inputFile), true);
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.menu;
 
+import java.util.Collections;
 import lombok.Getter;
 import lombok.Setter;
 import pro.zackpollard.telegrambot.api.TelegramBot;
