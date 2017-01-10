@@ -32,7 +32,7 @@ public class MessageCallbackQueryImpl extends CallbackQueryImpl implements Messa
     }
 
     @Override
-    public String getDate() {
+    public String getData() {
         return super.getData();
     }
 }

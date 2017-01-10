@@ -28,4 +28,9 @@ public class InlineCallbackQueryImpl extends CallbackQueryImpl implements Inline
     public String getInlineMessageId() {
         return inline_message_id;
     }
+
+    @Override
+    public String getData() {
+        return super.getData();
+    }
 }
