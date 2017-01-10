@@ -22,11 +22,17 @@ public class MessageCallbackQueryImpl extends CallbackQueryImpl implements Messa
 
     public static MessageCallbackQuery createMessageCallbackQuery(JSONObject jsonObject, TelegramBot telegramBot) {
 
+
         return jsonObject != null ? new MessageCallbackQueryImpl(jsonObject, telegramBot) : null;
     }
 
     @Override
     public Message getMessage() {
         return message;
+    }
+
+    @Override
+    public String getDate() {
+        return super.getData();
     }
 }

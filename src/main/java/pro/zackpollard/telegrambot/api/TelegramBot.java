@@ -10,6 +10,7 @@ import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
+import pro.zackpollard.telegrambot.api.chat.edit.EditableGameScore;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -21,7 +22,9 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.conversations.ConversationRegistry;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
+import pro.zackpollard.telegrambot.api.games.GameScoreEditResponse;
 import pro.zackpollard.telegrambot.api.internal.chat.*;
+import pro.zackpollard.telegrambot.api.internal.chat.game.GameScoreEditResponseImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.conversations.ConversationRegistryImpl;
@@ -33,6 +36,8 @@ import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.menu.InlineMenuRegistry;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 import pro.zackpollard.telegrambot.api.utils.Utils;
+
+import java.net.URL;
 
 /**
  * @author Zack Pollard
@@ -530,6 +535,26 @@ public final class TelegramBot {
                 }
 
                 break;
+            case GAME: {
+
+                SendableGameMessage gameMessage = (SendableGameMessage) message;
+
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendGame")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
+                            .field("game_short_name", gameMessage.getGameShortName(), "application/json; charset=utf8;");
+
+                    Utils.processReplyContent(request, gameMessage);
+                    Utils.processNotificationContent(request, gameMessage);
+
+                    response = request.asString();
+                    jsonResponse = Utils.processResponse(response);
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
             case CHAT_ACTION:
 
                 SendableChatAction sendableChatAction = (SendableChatAction) message;
@@ -862,12 +887,16 @@ public final class TelegramBot {
      * @param callbackQueryId   The ID of the callback query you are responding to
      * @param text              The text you would like to respond with
      * @param showAlert         True will show the text as an alert, false will show it as a toast notification
+     * @param url               URL that will be opened by the user's client. If you have created a Game and accepted
+     *                          the conditions via @Botfather, specify the URL that opens your game – note that this
+     *                          will only work if the query comes from a callback_game button. Otherwise, you may use
+     *                           links like telegram.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @return True if the response was sent successfully, otherwise False
      */
-    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert, URL url) {
 
-        if(callbackQueryId != null && text != null) {
+        if(callbackQueryId != null && (text != null || url != null)) {
 
             HttpResponse<String> response;
             JSONObject jsonResponse;
@@ -876,7 +905,8 @@ public final class TelegramBot {
                 MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
                         .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
                         .field("text", text, "application/json; charset=utf8;")
-                        .field("show_alert", showAlert);
+                        .field("show_alert", showAlert)
+                        .field("url", url != null ? url.toExternalForm() : null, "application/json; charset=utf8;");
 
                 response = requests.asString();
                 jsonResponse = Utils.processResponse(response);
@@ -891,6 +921,12 @@ public final class TelegramBot {
         }
 
         return false;
+    }
+
+    @Deprecated
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
+
+        return this.answerCallbackQuery(callbackQueryId, text, showAlert, null);
     }
 
     /**
@@ -959,6 +995,34 @@ public final class TelegramBot {
         }
 
         return false;
+    }
+
+    public GameScoreEditResponse setGameScore(EditableGameScore editableGameScore) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "setGameScore")
+                    .field("user_id", editableGameScore.getUserId())
+                    .field("score", editableGameScore.getScore())
+                    .field("disable_edit_message", editableGameScore.isEditMessage())
+                    .field("chat_id", editableGameScore.getInlineMessageId() == null ? editableGameScore.getChatId() : null)
+                    .field("message_id", editableGameScore.getInlineMessageId() == null ? editableGameScore.getMessageId() : null)
+                    .field("inline_message_id", editableGameScore.getInlineMessageId(), "application/json; charset=utf8;");
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                return GameScoreEditResponseImpl.createGameScoreEditResponse(jsonResponse, this);
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

@@ -3,7 +3,9 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
+import pro.zackpollard.telegrambot.api.internal.chat.inline.GameInlineCallbackQueryImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.inline.InlineCallbackQueryImpl;
+import pro.zackpollard.telegrambot.api.internal.chat.message.GameMessageMessageCallbackQueryImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageCallbackQueryImpl;
 import pro.zackpollard.telegrambot.api.internal.user.UserImpl;
 import pro.zackpollard.telegrambot.api.user.User;
@@ -16,6 +18,7 @@ public class CallbackQueryImpl implements CallbackQuery {
     private final String id;
     private final User from;
     private final String data;
+    private final String chatInstance;
 
     private final JSONObject jsonCallbackQuery;
 
@@ -25,7 +28,8 @@ public class CallbackQueryImpl implements CallbackQuery {
 
         this.id = jsonObject.getString("id");
         this.from = UserImpl.createUser(jsonObject.getJSONObject("from"));
-        this.data = jsonObject.getString("data");
+        this.data = jsonObject.optString("data");
+        this.chatInstance = jsonObject.getString("chat_instance");
 
         this.jsonCallbackQuery = jsonObject;
 
@@ -39,10 +43,22 @@ public class CallbackQueryImpl implements CallbackQuery {
 
             if (!jsonObject.isNull("message")) {
 
-                callbackQuery = MessageCallbackQueryImpl.createMessageCallbackQuery(jsonObject, telegramBot);
+                if(!jsonObject.isNull("game_short_name")) {
+
+                    callbackQuery = GameMessageMessageCallbackQueryImpl.createGameCallbackQuery(jsonObject, telegramBot);
+                } else {
+
+                    callbackQuery = MessageCallbackQueryImpl.createCallbackQuery(jsonObject, telegramBot);
+                }
             } else if (!jsonObject.isNull("inline_message_id")) {
 
-                callbackQuery = InlineCallbackQueryImpl.createInlineCallbackQuery(jsonObject, telegramBot);
+                if(!jsonObject.isNull("game_short_name")) {
+
+                    callbackQuery = GameInlineCallbackQueryImpl.createGameInlineCallbackQuery(jsonObject, telegramBot);
+                } else {
+
+                    callbackQuery = InlineCallbackQueryImpl.createInlineCallbackQuery(jsonObject, telegramBot);
+                }
             } else {
 
                 callbackQuery = new CallbackQueryImpl(jsonObject, telegramBot);
@@ -63,6 +79,11 @@ public class CallbackQueryImpl implements CallbackQuery {
     @Override
     public String getId() {
         return this.id;
+    }
+
+    @Override
+    public String getChatInstance() {
+        return chatInstance;
     }
 
     @Override

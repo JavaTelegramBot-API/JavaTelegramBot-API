@@ -1,6 +1,8 @@
 package pro.zackpollard.telegrambot.api.event;
 
 import pro.zackpollard.telegrambot.api.event.chat.*;
+import pro.zackpollard.telegrambot.api.event.chat.game.GameInlineCallbackQueryReceivedEvent;
+import pro.zackpollard.telegrambot.api.event.chat.game.GameMessageCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineResultChosenEvent;
@@ -81,5 +83,11 @@ public interface Listener {
     }
 
     default void onInlineCallbackQueryReceivedEvent(InlineCallbackQueryReceivedEvent event) {
+    }
+
+    default void onGameMessageCallbackQueryReceivedEvent(GameMessageCallbackQueryReceivedEvent event) {
+    }
+
+    default void onGameInlineCallbackQueryReceivedEvent(GameInlineCallbackQueryReceivedEvent event) {
     }
 }

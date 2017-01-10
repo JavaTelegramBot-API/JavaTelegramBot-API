@@ -12,7 +12,7 @@ public class InlineCallbackQueryImpl extends CallbackQueryImpl implements Inline
 
     private final String inline_message_id;
 
-    private InlineCallbackQueryImpl(JSONObject jsonObject, TelegramBot telegramBot) {
+    protected InlineCallbackQueryImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         super(jsonObject, telegramBot);
 

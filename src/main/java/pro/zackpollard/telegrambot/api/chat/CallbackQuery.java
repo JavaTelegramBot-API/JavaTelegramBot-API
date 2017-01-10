@@ -24,6 +24,13 @@ public interface CallbackQuery {
     String getId();
 
     /**
+     * Gets the unique identifier for the chat instance that this game callback query is being sent from
+     *
+     * @return The unique identifier for the chat this is from
+     */
+    String getChatInstance();
+
+    /**
      * Gets the CallbackQueryType for this callback query
      *
      * @return The CallbackQueryType for this callback query
@@ -43,8 +50,11 @@ public interface CallbackQuery {
     /**
      * Gets the data that was originally sent with the button used to trigger this CallbackQuery
      *
-     * @return The data that was originall sent with the button used to trigger this CallbackQuery
+     * @deprecated This method is deprecated in favour of the more specific CallbackQuery objects, as it can sometimes
+     * be null here.
+     * @return The data that was original sent with the button used to trigger this CallbackQuery, or null
      */
+    @Deprecated
     String getData();
 
     /**

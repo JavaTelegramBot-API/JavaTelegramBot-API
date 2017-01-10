@@ -7,10 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.inline.GameInlineCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineCallbackQuery;
+import pro.zackpollard.telegrambot.api.chat.message.GameMessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.message.MessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.event.chat.*;
+import pro.zackpollard.telegrambot.api.event.chat.game.GameInlineCallbackQueryReceivedEvent;
+import pro.zackpollard.telegrambot.api.event.chat.game.GameMessageCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineResultChosenEvent;
@@ -248,6 +252,14 @@ public class RequestUpdatesManager extends UpdateManager {
                                             }
                                             case INLINE_MESSAGE: {
                                                 eventManager.callEvent(new InlineCallbackQueryReceivedEvent((InlineCallbackQuery) update.getCallbackQuery()));
+                                                break;
+                                            }
+                                            case MESSAGE_GAME: {
+                                                eventManager.callEvent(new GameMessageCallbackQueryReceivedEvent((GameMessageCallbackQuery) update.getCallbackQuery()));
+                                                break;
+                                            }
+                                            case INLINE_GAME: {
+                                                eventManager.callEvent(new GameInlineCallbackQueryReceivedEvent((GameInlineCallbackQuery) update.getCallbackQuery()));
                                                 break;
                                             }
                                         }
