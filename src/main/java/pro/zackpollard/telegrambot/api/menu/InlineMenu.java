@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.menu;
 
+import java.util.Collections;
 import lombok.Getter;
 import lombok.Setter;
 import pro.zackpollard.telegrambot.api.TelegramBot;
@@ -54,6 +55,14 @@ public class InlineMenu {
         return new InlineMenuBuilder(bot).forWhom(forWhom);
     }
 
+    public List<InlineMenuRow> rows() {
+        return Collections.unmodifiableList(rows);
+    }
+
+    public int size() {
+        return rows.size();
+    }
+
     /**
      * Starts the inline menu, applies it's keyboard to the menu.
      * Registers itself as the menu used by the message
@@ -83,6 +92,30 @@ public class InlineMenu {
      */
     public InlineMenuRow rowAt(int index) {
         return rows.get(index);
+    }
+
+    public void deleteRowAt(int index) {
+        rows.remove(index);
+        rows.forEach((row) -> row.setIndex(rows.indexOf(row))); // ENFORCE CURRENT ROW INDEX TO ALL BUTTONS
+        apply();
+    }
+
+    public void deleteRow(InlineMenuRow row) {
+        rows.remove(row);
+        rows.forEach((menuRow) -> menuRow.setIndex(rows.indexOf(menuRow))); // ENFORCE CURRENT ROW INDEX TO ALL BUTTONS
+        apply();
+    }
+
+    public void addRow(InlineMenuRow row) {
+        row.setIndex(rows.size());
+        rows.add(row);
+        apply();
+    }
+
+    public void setRow(int index, InlineMenuRow row) {
+        row.setIndex(index);
+        rows.set(index, row);
+        apply();
     }
 
     /**

@@ -4,6 +4,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage.SendableTextMessageBuilder;
+import pro.zackpollard.telegrambot.api.menu.button.InlineMenuButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
 public class InlineMenuBuilder extends AbstractInlineMenuBuilder<InlineMenuBuilder> {
     private final TelegramBot bot;
     private Chat forWhom;
-    private SendableTextMessageBuilder message;
+    private SendableTextMessageBuilder messageBuilder;
+    private Message message;
     List<InlineMenu> subs = new ArrayList<>();
 
     InlineMenuBuilder(TelegramBot bot) {
@@ -24,12 +26,22 @@ public class InlineMenuBuilder extends AbstractInlineMenuBuilder<InlineMenuBuild
     }
 
     /**
-     * REQUIRED. Set message to be used
-     * @param builder Message to be usd
+     * REQUIRED OR message(Message). Set message to be used
+     * @param builder Message to be used
      * @return this
      */
     public InlineMenuBuilder message(SendableTextMessageBuilder builder) {
-        this.message = builder;
+        this.messageBuilder = builder;
+        return this;
+    }
+
+    /**
+     * REQUIRED OR message(SendableTextMessageBuilder). Set message to be used
+     * @param baseMessage Message to be used
+     * @return this
+     */
+    public InlineMenuBuilder message(Message baseMessage) {
+        this.message = baseMessage;
         return this;
     }
 
@@ -60,7 +72,7 @@ public class InlineMenuBuilder extends AbstractInlineMenuBuilder<InlineMenuBuild
 
     @Override
     public InlineMenu buildMenu() {
-        Message baseMessage = bot.sendMessage(forWhom, message.build());
+        Message baseMessage = message != null ? message : bot.sendMessage(forWhom, messageBuilder.build());
         InlineMenu menu = buildMenu(baseMessage);
 
         subs.forEach((sub) -> {

@@ -8,6 +8,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
 import pro.zackpollard.telegrambot.api.chat.edit.EditableGameScore;
@@ -227,8 +228,10 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendPhoto")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("photo", photoMessage.getPhoto().getFileID() != null ? photoMessage.getPhoto().getFileID() : new FileContainer(photoMessage.getPhoto()), photoMessage.getPhoto().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = photoMessage.getPhoto();
+                    Utils.processInputFileField(request, "photo", inputFile);
 
                     if (photoMessage.getCaption() != null)
                         request.field("caption", photoMessage.getCaption(), "application/json; charset=utf8;");
@@ -280,8 +283,10 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendAudio")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("audio", audioMessage.getAudio().getFileID() != null ? audioMessage.getAudio().getFileID() : new FileContainer(audioMessage.getAudio()), audioMessage.getAudio().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = audioMessage.getAudio();
+                    Utils.processInputFileField(request, "audio", inputFile);
 
                     Utils.processReplyContent(request, audioMessage);
                     Utils.processNotificationContent(request, audioMessage);
@@ -332,8 +337,10 @@ public final class TelegramBot {
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendDocument")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("document", documentMessage.getDocument().getFileID() != null ? documentMessage.getDocument().getFileID() : new FileContainer(documentMessage.getDocument()), documentMessage.getDocument().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = documentMessage.getDocument();
+                    Utils.processInputFileField(request, "document", inputFile);
 
                     if (documentMessage.getCaption() != null)
                         request.field("caption", documentMessage.getCaption(), "application/json; charset=utf8;");
@@ -372,14 +379,16 @@ public final class TelegramBot {
 
                 break;
             }
-            case STICKER:
+            case STICKER: {
 
                 SendableStickerMessage stickerMessage = (SendableStickerMessage) message;
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendSticker")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("sticker", stickerMessage.getSticker().getFileID() != null ? stickerMessage.getSticker().getFileID() : new FileContainer(stickerMessage.getSticker()), stickerMessage.getSticker().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = stickerMessage.getSticker();
+                    Utils.processInputFileField(request, "sticker", inputFile);
 
                     Utils.processReplyContent(request, stickerMessage);
                     Utils.processNotificationContent(request, stickerMessage);
@@ -407,15 +416,17 @@ public final class TelegramBot {
                 }
 
                 break;
-
-            case VIDEO:
+            }
+            case VIDEO: {
 
                 SendableVideoMessage videoMessage = (SendableVideoMessage) message;
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVideo")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("video", videoMessage.getVideo().getFileID() != null ? videoMessage.getVideo().getFileID() : new FileContainer(videoMessage.getVideo()), videoMessage.getVideo().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = videoMessage.getVideo();
+                    Utils.processInputFileField(request, "video", inputFile);
 
                     if (videoMessage.getDuration() > 0) request.field("duration", videoMessage.getDuration());
                     if (videoMessage.getWidth() > 0) request.field("width", videoMessage.getWidth());
@@ -449,14 +460,17 @@ public final class TelegramBot {
                 }
 
                 break;
-            case VOICE:
+            }
+            case VOICE: {
 
                 SendableVoiceMessage voiceMessage = (SendableVoiceMessage) message;
 
                 try {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVoice")
-                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
-                            .field("voice", voiceMessage.getVoice().getFileID() != null ? voiceMessage.getVoice().getFileID() : new FileContainer(voiceMessage.getVoice()), voiceMessage.getVoice().getFileID() == null);
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = voiceMessage.getVoice();
+                    Utils.processInputFileField(request, "voice", inputFile);
 
                     if (voiceMessage.getDuration() > 0) request.field("duration", voiceMessage.getDuration());
 
@@ -489,8 +503,8 @@ public final class TelegramBot {
                 }
 
                 break;
-
-            case LOCATION:
+            }
+            case LOCATION: {
 
                 SendableLocationMessage locationMessage = (SendableLocationMessage) message;
 
@@ -510,7 +524,8 @@ public final class TelegramBot {
                 }
 
                 break;
-            case VENUE:
+            }
+            case VENUE: {
 
                 SendableVenueMessage venueMessage = (SendableVenueMessage) message;
 
@@ -523,7 +538,8 @@ public final class TelegramBot {
                             .field("title", venueMessage.getTitle())
                             .field("address", venueMessage.getAddress());
 
-                    if (venueMessage.getFoursquareId() != null) request.field("foursquare_id", venueMessage.getFoursquareId());
+                    if (venueMessage.getFoursquareId() != null)
+                        request.field("foursquare_id", venueMessage.getFoursquareId());
 
                     Utils.processReplyContent(request, venueMessage);
                     Utils.processNotificationContent(request, venueMessage);
@@ -535,6 +551,7 @@ public final class TelegramBot {
                 }
 
                 break;
+            }
             case GAME: {
 
                 SendableGameMessage gameMessage = (SendableGameMessage) message;
@@ -555,7 +572,7 @@ public final class TelegramBot {
 
                 break;
             }
-            case CHAT_ACTION:
+            case CHAT_ACTION: {
 
                 SendableChatAction sendableChatAction = (SendableChatAction) message;
 
@@ -570,6 +587,7 @@ public final class TelegramBot {
                 }
 
                 return null;
+            }
         }
 
         return Utils.checkResponseStatus(jsonResponse) ? (messageResponse != null ? messageResponse : MessageImpl.createMessage(jsonResponse, this)) : null;
@@ -887,16 +905,12 @@ public final class TelegramBot {
      * @param callbackQueryId   The ID of the callback query you are responding to
      * @param text              The text you would like to respond with
      * @param showAlert         True will show the text as an alert, false will show it as a toast notification
-     * @param url               URL that will be opened by the user's client. If you have created a Game and accepted
-     *                          the conditions via @Botfather, specify the URL that opens your game – note that this
-     *                          will only work if the query comes from a callback_game button. Otherwise, you may use
-     *                           links like telegram.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @return True if the response was sent successfully, otherwise False
      */
-    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert, URL url) {
+    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
 
-        if(callbackQueryId != null && (text != null || url != null)) {
+        if(callbackQueryId != null && text != null) {
 
             HttpResponse<String> response;
             JSONObject jsonResponse;
@@ -905,8 +919,7 @@ public final class TelegramBot {
                 MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
                         .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
                         .field("text", text, "application/json; charset=utf8;")
-                        .field("show_alert", showAlert)
-                        .field("url", url != null ? url.toExternalForm() : null, "application/json; charset=utf8;");
+                        .field("show_alert", showAlert);
 
                 response = requests.asString();
                 jsonResponse = Utils.processResponse(response);
@@ -921,12 +934,6 @@ public final class TelegramBot {
         }
 
         return false;
-    }
-
-    @Deprecated
-    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
-
-        return this.answerCallbackQuery(callbackQueryId, text, showAlert, null);
     }
 
     /**
@@ -995,34 +1002,6 @@ public final class TelegramBot {
         }
 
         return false;
-    }
-
-    public GameScoreEditResponse setGameScore(EditableGameScore editableGameScore) {
-
-        HttpResponse<String> response;
-        JSONObject jsonResponse;
-
-        try {
-            MultipartBody request = Unirest.post(getBotAPIUrl() + "setGameScore")
-                    .field("user_id", editableGameScore.getUserId())
-                    .field("score", editableGameScore.getScore())
-                    .field("disable_edit_message", editableGameScore.isEditMessage())
-                    .field("chat_id", editableGameScore.getInlineMessageId() == null ? editableGameScore.getChatId() : null)
-                    .field("message_id", editableGameScore.getInlineMessageId() == null ? editableGameScore.getMessageId() : null)
-                    .field("inline_message_id", editableGameScore.getInlineMessageId(), "application/json; charset=utf8;");
-
-            response = request.asString();
-            jsonResponse = Utils.processResponse(response);
-
-            if(jsonResponse != null) {
-
-                return GameScoreEditResponseImpl.createGameScoreEditResponse(jsonResponse, this);
-            }
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     /**

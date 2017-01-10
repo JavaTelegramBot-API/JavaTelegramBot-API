@@ -61,4 +61,6 @@ public interface InlineMenuButton extends MenuPressable {
      * @return this as an inline keyboard button
      */
     InlineKeyboardButton toKeyboardButton();
+
+    void updateRow(int row);
 }

@@ -13,19 +13,26 @@ import pro.zackpollard.telegrambot.api.menu.button.callback.ButtonCallback;
  */
 public abstract class AbstractButtonBuilder<T, E extends AbstractInlineMenuBuilder> {
     protected final InlineMenuRowBuilder<E> parent;
-    protected final int index;
     protected String text;
     protected ButtonCallback callback;
 
-    protected AbstractButtonBuilder(InlineMenuRowBuilder<E> parent, int index) {
+    protected AbstractButtonBuilder(InlineMenuRowBuilder<E> parent) {
         this.parent = parent;
-        this.index = index;
     }
 
-    protected AbstractButtonBuilder(InlineMenuRowBuilder<E> parent, int index, String text) {
+    protected AbstractButtonBuilder(InlineMenuRowBuilder<E> parent, String text) {
         this.parent = parent;
-        this.index = index;
         this.text = text;
+    }
+
+    @Deprecated
+    protected AbstractButtonBuilder(InlineMenuRowBuilder<E> parent, int index) {
+        this(parent);
+    }
+
+    @Deprecated
+    protected AbstractButtonBuilder(InlineMenuRowBuilder<E> parent, int index, String text) {
+        this(parent, text);
     }
 
     protected abstract T instance();
@@ -35,6 +42,8 @@ public abstract class AbstractButtonBuilder<T, E extends AbstractInlineMenuBuild
      * @return parent row builder
      */
     public abstract InlineMenuRowBuilder<E> build();
+
+    public abstract InlineMenuButton buildButton();
 
     /**
      * Set the text of the current button. Required call unless provided at init
@@ -87,7 +96,7 @@ public abstract class AbstractButtonBuilder<T, E extends AbstractInlineMenuBuild
         return parent.build().buildMenu();
     }
 
-    protected InlineMenuButton processButton(InlineMenuButton button) {
-        return button.setCallback(callback);
+    protected <BT extends InlineMenuButton> BT processButton(BT button) {
+        return (BT) button.setCallback(callback);
     }
 }

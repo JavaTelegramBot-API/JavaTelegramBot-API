@@ -9,8 +9,10 @@ import pro.zackpollard.telegrambot.api.conversations.ConversationContext;
 import pro.zackpollard.telegrambot.api.conversations.prompt.TextPrompt;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardButton;
 import pro.zackpollard.telegrambot.api.menu.InlineMenu;
+import pro.zackpollard.telegrambot.api.menu.InlineMenuBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.AbstractInlineMenuButton;
 import pro.zackpollard.telegrambot.api.menu.button.InlineMenuButton;
+import pro.zackpollard.telegrambot.api.menu.button.builder.UserInputInlineMenuButtonBuilder;
 
 import java.util.function.BiConsumer;
 
@@ -24,14 +26,32 @@ public class UserInputInlineMenuButton extends AbstractInlineMenuButton {
     private final BiConsumer<InlineMenuButton, String> textCallback;
     private boolean inputGiven = true;
 
-    public UserInputInlineMenuButton(InlineMenu owner, int row, int num, String text, BiConsumer<InlineMenuButton, String> textCallback) {
-        super(owner, row, num, text);
+    public UserInputInlineMenuButton(InlineMenu owner, int row, String text, BiConsumer<InlineMenuButton, String> textCallback) {
+        super(owner, row, text);
         this.textCallback = textCallback;
     }
 
-    public UserInputInlineMenuButton(InlineMenu owner, int row, int num, BiConsumer<InlineMenuButton, String> textCallback) {
-        super(owner, row, num);
+    public UserInputInlineMenuButton(InlineMenu owner, int row, BiConsumer<InlineMenuButton, String> textCallback) {
+        super(owner, row);
         this.textCallback = textCallback;
+    }
+
+    @Deprecated
+    public UserInputInlineMenuButton(InlineMenu owner, int row, int num, String text, BiConsumer<InlineMenuButton, String> textCallback) {
+        this(owner, row, text, textCallback);
+    }
+
+    @Deprecated
+    public UserInputInlineMenuButton(InlineMenu owner, int row, int num, BiConsumer<InlineMenuButton, String> textCallback) {
+        this(owner, row, textCallback);
+    }
+
+    public static UserInputInlineMenuButtonBuilder builder() {
+        return new UserInputInlineMenuButtonBuilder<InlineMenuBuilder>(null);
+    }
+
+    public static UserInputInlineMenuButtonBuilder builder(String text) {
+        return new UserInputInlineMenuButtonBuilder<InlineMenuBuilder>(null, text);
     }
 
     @Override
