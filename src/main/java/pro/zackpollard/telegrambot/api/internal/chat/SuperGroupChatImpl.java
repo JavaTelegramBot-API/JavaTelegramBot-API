@@ -14,6 +14,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     private final long id;
     private final String username;
     private final String title;
+    private final boolean allMembersAreAdministrators;
 
     private final TelegramBot telegramBot;
 
@@ -22,6 +23,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         this.id = jsonObject.getLong("id");
         this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
+        this.allMembersAreAdministrators = jsonObject.getBoolean("all_members_are_administrators");
         this.telegramBot = telegramBot;
     }
 
@@ -30,6 +32,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         this.id = chatID;
         this.title = null;
         this.username = null;
+        this.allMembersAreAdministrators = false;
         this.telegramBot = telegramBot;
     }
 
@@ -72,6 +75,11 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAllMembersAreAdministrators() {
+        return allMembersAreAdministrators;
     }
 
     @Override

@@ -16,6 +16,13 @@ public interface GroupChat extends Chat {
     }
 
     /**
+     * Used to get whether all of the members in the chat are administrators
+     *
+     * @return True if all members are administrators, otherwise False
+     */
+    boolean isAllMembersAreAdministrators();
+
+    /**
      * This method will kick the User with the specified User ID from the chat if they are currently in it
      *
      * @param userId The User ID of the User you want to kick from the chat

@@ -13,6 +13,7 @@ public class GroupChatImpl implements GroupChat {
 
     private final int id;
     private final String title;
+    private final boolean allMembersAreAdministrators;
 
     private final TelegramBot telegramBot;
 
@@ -20,6 +21,7 @@ public class GroupChatImpl implements GroupChat {
 
         this.id = jsonObject.getInt("id");
         this.title = jsonObject.getString("title");
+        this.allMembersAreAdministrators = jsonObject.getBoolean("all_members_are_administrators");
         this.telegramBot = telegramBot;
     }
 
@@ -27,6 +29,7 @@ public class GroupChatImpl implements GroupChat {
 
         this.id = chatID;
         this.title = null;
+        this.allMembersAreAdministrators = false;
         this.telegramBot = telegramBot;
     }
 
@@ -64,6 +67,11 @@ public class GroupChatImpl implements GroupChat {
     public Message sendMessage(SendableMessage message) {
 
         return telegramBot.sendMessage(this, message);
+    }
+
+    @Override
+    public boolean isAllMembersAreAdministrators() {
+        return allMembersAreAdministrators;
     }
 
     @Override
