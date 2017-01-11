@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import com.mashape.unirest.request.body.MultipartBody;
@@ -906,11 +907,29 @@ public final class TelegramBot {
      * @param text              The text you would like to respond with
      * @param showAlert         True will show the text as an alert, false will show it as a toast notification
      *
+     * @deprecated  This method is deprecated in favour of the {@link #answerCallbackQuery(String, CallbackQueryResponse)}
+     *              method, this should be used for all new implementations
+     *
      * @return True if the response was sent successfully, otherwise False
      */
+    @Deprecated
     public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
 
-        if(callbackQueryId != null && text != null) {
+        return this.answerCallbackQuery(callbackQueryId, CallbackQueryResponse.builder().text(text).showAlert(showAlert).build());
+    }
+
+    /**
+     * This allows you to respond to a callback query with some text as a response. This will either show up as an
+     * alert or as a toast on the telegram client
+     *
+     * @param callbackQueryId       The ID of the callback query you are responding to
+     * @param callbackQueryResponse The response that you would like to send in reply to this callback query
+     *
+     * @return True if the response was sent successfully, otherwise False
+     */
+    public boolean answerCallbackQuery(String callbackQueryId, CallbackQueryResponse callbackQueryResponse) {
+
+        if(callbackQueryId != null && callbackQueryResponse.getText() != null) {
 
             HttpResponse<String> response;
             JSONObject jsonResponse;
@@ -918,8 +937,10 @@ public final class TelegramBot {
             try {
                 MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
                         .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
-                        .field("text", text, "application/json; charset=utf8;")
-                        .field("show_alert", showAlert);
+                        .field("text", callbackQueryResponse.getText(), "application/json; charset=utf8;")
+                        .field("show_alert", callbackQueryResponse.isShowAlert())
+                        .field("url", callbackQueryResponse.getURL().toExternalForm(), "application/json; charset=utf8;")
+                        .field("cache_time", callbackQueryResponse.getCacheTime());
 
                 response = requests.asString();
                 jsonResponse = Utils.processResponse(response);
