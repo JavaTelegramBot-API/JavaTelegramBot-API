@@ -18,6 +18,7 @@ public class InlineKeyboardButton {
     private final String url;
     private final String callback_data;
     private final String switch_inline_query;
+    private final String switch_inline_query_current_chat;
     private final CallbackGame callback_game;
 
     /**
@@ -67,6 +68,18 @@ public class InlineKeyboardButton {
     }
 
     /**
+     * Optional. If set, pressing the button will insert the bot‘s username and the specified inline query in the
+     * current chat's input field. Can be empty, in which case only the bot’s username will be inserted.
+     * This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting
+     * something from multiple options.
+     *
+     * @return The switch inline query current chat parameter
+     */
+    public String getSwitchInlineQueryCurrentChat() {
+        return switch_inline_query_current_chat;
+    }
+
+    /**
      * Description of the game that will be launched when the user presses the button.
      * NOTE: This is currently just a placeholder for when telegram implements the CallbackGame functionality
      * NOTE: This type of button must always be the first button in the first row.
@@ -84,6 +97,7 @@ public class InlineKeyboardButton {
         private String callback_data = null;
         private String switch_inline_query = null;
         private CallbackGame callback_game = null;
+        private String switch_inline_query_current_chat = null;
 
         InlineKeyboardButtonBuilder() {
         }
@@ -114,6 +128,7 @@ public class InlineKeyboardButton {
             this.callback_data = null;
             this.switch_inline_query = null;
             this.callback_game = null;
+            this.switch_inline_query_current_chat = null;
             return this;
         }
 
@@ -129,6 +144,7 @@ public class InlineKeyboardButton {
             this.callback_data = callbackData;
             this.url = null;
             this.switch_inline_query = null;
+            this.switch_inline_query_current_chat = null;
             this.callback_game = null;
             return this;
         }
@@ -145,6 +161,29 @@ public class InlineKeyboardButton {
          */
         public InlineKeyboardButton.InlineKeyboardButtonBuilder switchInlineQuery(String switchInlineQuery) {
             this.switch_inline_query = switchInlineQuery;
+            this.url = null;
+            this.callback_data = null;
+            this.callback_game = null;
+            this.switch_inline_query_current_chat = null;
+            return this;
+        }
+
+        /**
+         * *Optional*
+         * If set, pressing the button will insert the bot‘s username and the specified inline query in the current
+         * chat's input field. Can be empty, in which case only the bot’s username will be inserted.
+         * This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting
+         * something from multiple options.
+         *
+         * @param switchInlineQueryCurrentChat The parameters you want to be added after the bots username in the inline
+         *                                     query. Can be an empty string if you only want the bots username to be
+         *                                     inserted.
+         *
+         * @return The builder object
+         */
+        public InlineKeyboardButton.InlineKeyboardButtonBuilder switchInlineQueryCurrentChat(String switchInlineQueryCurrentChat) {
+            this.switch_inline_query_current_chat = switchInlineQueryCurrentChat;
+            this.switch_inline_query = null;
             this.url = null;
             this.callback_data = null;
             this.callback_game = null;
@@ -177,7 +216,7 @@ public class InlineKeyboardButton {
          * @return A InlineKeyboardButton object based on the previously provided values
          */
         public InlineKeyboardButton build() {
-            return new InlineKeyboardButton(text, url, callback_data, switch_inline_query, callback_game);
+            return new InlineKeyboardButton(text, url, callback_data, switch_inline_query, switch_inline_query_current_chat, callback_game);
         }
     }
 }
