@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import pro.zackpollard.telegrambot.api.games.CallbackGame;
 
 /**
  * @author zackp
@@ -17,6 +18,7 @@ public class InlineKeyboardButton {
     private final String url;
     private final String callback_data;
     private final String switch_inline_query;
+    private final CallbackGame callback_game;
 
     /**
      * This builder will allow you to progressively construct this object.
@@ -64,12 +66,24 @@ public class InlineKeyboardButton {
         return switch_inline_query;
     }
 
+    /**
+     * Description of the game that will be launched when the user presses the button.
+     * NOTE: This is currently just a placeholder for when telegram implements the CallbackGame functionality
+     * NOTE: This type of button must always be the first button in the first row.
+     *
+     * @return The CallbackGame that will be sent with this button
+     */
+    public CallbackGame getCallbackGame() {
+        return callback_game;
+    }
+
     @ToString
     public static class InlineKeyboardButtonBuilder {
         private String text = null;
         private String url = null;
         private String callback_data = null;
         private String switch_inline_query = null;
+        private CallbackGame callback_game = null;
 
         InlineKeyboardButtonBuilder() {
         }
@@ -99,6 +113,7 @@ public class InlineKeyboardButton {
             this.url = url;
             this.callback_data = null;
             this.switch_inline_query = null;
+            this.callback_game = null;
             return this;
         }
 
@@ -114,6 +129,7 @@ public class InlineKeyboardButton {
             this.callback_data = callbackData;
             this.url = null;
             this.switch_inline_query = null;
+            this.callback_game = null;
             return this;
         }
 
@@ -131,6 +147,27 @@ public class InlineKeyboardButton {
             this.switch_inline_query = switchInlineQuery;
             this.url = null;
             this.callback_data = null;
+            this.callback_game = null;
+            return this;
+        }
+
+        /**
+         * *Optional*
+         * Sets the CallbackGame object that will be sent with this button.
+         * NOTE: This will currently do nothing as this is just placeholder for when telegram implements the
+         * CallbackGame object
+         *
+         * @param callbackGame The inline query switch text
+         *
+         * @return The builder object
+         */
+        public InlineKeyboardButton.InlineKeyboardButtonBuilder callbackGame(CallbackGame callbackGame) {
+            /*
+            this.callback_game = callbackGame;
+            this.url = null;
+            this.callback_data = null;
+            this.switch_inline_query = null;
+            */
             return this;
         }
 
@@ -140,7 +177,7 @@ public class InlineKeyboardButton {
          * @return A InlineKeyboardButton object based on the previously provided values
          */
         public InlineKeyboardButton build() {
-            return new InlineKeyboardButton(text, url, callback_data, switch_inline_query);
+            return new InlineKeyboardButton(text, url, callback_data, switch_inline_query, callback_game);
         }
     }
 }
