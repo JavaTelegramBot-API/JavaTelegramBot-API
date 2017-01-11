@@ -32,6 +32,12 @@ public class InputFile {
     @Getter
     private final InputStream inputStream;
 
+    /*
+    NOTE: Files can be sent using a URL now in the telegram API.
+    It may make sense to change this to utilise that at some point.
+    For now I have left it due to possible breakages if the files are hosted locally, as telegram then couldn't download them
+     */
+
     /**
      * Create an InputFile object based on an external URL to be sent within a SendableMessage
      *
