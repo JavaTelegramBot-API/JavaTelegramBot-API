@@ -9,6 +9,7 @@ public enum ContentType {
     CONTACT,
     DELETE_CHAT_PHOTO,
     DOCUMENT,
+    GAME,
     LOCATION,
     NEW_CHAT_TITLE,
     NEW_CHAT_PARTICIPANT,

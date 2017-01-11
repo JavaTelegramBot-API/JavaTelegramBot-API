@@ -16,6 +16,13 @@ public interface InlineCallbackQuery extends CallbackQuery {
     String getInlineMessageId();
 
     /**
+     * Gets the data that was originally sent with the button used to trigger this InlineCallbackQuery
+     *
+     * @return The data that was original sent with the button used to trigger this InlineCallbackQuery
+     */
+    String getData();
+
+    /**
      * Gets the CallbackQueryType for this callback query
      *
      * @return The CallbackQueryType for this callback query

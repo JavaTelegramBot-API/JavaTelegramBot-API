@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequestWithBody;
 import com.mashape.unirest.request.body.MultipartBody;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import org.apache.http.entity.mime.content.InputStreamBody;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
+import pro.zackpollard.telegrambot.api.chat.edit.EditableGameScore;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -22,7 +24,9 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.conversations.ConversationRegistry;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
+import pro.zackpollard.telegrambot.api.games.GameScoreEditResponse;
 import pro.zackpollard.telegrambot.api.internal.chat.*;
+import pro.zackpollard.telegrambot.api.internal.chat.game.GameScoreEditResponseImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.internal.conversations.ConversationRegistryImpl;
@@ -34,6 +38,8 @@ import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.menu.InlineMenuRegistry;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 import pro.zackpollard.telegrambot.api.utils.Utils;
+
+import java.net.URL;
 
 /**
  * @author Zack Pollard
@@ -547,6 +553,26 @@ public final class TelegramBot {
 
                 break;
             }
+            case GAME: {
+
+                SendableGameMessage gameMessage = (SendableGameMessage) message;
+
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendGame")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;")
+                            .field("game_short_name", gameMessage.getGameShortName(), "application/json; charset=utf8;");
+
+                    Utils.processReplyContent(request, gameMessage);
+                    Utils.processNotificationContent(request, gameMessage);
+
+                    response = request.asString();
+                    jsonResponse = Utils.processResponse(response);
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
             case CHAT_ACTION: {
 
                 SendableChatAction sendableChatAction = (SendableChatAction) message;
@@ -881,11 +907,29 @@ public final class TelegramBot {
      * @param text              The text you would like to respond with
      * @param showAlert         True will show the text as an alert, false will show it as a toast notification
      *
+     * @deprecated  This method is deprecated in favour of the {@link #answerCallbackQuery(String, CallbackQueryResponse)}
+     *              method, this should be used for all new implementations
+     *
      * @return True if the response was sent successfully, otherwise False
      */
+    @Deprecated
     public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
 
-        if(callbackQueryId != null && text != null) {
+        return this.answerCallbackQuery(callbackQueryId, CallbackQueryResponse.builder().text(text).showAlert(showAlert).build());
+    }
+
+    /**
+     * This allows you to respond to a callback query with some text as a response. This will either show up as an
+     * alert or as a toast on the telegram client
+     *
+     * @param callbackQueryId       The ID of the callback query you are responding to
+     * @param callbackQueryResponse The response that you would like to send in reply to this callback query
+     *
+     * @return True if the response was sent successfully, otherwise False
+     */
+    public boolean answerCallbackQuery(String callbackQueryId, CallbackQueryResponse callbackQueryResponse) {
+
+        if(callbackQueryId != null && callbackQueryResponse.getText() != null) {
 
             HttpResponse<String> response;
             JSONObject jsonResponse;
@@ -893,8 +937,10 @@ public final class TelegramBot {
             try {
                 MultipartBody requests = Unirest.post(getBotAPIUrl() + "answerCallbackQuery")
                         .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
-                        .field("text", text, "application/json; charset=utf8;")
-                        .field("show_alert", showAlert);
+                        .field("text", callbackQueryResponse.getText(), "application/json; charset=utf8;")
+                        .field("show_alert", callbackQueryResponse.isShowAlert())
+                        .field("url", callbackQueryResponse.getURL().toExternalForm(), "application/json; charset=utf8;")
+                        .field("cache_time", callbackQueryResponse.getCacheTime());
 
                 response = requests.asString();
                 jsonResponse = Utils.processResponse(response);
