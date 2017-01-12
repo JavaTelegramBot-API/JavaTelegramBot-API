@@ -10,6 +10,7 @@ import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.inline.GameInlineCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.message.GameMessageCallbackQuery;
+import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.MessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.chat.message.content.TextContent;
 import pro.zackpollard.telegrambot.api.event.Event;
@@ -143,83 +144,86 @@ public class RequestUpdatesManager extends UpdateManager {
 
                                 switch (update.getType()) {
 
-                                    case MESSAGE: {
+                                    case MESSAGE:
+                                    case CHANNEL_POST: {
+
+                                        Message message = update.getType() == Update.UpdateType.MESSAGE ? update.getMessage() : update.getChannelPost();
 
                                         // if (getBotInstance().getConversationRegistry().processMessage(update.getMessage())) {
                                         //    break;
                                         // }
 
-                                        MessageEvent event = new MessageReceivedEvent(update.getMessage());
+                                        MessageEvent event = new MessageReceivedEvent(message);
                                         eventManager.callEvent(event);
                                         boolean isCancelled = event.isCancelled();
                                         boolean hasEvent = true;
-                                        switch (update.getMessage().getContent().getType()) {
+                                        switch (message.getContent().getType()) {
 
                                             case AUDIO:
-                                                event = new AudioMessageReceivedEvent(update.getMessage());
+                                                event = new AudioMessageReceivedEvent(message);
                                                 break;
                                             case CONTACT:
-                                                event = new ContactMessageReceivedEvent(update.getMessage());
+                                                event = new ContactMessageReceivedEvent(message);
                                                 break;
                                             case DELETE_CHAT_PHOTO:
-                                                event = new DeleteGroupChatPhotoEvent(update.getMessage());
+                                                event = new DeleteGroupChatPhotoEvent(message);
                                                 break;
                                             case DOCUMENT:
-                                                event = new DocumentMessageReceivedEvent(update.getMessage());
+                                                event = new DocumentMessageReceivedEvent(message);
                                                 break;
                                             case LOCATION:
-                                                event = new LocationMessageReceivedEvent(update.getMessage());
+                                                event = new LocationMessageReceivedEvent(message);
                                                 break;
                                             case NEW_CHAT_TITLE:
-                                                event = new NewGroupChatTitleEvent(update.getMessage());
+                                                event = new NewGroupChatTitleEvent(message);
                                                 break;
                                             case NEW_CHAT_PARTICIPANT:
-                                                event = new ParticipantJoinGroupChatEvent(update.getMessage());
+                                                event = new ParticipantJoinGroupChatEvent(message);
                                                 break;
                                             case PHOTO:
-                                                event = new PhotoMessageReceivedEvent(update.getMessage());
+                                                event = new PhotoMessageReceivedEvent(message);
                                                 break;
                                             case STICKER:
-                                                event = new StickerMessageReceivedEvent(update.getMessage());
+                                                event = new StickerMessageReceivedEvent(message);
                                                 break;
                                             case TEXT: {
 
-                                                if (((TextContent) update.getMessage().getContent()).getContent().startsWith("/")) {
+                                                if (((TextContent) message.getContent()).getContent().startsWith("/")) {
 
-                                                    event = new CommandMessageReceivedEvent(update.getMessage());
+                                                    event = new CommandMessageReceivedEvent(message);
                                                 } else {
 
-                                                    event = new TextMessageReceivedEvent(update.getMessage());
+                                                    event = new TextMessageReceivedEvent(message);
                                                 }
 
                                                 break;
                                             }
                                             case VIDEO:
-                                                event = new VideoMessageReceivedEvent(update.getMessage());
+                                                event = new VideoMessageReceivedEvent(message);
                                                 break;
                                             case VOICE:
-                                                event = new VoiceMessageReceivedEvent(update.getMessage());
+                                                event = new VoiceMessageReceivedEvent(message);
                                                 break;
                                             case GROUP_CHAT_CREATED:
-                                                event = new GroupChatCreatedEvent(update.getMessage());
+                                                event = new GroupChatCreatedEvent(message);
                                                 break;
                                             case LEFT_CHAT_PARTICIPANT:
-                                                event = new ParticipantLeaveGroupChatEvent(update.getMessage());
+                                                event = new ParticipantLeaveGroupChatEvent(message);
                                                 break;
                                             case NEW_CHAT_PHOTO:
-                                                event = new NewGroupChatPhotoEvent(update.getMessage());
+                                                event = new NewGroupChatPhotoEvent(message);
                                                 break;
                                             case CHANNEL_CHAT_CREATED:
-                                                event = new ChannelChatCreatedEvent(update.getMessage());
+                                                event = new ChannelChatCreatedEvent(message);
                                                 break;
                                             case MIGRATE_FROM_CHAT_ID:
-                                                event = new MigrateFromChatEvent(update.getMessage());
+                                                event = new MigrateFromChatEvent(message);
                                                 break;
                                             case MIGRATE_TO_CHAT_ID:
-                                                event = new MigrateToChatEvent(update.getMessage());
+                                                event = new MigrateToChatEvent(message);
                                                 break;
                                             case SUPER_GROUP_CHAT_CREATED:
-                                                event = new SuperGroupChatCreatedEvent(update.getMessage());
+                                                event = new SuperGroupChatCreatedEvent(message);
                                                 break;
                                             default:
                                                 hasEvent = false;
@@ -234,6 +238,12 @@ public class RequestUpdatesManager extends UpdateManager {
                                     }
 
                                     case EDITED_MESSAGE: {
+
+                                        eventManager.callEvent(new MessageEditReceivedEvent(update.getEditedMessage()));
+                                        break;
+                                    }
+
+                                    case EDITED_CHANNEL_POST: {
 
                                         eventManager.callEvent(new MessageEditReceivedEvent(update.getEditedMessage()));
                                         break;

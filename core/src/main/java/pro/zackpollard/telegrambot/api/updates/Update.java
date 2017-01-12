@@ -35,6 +35,21 @@ public interface Update {
     Message getEditedMessage();
 
     /**
+     * Gets the Channel Message that this Update contains
+     *
+     * @return The Channel Message that this Update contains
+     */
+    Message getChannelPost();
+
+    /**
+     * Gets the Edited Channel Message that this Update contains. New version of a message that is known to the bot and
+     * was edited
+     *
+     * @return New version of a message that is known to the bot and was edited
+     */
+    Message getEditedChannelPost();
+
+    /**
      * Gets the new incoming inline query
      *
      * @return The new incoming inline query
@@ -75,6 +90,8 @@ public interface Update {
         EDITED_MESSAGE,
         INLINE_QUERY,
         CALLBACK_QUERY,
+        CHANNEL_POST,
+        EDITED_CHANNEL_POST,
         CHOSEN_INLINE_RESULT
     }
 }

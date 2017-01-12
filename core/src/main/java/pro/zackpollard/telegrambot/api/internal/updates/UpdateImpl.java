@@ -20,6 +20,8 @@ public class UpdateImpl implements Update {
     private final int update_id;
     private final Message message;
     private final Message edited_message;
+    private final Message channel_post;
+    private final Message edited_channel_post;
     private final InlineQuery inline_query;
     private final ChosenInlineResult chosen_inline_result;
     private final CallbackQuery callbackQuery;
@@ -30,14 +32,25 @@ public class UpdateImpl implements Update {
     private UpdateImpl(JSONObject jsonObject, TelegramBot telegramBot) {
 
         this.update_id = jsonObject.getInt("update_id");
+
         this.message = MessageImpl.createMessage(jsonObject.optJSONObject("message"), telegramBot);
         if (message != null) updateType = UpdateType.MESSAGE;
+
         this.edited_message = MessageImpl.createMessage(jsonObject.optJSONObject("edited_message"), telegramBot);
-        if (edited_message != null) updateType = UpdateType.EDITED_MESSAGE;
+        if (edited_message != null && updateType == null) updateType = UpdateType.EDITED_MESSAGE;
+
+        this.channel_post = MessageImpl.createMessage(jsonObject.optJSONObject("channel_post"), telegramBot);
+        if (channel_post != null && updateType == null) updateType = UpdateType.CHANNEL_POST;
+
+        this.edited_channel_post = MessageImpl.createMessage(jsonObject.optJSONObject("edited_channel_post"), telegramBot);
+        if (edited_channel_post != null && updateType == null) updateType = UpdateType.EDITED_CHANNEL_POST;
+
         this.inline_query = InlineQueryImpl.createInlineQuery(jsonObject.optJSONObject("inline_query"));
         if (inline_query != null && updateType == null) updateType = UpdateType.INLINE_QUERY;
+
         this.chosen_inline_result = ChosenInlineResultImpl.createChosenInlineResult(jsonObject.optJSONObject("chosen_inline_result"));
         if (chosen_inline_result != null && updateType == null) updateType = UpdateType.CHOSEN_INLINE_RESULT;
+
         this.callbackQuery = CallbackQueryImpl.createCallbackQuery(jsonObject.optJSONObject("callback_query"), telegramBot);
         if (callbackQuery != null && updateType == null) updateType = UpdateType.CALLBACK_QUERY;
 
@@ -51,13 +64,11 @@ public class UpdateImpl implements Update {
 
     @Override
     public int getId() {
-
         return update_id;
     }
 
     @Override
     public Message getMessage() {
-
         return message;
     }
 
@@ -66,14 +77,22 @@ public class UpdateImpl implements Update {
     }
 
     @Override
-    public InlineQuery getInlineQuery() {
+    public Message getChannelPost() {
+        return channel_post;
+    }
 
+    @Override
+    public Message getEditedChannelPost() {
+        return edited_channel_post;
+    }
+
+    @Override
+    public InlineQuery getInlineQuery() {
         return inline_query;
     }
 
     @Override
     public ChosenInlineResult getChosenInlineResult() {
-
         return chosen_inline_result;
     }
 
