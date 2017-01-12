@@ -23,6 +23,7 @@ public class MessageImpl implements Message {
     private final Chat chat;
     private final User forward_from;
     private final Chat forward_from_chat;
+    private final Integer forward_from_message_id;
     private final Long forward_date;
     private final Message reply_to_message;
     private final Long edit_date;
@@ -42,6 +43,7 @@ public class MessageImpl implements Message {
         chat = ChatImpl.createChat(jsonObject.getJSONObject("chat"), telegramBot);
         forward_from = UserImpl.createUser(jsonObject.optJSONObject("forward_from"));
         forward_from_chat = ChatImpl.createChat(jsonObject.optJSONObject("forward_from_chat"), telegramBot);
+        forward_from_message_id = jsonObject.optInt("forward_from_message_id");
         forward_date = jsonObject.optLong("forward_date");
         reply_to_message = MessageImpl.createMessage(jsonObject.optJSONObject("reply_to_message"), telegramBot);
         edit_date = jsonObject.optLong("edit_date");
@@ -113,6 +115,14 @@ public class MessageImpl implements Message {
     @Override
     public Chat getChatForwardedFrom() {
         return forward_from_chat;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer getForwardFromMessageId() {
+        return forward_from_message_id;
     }
 
     /**
