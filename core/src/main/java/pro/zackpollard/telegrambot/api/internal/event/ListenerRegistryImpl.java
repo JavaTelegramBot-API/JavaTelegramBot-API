@@ -7,6 +7,8 @@ import pro.zackpollard.telegrambot.api.event.Event;
 import pro.zackpollard.telegrambot.api.event.Listener;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
 import pro.zackpollard.telegrambot.api.event.chat.*;
+import pro.zackpollard.telegrambot.api.event.chat.game.GameInlineCallbackQueryReceivedEvent;
+import pro.zackpollard.telegrambot.api.event.chat.game.GameMessageCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineCallbackQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineQueryReceivedEvent;
 import pro.zackpollard.telegrambot.api.event.chat.inline.InlineResultChosenEvent;
@@ -135,6 +137,8 @@ public class ListenerRegistryImpl implements ListenerRegistry {
             register(CallbackQueryReceivedEvent.class, Listener::onCallbackQueryReceivedEvent);
             register(MessageCallbackQueryReceivedEvent.class, Listener::onMessageCallbackQueryReceivedEvent);
             register(InlineCallbackQueryReceivedEvent.class, Listener::onInlineCallbackQueryReceivedEvent);
+            register(GameMessageCallbackQueryReceivedEvent.class, Listener::onGameMessageCallbackQueryReceivedEvent);
+            register(GameInlineCallbackQueryReceivedEvent.class, Listener::onGameInlineCallbackQueryReceivedEvent);
         }
 
         private <T extends Event> void register(Class<T> clazz, BiConsumer<Listener, T> invoker) {

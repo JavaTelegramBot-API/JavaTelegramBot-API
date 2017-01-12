@@ -1,7 +1,6 @@
 package pro.zackpollard.telegrambot.api.event.chat.game;
 
 import pro.zackpollard.telegrambot.api.chat.inline.GameInlineCallbackQuery;
-import pro.zackpollard.telegrambot.api.chat.message.GameMessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.event.chat.CallbackQueryReceivedEvent;
 
 /**
