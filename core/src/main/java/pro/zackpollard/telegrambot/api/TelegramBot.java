@@ -21,7 +21,12 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
 import pro.zackpollard.telegrambot.api.extensions.Extension;
+import pro.zackpollard.telegrambot.api.games.GameHighScore;
+import pro.zackpollard.telegrambot.api.games.GameScoreEditResponse;
+import pro.zackpollard.telegrambot.api.games.GameScoreRequest;
+import pro.zackpollard.telegrambot.api.games.SendableGameScore;
 import pro.zackpollard.telegrambot.api.internal.chat.ChatImpl;
+import pro.zackpollard.telegrambot.api.internal.chat.game.GameScoreEditResponseImpl;
 import pro.zackpollard.telegrambot.api.internal.chat.message.MessageImpl;
 import pro.zackpollard.telegrambot.api.internal.event.ListenerRegistryImpl;
 import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
@@ -31,6 +36,7 @@ import pro.zackpollard.telegrambot.api.updates.UpdateManager;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -1012,6 +1018,35 @@ public final class TelegramBot {
         }
 
         return false;
+    }
+
+    public GameScoreEditResponse setGameScore(SendableGameScore sendableGameScore) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "setGameScore")
+                    .field("user_id", sendableGameScore.getUserId(), "application/json; charset=utf8;")
+                    .field("score", sendableGameScore.getScore())
+                    .field("force", sendableGameScore.isForce())
+                    .field("disable_edit_message", sendableGameScore.isDisableEditMessage())
+                    .field("chat_id", sendableGameScore.getChatId())
+                    .field("message_id", sendableGameScore.getMessageId())
+                    .field("inline_message_id", sendableGameScore.getInlineMessageId());
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                return GameScoreEditResponseImpl.createGameScoreEditResponse(jsonResponse.getJSONObject("result"), this);
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
