@@ -936,8 +936,10 @@ public final class TelegramBot {
                         .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
                         .field("text", callbackQueryResponse.getText(), "application/json; charset=utf8;")
                         .field("show_alert", callbackQueryResponse.isShowAlert())
-                        .field("url", callbackQueryResponse.getURL().toExternalForm(), "application/json; charset=utf8;")
                         .field("cache_time", callbackQueryResponse.getCacheTime());
+                if (callbackQueryResponse.getURL() != null) {
+                    requests.field("url", callbackQueryResponse.getURL().toExternalForm(), "application/json; charset=utf8;");
+                }
 
                 response = requests.asString();
                 jsonResponse = Utils.processResponse(response);
