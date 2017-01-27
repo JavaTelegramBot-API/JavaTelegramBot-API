@@ -78,7 +78,7 @@ public final class TelegramBot {
         this.authToken = authToken;
         this.botID = botID;
         this.botName = botName;
-        this.botUsername = botUsername;
+        this.botUsername = "@" + botUsername;
 
         listenerRegistry = ListenerRegistryImpl.getNewInstance();
     }
