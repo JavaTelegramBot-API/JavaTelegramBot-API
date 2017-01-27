@@ -48,7 +48,7 @@ public class CallbackQueryImpl implements CallbackQuery {
                     callbackQuery = GameMessageMessageCallbackQueryImpl.createGameCallbackQuery(jsonObject, telegramBot);
                 } else {
 
-                    callbackQuery = MessageCallbackQueryImpl.createCallbackQuery(jsonObject, telegramBot);
+                    callbackQuery = MessageCallbackQueryImpl.createMessageCallbackQuery(jsonObject, telegramBot);
                 }
             } else if (!jsonObject.isNull("inline_message_id")) {
 

@@ -78,7 +78,7 @@ public final class TelegramBot {
         this.authToken = authToken;
         this.botID = botID;
         this.botName = botName;
-        this.botUsername = botUsername;
+        this.botUsername = "@" + botUsername;
 
         listenerRegistry = ListenerRegistryImpl.getNewInstance();
     }
@@ -936,8 +936,9 @@ public final class TelegramBot {
                         .field("callback_query_id", callbackQueryId, "application/json; charset=utf8;")
                         .field("text", callbackQueryResponse.getText(), "application/json; charset=utf8;")
                         .field("show_alert", callbackQueryResponse.isShowAlert())
-                        .field("url", callbackQueryResponse.getURL().toExternalForm(), "application/json; charset=utf8;")
-                        .field("cache_time", callbackQueryResponse.getCacheTime());
+                        .field("cache_time", callbackQueryResponse.getCacheTime())
+                        .field("url", callbackQueryResponse.getURL() != null ? callbackQueryResponse.getURL().toExternalForm() : null, "application/json; charset=utf8;");
+
 
                 response = requests.asString();
                 jsonResponse = Utils.processResponse(response);
