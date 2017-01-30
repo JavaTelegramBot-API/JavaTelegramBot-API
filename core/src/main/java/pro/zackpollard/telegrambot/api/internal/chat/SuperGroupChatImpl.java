@@ -23,7 +23,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         this.id = jsonObject.getLong("id");
         this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
-        this.allMembersAreAdministrators = jsonObject.getBoolean("all_members_are_administrators");
+        this.allMembersAreAdministrators = jsonObject.optBoolean("all_members_are_administrators");
         this.telegramBot = telegramBot;
     }
 

@@ -21,7 +21,7 @@ public class GroupChatImpl implements GroupChat {
 
         this.id = jsonObject.getInt("id");
         this.title = jsonObject.getString("title");
-        this.allMembersAreAdministrators = jsonObject.getBoolean("all_members_are_administrators");
+        this.allMembersAreAdministrators = jsonObject.optBoolean("all_members_are_administrators");
         this.telegramBot = telegramBot;
     }
 
