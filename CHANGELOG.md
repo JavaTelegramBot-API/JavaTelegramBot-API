@@ -1,4 +1,11 @@
 # Changelog
+#### Version 1.6.0
+* Implemented the new game API
+* Implemented Bots 2.1 API changes
+* Lots of things that I can't remember at this point, due to how long this update took.
+* Various bug fixes
+* Extensions to the menu API and conversations API
+
 #### Version 1.5.1
 * Fixed an issue with the constructor in the new ReplyKeyboardRemove object being private
 
