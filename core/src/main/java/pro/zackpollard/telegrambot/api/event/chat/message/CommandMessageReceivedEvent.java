@@ -67,8 +67,7 @@ public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
      * Gets whether the bot was mentioned in this command, or whether it was just the command that was sent.
      *
      * @return  True if the command was of form `/command@botname args` where botname is the name of this bot,
-     *              or if the command was sent in a private chat;
-     *          and false otherwise
+     *          or if the command was sent in a private chat; and false otherwise
      */
     public boolean isBotMentioned() {
         return this.botMentioned;
