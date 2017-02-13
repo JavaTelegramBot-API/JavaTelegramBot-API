@@ -72,8 +72,8 @@ public class InlineMenu {
      * @see InlineMenuRegistry#register(InlineMenu)
      */
     public void start() {
-        apply();
         Extensions.get(baseMessage.getBotInstance(), InlineMenuRegistry.class).register(this);
+        apply();
     }
 
     /**
