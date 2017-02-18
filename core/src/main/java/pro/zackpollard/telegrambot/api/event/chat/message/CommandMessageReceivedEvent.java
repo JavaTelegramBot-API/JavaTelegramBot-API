@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.event.chat.message;
 
 import lombok.ToString;
+import pro.zackpollard.telegrambot.api.chat.ChatType;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 
 /**
@@ -18,9 +19,9 @@ public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
 
         super(message);
 
-        String[] commandSections = getContent().getContent().substring(1).split(" ")[0].split("@");
+        String[] commandSections = getContent().getContent().substring(1).split(" ", 2)[0].split("@", 2);
         this.command = commandSections[0];
-        botMentioned = commandSections.length >= 1;
+        this.botMentioned = (commandSections.length == 2 && message.getBotInstance().getBotUsername().equalsIgnoreCase("@" + commandSections[1])) || message.getChat().getType() == ChatType.PRIVATE;
 
         int argsStart = getContent().getContent().indexOf(" ");
 
@@ -56,7 +57,7 @@ public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
     /**
      * Gets the command that was received that fired this Event
      *
-     * @return The command that was receied that fired this Event
+     * @return The command that was received that fired this Event
      */
     public String getCommand() {
         return this.command;
@@ -66,7 +67,7 @@ public class CommandMessageReceivedEvent extends TextMessageReceivedEvent {
      * Gets whether the bot was mentioned in this command, or whether it was just the command that was sent.
      *
      * @return  True if the command was of form `/command@botname args` where botname is the name of this bot,
-     *          false if the command was of form `/command args`
+     *          or if the command was sent in a private chat; and false otherwise
      */
     public boolean isBotMentioned() {
         return this.botMentioned;
