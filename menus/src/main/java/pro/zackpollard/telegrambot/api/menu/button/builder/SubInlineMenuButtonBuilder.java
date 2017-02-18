@@ -8,6 +8,8 @@ import pro.zackpollard.telegrambot.api.menu.button.InlineMenuButton;
 import pro.zackpollard.telegrambot.api.menu.button.impl.SubInlineMenuButton;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
+import java.util.function.Supplier;
+
 /**
  * Builder for SubMenus
  * @param <T> menu builder type
@@ -16,7 +18,7 @@ import pro.zackpollard.telegrambot.api.utils.Utils;
  */
 public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
         extends AbstractButtonBuilder<SubInlineMenuButtonBuilder<T>, T> {
-    private InlineMenu nextMenu;
+    private Supplier<InlineMenu> nextMenu;
 
     public SubInlineMenuButtonBuilder(InlineMenuRowBuilder<T> parent) {
         super(parent);
@@ -42,11 +44,22 @@ public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
     }
 
     /**
-     * Required. Set the nextMenu field.
+     * Set the nextMenu field.
      * @param menu menu which will open when the button is pressed
      * @return this
      */
     public SubInlineMenuButtonBuilder<T> nextMenu(InlineMenu menu) {
+        this.nextMenu = () -> menu;
+        return this;
+    }
+
+    /**
+     * Set the nextMenu supplier. This will be called *every* time the button
+     * is pressed to generate a menu.
+     *
+     * @return this
+     */
+    public SubInlineMenuButtonBuilder<T> nextMenu(Supplier<InlineMenu> menu) {
         this.nextMenu = menu;
         return this;
     }

@@ -1,10 +1,7 @@
 package pro.zackpollard.telegrambot.api.menu;
 
 import pro.zackpollard.telegrambot.api.menu.button.InlineMenuButton;
-import pro.zackpollard.telegrambot.api.menu.button.builder.BackButtonBuilder;
-import pro.zackpollard.telegrambot.api.menu.button.builder.SubInlineMenuButtonBuilder;
-import pro.zackpollard.telegrambot.api.menu.button.builder.ToggleInlineMenuButtonBuilder;
-import pro.zackpollard.telegrambot.api.menu.button.builder.UserInputInlineMenuButtonBuilder;
+import pro.zackpollard.telegrambot.api.menu.button.builder.*;
 
 import java.util.List;
 
@@ -93,6 +90,7 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
     /**
      * Creates a new back button builder.
      * @return a new back button builder
+     * @see pro.zackpollard.telegrambot.api.menu.button.impl.BackButton
      */
     public BackButtonBuilder<T> backButton() {
         if (!(parent instanceof SubInlineMenuBuilder)) {
@@ -106,13 +104,29 @@ public class InlineMenuRowBuilder<T extends AbstractInlineMenuBuilder> {
      * Creates a new back button builder with provided text
      * @param text Text for the button to initialize with
      * @return a new back button builder
+     * @see pro.zackpollard.telegrambot.api.menu.button.impl.BackButton
      */
     public BackButtonBuilder<T> backButton(String text) {
-        if (!(parent instanceof SubInlineMenuBuilder)) {
-            throw new UnsupportedOperationException("Back buttons are only allowed for sub menus!");
-        }
-
         return new BackButtonBuilder<>(this, text);
+    }
+
+    /**
+     * Creates a new dummy button builder with provided text
+     * @param text Text for the button to initialize with
+     * @return a new dummy button builder
+     * @see pro.zackpollard.telegrambot.api.menu.button.impl.DummyButton
+     */
+    public DummyButtonBuilder<T> dummyButton(String text) {
+        return new DummyButtonBuilder<>(this, text);
+    }
+
+    /**
+     * Creates a new dummy button builder
+     * @return a new dummy button builder
+     * @see pro.zackpollard.telegrambot.api.menu.button.impl.DummyButton
+     */
+    public DummyButtonBuilder<T> dummyButton() {
+        return new DummyButtonBuilder<>(this);
     }
 
     /**

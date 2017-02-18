@@ -7,36 +7,37 @@ import pro.zackpollard.telegrambot.api.menu.InlineMenuBuilder;
 import pro.zackpollard.telegrambot.api.menu.button.AbstractInlineMenuButton;
 import pro.zackpollard.telegrambot.api.menu.button.builder.SubInlineMenuButtonBuilder;
 
+import java.util.function.Supplier;
+
 /**
  * A button which opens a sub menu.
  *
  * @author Mazen Kotb
  */
 public class SubInlineMenuButton extends AbstractInlineMenuButton {
-    private final InlineMenu nextMenu;
+    private final Supplier<InlineMenu> nextMenu;
 
     @Deprecated
-    public SubInlineMenuButton(InlineMenu owner, int row, int num, InlineMenu nextMenu) {
-        super(owner, row, num);
-        this.nextMenu = nextMenu;
-    }
-
-    @Deprecated
-    public SubInlineMenuButton(InlineMenu owner, int row, int num, InlineMenu nextMenu, String text) {
-        super(owner, row, num, text);
-        this.nextMenu = nextMenu;
-    }
-
     public SubInlineMenuButton(InlineMenu owner, int row, InlineMenu nextMenu) {
+        super(owner, row);
+        this.nextMenu = () -> nextMenu;
+    }
+
+    @Deprecated
+    public SubInlineMenuButton(InlineMenu owner, int row, InlineMenu nextMenu, String text) {
+        super(owner, row, text);
+        this.nextMenu = () -> nextMenu;
+    }
+
+    public SubInlineMenuButton(InlineMenu owner, int row, Supplier<InlineMenu> nextMenu) {
         super(owner, row);
         this.nextMenu = nextMenu;
     }
 
-    public SubInlineMenuButton(InlineMenu owner, int row, InlineMenu nextMenu, String text) {
+    public SubInlineMenuButton(InlineMenu owner, int row, Supplier<InlineMenu> nextMenu, String text) {
         super(owner, row, text);
         this.nextMenu = nextMenu;
     }
-
 
     public static SubInlineMenuButtonBuilder builder() {
         return new SubInlineMenuButtonBuilder<InlineMenuBuilder>(null);
@@ -55,6 +56,9 @@ public class SubInlineMenuButton extends AbstractInlineMenuButton {
     public void handlePress(CallbackQuery query) {
         executeCallback();
         owner.unregister();
-        nextMenu.start();
+        InlineMenu menu = nextMenu.get();
+
+        menu.setLastMenu(owner);
+        menu.start();
     }
 }

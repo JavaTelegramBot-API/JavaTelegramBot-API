@@ -89,6 +89,7 @@ public class ToggleInlineMenuButton extends AbstractInlineMenuButton {
     @Override
     public void handlePress(CallbackQuery query) {
         value = !value;
+        executeCallback();
         setText(callback.handleToggle(this, value));
     }
 }

@@ -27,9 +27,13 @@ public class InlineMenu {
     private int internalId;
     @Getter
     Message baseMessage;
+    @Deprecated
     @Getter
     @Setter
     private InlineMenu parent;
+    @Getter
+    @Setter
+    private InlineMenu lastMenu;
     Predicate<User> userPredicate;
     List<InlineMenuRow> rows;
 
@@ -153,7 +157,7 @@ public class InlineMenu {
     }
 
     /**
-     * Apply any updates to the message
+     * Apply any updates to the message (for viewer on Telegram)
      */
     public void apply() {
         baseMessage.getBotInstance().editMessageReplyMarkup(baseMessage, toKeyboard());
