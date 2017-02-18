@@ -1,4 +1,8 @@
 # Changelog
+#### Version 1.6.1
+* (Menus) - Fix a bug where buttons are unaware of their menu ID (#71)
+* (Core)  - Improve CommandMessageReceivedEvent#isBotMentioned() (#70)
+
 #### Version 1.6.0
 * Implemented the new game API
 * Implemented Bots 2.1 API changes
