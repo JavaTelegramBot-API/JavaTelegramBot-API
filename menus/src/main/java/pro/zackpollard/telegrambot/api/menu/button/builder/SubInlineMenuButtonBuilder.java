@@ -57,6 +57,8 @@ public class SubInlineMenuButtonBuilder<T extends AbstractInlineMenuBuilder>
      * Set the nextMenu supplier. This will be called *every* time the button
      * is pressed to generate a menu.
      *
+     * @param menu The menu supplier
+     *
      * @return this
      */
     public SubInlineMenuButtonBuilder<T> nextMenu(Supplier<InlineMenu> menu) {
