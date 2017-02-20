@@ -40,18 +40,15 @@ public class InlineMenuRegistryImpl implements InlineMenuRegistry {
 
     @Override
     public void register(InlineMenu menu) {
-        int next = nextId.get();
+        int next = nextId.getAndIncrement();
 
         menus.put(next, menu);
         menu.setInternalId(next);
-
-        updateNextId();
     }
 
     @Override
     public void unregister(InlineMenu menu) {
         menus.remove(menu.getInternalId());
-        updateNextId();
     }
 
     private boolean process(CallbackQuery query) {
@@ -67,17 +64,5 @@ public class InlineMenuRegistryImpl implements InlineMenuRegistry {
         return menu != null &&
                 menu.handle(query, Integer.parseInt(matcher.group(2)),
                         Integer.parseInt(matcher.group(3)));
-    }
-
-    private void updateNextId() {
-        int selectedId = -1;
-        Set<Integer> usedIds = menus.keySet();
-
-        for (int i = 0; selectedId == -1; i++) {
-            if (!usedIds.contains(i))
-                selectedId = i;
-        }
-
-        nextId.set(selectedId);
     }
 }
