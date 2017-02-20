@@ -107,6 +107,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
          * Appends text as escaped text, no formatting.
          *
          * @param text Text to append and escape
+         *
+         * @return this builder
          */
         public SendableTextBuilder escaped(String text) {
             return html(htmlEscaped(text));
@@ -116,6 +118,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
          * Text to take in and parse as HTML-formatted text.
          *
          * @param html Text to append and parse as HTML
+         *
+         * @return this builder
          */
         public SendableTextBuilder html(String html) {
             message.append(html);
@@ -126,6 +130,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
          * Appends text and makes it bold. Text is escaped.
          *
          * @param text Text to append
+         *
+         * @return this builder
          */
         public SendableTextBuilder bold(String text) {
             return element("b", text);
@@ -135,6 +141,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
          * Appends text and makes it italic. Text is escaped.
          *
          * @param text Text to append
+         *
+         * @return this builder
          */
         public SendableTextBuilder italics(String text) {
             return element("i", text);
@@ -145,6 +153,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
          *
          * @param text Text to link. Text is escaped
          * @param link Link to reference
+         *
+         * @return this builder
          */
         public SendableTextBuilder link(String text, String link) {
             return element("a href=\"" + link + "\"", text);
@@ -154,6 +164,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
          * Appends inline-code to the text
          *
          * @param text Text to format. Escaped.
+         *
+         * @return this builder
          */
         public SendableTextBuilder code(String text) {
             return element("code", text);
@@ -163,6 +175,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
          * Appends pre-formatted fixed-width code block.
          *
          * @param text Text to format. Escaped
+         *
+         * @return this builder
          */
         public SendableTextBuilder preformatted(String text) {
             return element("pre", text);
@@ -170,6 +184,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Appends a space.
+         *
+         * @return this builder
          */
         public SendableTextBuilder space() {
             message.append(' ');
@@ -178,6 +194,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Appends a new line
+         *
+         * @return this builder
          */
         public SendableTextBuilder newLine() {
             message.append("\n");
@@ -186,6 +204,8 @@ public class SendableTextMessage implements SendableMessage, ReplyingOptions, No
 
         /**
          * Alias for newLine()
+         *
+         * @return this builder
          */
         public SendableTextBuilder nextLine() {
             return newLine();

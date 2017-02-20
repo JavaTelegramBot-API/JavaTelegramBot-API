@@ -30,6 +30,8 @@ public class DummyButtonBuilder<T extends AbstractInlineMenuBuilder>
 
     /**
      * Required. A callback to execute once the button is pressed.
+     *
+     * @param cb The callback function
      */
     public DummyButtonBuilder<T> callback(BiConsumer<DummyButton, CallbackQuery> cb) {
         this.callback = cb;
