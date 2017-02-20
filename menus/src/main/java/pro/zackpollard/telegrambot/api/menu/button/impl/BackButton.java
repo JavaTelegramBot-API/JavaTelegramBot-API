@@ -9,7 +9,18 @@ import pro.zackpollard.telegrambot.api.menu.button.builder.BackButtonBuilder;
 
 /**
  * A button which once pressed will exit it's current menu
- * and as a result open it's parent's.
+ * and as a result open the last seen menu.
+ *
+ * NOTE: Given a menu scenario like this:
+ *
+ * Menu 1 <-> Menu 2 <-> Menu 3
+ *
+ * If the user goes from 1->2->3 then hits the back button
+ * on 3, it will take them back to 2. If they hit the back
+ * button on 2, it will return them to menu 1. This is to
+ * best follow their menu history and not send them to menu
+ * 3 when they hit the back button on menu 2 after they've
+ * been to menu 3. (what a sentence)
  *
  * @author Mazen Kotb
  */
@@ -46,7 +57,7 @@ public class BackButton extends AbstractInlineMenuButton {
     }
 
     /**
-     * If there is a valid parent, execute callback, unregister the current menu, and start the parent.
+     * If there is a last menu, execute callback, unregister the current menu, and start the parent.
      *
      * @param query Query to process, unused.
      * @see InlineMenu#unregister()
@@ -54,12 +65,12 @@ public class BackButton extends AbstractInlineMenuButton {
      */
     @Override
     public void handlePress(CallbackQuery query) {
-        InlineMenu parent = owner.getParent();
+        InlineMenu lastMenu = owner.getLastMenu();
 
-        if (parent != null) {
+        if (lastMenu != null) {
             executeCallback();
             owner.unregister();
-            parent.start();
+            lastMenu.start();
         }
     }
 }

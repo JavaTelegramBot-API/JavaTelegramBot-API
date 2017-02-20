@@ -1,4 +1,11 @@
 # Changelog
+#### Version 1.6.2
+* (Menus) - Add dummy button: Allows developers to execute whatever code they want for that button, it does nothing otherwise
+* (Menus) - Remove opening slot ids for menu callbacks to avoid bugs with id conflicts
+* (Menus) - Make back button refer to the last seen menu instead of "root menu"
+* (Menus) - Add extensibility to inline menu buttons with lazy creation
+* (Menus) - Execute buttonCallbacks on toggle buttons
+
 #### Version 1.6.1
 * (Menus) - Fix a bug where buttons are unaware of their menu ID (#71)
 * (Core)  - Improve CommandMessageReceivedEvent#isBotMentioned() (#70)
