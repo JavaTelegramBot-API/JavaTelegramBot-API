@@ -1,5 +1,5 @@
 # Changelog
-#### Version 1.6.2
+#### Version 1.6.3
 * (Menus) - Add dummy button: Allows developers to execute whatever code they want for that button, it does nothing otherwise
 * (Menus) - Remove opening slot ids for menu callbacks to avoid bugs with id conflicts
 * (Menus) - Make back button refer to the last seen menu instead of "root menu"
