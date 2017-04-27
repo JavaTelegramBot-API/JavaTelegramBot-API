@@ -1,4 +1,7 @@
 # Changelog
+#### Version - 1.6.4
+* (Core) - Fix a bug where the bot token was not sent in the request for a users profile photos
+
 #### Version 1.6.3
 * (Menus) - Add dummy button: Allows developers to execute whatever code they want for that button, it does nothing otherwise
 * (Menus) - Remove opening slot ids for menu callbacks to avoid bugs with id conflicts
