@@ -8,9 +8,9 @@ JavaDocs https://zackpollard.github.io/JavaTelegramBot-API  
 
 ## Support
 
-Telegram Channel for this API available at https://telegram.me/javatelegrambotapi
-Please join this channel for information about updates to this bot.
-You can also contact me at https://telegram.me/zackpollard
+Telegram Channel for this API available at https://telegram.me/javatelegrambotapi   
+Please join this channel for information about updates to this bot.   
+You can also contact me at https://telegram.me/zackpollard   
 If you need help in Persian(فارسی) you can contact https://telegram.me/aaomidi
 
 ## Example Usage
