@@ -1,5 +1,8 @@
 # Changelog
-#### Version - 1.6.4
+#### Version 1.6.5
+* (Core) - Fix remaining bugs with the createUserProfilePhotos method in UserProfilePhotosImpl
+
+#### Version 1.6.4
 * (Core) - Fix a bug where the bot token was not sent in the request for a users profile photos
 
 #### Version 1.6.3
