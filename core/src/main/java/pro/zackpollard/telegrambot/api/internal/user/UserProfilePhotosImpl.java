@@ -35,7 +35,7 @@ public class UserProfilePhotosImpl implements UserProfilePhotos {
 
             for (int j = 0; j < jsonPhotoSizes.length(); ++j) {
 
-                JSONObject photoObject = jsonPhotos.getJSONObject(i);
+                JSONObject photoObject = jsonPhotoSizes.getJSONObject(j);
                 photoSizesList.add(PhotoSizeImpl.createPhotoSize(photoObject));
             }
 
@@ -50,8 +50,11 @@ public class UserProfilePhotosImpl implements UserProfilePhotos {
     public static UserProfilePhotos createUserProfilePhotos(long user_id, TelegramBot telegramBot) {
 
         try {
-            return new UserProfilePhotosImpl(Unirest.post(telegramBot.getBotAPIUrl() + "getUserProfilePhotos")
-                    .queryString("user_id", user_id).asJson().getBody().getObject());
+            JSONObject json = Unirest.post(telegramBot.getBotAPIUrl() + "getUserProfilePhotos")
+                    .queryString("user_id", user_id).asJson().getBody().getObject();
+            if(json.getBoolean("ok")) {
+                return new UserProfilePhotosImpl(json.getJSONObject("result"));
+            }
         } catch (UnirestException e) {
             e.printStackTrace();
         }
