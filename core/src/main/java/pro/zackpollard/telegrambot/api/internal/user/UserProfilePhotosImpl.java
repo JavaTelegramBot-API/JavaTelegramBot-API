@@ -50,7 +50,7 @@ public class UserProfilePhotosImpl implements UserProfilePhotos {
     public static UserProfilePhotos createUserProfilePhotos(long user_id, TelegramBot telegramBot) {
 
         try {
-            return new UserProfilePhotosImpl(Unirest.post(TelegramBot.API_URL + "getUserProfilePhotos")
+            return new UserProfilePhotosImpl(Unirest.post(telegramBot.getBotAPIUrl() + "getUserProfilePhotos")
                     .queryString("user_id", user_id).asJson().getBody().getObject());
         } catch (UnirestException e) {
             e.printStackTrace();
