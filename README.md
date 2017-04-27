@@ -1,10 +1,11 @@
 # Java Telegram Bot API
 
-Telegram Channel for this API available at https://telegram.me/javatelegrambotapi   
-Please join this channel for information about updates to this bot.   
+Telegram Channel for this API available at https://telegram.me/javatelegrambotapi  
+Please join this channel for information about updates to this bot.  
 You can also contact me at https://telegram.me/zackpollard   
 If you need help in Persian(فارسی) you can contact https://telegram.me/aaomidi
 
+JavaDocs https://zackpollard.github.io/JavaTelegramBot-API   
 This is a Telegram Bot API for Java. At the time of writing it supports all the features of the HTTP API and follows the same specification. This is a work in progress and currently has very minimal error handling and testing. Any methods or functionality outside of `pro.zackpollard.telegrambot.api.internal` package should remain as they are currently and should work as expected, anything inside the `internal` package is not guaranteed to work as expected and may yield unexpected results if used in a way that is not intended.
 
 ## Example Usage
@@ -54,7 +55,7 @@ Maven is used for dependency management and deployment.
     <dependency>
         <groupId>pro.zackpollard.telegrambot.api</groupId>
         <artifactId>jtelegram-botapi</artifactId>
-        <version>1.6.3</version>
+        <version>1.6.4</version>
     </dependency>
 </dependencies>
 ```

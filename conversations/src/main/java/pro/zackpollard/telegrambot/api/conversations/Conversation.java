@@ -269,6 +269,8 @@ public final class Conversation {
          * If the conversation is not finished, it will be ended.
          *
          * @param timeout Timeout in seconds
+         *
+         * @return this builder
          */
         public ConversationBuilder conservationTimeout(long timeout) {
             return conversationTimeout(timeout, null);
@@ -280,6 +282,8 @@ public final class Conversation {
          *
          * @param timeout Timeout in seconds
          * @param message Message to be sent if the conversation is timed out
+         *
+         * @return this builder
          */
         public ConversationBuilder conversationTimeout(long timeout, SendableMessage message) {
             this.timeout = timeout;
@@ -301,6 +305,10 @@ public final class Conversation {
 
         /**
          * Called with every input, if returns true, the conversation will be ended.
+         *
+         * @param textPredicate The predicate for deciding whether to end the conversation
+         *
+         * @return this builder
          */
         public ConversationBuilder endText(Predicate<String> textPredicate) {
             return endPredicate((context, content) -> content instanceof TextContent &&
@@ -319,7 +327,8 @@ public final class Conversation {
          * the conversation will be ended.
          *
          * @param message Message to be sent when the conversation ends.
-         * @return Current Builder
+         *
+         * @return this builder
          */
         public ConversationBuilder endingMessage(SendableTextMessage message) {
             return endCallback((conv, context) -> conv.sendMessage(message));
@@ -332,8 +341,10 @@ public final class Conversation {
 
         /**
          * Mandatory. Set the other participant in the conversation
+         *
          * @param chat The other participant
-         * @return Current builder
+         *
+         * @return this builder
          */
         public ConversationBuilder forWhom(Chat chat) {
             this.forWhom = chat;
@@ -377,7 +388,8 @@ public final class Conversation {
          * the prompts will be called, otherwise it won't
          *
          * @param predicate user filter
-         * @return this
+         *
+         * @return this builder
          */
         public ConversationBuilder userFilter(Predicate<User> predicate) {
             this.userPredicate = predicate;
@@ -386,8 +398,10 @@ public final class Conversation {
 
         /**
          * Allow a list of users to be part of this conversation
+         *
          * @param users Allowed users
-         * @return this
+         *
+         * @return this builder
          */
         public ConversationBuilder allowedUsers(User... users) {
             List<User> usersList = Arrays.asList(users);
@@ -398,7 +412,9 @@ public final class Conversation {
 
         /**
          * Allow a single user to be part of this conversation
+         *
          * @param allowedUser allowed user
+         *
          * @return this
          */
         public ConversationBuilder allowedUser(User allowedUser) {
@@ -408,7 +424,9 @@ public final class Conversation {
 
         /**
          * Allow a list of users to be part of this conversation
+         *
          * @param userIds allows user ids
+         *
          * @return this
          */
         public ConversationBuilder allowedUsers(long... userIds) {
@@ -418,7 +436,6 @@ public final class Conversation {
                         return true;
                     }
                 }
-
                 return false;
             };
             return this;
@@ -426,8 +443,10 @@ public final class Conversation {
 
         /**
          * Allow a single user to use be part of conversation
+         *
          * @param userId the id of said user
-         * @return this
+         *
+         * @return this builder
          */
         public ConversationBuilder allowedUser(long userId) {
             this.userPredicate = (user) -> user.getId() == userId;

@@ -13,9 +13,9 @@ import pro.zackpollard.telegrambot.api.menu.button.builder.BackButtonBuilder;
  *
  * NOTE: Given a menu scenario like this:
  *
- * Menu 1 <-> Menu 2 <-> Menu 3
+ * Menu 1 &lt;-&gt; Menu 2 &lt;-&gt; Menu 3
  *
- * If the user goes from 1->2->3 then hits the back button
+ * If the user goes from 1-&gt;2-&gt;3 then hits the back button
  * on 3, it will take them back to 2. If they hit the back
  * button on 2, it will return them to menu 1. This is to
  * best follow their menu history and not send them to menu
