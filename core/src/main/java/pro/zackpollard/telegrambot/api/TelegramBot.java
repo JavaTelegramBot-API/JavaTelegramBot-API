@@ -855,6 +855,36 @@ public final class TelegramBot {
 
         return false;
     }
+    
+    public boolean deleteMessage(Message message) {
+        return this.deleteMessage(message.getChat().getId(), message.getMessageId());
+    }
+    
+    public boolean deleteMessage(String chatId, Long messageId) {
+        if(chatId != null && messageId != null) {
+
+            HttpResponse<String> response;
+            JSONObject jsonResponse = null;
+
+            try {
+                MultipartBody requests = Unirest.post(getBotAPIUrl() + "deleteMessage")
+                        .field("chat_id", chatId, "application/json; charset=utf8;")
+                        .field("message_id", messageId);
+
+                response = requests.asString();
+                jsonResponse = Utils.processResponse(response);
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * This allows you to respond to an inline query with an InlineQueryResponse object
