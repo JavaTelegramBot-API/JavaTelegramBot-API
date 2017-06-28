@@ -75,7 +75,7 @@ public class InlineQueryResultGif implements InlineQueryResult {
      *
      * @return The width of the gif, or null if not specified
      */
-    public int getGifWidth() {
+    public Integer getGifWidth() {
         return this.gif_width;
     }
 
@@ -84,7 +84,7 @@ public class InlineQueryResultGif implements InlineQueryResult {
      *
      * @return The height of the gif, or null if not specified
      */
-    public int getGifHeight() {
+    public Integer getGifHeight() {
         return this.gif_height;
     }
 
@@ -93,7 +93,7 @@ public class InlineQueryResultGif implements InlineQueryResult {
      * 
      * @return The duration of the gif, or null if not specified
      */
-    public int getGifDuration() {
+    public Integer getGifDuration() {
         return this.gif_duration;
     }
 
