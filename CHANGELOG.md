@@ -1,4 +1,17 @@
 # Changelog
+#### Version 1.7.0
+* (Core) - Add delete message functionality
+* (Core) - Make documents Captionable to align with the specification
+* (Core) - Implement the VideoNote object type and all associated methods
+* (Core) - Add in missing getCaption method to DocumentContentImpl object, fixes #72
+* (Core) - Add new chat actions for uploading and recording a video note
+* (Core) - Add users language code to the User object to match API spec
+* (Core) - Add support for new_chat_participants content type from the API spec
+* (Core) - Make sure the new video note event is actually called
+* (Core) - Add the ability to specify gif_duration in the InlineQueryResultGif object as per the new API spec
+* (Core) - Use Integer instead of int as these values can be null as they are optional
+* (Core) - Add support for duration field inside the InlineQueryResultMpeg4Gif object as per the new API spec
+
 #### Version 1.6.5
 * (Core) - Fix remaining bugs with the createUserProfilePhotos method in UserProfilePhotosImpl
 
