@@ -204,6 +204,9 @@ public class RequestUpdatesManager extends UpdateManager {
                                             case VIDEO:
                                                 event = new VideoMessageReceivedEvent(message);
                                                 break;
+                                            case VIDEO_NOTE:
+                                                event = new VideoNoteMessageReceivedEvent(message);
+                                                break;
                                             case VOICE:
                                                 event = new VoiceMessageReceivedEvent(message);
                                                 break;
