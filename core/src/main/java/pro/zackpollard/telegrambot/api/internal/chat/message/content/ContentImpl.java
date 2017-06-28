@@ -72,7 +72,10 @@ public class ContentImpl {
                     return VenueContentImpl.createVenueContent(jsonObject.getJSONObject("venue"));
                 case "new_chat_member":
 
-                    return NewParticipantContentImpl.createNewParticipantContent(jsonObject.getJSONObject("new_chat_member"));
+                    return NewChatParticipantContentImpl.createNewParticipantContent(jsonObject.getJSONObject("new_chat_member"));
+                case "new_chat_members":
+                    
+                    return NewChatParticipantsContentImpl.createNewParticipantsContent(jsonObject.getJSONArray("new_chat_members"));
                 case "left_chat_member":
 
                     return LeftChatParticipantContentImpl.createLeftChatParticipantContent(jsonObject.getJSONObject("left_chat_member"));

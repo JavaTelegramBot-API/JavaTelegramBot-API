@@ -180,6 +180,9 @@ public class RequestUpdatesManager extends UpdateManager {
                                             case NEW_CHAT_PARTICIPANT:
                                                 event = new ParticipantJoinGroupChatEvent(message);
                                                 break;
+                                            case NEW_CHAT_PARTICIPANTS:
+                                                event = new ParticipantsJoinGroupChatEvent(message);
+                                                break;
                                             case PHOTO:
                                                 event = new PhotoMessageReceivedEvent(message);
                                                 break;

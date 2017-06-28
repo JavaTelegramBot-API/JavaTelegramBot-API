@@ -69,6 +69,9 @@ public interface Listener {
 
     default void onParticipantJoinGroupChat(ParticipantJoinGroupChatEvent event) {
     }
+    
+    default void onParticipantsJoinGroupChat(ParticipantsJoinGroupChatEvent event) {
+    }
 
     default void onParticipantLeaveGroupChat(ParticipantLeaveGroupChatEvent event) {
     }

@@ -13,6 +13,7 @@ public enum ContentType {
     LOCATION,
     NEW_CHAT_TITLE,
     NEW_CHAT_PARTICIPANT,
+    NEW_CHAT_PARTICIPANTS,
     PHOTO,
     STICKER,
     TEXT,
