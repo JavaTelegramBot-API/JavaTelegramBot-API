@@ -14,6 +14,7 @@ public class UserImpl implements User {
     private final String first_name;
     private final String last_name;
     private final String username;
+    private final String language_code;
 
     private UserImpl(JSONObject jsonObject) {
 
@@ -21,6 +22,7 @@ public class UserImpl implements User {
         this.first_name = jsonObject.getString("first_name");
         this.last_name = jsonObject.optString("last_name");
         this.username = "@" + jsonObject.optString("username");
+        this.language_code = jsonObject.optString("language_code");
     }
 
     private UserImpl(int userID) {
@@ -29,6 +31,7 @@ public class UserImpl implements User {
         this.first_name = null;
         this.last_name = null;
         this.username = null;
+        this.language_code = null;
     }
 
     public static User createUser(JSONObject jsonObject) {
@@ -59,6 +62,11 @@ public class UserImpl implements User {
     @Override
     public String getUsername() {
         return username;
+    }
+    
+    @Override
+    public String getLanguageCode() {
+        return language_code;
     }
 
     @Override

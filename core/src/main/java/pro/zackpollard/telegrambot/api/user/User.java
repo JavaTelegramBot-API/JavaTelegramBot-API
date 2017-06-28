@@ -46,6 +46,13 @@ public interface User {
     String getUsername();
 
     /**
+     * Gets the language code for the User
+     * 
+     * @return The language code for the user, or null if none is provided
+     */
+    String getLanguageCode();
+
+    /**
      * Gets the profile photos for the User
      *
      * @param telegramBot The TelegramBot instance that should retrieve the profile photos
