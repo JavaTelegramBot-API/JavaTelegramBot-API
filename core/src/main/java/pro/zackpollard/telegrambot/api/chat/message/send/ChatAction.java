@@ -9,6 +9,8 @@ public enum ChatAction {
     UPLOADING_PHOTO("upload_photo"),
     RECORDING_VIDEO("record_video"),
     UPLOADING_VIDEO("upload_video"),
+    RECORD_VIDEO_NOTE("record_video_note"),
+    UPLOAD_VIDEO_NOTE("upload_video_note"),
     RECORD_AUDIO("record_audio"),
     UPLOAD_AUDIO("upload_audio"),
     UPLOAD_DOCUMENT("upload_document"),
