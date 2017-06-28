@@ -12,6 +12,7 @@ public enum MessageType {
     DOCUMENT,
     STICKER,
     VIDEO,
+    VIDEO_NOTE,
     LOCATION,
     VENUE,
     VOICE,

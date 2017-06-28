@@ -22,8 +22,9 @@ public class InlineQueryResultGif implements InlineQueryResult {
     private final String id;
     @NonNull
     private final URL gif_url;
-    private final int gif_width;
-    private final int gif_height;
+    private final Integer gif_width;
+    private final Integer gif_height;
+    private final Integer gif_duration;
     @NonNull
     private final URL thumb_url;
     private final String title;
@@ -72,19 +73,28 @@ public class InlineQueryResultGif implements InlineQueryResult {
     /**
      * Gets the width of the gif
      *
-     * @return The width of the gif
+     * @return The width of the gif, or null if not specified
      */
-    public int getGifWidth() {
+    public Integer getGifWidth() {
         return this.gif_width;
     }
 
     /**
      * Gets the height of the gif
      *
-     * @return The height of the gif
+     * @return The height of the gif, or null if not specified
      */
-    public int getGifHeight() {
+    public Integer getGifHeight() {
         return this.gif_height;
+    }
+
+    /**
+     * Gets the duration of the gif
+     * 
+     * @return The duration of the gif, or null if not specified
+     */
+    public Integer getGifDuration() {
+        return this.gif_duration;
     }
 
     /**
@@ -137,8 +147,9 @@ public class InlineQueryResultGif implements InlineQueryResult {
     public static class InlineQueryResultGifBuilder {
         private String id = Utils.generateRandomString(32);
         private URL gif_url;
-        private int gif_width;
-        private int gif_height;
+        private Integer gif_width;
+        private Integer gif_height;
+        private Integer gif_duration;
         private URL thumb_url;
         private String title;
         private String caption;
@@ -182,7 +193,7 @@ public class InlineQueryResultGif implements InlineQueryResult {
          *
          * @return The builder object
          */
-        public InlineQueryResultGif.InlineQueryResultGifBuilder gifWidth(int gifWidth) {
+        public InlineQueryResultGif.InlineQueryResultGifBuilder gifWidth(Integer gifWidth) {
             this.gif_width = gifWidth;
             return this;
         }
@@ -195,8 +206,21 @@ public class InlineQueryResultGif implements InlineQueryResult {
          *
          * @return The builder object
          */
-        public InlineQueryResultGif.InlineQueryResultGifBuilder gifHeight(int gifHeight) {
+        public InlineQueryResultGif.InlineQueryResultGifBuilder gifHeight(Integer gifHeight) {
             this.gif_height = gifHeight;
+            return this;
+        }
+
+        /**
+         * *Optional*
+         * Sets the duration of the gif for the result
+         *
+         * @param gifDuration The duration of the gif
+         *
+         * @return The builder object
+         */
+        public InlineQueryResultGif.InlineQueryResultGifBuilder gifDuration(Integer gifDuration) {
+            this.gif_duration = gifDuration;
             return this;
         }
 
@@ -271,7 +295,7 @@ public class InlineQueryResultGif implements InlineQueryResult {
          * @return An InlineQueryResultGif object based on the previously provided values
          */
         public InlineQueryResultGif build() {
-            return new InlineQueryResultGif(id, gif_url, gif_width, gif_height, thumb_url, title, caption, reply_markup, input_message_content);
+            return new InlineQueryResultGif(id, gif_url, gif_width, gif_height, gif_duration, thumb_url, title, caption, reply_markup, input_message_content);
         }
     }
 }

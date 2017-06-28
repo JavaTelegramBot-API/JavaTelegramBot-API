@@ -8,18 +8,18 @@ import pro.zackpollard.telegrambot.api.user.User;
 /**
  * @author Zack Pollard
  */
-public class NewParticipantContentImpl implements NewChatParticipantContent {
+public class NewChatParticipantContentImpl implements NewChatParticipantContent {
 
     private final User content;
 
-    private NewParticipantContentImpl(JSONObject jsonObject) {
+    private NewChatParticipantContentImpl(JSONObject jsonObject) {
 
         this.content = UserImpl.createUser(jsonObject);
     }
 
     public static NewChatParticipantContent createNewParticipantContent(JSONObject jsonObject) {
 
-        return jsonObject != null ? new NewParticipantContentImpl(jsonObject) : null;
+        return jsonObject != null ? new NewChatParticipantContentImpl(jsonObject) : null;
     }
 
     /**

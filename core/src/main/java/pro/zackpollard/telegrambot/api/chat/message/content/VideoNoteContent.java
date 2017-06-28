@@ -1,18 +1,18 @@
 package pro.zackpollard.telegrambot.api.chat.message.content;
 
-import pro.zackpollard.telegrambot.api.chat.message.content.type.Document;
+import pro.zackpollard.telegrambot.api.chat.message.content.type.VideoNote;
 
 /**
  * @author Zack Pollard
  */
-public interface DocumentContent extends Content, Captionable {
+public interface VideoNoteContent extends Content {
 
     /**
-     * Gets the Document object relating to this DocumentContent object
+     * Gets the VideoNote object relating to this VideoNoteContent object
      *
-     * @return The Document object
+     * @return The VideoNote object
      */
-    Document getContent();
+    VideoNote getContent();
 
     /**
      * Gets the ContentType relating to this Content object
@@ -22,6 +22,6 @@ public interface DocumentContent extends Content, Captionable {
     @Override
     default ContentType getType() {
 
-        return ContentType.DOCUMENT;
+        return ContentType.VIDEO_NOTE;
     }
 }

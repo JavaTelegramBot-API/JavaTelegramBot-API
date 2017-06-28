@@ -121,6 +121,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
             register(StickerMessageReceivedEvent.class, Listener::onStickerMessageReceived);
             register(TextMessageReceivedEvent.class, Listener::onTextMessageReceived);
             register(VideoMessageReceivedEvent.class, Listener::onVideoMessageReceived);
+            register(VideoNoteMessageReceivedEvent.class, Listener::onVideoNoteMessageReceived);
             register(VoiceMessageReceivedEvent.class, Listener::onVoiceMessageReceived);
 
             register(DeleteGroupChatPhotoEvent.class, Listener::onDeleteGroupChatPhoto);
@@ -129,6 +130,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
             register(NewGroupChatPhotoEvent.class, Listener::onNewGroupChatPhoto);
             register(NewGroupChatTitleEvent.class, Listener::onNewGroupChatTitle);
             register(ParticipantJoinGroupChatEvent.class, Listener::onParticipantJoinGroupChat);
+            register(ParticipantsJoinGroupChatEvent.class, Listener::onParticipantsJoinGroupChat);
             register(ParticipantLeaveGroupChatEvent.class, Listener::onParticipantLeaveGroupChat);
 
             register(InlineQueryReceivedEvent.class, Listener::onInlineQueryReceived);

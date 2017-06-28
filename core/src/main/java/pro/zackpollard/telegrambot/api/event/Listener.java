@@ -46,6 +46,9 @@ public interface Listener {
     default void onVideoMessageReceived(VideoMessageReceivedEvent event) {
     }
 
+    default void onVideoNoteMessageReceived(VideoNoteMessageReceivedEvent event) {
+    }
+
     default void onVoiceMessageReceived(VoiceMessageReceivedEvent event) {
     }
 
@@ -65,6 +68,9 @@ public interface Listener {
     }
 
     default void onParticipantJoinGroupChat(ParticipantJoinGroupChatEvent event) {
+    }
+    
+    default void onParticipantsJoinGroupChat(ParticipantsJoinGroupChatEvent event) {
     }
 
     default void onParticipantLeaveGroupChat(ParticipantLeaveGroupChatEvent event) {

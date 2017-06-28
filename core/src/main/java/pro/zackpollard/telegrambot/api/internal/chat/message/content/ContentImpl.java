@@ -55,6 +55,9 @@ public class ContentImpl {
                 case "video":
 
                     return VideoContentImpl.createVideoContent(jsonObject.getJSONObject("video"), jsonObject.optString("caption"));
+                case "video_note":
+                    
+                    return VideoNoteContentImpl.createVideoNoteContent(jsonObject.getJSONObject("video_note"));
                 case "voice":
 
                     return VoiceContentImpl.createVoiceContent(jsonObject.getJSONObject("voice"));
@@ -69,7 +72,10 @@ public class ContentImpl {
                     return VenueContentImpl.createVenueContent(jsonObject.getJSONObject("venue"));
                 case "new_chat_member":
 
-                    return NewParticipantContentImpl.createNewParticipantContent(jsonObject.getJSONObject("new_chat_member"));
+                    return NewChatParticipantContentImpl.createNewParticipantContent(jsonObject.getJSONObject("new_chat_member"));
+                case "new_chat_members":
+                    
+                    return NewChatParticipantsContentImpl.createNewParticipantsContent(jsonObject.getJSONArray("new_chat_members"));
                 case "left_chat_member":
 
                     return LeftChatParticipantContentImpl.createLeftChatParticipantContent(jsonObject.getJSONObject("left_chat_member"));

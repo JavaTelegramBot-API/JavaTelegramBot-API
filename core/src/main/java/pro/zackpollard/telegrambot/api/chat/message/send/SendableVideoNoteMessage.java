@@ -9,19 +9,15 @@ import pro.zackpollard.telegrambot.api.chat.message.ReplyMarkup;
  */
 @ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class SendableVideoMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
+public class SendableVideoNoteMessage implements SendableMessage, ReplyingOptions, NotificationOptions {
 
     @NonNull
     @Getter
-    private final InputFile video;
+    private final InputFile videoNote;
     @Getter
     private final int duration;
     @Getter
-    private final int width;
-    @Getter
-    private final int height;
-    @Getter
-    private final String caption;
+    private final int length;
     @Getter
     private final long replyTo;
     @Getter
@@ -34,8 +30,8 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
      *
      * @return A SendableVideoNoteMessageBuilder object used to construct the SendableVideoMessage object
      */
-    public static SendableVideoMessageBuilder builder() {
-        return new SendableVideoMessageBuilder();
+    public static SendableVideoNoteMessageBuilder builder() {
+        return new SendableVideoNoteMessageBuilder();
     }
 
     /**
@@ -45,34 +41,32 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
      */
     @Override
     public MessageType getType() {
-        return MessageType.VIDEO;
+        return MessageType.VIDEO_NOTE;
     }
 
     @ToString
-    public static class SendableVideoMessageBuilder {
+    public static class SendableVideoNoteMessageBuilder {
 
-        private InputFile video;
+        private InputFile videoNote;
         private int duration;
-        private int width;
-        private int height;
-        private String caption;
+        private int length;
         private long replyTo;
         private ReplyMarkup replyMarkup;
         private boolean disableNotification;
 
-        SendableVideoMessageBuilder() {
+        SendableVideoNoteMessageBuilder() {
         }
 
         /**
          * *Required*
-         * Sets the video InputFile to be sent
+         * Sets the video note InputFile to be sent
          *
-         * @param video The video InputFile
+         * @param videoNote The video note InputFile
          *
          * @return The builder object
          */
-        public SendableVideoMessage.SendableVideoMessageBuilder video(InputFile video) {
-            this.video = video;
+        public SendableVideoNoteMessageBuilder video(InputFile videoNote) {
+            this.videoNote = videoNote;
             return this;
         }
 
@@ -84,47 +78,21 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
          *
          * @return The builder object
          */
-        public SendableVideoMessage.SendableVideoMessageBuilder duration(int duration) {
+        public SendableVideoNoteMessageBuilder duration(int duration) {
             this.duration = duration;
             return this;
         }
 
         /**
          * *Optional*
-         * Sets the width of the video file to be sent
+         * Sets the height and width of the video file to be sent
          *
-         * @param width The width of the video file
-         *
-         * @return The builder object
-         */
-        public SendableVideoMessage.SendableVideoMessageBuilder width(int width) {
-            this.width = width;
-            return this;
-        }
-
-        /**
-         * *Optional*
-         * Sets the height of the video file to be sent
-         *
-         * @param height The height of the video file
+         * @param length The height and width of the video file
          *
          * @return The builder object
          */
-        public SendableVideoMessage.SendableVideoMessageBuilder height(int height) {
-            this.height = height;
-            return this;
-        }
-
-        /**
-         * *Optional*
-         * Sets the caption that you want to send with the Message
-         *
-         * @param caption The caption you want to send with the Message
-         *
-         * @return The builder object
-         */
-        public SendableVideoMessage.SendableVideoMessageBuilder caption(String caption) {
-            this.caption = caption;
+        public SendableVideoNoteMessageBuilder length(int length) {
+            this.length = length;
             return this;
         }
 
@@ -136,7 +104,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
          *
          * @return The builder object
          */
-        public SendableVideoMessage.SendableVideoMessageBuilder replyTo(Message replyTo) {
+        public SendableVideoNoteMessageBuilder replyTo(Message replyTo) {
             this.replyTo = replyTo != null ? replyTo.getMessageId() : 0;
             return this;
         }
@@ -149,7 +117,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
          *
          * @return The builder object
          */
-        public SendableVideoMessage.SendableVideoMessageBuilder replyTo(long replyTo) {
+        public SendableVideoNoteMessageBuilder replyTo(long replyTo) {
             this.replyTo = replyTo;
             return this;
         }
@@ -162,7 +130,7 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
          *
          * @return The builder object
          */
-        public SendableVideoMessage.SendableVideoMessageBuilder replyMarkup(ReplyMarkup replyMarkup) {
+        public SendableVideoNoteMessageBuilder replyMarkup(ReplyMarkup replyMarkup) {
             this.replyMarkup = replyMarkup;
             return this;
         }
@@ -175,19 +143,19 @@ public class SendableVideoMessage implements SendableMessage, ReplyingOptions, N
          *
          * @return The builder object
          */
-        public SendableVideoMessage.SendableVideoMessageBuilder disableNotification(boolean disableNotification) {
+        public SendableVideoNoteMessageBuilder disableNotification(boolean disableNotification) {
 
             this.disableNotification = disableNotification;
             return this;
         }
 
         /**
-         * Builds the SendableVideoMessage object
+         * Builds the SendableVideoNoteMessage object
          *
-         * @return A SendableVideoMessage object based on the previously provided values
+         * @return A SendableVideoNoteMessage object based on the previously provided values
          */
-        public SendableVideoMessage build() {
-            return new SendableVideoMessage(video, duration, width, height, caption, replyTo, replyMarkup, disableNotification);
+        public SendableVideoNoteMessage build() {
+            return new SendableVideoNoteMessage(videoNote, duration, length, replyTo, replyMarkup, disableNotification);
         }
     }
 }

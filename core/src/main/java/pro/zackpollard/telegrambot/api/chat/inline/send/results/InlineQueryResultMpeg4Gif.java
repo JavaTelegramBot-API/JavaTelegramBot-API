@@ -22,8 +22,9 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
     private final String id;
     @NonNull
     private final URL mpeg4_url;
-    private final int mpeg4_width;
-    private final int mpeg4_height;
+    private final Integer mpeg4_width;
+    private final Integer mpeg4_height;
+    private final Integer mpeg4_duration;
     @NonNull
     private final URL thumb_url;
     private final String title;
@@ -74,7 +75,7 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
      *
      * @return The width of the mpeg4gif
      */
-    public int getMpeg4Width() {
+    public Integer getMpeg4Width() {
         return this.mpeg4_width;
     }
 
@@ -83,10 +84,19 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
      *
      * @return The height of the mpeg4gif
      */
-    public int getMpeg4Height() {
+    public Integer getMpeg4Height() {
         return this.mpeg4_height;
     }
 
+    /**
+     * Gets the duration of the mpeg4gif
+     * 
+     * @return The duration of the mpeg4gif
+     */
+    public Integer getMpeg4Duration() {
+        return this.mpeg4_duration;
+    }
+    
     /**
      * Gets the URL of the thumbnail for the result
      *
@@ -137,8 +147,9 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
     public static class InlineQueryResultMpeg4GifBuilder {
         private String id = Utils.generateRandomString(32);
         private URL mpeg4_url;
-        private int mpeg4_width;
-        private int mpeg4_height;
+        private Integer mpeg4_width;
+        private Integer mpeg4_height;
+        private Integer mpeg4_duration;
         private URL thumb_url;
         private String title;
         private String caption;
@@ -197,6 +208,19 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
          */
         public InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder mpeg4Height(int mpeg4Height) {
             this.mpeg4_height = mpeg4Height;
+            return this;
+        }
+
+        /**
+         * *Optional*
+         * Sets the duration of the mpeg4gif for the result
+         *
+         * @param mpeg4Duration The duration of the mpeg4gif
+         *
+         * @return The builder object
+         */
+        public InlineQueryResultMpeg4Gif.InlineQueryResultMpeg4GifBuilder mpeg4Duration(int mpeg4Duration) {
+            this.mpeg4_duration = mpeg4Duration;
             return this;
         }
 
@@ -271,7 +295,7 @@ public class InlineQueryResultMpeg4Gif implements InlineQueryResult {
          * @return An InlineQueryResultMpeg4Gif object based on the previously provided values
          */
         public InlineQueryResultMpeg4Gif build() {
-            return new InlineQueryResultMpeg4Gif(id, mpeg4_url, mpeg4_width, mpeg4_height, thumb_url, title, caption, reply_markup, input_message_content);
+            return new InlineQueryResultMpeg4Gif(id, mpeg4_url, mpeg4_width, mpeg4_height, mpeg4_duration, thumb_url, title, caption, reply_markup, input_message_content);
         }
     }
 }
