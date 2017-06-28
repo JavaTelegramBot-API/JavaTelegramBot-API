@@ -46,6 +46,9 @@ public interface Listener {
     default void onVideoMessageReceived(VideoMessageReceivedEvent event) {
     }
 
+    default void onVideoNoteMessageReceived(VideoNoteMessageReceivedEvent event) {
+    }
+
     default void onVoiceMessageReceived(VoiceMessageReceivedEvent event) {
     }
 

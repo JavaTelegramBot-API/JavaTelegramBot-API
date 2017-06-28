@@ -121,6 +121,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
             register(StickerMessageReceivedEvent.class, Listener::onStickerMessageReceived);
             register(TextMessageReceivedEvent.class, Listener::onTextMessageReceived);
             register(VideoMessageReceivedEvent.class, Listener::onVideoMessageReceived);
+            register(VideoNoteMessageReceivedEvent.class, Listener::onVideoNoteMessageReceived);
             register(VoiceMessageReceivedEvent.class, Listener::onVoiceMessageReceived);
 
             register(DeleteGroupChatPhotoEvent.class, Listener::onDeleteGroupChatPhoto);

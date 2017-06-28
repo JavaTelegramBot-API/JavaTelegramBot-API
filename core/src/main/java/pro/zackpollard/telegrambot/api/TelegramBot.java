@@ -14,10 +14,7 @@ import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.content.*;
-import pro.zackpollard.telegrambot.api.chat.message.content.type.PhotoSize;
-import pro.zackpollard.telegrambot.api.chat.message.content.type.Sticker;
-import pro.zackpollard.telegrambot.api.chat.message.content.type.Video;
-import pro.zackpollard.telegrambot.api.chat.message.content.type.Voice;
+import pro.zackpollard.telegrambot.api.chat.message.content.type.*;
 import pro.zackpollard.telegrambot.api.chat.message.send.*;
 import pro.zackpollard.telegrambot.api.event.ListenerRegistry;
 import pro.zackpollard.telegrambot.api.extensions.Extension;
@@ -455,6 +452,47 @@ public final class TelegramBot {
                     Video video = ((VideoContent) messageResponse.getContent()).getContent();
 
                     fileManager.cacheFileID(videoMessage.getVideo().getFile(), video.getFileId());
+                }
+
+                break;
+            }
+            case VIDEO_NOTE: {
+                
+                SendableVideoNoteMessage videoNoteMessage = (SendableVideoNoteMessage) message;
+
+                try {
+                    MultipartBody request = Unirest.post(getBotAPIUrl() + "sendVideo")
+                            .field("chat_id", chat.getId(), "application/json; charset=utf8;");
+
+                    InputFile inputFile = videoNoteMessage.getVideoNote();
+                    Utils.processInputFileField(request, "video", inputFile);
+
+                    if (videoNoteMessage.getDuration() > 0) request.field("duration", videoNoteMessage.getDuration());
+                    if (videoNoteMessage.getLength() > 0) request.field("width", videoNoteMessage.getLength());
+
+                    Utils.processReplyContent(request, videoNoteMessage);
+                    Utils.processNotificationContent(request, videoNoteMessage);
+
+                    response = request.asString();
+                    jsonResponse = Utils.processResponse(response);
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
+
+                messageResponse = Utils.checkResponseStatus(jsonResponse) ? (MessageImpl.createMessage(jsonResponse != null ? jsonResponse : null, this)) : null;
+
+                //VideoNote cacheing to FileManager
+                if (videoNoteMessage.getVideoNote().getFile() != null && messageResponse != null) {
+
+                    if (!messageResponse.getContent().getType().equals(ContentType.VIDEO_NOTE)) {
+
+                        System.err.println("The API returned content type " + messageResponse.getContent().getType().name() + " when a " + message.getType() + " type was sent, this is not supported by this API and will break cacheing, please create an issue on github or message @zackpollard on telegram.");
+                        break;
+                    }
+
+                    VideoNote videoNote = ((VideoNoteContent) messageResponse.getContent()).getContent();
+
+                    fileManager.cacheFileID(videoNoteMessage.getVideoNote().getFile(), videoNote.getFileId());
                 }
 
                 break;

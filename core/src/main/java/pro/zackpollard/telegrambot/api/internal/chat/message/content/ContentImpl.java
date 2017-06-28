@@ -55,6 +55,9 @@ public class ContentImpl {
                 case "video":
 
                     return VideoContentImpl.createVideoContent(jsonObject.getJSONObject("video"), jsonObject.optString("caption"));
+                case "video_note":
+                    
+                    return VideoNoteContentImpl.createVideoNoteContent(jsonObject.getJSONObject("video_note"));
                 case "voice":
 
                     return VoiceContentImpl.createVoiceContent(jsonObject.getJSONObject("voice"));
