@@ -5,7 +5,7 @@ import pro.zackpollard.telegrambot.api.chat.message.content.type.Document;
 /**
  * @author Zack Pollard
  */
-public interface DocumentContent extends Content {
+public interface DocumentContent extends Content, Captionable {
 
     /**
      * Gets the Document object relating to this DocumentContent object
