@@ -60,7 +60,7 @@ Maven is used for dependency management and deployment.
     <dependency>
         <groupId>pro.zackpollard.telegrambot.api</groupId>
         <artifactId>jtelegram-botapi</artifactId>
-        <version>1.6.5</version>
+        <version>1.7.0</version>
     </dependency>
 </dependencies>
 ```
