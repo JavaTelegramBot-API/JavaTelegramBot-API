@@ -28,4 +28,9 @@ public class DocumentContentImpl implements DocumentContent {
     public Document getContent() {
         return content;
     }
+
+    @Override
+    public String getCaption() {
+        return caption;
+    }
 }
