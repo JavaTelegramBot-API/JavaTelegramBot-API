@@ -1033,7 +1033,7 @@ public final class TelegramBot {
      *
      * @return True if the user was kicked successfully, otherwise False
      */
-    public boolean kickChatMember(String chatId, int userId) {
+    public boolean kickChatMember(String chatId, int userId, long until_date) {
 
         HttpResponse<String> response;
         JSONObject jsonResponse;
@@ -1041,7 +1041,8 @@ public final class TelegramBot {
         try {
             MultipartBody request = Unirest.post(getBotAPIUrl() + "kickChatMember")
                     .field("chat_id", chatId, "application/json; charset=utf8;")
-                    .field("user_id", userId);
+                    .field("user_id", userId)
+                    .field("until_date", until_date);
 
             response = request.asString();
             jsonResponse = Utils.processResponse(response);

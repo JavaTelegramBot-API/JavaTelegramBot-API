@@ -91,9 +91,9 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     }
 
     @Override
-    public boolean kickChatMember(int userId) {
+    public boolean kickChatMember(int userId, long until_time) {
 
-        return telegramBot.kickChatMember(this.getId(), userId);
+        return telegramBot.kickChatMember(this.getId(), userId, until_time);
     }
 
     @Override

@@ -70,8 +70,8 @@ public class GroupChatImpl implements GroupChat {
     }
 
     @Override
-    public boolean kickChatMember(int userId) {
+    public boolean kickChatMember(int userId, long until_date) {
 
-        return telegramBot.kickChatMember(this.getId(), userId);
+        return telegramBot.kickChatMember(this.getId(), userId, until_date);
     }
 }
