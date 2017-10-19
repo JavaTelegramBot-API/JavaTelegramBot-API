@@ -94,4 +94,11 @@ public interface SuperGroupChat extends GroupChat {
      * @return Returns True if the promotions were applied successfully, False otherwise
      */
     boolean promoteChatMember(int userId, UserPromotions userPromotions);
+
+    /**
+     * Use this to export an invite link for this chat
+     *
+     * @return An invite link for this chat, or null if the export failed
+     */
+    String exportChatInviteLink();
 }

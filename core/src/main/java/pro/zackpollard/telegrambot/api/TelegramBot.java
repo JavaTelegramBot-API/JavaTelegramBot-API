@@ -1177,6 +1177,37 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * Use this method to export an invite link to a supergroup or a channel. The bot must be an administrator in the
+     * chat for this to work and must have the appropriate admin rights
+     *
+     * @param chatId The id of the chat that you would like to export the invite link for
+     *
+     * @return The invite link for the chat, or null if the export failed
+     */
+    public String exportChatInviteLink(String chatId) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "exportChatInviteLink")
+                    .field("chat_id", chatId, "application/json; charset=utf8;");
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                return jsonResponse.getString("result");
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public GameScoreEditResponse setGameScore(SendableGameScore sendableGameScore) {
 
         HttpResponse<String> response;

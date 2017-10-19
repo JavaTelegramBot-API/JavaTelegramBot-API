@@ -91,4 +91,9 @@ public class ChannelChatImpl implements ChannelChat {
     public boolean promoteChatMember(int userId, UserPromotions userPromotions) {
         return telegramBot.promoteChatMember(this.getId(), userId, userPromotions);
     }
+
+    @Override
+    public String exportChatInviteLink() {
+        return telegramBot.exportChatInviteLink(this.getId());
+    }
 }
