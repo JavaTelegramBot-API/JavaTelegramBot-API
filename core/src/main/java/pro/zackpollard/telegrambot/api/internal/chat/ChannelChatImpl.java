@@ -16,6 +16,7 @@ public class ChannelChatImpl implements ChannelChat {
     private final String title;
     private final ChatPhoto photo;
     private final String description;
+    private final String invite_link;
 
     private final TelegramBot telegramBot;
 
@@ -25,6 +26,7 @@ public class ChannelChatImpl implements ChannelChat {
         this.title = jsonObject.getString("title");
         this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
         this.description = jsonObject.optString("description");
+        this.invite_link = jsonObject.optString("invite_link");
         this.telegramBot = telegramBot;
     }
 
@@ -41,6 +43,11 @@ public class ChannelChatImpl implements ChannelChat {
     @Override
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getInviteLink() {
+        return invite_link;
     }
 
     @Override

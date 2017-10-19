@@ -21,6 +21,14 @@ public interface ChannelChat extends Chat {
     String getDescription();
 
     /**
+     * Gets the invite link of the Channel that this ChannelChat object refers to
+     * Only gets returned when the ChannelChat was retrieved from a call to getChat()
+     *
+     * @return The invite link of the ChannelChat
+     */
+    String getInviteLink();
+
+    /**
      * Gets the ChatType of this Chat
      *
      * @return The ChatType of this Chat

@@ -26,6 +26,14 @@ public interface SuperGroupChat extends GroupChat {
     String getDescription();
 
     /**
+     * Gets the invite link of the SuperGroup that this SuperGroupChat object refers to
+     * Only gets returned when the SuperGroupChat was retrieved from a call to getChat()
+     *
+     * @return The invite link of the SuperGroupChat
+     */
+    String getInviteLink();
+
+    /**
      * This method will kick and ban the User with the specified User ID from the chat if they are currently in it
      *
      * @param userId The User ID of the User you want to kick from the chat
