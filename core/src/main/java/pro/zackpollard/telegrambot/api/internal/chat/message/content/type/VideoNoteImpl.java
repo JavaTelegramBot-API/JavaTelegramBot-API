@@ -14,7 +14,7 @@ public class VideoNoteImpl implements VideoNote {
     private final int length;
     private final int duration;
     private final PhotoSize thumb;
-    private final int file_size;
+    private final Integer file_size;
 
     private VideoNoteImpl(JSONObject jsonObject) {
 
@@ -46,7 +46,7 @@ public class VideoNoteImpl implements VideoNote {
     }
     
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 

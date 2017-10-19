@@ -11,7 +11,7 @@ public class VoiceImpl implements Voice {
     private final String file_id;
     private final int duration;
     private final String mime_type;
-    private final int file_size;
+    private final Integer file_size;
 
     private VoiceImpl(JSONObject jsonObject) {
 
@@ -47,7 +47,7 @@ public class VoiceImpl implements Voice {
      * @return The file size
      */
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 

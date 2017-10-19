@@ -15,7 +15,7 @@ public class VideoImpl implements Video {
     private final int duration;
     private final PhotoSize thumb;
     private final String mime_type;
-    private final int file_size;
+    private final Integer file_size;
 
     private VideoImpl(JSONObject jsonObject) {
 
@@ -74,7 +74,7 @@ public class VideoImpl implements Video {
      * @return The file size
      */
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 

@@ -13,7 +13,7 @@ public class AudioImpl implements Audio {
     private final String performer;
     private final String title;
     private final String mime_type;
-    private final int file_size;
+    private final Integer file_size;
 
     private AudioImpl(JSONObject jsonObject) {
 
@@ -41,7 +41,7 @@ public class AudioImpl implements Audio {
     }
 
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 

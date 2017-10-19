@@ -53,7 +53,7 @@ public class AnimationImpl implements Animation {
     }
 
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 

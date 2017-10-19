@@ -13,7 +13,7 @@ public class DocumentImpl implements Document {
     private final PhotoSize thumb;
     private final String file_name;
     private final String mime_type;
-    private final int file_size;
+    private final Integer file_size;
 
     private DocumentImpl(JSONObject jsonObject) {
 
@@ -46,7 +46,7 @@ public class DocumentImpl implements Document {
      * @return The file size
      */
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 

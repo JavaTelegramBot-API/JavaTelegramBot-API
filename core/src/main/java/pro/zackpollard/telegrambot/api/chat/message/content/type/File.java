@@ -26,7 +26,7 @@ public interface File {
      *
      * @return The file size
      */
-    int getSize();
+    Integer getSize();
 
     /**
      * Gets the download link for this file

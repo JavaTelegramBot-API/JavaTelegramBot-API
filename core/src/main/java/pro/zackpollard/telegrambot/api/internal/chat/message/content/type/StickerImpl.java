@@ -14,7 +14,7 @@ public class StickerImpl implements Sticker {
     private final int height;
     private final PhotoSize thumb;
     private final String emoji;
-    private final int file_size;
+    private final Integer file_size;
 
     private StickerImpl(JSONObject jsonObject) {
 
@@ -67,7 +67,7 @@ public class StickerImpl implements Sticker {
      * @return The file size
      */
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 

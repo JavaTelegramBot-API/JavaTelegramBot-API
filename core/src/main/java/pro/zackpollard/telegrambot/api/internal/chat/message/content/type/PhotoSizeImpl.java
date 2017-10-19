@@ -65,7 +65,7 @@ public class PhotoSizeImpl implements PhotoSize {
      * @return The file size
      */
     @Override
-    public int getSize() {
+    public Integer getSize() {
         return file_size;
     }
 }
