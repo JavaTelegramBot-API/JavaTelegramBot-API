@@ -1,23 +1,25 @@
 package pro.zackpollard.telegrambot.api.internal.chat.message.content.type;
 
+import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.PhotoSize;
 
 /**
  * @author Zack Pollard
  */
+@RequiredArgsConstructor
 public class PhotoSizeImpl implements PhotoSize {
 
     private final String file_id;
     private final int width;
     private final int height;
-    private final int file_size;
+    private final Integer file_size;
 
     private PhotoSizeImpl(JSONObject jsonObject) {
 
         this.file_id = jsonObject.getString("file_id");
-        this.width = jsonObject.optInt("width");
-        this.height = jsonObject.optInt("height");
+        this.width = jsonObject.getInt("width");
+        this.height = jsonObject.getInt("height");
         this.file_size = jsonObject.optInt("file_size");
     }
 
