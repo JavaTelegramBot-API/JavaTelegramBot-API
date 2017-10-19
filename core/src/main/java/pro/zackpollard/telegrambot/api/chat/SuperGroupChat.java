@@ -1,5 +1,7 @@
 package pro.zackpollard.telegrambot.api.chat;
 
+import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
+
 /**
  * @author Zack Pollard
  */
@@ -67,4 +69,6 @@ public interface SuperGroupChat extends GroupChat {
      * @return True if the user was unbanned, otherwise False
      */
     boolean unbanChatMember(int userId);
+
+    boolean restrictChatMember(int userId, UserRestrictions userRestrictions);
 }

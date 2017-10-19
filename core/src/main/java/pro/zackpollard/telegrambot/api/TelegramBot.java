@@ -10,6 +10,7 @@ import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
+import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -1092,6 +1093,46 @@ public final class TelegramBot {
         return false;
     }
 
+    /**
+     * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this
+     * to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions
+     * from a user
+     *
+     * @param chatId            The ID of the chat that you want to restrict the user in
+     * @param userId            The ID of the user that you want to restrict
+     * @param userRestrictions  The UserRestrictions object containing the restrictions you want to place on the user
+     *
+     * @return Returns True if the restrictions were applied successfully, False otherwise
+     */
+    public boolean restrictChatMember(String chatId, int userId, UserRestrictions userRestrictions) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "restrictChatMember")
+                    .field("chat_id", chatId, "application/json; charset=utf8;")
+                    .field("user_id", userId)
+                    .field("until_date", userRestrictions.getUntilDate())
+                    .field("can_send_messages", userRestrictions.getCanSendMessages())
+                    .field("can_send_media_messages", userRestrictions.getCanSendMediaMessages())
+                    .field("can_send_other_messages", userRestrictions.getCanSendOtherMessages())
+                    .field("can_add_web_page_previews", userRestrictions.getCanAddWebPagePreviews());
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public GameScoreEditResponse setGameScore(SendableGameScore sendableGameScore) {
 
         HttpResponse<String> response;
@@ -1136,11 +1177,11 @@ public final class TelegramBot {
             response = request.asString();
             jsonResponse = Utils.processResponse(response);
 
-            if(jsonResponse != null) {
+            if (jsonResponse != null) {
 
                 List<GameHighScore> highScores = new LinkedList<>();
 
-                for(Object object : jsonResponse.getJSONArray("result")) {
+                for (Object object : jsonResponse.getJSONArray("result")) {
 
                     JSONObject jsonObject = (JSONObject) object;
 

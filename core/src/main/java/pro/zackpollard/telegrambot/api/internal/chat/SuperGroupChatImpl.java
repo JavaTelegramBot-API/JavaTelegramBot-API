@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
+import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 
@@ -39,11 +40,6 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         return new SuperGroupChatImpl(jsonObject, telegramBot);
     }
 
-    /**
-     * Gets the name of the group chat.
-     *
-     * @return The group chat name, currently can be null due to chat creation by ID with no way of getting the group chats name from telegram servers.
-     */
     @Override
     public String getName() {
         return title;
@@ -66,7 +62,6 @@ public class SuperGroupChatImpl implements SuperGroupChat {
 
     @Override
     public Message sendMessage(SendableMessage message) {
-
         return telegramBot.sendMessage(this, message);
     }
 
@@ -92,13 +87,16 @@ public class SuperGroupChatImpl implements SuperGroupChat {
 
     @Override
     public boolean kickChatMember(int userId, long until_time) {
-
         return telegramBot.kickChatMember(this.getId(), userId, until_time);
     }
 
     @Override
     public boolean unbanChatMember(int userId) {
-
         return telegramBot.unbanChatMember(this.getId(), userId);
+    }
+
+    @Override
+    public boolean restrictChatMember(int userId, UserRestrictions userRestrictions) {
+        return telegramBot.restrictChatMember(this.getId(), userId, userRestrictions);
     }
 }
