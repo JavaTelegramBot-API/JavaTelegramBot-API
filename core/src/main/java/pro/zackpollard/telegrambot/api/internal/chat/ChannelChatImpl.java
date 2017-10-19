@@ -75,4 +75,14 @@ public class ChannelChatImpl implements ChannelChat {
 
         return telegramBot.sendMessage(this, message);
     }
+
+    @Override
+    public boolean kickChatMember(int userId, long until_time) {
+        return telegramBot.kickChatMember(this.getId(), userId, until_time);
+    }
+
+    @Override
+    public boolean unbanChatMember(int userId) {
+        return telegramBot.unbanChatMember(this.getId(), userId);
+    }
 }
