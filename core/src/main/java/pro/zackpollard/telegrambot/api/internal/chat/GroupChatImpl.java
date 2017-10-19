@@ -2,6 +2,7 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.GroupChat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
@@ -14,6 +15,7 @@ public class GroupChatImpl implements GroupChat {
     private final int id;
     private final String title;
     private final boolean allMembersAreAdministrators;
+    private final ChatPhoto photo;
 
     private final TelegramBot telegramBot;
 
@@ -22,25 +24,13 @@ public class GroupChatImpl implements GroupChat {
         this.id = jsonObject.getInt("id");
         this.title = jsonObject.getString("title");
         this.allMembersAreAdministrators = jsonObject.optBoolean("all_members_are_administrators");
-        this.telegramBot = telegramBot;
-    }
-
-    private GroupChatImpl(int chatID, TelegramBot telegramBot) {
-
-        this.id = chatID;
-        this.title = null;
-        this.allMembersAreAdministrators = false;
+        this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
         this.telegramBot = telegramBot;
     }
 
     public static GroupChat createGroupChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
         return new GroupChatImpl(jsonObject, telegramBot);
-    }
-
-    public static GroupChat createGroupChat(int chatID, TelegramBot telegramBot) {
-
-        return new GroupChatImpl(chatID, telegramBot);
     }
 
     /**
@@ -51,6 +41,11 @@ public class GroupChatImpl implements GroupChat {
     @Override
     public String getName() {
         return title;
+    }
+
+    @Override
+    public ChatPhoto getPhoto() {
+        return photo;
     }
 
     @Override

@@ -40,6 +40,13 @@ public interface Chat {
     String getName();
 
     /**
+     * The Chat Photo. Only returned when the object was returned from a call to getChat()
+     *
+     * @return A ChatPhoto object representing the photo for this chat
+     */
+    ChatPhoto getPhoto();
+
+    /**
      * Gets the ChatType of this Chat
      *
      * @return The ChatType of this Chat

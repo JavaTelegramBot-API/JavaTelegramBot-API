@@ -3,6 +3,7 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.ChannelChat;
+import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 
@@ -13,6 +14,7 @@ public class ChannelChatImpl implements ChannelChat {
 
     private final String username;
     private final String title;
+    private final ChatPhoto photo;
 
     private final TelegramBot telegramBot;
 
@@ -20,24 +22,13 @@ public class ChannelChatImpl implements ChannelChat {
 
         this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
-        this.telegramBot = telegramBot;
-    }
-
-    private ChannelChatImpl(String username, TelegramBot telegramBot) {
-
-        this.username = username;
-        this.title = null;
+        this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
         this.telegramBot = telegramBot;
     }
 
     public static ChannelChat createChannelChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
         return new ChannelChatImpl(jsonObject, telegramBot);
-    }
-
-    public static ChannelChat createChannelChat(String username, TelegramBot telegramBot) {
-
-        return new ChannelChatImpl(username, telegramBot);
     }
 
     @Override
@@ -48,6 +39,11 @@ public class ChannelChatImpl implements ChannelChat {
     @Override
     public String getName() {
         return title;
+    }
+
+    @Override
+    public ChatPhoto getPhoto() {
+        return photo;
     }
 
     @Override

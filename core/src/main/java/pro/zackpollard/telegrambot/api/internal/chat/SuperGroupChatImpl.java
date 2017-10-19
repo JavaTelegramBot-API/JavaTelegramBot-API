@@ -2,6 +2,7 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
@@ -15,6 +16,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     private final String username;
     private final String title;
     private final boolean allMembersAreAdministrators;
+    private final ChatPhoto photo;
 
     private final TelegramBot telegramBot;
 
@@ -24,26 +26,13 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
         this.allMembersAreAdministrators = jsonObject.optBoolean("all_members_are_administrators");
-        this.telegramBot = telegramBot;
-    }
-
-    private SuperGroupChatImpl(long chatID, TelegramBot telegramBot) {
-
-        this.id = chatID;
-        this.title = null;
-        this.username = null;
-        this.allMembersAreAdministrators = false;
+        this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
         this.telegramBot = telegramBot;
     }
 
     public static SuperGroupChat createSuperGroupChat(JSONObject jsonObject, TelegramBot telegramBot) {
 
         return new SuperGroupChatImpl(jsonObject, telegramBot);
-    }
-
-    public static SuperGroupChat createSuperGroupChat(long chatID, TelegramBot telegramBot) {
-
-        return new SuperGroupChatImpl(chatID, telegramBot);
     }
 
     /**
@@ -54,6 +43,11 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     @Override
     public String getName() {
         return title;
+    }
+
+    @Override
+    public ChatPhoto getPhoto() {
+        return photo;
     }
 
     @Override
