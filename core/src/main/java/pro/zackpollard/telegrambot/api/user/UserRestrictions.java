@@ -27,6 +27,7 @@ public class UserRestrictions {
         return new UserRestrictionsBuilder();
     }
 
+    @ToString
     public static class UserRestrictionsBuilder {
         private Long untilDate;
         private Boolean canSendMessages;
@@ -37,37 +38,81 @@ public class UserRestrictions {
         UserRestrictionsBuilder() {
         }
 
+        /**
+         * Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days
+         * or less than 30 seconds from the current time, they are considered to be restricted forever
+         *
+         * @param untilDate Date when restrictions will be lifted for the user, unix time. If user is restricted for
+         *                  more than 366 days or less than 30 seconds from the current time, they are considered to be
+         *                  restricted forever
+         *
+         * @return The builder object
+         */
         public UserRestrictionsBuilder untilDate(Long untilDate) {
             this.untilDate = untilDate;
             return this;
         }
 
+        /**
+         * Pass True, if the user can send text messages, contacts, locations and venues
+         *
+         * @param canSendMessages Pass True, if the user can send text messages, contacts, locations and venues
+         *
+         * @return The builder object
+         */
         public UserRestrictionsBuilder canSendMessages(Boolean canSendMessages) {
             this.canSendMessages = canSendMessages;
             return this;
         }
 
+        /**
+         * Pass True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies
+         * can_send_messages
+         *
+         * @param canSendMediaMessages Pass True, if the user can send audios, documents, photos, videos, video notes
+         *                             and voice notes, implies can_send_messages
+         *
+         * @return The builder object
+         */
         public UserRestrictionsBuilder canSendMediaMessages(Boolean canSendMediaMessages) {
             this.canSendMediaMessages = canSendMediaMessages;
             return this;
         }
 
+        /**
+         * Pass True, if the user can send animations, games, stickers and use inline bots, implies
+         * can_send_media_messages
+         *
+         * @param canSendOtherMessages Pass True, if the user can send animations, games, stickers and use inline bots,
+         *                             implies can_send_media_messages
+         *
+         * @return The builder object
+         */
         public UserRestrictionsBuilder canSendOtherMessages(Boolean canSendOtherMessages) {
             this.canSendOtherMessages = canSendOtherMessages;
             return this;
         }
 
+        /**
+         * Pass True, if the user may add web page previews to their messages, implies can_send_media_messages
+         *
+         * @param canAddWebPagePreviews Pass True, if the user may add web page previews to their messages, implies
+         *                              can_send_media_messages
+         *
+         * @return The builder object
+         */
         public UserRestrictionsBuilder canAddWebPagePreviews(Boolean canAddWebPagePreviews) {
             this.canAddWebPagePreviews = canAddWebPagePreviews;
             return this;
         }
 
+        /**
+         * Builds the UserPromotion object
+         *
+         * @return A UserPromotion object based on the previously provided values
+         */
         public UserRestrictions build() {
             return new UserRestrictions(untilDate, canSendMessages, canSendMediaMessages, canSendOtherMessages, canAddWebPagePreviews);
-        }
-
-        public String toString() {
-            return "UserRestrictions.UserRestrictionsBuilder(untilDate=" + this.untilDate + ", canSendMessages=" + this.canSendMessages + ", canSendMediaMessages=" + this.canSendMediaMessages + ", canSendOtherMessages=" + this.canSendOtherMessages + ", canAddWebPagePreviews=" + this.canAddWebPagePreviews + ")";
         }
     }
 }

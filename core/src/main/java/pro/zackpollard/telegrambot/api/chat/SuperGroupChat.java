@@ -1,6 +1,7 @@
 package pro.zackpollard.telegrambot.api.chat;
 
 import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
+import pro.zackpollard.telegrambot.api.user.UserPromotions;
 
 /**
  * @author Zack Pollard
@@ -70,5 +71,27 @@ public interface SuperGroupChat extends GroupChat {
      */
     boolean unbanChatMember(int userId);
 
+    /**
+     * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this
+     * to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions
+     * from a user
+     *
+     * @param userId            The ID of the user that you want to restrict
+     * @param userRestrictions  The UserRestrictions object containing the restrictions you want to place on the user
+     *
+     * @return Returns True if the restrictions were applied successfully, False otherwise
+     */
     boolean restrictChatMember(int userId, UserRestrictions userRestrictions);
+
+    /**
+     * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the
+     * chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote
+     * a user
+     *
+     * @param userId            The ID of the user that you want to promote
+     * @param userPromotions    The UserPromotions object containing the promotions you want to place on the user
+     *
+     * @return Returns True if the promotions were applied successfully, False otherwise
+     */
+    boolean promoteChatMember(int userId, UserPromotions userPromotions);
 }

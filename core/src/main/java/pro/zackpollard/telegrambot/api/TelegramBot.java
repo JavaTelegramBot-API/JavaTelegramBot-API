@@ -32,6 +32,7 @@ import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
+import pro.zackpollard.telegrambot.api.user.UserPromotions;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.HashMap;
@@ -1118,6 +1119,49 @@ public final class TelegramBot {
                     .field("can_send_media_messages", userRestrictions.getCanSendMediaMessages())
                     .field("can_send_other_messages", userRestrictions.getCanSendOtherMessages())
                     .field("can_add_web_page_previews", userRestrictions.getCanAddWebPagePreviews());
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the
+     * chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote
+     * a user
+     *
+     * @param chatId            The ID of the chat that you want to promote the user in
+     * @param userId            The ID of the user that you want to promote
+     * @param userPromotions    The UserPromotions object containing the promotions you want to place on the user
+     *
+     * @return Returns True if the promotions were applied successfully, False otherwise
+     */
+    public boolean promoteChatMember(String chatId, int userId, UserPromotions userPromotions) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(getBotAPIUrl() + "promoteChatMember")
+                    .field("chat_id", chatId, "application/json; charset=utf8;")
+                    .field("user_id", userId)
+                    .field("can_change_info", userPromotions.getCanChangeInfo())
+                    .field("can_post_messages", userPromotions.getCanPostMessages())
+                    .field("can_edit_messages", userPromotions.getCanEditMessages())
+                    .field("can_delete_messages", userPromotions.getCanDeleteMessages())
+                    .field("can_invite_users", userPromotions.getCanInviteUsers())
+                    .field("can_restrict_members", userPromotions.getCanRestrictMembers())
+                    .field("can_pin_messages", userPromotions.getCanPinMessages())
+                    .field("can_promote_members", userPromotions.getCanPromoteMembers());
 
             response = request.asString();
             jsonResponse = Utils.processResponse(response);

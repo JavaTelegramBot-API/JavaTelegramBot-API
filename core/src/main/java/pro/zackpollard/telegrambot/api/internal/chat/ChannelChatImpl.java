@@ -6,6 +6,7 @@ import pro.zackpollard.telegrambot.api.chat.ChannelChat;
 import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
+import pro.zackpollard.telegrambot.api.user.UserPromotions;
 
 /**
  * @author Zack Pollard
@@ -84,5 +85,10 @@ public class ChannelChatImpl implements ChannelChat {
     @Override
     public boolean unbanChatMember(int userId) {
         return telegramBot.unbanChatMember(this.getId(), userId);
+    }
+
+    @Override
+    public boolean promoteChatMember(int userId, UserPromotions userPromotions) {
+        return telegramBot.promoteChatMember(this.getId(), userId, userPromotions);
     }
 }

@@ -7,6 +7,7 @@ import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
 import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
+import pro.zackpollard.telegrambot.api.user.UserPromotions;
 
 /**
  * @author Zack Pollard
@@ -98,5 +99,10 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     @Override
     public boolean restrictChatMember(int userId, UserRestrictions userRestrictions) {
         return telegramBot.restrictChatMember(this.getId(), userId, userRestrictions);
+    }
+
+    @Override
+    public boolean promoteChatMember(int userId, UserPromotions userPromotions) {
+        return telegramBot.promoteChatMember(this.getId(), userId, userPromotions);
     }
 }
