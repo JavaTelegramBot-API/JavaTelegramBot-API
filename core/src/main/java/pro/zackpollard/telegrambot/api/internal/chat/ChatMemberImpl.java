@@ -37,7 +37,7 @@ public class ChatMemberImpl implements ChatMember {
         this.can_be_edited = jsonObject.optBoolean("can_be_edited");
         this.can_change_info = jsonObject.optBoolean("can_change_info");
         this.can_post_messages = jsonObject.optBoolean("can_post_messages");
-        this.can_edit_messages = jsonObject.optBoolean("can_edt_messages");
+        this.can_edit_messages = jsonObject.optBoolean("can_edit_messages");
         this.can_delete_messages = jsonObject.optBoolean("can_delete_messages");
         this.can_invite_users = jsonObject.optBoolean("can_invite_users");
         this.can_restrict_members = jsonObject.optBoolean("can_restrict_members");
