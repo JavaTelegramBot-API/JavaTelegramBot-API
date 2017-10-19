@@ -15,6 +15,7 @@ public class ChannelChatImpl implements ChannelChat {
     private final String username;
     private final String title;
     private final ChatPhoto photo;
+    private final String description;
 
     private final TelegramBot telegramBot;
 
@@ -23,6 +24,7 @@ public class ChannelChatImpl implements ChannelChat {
         this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
         this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
+        this.description = jsonObject.optString("description");
         this.telegramBot = telegramBot;
     }
 
@@ -34,6 +36,11 @@ public class ChannelChatImpl implements ChannelChat {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
     }
 
     @Override

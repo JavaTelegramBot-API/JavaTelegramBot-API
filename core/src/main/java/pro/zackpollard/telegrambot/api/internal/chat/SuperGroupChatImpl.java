@@ -17,6 +17,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     private final String title;
     private final boolean allMembersAreAdministrators;
     private final ChatPhoto photo;
+    private final String description;
 
     private final TelegramBot telegramBot;
 
@@ -27,6 +28,7 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         this.title = jsonObject.getString("title");
         this.allMembersAreAdministrators = jsonObject.optBoolean("all_members_are_administrators");
         this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
+        this.description = jsonObject.optString("description");
         this.telegramBot = telegramBot;
     }
 
@@ -69,6 +71,11 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
     }
 
     @Override
