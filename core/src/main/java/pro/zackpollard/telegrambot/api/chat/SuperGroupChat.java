@@ -23,20 +23,28 @@ public interface SuperGroupChat extends GroupChat {
     String getUsername();
 
     /**
-     * Gets the description of the SuperGroup that this SuperGroupChat object refers to
-     * Only gets returned when the SuperGroupChat was retrieved from a call to getChat()
+     * Gets the description of the SuperGroup that this SuperGroupChat object refers to. Only gets returned when the
+     * SuperGroupChat was retrieved from a call to getChat()
      *
      * @return The description of the SuperGroupChat
      */
     String getDescription();
 
     /**
-     * Gets the invite link of the SuperGroup that this SuperGroupChat object refers to
-     * Only gets returned when the SuperGroupChat was retrieved from a call to getChat()
+     * Gets the invite link of the SuperGroup that this SuperGroupChat object refers to. Only gets returned when the
+     * SuperGroupChat was retrieved from a call to getChat()
      *
      * @return The invite link of the SuperGroupChat
      */
     String getInviteLink();
+
+    /**
+     * Gets the pinned Message for the chat that this SuperGroupChat object refers to. Only gets returned when the
+     * SuperGroupChat was retrieved from a call to getChat()
+     *
+     * @return The pinned message, or null if the chat was not fetched from getChat(), or there is no pinned message
+     */
+    Message getPinnedMessage();
 
     /**
      * This method will kick and ban the User with the specified User ID from the chat if they are currently in it until
