@@ -24,9 +24,11 @@ public class MessageImpl implements Message {
     private final User forward_from;
     private final Chat forward_from_chat;
     private final Integer forward_from_message_id;
+    private final String forward_signature;
     private final Long forward_date;
     private final Message reply_to_message;
     private final Long edit_date;
+    private final String author_signature;
     private final Content content;
 
     private final TelegramBot telegramBot;
@@ -44,9 +46,11 @@ public class MessageImpl implements Message {
         forward_from = UserImpl.createUser(jsonObject.optJSONObject("forward_from"));
         forward_from_chat = ChatImpl.createChat(jsonObject.optJSONObject("forward_from_chat"), telegramBot);
         forward_from_message_id = jsonObject.optInt("forward_from_message_id");
+        forward_signature = jsonObject.optString("forward_signature");
         forward_date = jsonObject.optLong("forward_date");
         reply_to_message = MessageImpl.createMessage(jsonObject.optJSONObject("reply_to_message"), telegramBot);
         edit_date = jsonObject.optLong("edit_date");
+        author_signature = jsonObject.optString("author_signature");
         content = ContentImpl.createContent(jsonObject, telegramBot);
 
         this.telegramBot = telegramBot;
@@ -125,6 +129,11 @@ public class MessageImpl implements Message {
         return forward_from_message_id;
     }
 
+    @Override
+    public String getForwardSignature() {
+        return forward_signature;
+    }
+
     /**
      * Gets the UNIX timestamp of when the original forwarded message was sent
      *
@@ -153,6 +162,11 @@ public class MessageImpl implements Message {
     @Override
     public Long getEditDate() {
         return edit_date;
+    }
+
+    @Override
+    public String getAuthorSignature() {
+        return author_signature;
     }
 
     /**

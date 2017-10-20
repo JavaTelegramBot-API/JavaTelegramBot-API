@@ -63,6 +63,14 @@ public interface Message {
     Integer getForwardFromMessageId();
 
     /**
+     * For messages forwarded from channels, signature of the post author if present
+     *
+     * @return  The author signature of the forwarded message, or null if the author didn't sign the message, or this
+     *          message forwarded from a channel
+     */
+    String getForwardSignature();
+
+    /**
      * Gets the UNIX timestamp of when the original forwarded message was sent
      *
      * @return The forwarded messages timestamp, or null if the message wasn't forwarded
@@ -82,6 +90,13 @@ public interface Message {
      * @return The time that this message was edited, or null if it wasn't edited
      */
     Long getEditDate();
+
+    /**
+     * Signature of the post author for messages in channels
+     *
+     * @return The author signature, or null if the author didn't sign the message, or this message wasn't in a channel
+     */
+    String getAuthorSignature();
 
     /**
      * Gets the content of the message
