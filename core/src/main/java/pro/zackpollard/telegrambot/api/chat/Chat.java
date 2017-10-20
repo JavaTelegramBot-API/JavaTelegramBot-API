@@ -215,9 +215,11 @@ public interface Chat {
      * able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be
      * an administrator in the group for this to work
      *
-     * @param instance  The TelegramBot instance that you are using to call this method
-     * @param chatId    The ID of the chat that you want to kick the user from
-     * @param userId    The ID of the user that you want to kick from the chat
+     * @param instance      The TelegramBot instance that you are using to call this method
+     * @param chatId        The ID of the chat that you want to kick the user from
+     * @param userId        The ID of the user that you want to kick from the chat
+     * @param until_date    Date when the user will be unbanned, unix time. If user is banned for more than 366 days or
+     *                      less than 30 seconds from the current time they are considered to be banned forever
      *
      * @return True if the user was kicked successfully, otherwise False
      */
