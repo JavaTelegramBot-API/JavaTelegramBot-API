@@ -2,6 +2,9 @@ package pro.zackpollard.telegrambot.api.menu.internal;
 
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.CallbackQuery;
+import pro.zackpollard.telegrambot.api.chat.CallbackQueryType;
+import pro.zackpollard.telegrambot.api.chat.inline.InlineCallbackQuery;
+import pro.zackpollard.telegrambot.api.chat.message.MessageCallbackQuery;
 import pro.zackpollard.telegrambot.api.event.Event;
 import pro.zackpollard.telegrambot.api.event.Listener;
 import pro.zackpollard.telegrambot.api.event.chat.CallbackQueryReceivedEvent;
@@ -52,7 +55,16 @@ public class InlineMenuRegistryImpl implements InlineMenuRegistry {
     }
 
     private boolean process(CallbackQuery query) {
-        String data = query.getData();
+        String data;
+
+        if (query instanceof MessageCallbackQuery) {
+            data = ((MessageCallbackQuery) query).getData();
+        } else if (query instanceof InlineCallbackQuery) {
+            data = ((InlineCallbackQuery) query).getData();
+        } else {
+            return false;
+        }
+
         Matcher matcher = DATA_PATTERN.matcher(data);
 
         if (!matcher.find()) {
