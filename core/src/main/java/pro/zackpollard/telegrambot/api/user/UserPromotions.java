@@ -53,6 +53,7 @@ public class UserPromotions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the administrator can change chat title, photo and other settings
          *
          * @param canChangeInfo Pass True, if the administrator can change chat title, photo and other settings
@@ -65,6 +66,7 @@ public class UserPromotions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the administrator can create channel posts, channels only
          *
          * @param canPostMessages Pass True, if the administrator can create channel posts, channels only
@@ -77,6 +79,7 @@ public class UserPromotions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the administrator can edit messages of other users, channels only
          *
          * @param canEditMessages Pass True, if the administrator can edit messages of other users, channels only
@@ -89,6 +92,7 @@ public class UserPromotions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the administrator can delete messages of other users
          *
          * @param canDeleteMessages Pass True, if the administrator can delete messages of other users
@@ -101,6 +105,7 @@ public class UserPromotions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the administrator can invite new users to the chat
          *
          * @param canInviteUsers Pass True, if the administrator can invite new users to the chat
@@ -125,6 +130,7 @@ public class UserPromotions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the administrator can pin messages, supergroups only
          *
          * @param canPinMessages Pass True, if the administrator can pin messages, supergroups only
@@ -137,6 +143,7 @@ public class UserPromotions {
         }
 
         /**
+         * *Optional*
          * 	Pass True, if the administrator can add new administrators with a subset of his own privileges or demote
          * 	administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed
          * 	by them)

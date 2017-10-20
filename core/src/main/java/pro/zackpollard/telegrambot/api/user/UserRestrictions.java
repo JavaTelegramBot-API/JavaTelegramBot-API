@@ -1,4 +1,4 @@
-package pro.zackpollard.telegrambot.api.chat.edit;
+package pro.zackpollard.telegrambot.api.user;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -39,6 +39,7 @@ public class UserRestrictions {
         }
 
         /**
+         * *Optional*
          * Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days
          * or less than 30 seconds from the current time, they are considered to be restricted forever
          *
@@ -54,6 +55,7 @@ public class UserRestrictions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the user can send text messages, contacts, locations and venues
          *
          * @param canSendMessages Pass True, if the user can send text messages, contacts, locations and venues
@@ -66,6 +68,7 @@ public class UserRestrictions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies
          * can_send_messages
          *
@@ -80,6 +83,7 @@ public class UserRestrictions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the user can send animations, games, stickers and use inline bots, implies
          * can_send_media_messages
          *
@@ -94,6 +98,7 @@ public class UserRestrictions {
         }
 
         /**
+         * *Optional*
          * Pass True, if the user may add web page previews to their messages, implies can_send_media_messages
          *
          * @param canAddWebPagePreviews Pass True, if the user may add web page previews to their messages, implies

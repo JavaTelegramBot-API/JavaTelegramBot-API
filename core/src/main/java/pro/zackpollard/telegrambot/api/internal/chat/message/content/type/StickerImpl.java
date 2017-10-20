@@ -3,6 +3,8 @@ package pro.zackpollard.telegrambot.api.internal.chat.message.content.type;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.PhotoSize;
 import pro.zackpollard.telegrambot.api.chat.message.content.type.Sticker;
+import pro.zackpollard.telegrambot.api.internal.stickers.MaskPositionImpl;
+import pro.zackpollard.telegrambot.api.stickers.MaskPosition;
 
 /**
  * @author Zack Pollard
@@ -14,6 +16,8 @@ public class StickerImpl implements Sticker {
     private final int height;
     private final PhotoSize thumb;
     private final String emoji;
+    private final String set_name;
+    private final MaskPosition mask_position;
     private final Integer file_size;
 
     private StickerImpl(JSONObject jsonObject) {
@@ -23,6 +27,8 @@ public class StickerImpl implements Sticker {
         this.height = jsonObject.getInt("height");
         this.thumb = PhotoSizeImpl.createPhotoSize(jsonObject.optJSONObject("thumb"));
         this.emoji = jsonObject.optString("emoji");
+        this.set_name = jsonObject.optString("set_name");
+        this.mask_position = MaskPositionImpl.createMaskPosition(jsonObject.optJSONObject("mask_position"));
         this.file_size = jsonObject.optInt("file_size");
     }
 
@@ -79,5 +85,15 @@ public class StickerImpl implements Sticker {
     @Override
     public String getEmoji() {
         return emoji;
+    }
+
+    @Override
+    public String getSetName() {
+        return set_name;
+    }
+
+    @Override
+    public MaskPosition getMaskPosition() {
+        return mask_position;
     }
 }

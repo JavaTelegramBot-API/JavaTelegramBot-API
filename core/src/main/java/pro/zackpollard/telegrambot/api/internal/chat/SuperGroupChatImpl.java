@@ -4,10 +4,8 @@ import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
-import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
-import pro.zackpollard.telegrambot.api.user.UserPromotions;
 
 /**
  * @author Zack Pollard

@@ -10,7 +10,6 @@ import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
-import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -32,7 +31,6 @@ import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
-import pro.zackpollard.telegrambot.api.user.UserPromotions;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.HashMap;
