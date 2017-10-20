@@ -68,10 +68,4 @@ public class GroupChatImpl implements GroupChat {
     public boolean isAllMembersAreAdministrators() {
         return allMembersAreAdministrators;
     }
-
-    @Override
-    public boolean kickChatMember(int userId, long until_date) {
-
-        return telegramBot.kickChatMember(this.getId(), userId, until_date);
-    }
 }

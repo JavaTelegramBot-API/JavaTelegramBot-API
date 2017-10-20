@@ -50,7 +50,9 @@ public interface ChannelChat extends Chat {
      *
      * @return True if the user was kicked, otherwise False
      */
-    boolean kickChatMember(int userId, long until_time);
+    default boolean kickChatMember(int userId, long until_time) {
+        return Chat.kickChatMember(getBotInstance(), getId(), userId, until_time);
+    }
 
     /**
      * This method will unban a user that was previously banned from the chat
@@ -59,7 +61,9 @@ public interface ChannelChat extends Chat {
      *
      * @return True if the user was unbanned, otherwise False
      */
-    boolean unbanChatMember(int userId);
+    default boolean unbanChatMember(int userId) {
+        return Chat.unbanChatMember(getBotInstance(), getId(), userId);
+    }
 
     /**
      * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the
@@ -71,12 +75,16 @@ public interface ChannelChat extends Chat {
      *
      * @return Returns True if the promotions were applied successfully, False otherwise
      */
-    boolean promoteChatMember(int userId, UserPromotions userPromotions);
+    default boolean promoteChatMember(int userId, UserPromotions userPromotions) {
+        return Chat.promoteChatMember(getBotInstance(), getId(), userId, userPromotions);
+    }
 
     /**
      * Use this to export an invite link for this chat
      *
      * @return An invite link for this chat, or null if the export failed
      */
-    String exportChatInviteLink();
+    default String exportChatInviteLink() {
+        return Chat.exportChatInviteLink(getBotInstance(), getId());
+    }
 }

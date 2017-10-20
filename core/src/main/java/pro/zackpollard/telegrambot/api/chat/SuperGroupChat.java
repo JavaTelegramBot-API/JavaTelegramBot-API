@@ -37,20 +37,6 @@ public interface SuperGroupChat extends GroupChat {
     String getInviteLink();
 
     /**
-     * This method will kick and ban the User with the specified User ID from the chat if they are currently in it
-     *
-     * @deprecated Should use the new #kickChatMember(userId, until_time) method
-     *
-     * @param userId The User ID of the User you want to kick from the chat
-     *
-     * @return True if the user was kicked, otherwise False
-     */
-    @Deprecated
-    default boolean kickChatMember(int userId) {
-        return this.kickChatMember(userId, 0);
-    }
-
-    /**
      * This method will kick and ban the User with the specified User ID from the chat if they are currently in it until
      * the unix time specified in the until_time field.
      *
@@ -60,7 +46,9 @@ public interface SuperGroupChat extends GroupChat {
      *
      * @return True if the user was kicked, otherwise False
      */
-    boolean kickChatMember(int userId, long until_time);
+    default boolean kickChatMember(int userId, long until_time) {
+        return Chat.kickChatMember(getBotInstance(), getId(), userId, until_time);
+    }
 
     /**
      * This method will unban a user that was previously banned from the chat
@@ -69,7 +57,9 @@ public interface SuperGroupChat extends GroupChat {
      *
      * @return True if the user was unbanned, otherwise False
      */
-    boolean unbanChatMember(int userId);
+    default boolean unbanChatMember(int userId) {
+        return Chat.unbanChatMember(getBotInstance(), getId(), userId);
+    }
 
     /**
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this
@@ -81,7 +71,9 @@ public interface SuperGroupChat extends GroupChat {
      *
      * @return Returns True if the restrictions were applied successfully, False otherwise
      */
-    boolean restrictChatMember(int userId, UserRestrictions userRestrictions);
+    default boolean restrictChatMember(int userId, UserRestrictions userRestrictions) {
+        return Chat.restrictChatMember(getBotInstance(), getId(), userId, userRestrictions);
+    }
 
     /**
      * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the
@@ -93,12 +85,16 @@ public interface SuperGroupChat extends GroupChat {
      *
      * @return Returns True if the promotions were applied successfully, False otherwise
      */
-    boolean promoteChatMember(int userId, UserPromotions userPromotions);
+    default boolean promoteChatMember(int userId, UserPromotions userPromotions) {
+        return Chat.promoteChatMember(getBotInstance(), getId(), userId, userPromotions);
+    }
 
     /**
      * Use this to export an invite link for this chat
      *
      * @return An invite link for this chat, or null if the export failed
      */
-    String exportChatInviteLink();
+    default String exportChatInviteLink() {
+        return Chat.exportChatInviteLink(getBotInstance(), getId());
+    }
 }
