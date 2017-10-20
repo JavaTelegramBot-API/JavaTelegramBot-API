@@ -1,5 +1,7 @@
 package pro.zackpollard.telegrambot.api.chat;
 
+import pro.zackpollard.telegrambot.api.chat.message.send.InputFile;
+
 /**
  * @author Zack Pollard
  */
@@ -34,5 +36,39 @@ public interface GroupChat extends Chat {
      */
     default boolean kickChatMember(int userId, long until_time) {
         return Chat.kickChatMember(getBotInstance(), getId(), userId, until_time);
+    }
+
+    /**
+     * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must
+     * be an administrator in the chat for this to work and must have the appropriate admin rights
+     *
+     * @param inputFile     The InputFile form of the Photo that you would like to set as the chat photo
+     *
+     * @return Returns True if the chat image was set successfully, False otherwise
+     */
+    default boolean setChatPhoto(InputFile inputFile) {
+        return Chat.setChatPhoto(getBotInstance(), getId(), inputFile);
+    }
+
+    /**
+     * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an
+     * administrator in the chat for this to work and must have the appropriate admin rights
+     *
+     * @return Returns True if the chat image was deleted successfully, False otherwise
+     */
+    default boolean deleteChatPhoto() {
+        return Chat.deleteChatPhoto(getBotInstance(), getId());
+    }
+
+    /**
+     * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an
+     * administrator in the chat for this to work and must have the appropriate admin rights
+     *
+     * @param title     The title that you would like to be set for the chat
+     *
+     * @return Returns True if the title was set successfully, False otherwise
+     */
+    default boolean setChatTitle(String title) {
+        return Chat.setChatTitle(getBotInstance(), getId(), title);
     }
 }

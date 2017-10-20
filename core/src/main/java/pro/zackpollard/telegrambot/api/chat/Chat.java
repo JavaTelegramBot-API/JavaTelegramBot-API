@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
+import pro.zackpollard.telegrambot.api.chat.message.send.InputFile;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 import pro.zackpollard.telegrambot.api.user.User;
@@ -395,5 +396,208 @@ public interface Chat {
         }
 
         return null;
+    }
+
+    /**
+     * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must
+     * be an administrator in the chat for this to work and must have the appropriate admin rights
+     *
+     * @param instance      The TelegramBot instance that you are using to call this method
+     * @param chatId        The ID of the chat that you want to set the photo for
+     * @param inputFile     The InputFile form of the Photo that you would like to set as the chat photo
+     *
+     * @return Returns True if the chat image was set successfully, False otherwise
+     */
+    static boolean setChatPhoto(TelegramBot instance, String chatId, InputFile inputFile) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(instance.getBotAPIUrl() + "setChatPhoto")
+                    .field("chat_id", chatId, "application/json; charset=utf8;");
+
+            Utils.processInputFileField(request, "photo", inputFile);
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an
+     * administrator in the chat for this to work and must have the appropriate admin rights
+     *
+     * @param instance      The TelegramBot instance that you are using to call this method
+     * @param chatId        The ID of the chat that you want to delete the photo for
+     *
+     * @return Returns True if the chat image was deleted successfully, False otherwise
+     */
+    static boolean deleteChatPhoto(TelegramBot instance, String chatId) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(instance.getBotAPIUrl() + "deleteChatPhoto")
+                    .field("chat_id", chatId, "application/json; charset=utf8;");
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an
+     * administrator in the chat for this to work and must have the appropriate admin rights
+     *
+     * @param instance  The TelegramBot instance that you are using to call this method
+     * @param chatId    The ID of the chat that you want to set the title for
+     * @param title     The title that you would like to be set for the chat
+     *
+     * @return Returns True if the title was set successfully, False otherwise
+     */
+    static boolean setChatTitle(TelegramBot instance, String chatId, String title) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(instance.getBotAPIUrl() + "setChatTitle")
+                    .field("chat_id", chatId, "application/json; charset=utf8;")
+                    .field("title", title, "application/json; charset=utf8");
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the
+     * chat for this to work and must have the appropriate admin rights
+     *
+     * @param instance      The TelegramBot instance that you are using to call this method
+     * @param chatId        The ID of the chat that you want to set the description for
+     * @param description   The description that you would like to be set for the chat
+     *
+     * @return Returns True if the description was set successfully, False otherwise
+     */
+    static boolean setChatDescription(TelegramBot instance, String chatId, String description) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(instance.getBotAPIUrl() + "setChatDescription")
+                    .field("chat_id", chatId, "application/json; charset=utf8;")
+                    .field("description", description, "application/json; charset=utf8");
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Use this method to pin a message in a supergroup. The bot must be an administrator in the chat for this to work
+     * and must have the appropriate admin rights
+     *
+     * @param instance              The TelegramBot instance that you are using to call this method
+     * @param chatId                The ID of the chat that you want to set the pinned message for
+     * @param messageId             The ID of the message that you want to pin
+     * @param disableNotification   True if you want to disable all users being notified about the new pinned message
+     *
+     * @return Returns True if the pinned message was set successfully, False otherwise
+     */
+    static boolean pinChatMessage(TelegramBot instance, String chatId, long messageId, boolean disableNotification) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(instance.getBotAPIUrl() + "pinChatMessage")
+                    .field("chat_id", chatId, "application/json; charset=utf8;")
+                    .field("message_id", messageId)
+                    .field("disable_notification", disableNotification);
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Use this method to unpin a message in a supergroup chat. The bot must be an administrator in the chat for this to
+     * work and must have the appropriate admin rights
+     *
+     * @param instance  The TelegramBot instance that you are using to call this method
+     * @param chatId    The ID of the chat that you want to set the pinned message for
+     *
+     * @return Returns True if the pinned message was set successfully, False otherwise
+     */
+    static boolean unpinChatMessage(TelegramBot instance, String chatId) {
+
+        HttpResponse<String> response;
+        JSONObject jsonResponse;
+
+        try {
+            MultipartBody request = Unirest.post(instance.getBotAPIUrl() + "unpinChatMessage")
+                    .field("chat_id", chatId, "application/json; charset=utf8;");
+
+            response = request.asString();
+            jsonResponse = Utils.processResponse(response);
+
+            if(jsonResponse != null) {
+
+                if(jsonResponse.getBoolean("result")) return true;
+            }
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
