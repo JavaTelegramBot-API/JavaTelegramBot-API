@@ -10,6 +10,7 @@ import com.mashape.unirest.request.body.MultipartBody;
 import lombok.Getter;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.chat.Chat;
+import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.inline.InlineReplyMarkup;
 import pro.zackpollard.telegrambot.api.chat.inline.send.InlineQueryResponse;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
@@ -31,6 +32,7 @@ import pro.zackpollard.telegrambot.api.internal.managers.FileManager;
 import pro.zackpollard.telegrambot.api.internal.updates.RequestUpdatesManager;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.updates.UpdateManager;
+import pro.zackpollard.telegrambot.api.user.UserPromotions;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.HashMap;
@@ -968,25 +970,6 @@ public final class TelegramBot {
      * This allows you to respond to a callback query with some text as a response. This will either show up as an
      * alert or as a toast on the telegram client
      *
-     * @param callbackQueryId   The ID of the callback query you are responding to
-     * @param text              The text you would like to respond with
-     * @param showAlert         True will show the text as an alert, false will show it as a toast notification
-     *
-     * @deprecated  This method is deprecated in favour of the {@link #answerCallbackQuery(String, CallbackQueryResponse)}
-     *              method, this should be used for all new implementations
-     *
-     * @return True if the response was sent successfully, otherwise False
-     */
-    @Deprecated
-    public boolean answerCallbackQuery(String callbackQueryId, String text, boolean showAlert) {
-
-        return this.answerCallbackQuery(callbackQueryId, CallbackQueryResponse.builder().text(text).showAlert(showAlert).build());
-    }
-
-    /**
-     * This allows you to respond to a callback query with some text as a response. This will either show up as an
-     * alert or as a toast on the telegram client
-     *
      * @param callbackQueryId       The ID of the callback query you are responding to
      * @param callbackQueryResponse The response that you would like to send in reply to this callback query
      *
@@ -1018,74 +1001,6 @@ public final class TelegramBot {
             } catch (UnirestException e) {
                 e.printStackTrace();
             }
-        }
-
-        return false;
-    }
-
-    /**
-     * Use this method to kick a user from a group or a supergroup. In the case of supergroups, the user will not be
-     * able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be
-     * an administrator in the group for this to work
-     *
-     * @param chatId    The ID of the chat that you want to kick the user from
-     * @param userId    The ID of the user that you want to kick from the chat
-     *
-     * @return True if the user was kicked successfully, otherwise False
-     */
-    public boolean kickChatMember(String chatId, int userId) {
-
-        HttpResponse<String> response;
-        JSONObject jsonResponse;
-
-        try {
-            MultipartBody request = Unirest.post(getBotAPIUrl() + "kickChatMember")
-                    .field("chat_id", chatId, "application/json; charset=utf8;")
-                    .field("user_id", userId);
-
-            response = request.asString();
-            jsonResponse = Utils.processResponse(response);
-
-            if(jsonResponse != null) {
-
-                if(jsonResponse.getBoolean("result")) return true;
-            }
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    /**
-     * Use this method to unban a previously kicked user in a supergroup. The user will not return to the group
-     * automatically, but will be able to join via link, etc. The bot must be an administrator in the group for
-     * this to work
-     *
-     * @param chatId    The ID of the chat that you want to unban the user from
-     * @param userId    The ID of the user that you want to unban from the chat
-     *
-     * @return True if the user was unbanned, otherwise False
-     */
-    public boolean unbanChatMember(String chatId, int userId) {
-
-        HttpResponse<String> response;
-        JSONObject jsonResponse;
-
-        try {
-            MultipartBody request = Unirest.post(getBotAPIUrl() + "unbanChatMember")
-                    .field("chat_id", chatId, "application/json; charset=utf8;")
-                    .field("user_id", userId);
-
-            response = request.asString();
-            jsonResponse = Utils.processResponse(response);
-
-            if(jsonResponse != null) {
-
-                if(jsonResponse.getBoolean("result")) return true;
-            }
-        } catch (UnirestException e) {
-            e.printStackTrace();
         }
 
         return false;
@@ -1135,11 +1050,11 @@ public final class TelegramBot {
             response = request.asString();
             jsonResponse = Utils.processResponse(response);
 
-            if(jsonResponse != null) {
+            if (jsonResponse != null) {
 
                 List<GameHighScore> highScores = new LinkedList<>();
 
-                for(Object object : jsonResponse.getJSONArray("result")) {
+                for (Object object : jsonResponse.getJSONArray("result")) {
 
                     JSONObject jsonObject = (JSONObject) object;
 

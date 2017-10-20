@@ -2,9 +2,12 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.SuperGroupChat;
+import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
+import pro.zackpollard.telegrambot.api.user.UserPromotions;
 
 /**
  * @author Zack Pollard
@@ -15,6 +18,9 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     private final String username;
     private final String title;
     private final boolean allMembersAreAdministrators;
+    private final ChatPhoto photo;
+    private final String description;
+    private final String invite_link;
 
     private final TelegramBot telegramBot;
 
@@ -24,15 +30,9 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
         this.allMembersAreAdministrators = jsonObject.optBoolean("all_members_are_administrators");
-        this.telegramBot = telegramBot;
-    }
-
-    private SuperGroupChatImpl(long chatID, TelegramBot telegramBot) {
-
-        this.id = chatID;
-        this.title = null;
-        this.username = null;
-        this.allMembersAreAdministrators = false;
+        this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
+        this.description = jsonObject.optString("description");
+        this.invite_link = jsonObject.optString("invite_link");
         this.telegramBot = telegramBot;
     }
 
@@ -41,19 +41,14 @@ public class SuperGroupChatImpl implements SuperGroupChat {
         return new SuperGroupChatImpl(jsonObject, telegramBot);
     }
 
-    public static SuperGroupChat createSuperGroupChat(long chatID, TelegramBot telegramBot) {
-
-        return new SuperGroupChatImpl(chatID, telegramBot);
-    }
-
-    /**
-     * Gets the name of the group chat.
-     *
-     * @return The group chat name, currently can be null due to chat creation by ID with no way of getting the group chats name from telegram servers.
-     */
     @Override
     public String getName() {
         return title;
+    }
+
+    @Override
+    public ChatPhoto getPhoto() {
+        return photo;
     }
 
     @Override
@@ -68,7 +63,6 @@ public class SuperGroupChatImpl implements SuperGroupChat {
 
     @Override
     public Message sendMessage(SendableMessage message) {
-
         return telegramBot.sendMessage(this, message);
     }
 
@@ -78,19 +72,17 @@ public class SuperGroupChatImpl implements SuperGroupChat {
     }
 
     @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String getInviteLink() {
+        return invite_link;
+    }
+
+    @Override
     public boolean isAllMembersAreAdministrators() {
         return allMembersAreAdministrators;
-    }
-
-    @Override
-    public boolean kickChatMember(int userId) {
-
-        return telegramBot.kickChatMember(this.getId(), userId);
-    }
-
-    @Override
-    public boolean unbanChatMember(int userId) {
-
-        return telegramBot.unbanChatMember(this.getId(), userId);
     }
 }

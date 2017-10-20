@@ -3,8 +3,10 @@ package pro.zackpollard.telegrambot.api.internal.chat;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
 import pro.zackpollard.telegrambot.api.chat.ChannelChat;
+import pro.zackpollard.telegrambot.api.chat.ChatPhoto;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
+import pro.zackpollard.telegrambot.api.user.UserPromotions;
 
 /**
  * @author Zack Pollard
@@ -13,6 +15,9 @@ public class ChannelChatImpl implements ChannelChat {
 
     private final String username;
     private final String title;
+    private final ChatPhoto photo;
+    private final String description;
+    private final String invite_link;
 
     private final TelegramBot telegramBot;
 
@@ -20,13 +25,9 @@ public class ChannelChatImpl implements ChannelChat {
 
         this.username = "@" + jsonObject.optString("username");
         this.title = jsonObject.getString("title");
-        this.telegramBot = telegramBot;
-    }
-
-    private ChannelChatImpl(String username, TelegramBot telegramBot) {
-
-        this.username = username;
-        this.title = null;
+        this.photo = ChatPhotoImpl.createChatPhoto(jsonObject.optJSONObject("photo"));
+        this.description = jsonObject.optString("description");
+        this.invite_link = jsonObject.optString("invite_link");
         this.telegramBot = telegramBot;
     }
 
@@ -35,19 +36,29 @@ public class ChannelChatImpl implements ChannelChat {
         return new ChannelChatImpl(jsonObject, telegramBot);
     }
 
-    public static ChannelChat createChannelChat(String username, TelegramBot telegramBot) {
-
-        return new ChannelChatImpl(username, telegramBot);
-    }
-
     @Override
     public String getUsername() {
         return username;
     }
 
     @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String getInviteLink() {
+        return invite_link;
+    }
+
+    @Override
     public String getName() {
         return title;
+    }
+
+    @Override
+    public ChatPhoto getPhoto() {
+        return photo;
     }
 
     @Override
