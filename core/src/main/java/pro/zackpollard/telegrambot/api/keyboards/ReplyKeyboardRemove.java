@@ -20,7 +20,7 @@ public class ReplyKeyboardRemove implements Keyboard {
     /**
      * This builder will allow you to progressively construct this object.
      *
-     * @return A ReplyKeyboardRemoveBuilder object used to construct the ReplyKeyboardHide object
+     * @return A ReplyKeyboardRemoveBuilder object used to construct the ReplyKeyboardRemove object
      */
     public static ReplyKeyboardRemoveBuilder builder() {
 
@@ -83,9 +83,9 @@ public class ReplyKeyboardRemove implements Keyboard {
         }
 
         /**
-         * Builds the ReplyKeyboardHide object
+         * Builds the ReplyKeyboardRemove object
          *
-         * @return A ReplyKeyboardHide object based on the previously provided values
+         * @return A ReplyKeyboardRemove object based on the previously provided values
          */
         public ReplyKeyboardRemove build() {
 

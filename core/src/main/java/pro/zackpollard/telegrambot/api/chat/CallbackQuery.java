@@ -2,6 +2,7 @@ package pro.zackpollard.telegrambot.api.chat;
 
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
+import pro.zackpollard.telegrambot.api.chat.message.send.CallbackQueryResponse;
 import pro.zackpollard.telegrambot.api.user.User;
 
 /**
@@ -48,16 +49,6 @@ public interface CallbackQuery {
     User getFrom();
 
     /**
-     * Gets the data that was originally sent with the button used to trigger this CallbackQuery
-     *
-     * @deprecated This method is deprecated in favour of the more specific CallbackQuery objects, as it can sometimes
-     * be null here.
-     * @return The data that was original sent with the button used to trigger this CallbackQuery, or null
-     */
-    @Deprecated
-    String getData();
-
-    /**
      * Gets the JSON representation of this CallbackQuery object as received from the Telegram Bot API
      *
      * @return The JSON representation of this CallbackQuery object as received from the Telegram Bot API
@@ -74,6 +65,6 @@ public interface CallbackQuery {
      */
     default boolean answer(String text, boolean showAlert) {
 
-        return getBotInstance().answerCallbackQuery(getId(), text, showAlert);
+        return getBotInstance().answerCallbackQuery(getId(), CallbackQueryResponse.builder().text(text).showAlert(showAlert).build());
     }
 }

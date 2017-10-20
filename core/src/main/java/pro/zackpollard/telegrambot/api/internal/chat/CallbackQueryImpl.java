@@ -86,14 +86,13 @@ public class CallbackQueryImpl implements CallbackQuery {
         return chatInstance;
     }
 
-    @Override
-    public User getFrom() {
-        return this.from;
+    public String getData() {
+        return data;
     }
 
     @Override
-    public String getData() {
-        return this.data;
+    public User getFrom() {
+        return this.from;
     }
 
     @Override

@@ -12,7 +12,6 @@ import pro.zackpollard.telegrambot.api.chat.message.send.NotificationOptions;
 import pro.zackpollard.telegrambot.api.chat.message.send.ReplyingOptions;
 import pro.zackpollard.telegrambot.api.internal.chat.message.send.FileContainer;
 import pro.zackpollard.telegrambot.api.keyboards.InlineKeyboardMarkup;
-import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardHide;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardMarkup;
 import pro.zackpollard.telegrambot.api.keyboards.ReplyKeyboardRemove;
 
@@ -102,9 +101,6 @@ public class Utils {
 
                 case FORCE_REPLY:
                     multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json; charset=utf8;");
-                    break;
-                case KEYBOARD_HIDE:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json; charset=utf8;");
                     break;
                 case KEYBOARD_REMOVE:
                     multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardRemove.class), "application/json; charset=utf8;");
