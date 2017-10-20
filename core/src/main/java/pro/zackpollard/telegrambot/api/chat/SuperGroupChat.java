@@ -1,6 +1,6 @@
 package pro.zackpollard.telegrambot.api.chat;
 
-import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
+import pro.zackpollard.telegrambot.api.user.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.InputFile;
 import pro.zackpollard.telegrambot.api.user.UserPromotions;

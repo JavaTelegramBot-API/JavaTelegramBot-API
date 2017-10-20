@@ -7,13 +7,13 @@ import com.mashape.unirest.request.body.MultipartBody;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pro.zackpollard.telegrambot.api.TelegramBot;
-import pro.zackpollard.telegrambot.api.chat.edit.UserRestrictions;
 import pro.zackpollard.telegrambot.api.chat.message.Message;
 import pro.zackpollard.telegrambot.api.chat.message.send.InputFile;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableMessage;
 import pro.zackpollard.telegrambot.api.chat.message.send.SendableTextMessage;
 import pro.zackpollard.telegrambot.api.user.User;
 import pro.zackpollard.telegrambot.api.user.UserPromotions;
+import pro.zackpollard.telegrambot.api.user.UserRestrictions;
 import pro.zackpollard.telegrambot.api.utils.Utils;
 
 import java.util.ArrayList;
