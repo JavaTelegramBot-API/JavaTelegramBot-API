@@ -11,6 +11,7 @@ import pro.zackpollard.telegrambot.api.user.UserProfilePhotos;
 public class UserImpl implements User {
 
     private final long id;
+    private final boolean is_bot;
     private final String first_name;
     private final String last_name;
     private final String username;
@@ -19,19 +20,11 @@ public class UserImpl implements User {
     private UserImpl(JSONObject jsonObject) {
 
         this.id = jsonObject.getInt("id");
+        this.is_bot = jsonObject.getBoolean("is_bot");
         this.first_name = jsonObject.getString("first_name");
         this.last_name = jsonObject.optString("last_name");
         this.username = "@" + jsonObject.optString("username");
         this.language_code = jsonObject.optString("language_code");
-    }
-
-    private UserImpl(int userID) {
-
-        this.id = userID;
-        this.first_name = null;
-        this.last_name = null;
-        this.username = null;
-        this.language_code = null;
     }
 
     public static User createUser(JSONObject jsonObject) {
@@ -39,14 +32,14 @@ public class UserImpl implements User {
         return jsonObject != null ? new UserImpl(jsonObject) : null;
     }
 
-    public static User createUser(int userID) {
-
-        return new UserImpl(userID);
-    }
-
     @Override
     public long getId() {
         return id;
+    }
+
+    @Override
+    public boolean isBot() {
+        return is_bot;
     }
 
     @Override

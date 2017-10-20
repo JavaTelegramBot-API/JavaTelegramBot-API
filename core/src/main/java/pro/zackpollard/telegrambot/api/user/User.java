@@ -15,6 +15,13 @@ public interface User {
     long getId();
 
     /**
+     * Signifies if the User is a bot or not
+     *
+     * @return True if the user is a bot, False otherwise
+     */
+    boolean isBot();
+
+    /**
      * Gets the first name of the User.
      *
      * @return The users first name, currently can be null due to chat creation of individual chats by ID with no way of getting the users name from telegram servers.
