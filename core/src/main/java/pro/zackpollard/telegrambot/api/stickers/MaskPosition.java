@@ -1,5 +1,6 @@
 package pro.zackpollard.telegrambot.api.stickers;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
 @ToString
@@ -9,7 +10,9 @@ public class MaskPosition {
     @Getter
     @NonNull
     private final MaskPoint point;
+    @SerializedName("x_shift")
     private final double xShift;
+    @SerializedName("y_shift")
     private final double yShift;
     private final double scale;
 
