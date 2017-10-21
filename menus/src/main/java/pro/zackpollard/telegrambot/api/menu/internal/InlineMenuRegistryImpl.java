@@ -14,6 +14,7 @@ import pro.zackpollard.telegrambot.api.menu.InlineMenuRegistry;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -25,9 +26,7 @@ public class InlineMenuRegistryImpl implements InlineMenuRegistry {
             return new InlineMenuRegistryImpl(bot);
         }
     }
-
-    private final AtomicInteger nextId = new AtomicInteger(0);
-    private final Map<Integer, InlineMenu> menus = new ConcurrentHashMap<>();
+    private final Map<String, InlineMenu> menus = new ConcurrentHashMap<>();
 
     private InlineMenuRegistryImpl(TelegramBot bot) {
         bot.getEventsManager().register(new Listener() {
@@ -43,10 +42,10 @@ public class InlineMenuRegistryImpl implements InlineMenuRegistry {
 
     @Override
     public void register(InlineMenu menu) {
-        int next = nextId.getAndIncrement();
+        UUID id = UUID.randomUUID();
 
-        menus.put(next, menu);
-        menu.setInternalId(next);
+        menus.put(id.toString(), menu);
+        menu.setInternalId(id.toString());
     }
 
     @Override
@@ -71,7 +70,7 @@ public class InlineMenuRegistryImpl implements InlineMenuRegistry {
             return false;
         }
 
-        InlineMenu menu = menus.get(Integer.parseInt(matcher.group(1)));
+        InlineMenu menu = menus.get(matcher.group(1));
 
         return menu != null &&
                 menu.handle(query, Integer.parseInt(matcher.group(2)),

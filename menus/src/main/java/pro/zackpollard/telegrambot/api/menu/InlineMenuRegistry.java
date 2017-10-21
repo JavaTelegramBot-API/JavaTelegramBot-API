@@ -19,14 +19,14 @@ public interface InlineMenuRegistry extends Extension {
      * Pattern of the callback data put in buttons
      * @see AbstractInlineMenuButton#keyboardBuilder()
      */
-    Pattern DATA_PATTERN = Pattern.compile("^im\\.(\\d+)\\.(\\d+)\\.(\\d+)$");
+    Pattern DATA_PATTERN = Pattern.compile("^im\\.(\\S+)\\.(\\d+)\\.(\\d+)$");
 
     /**
      * Register the inline menu.
      * Sets internal id
      *
      * @param menu menu to register
-     * @see InlineMenu#setInternalId(int)
+     * @see InlineMenu#setInternalId(String)
      */
     void register(InlineMenu menu);
 

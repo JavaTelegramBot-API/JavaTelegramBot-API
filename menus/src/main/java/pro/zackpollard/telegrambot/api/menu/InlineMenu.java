@@ -24,7 +24,7 @@ import java.util.function.Predicate;
  */
 public class InlineMenu {
     @Getter
-    private int internalId;
+    private String internalId;
     @Getter
     Message baseMessage;
     @Deprecated
@@ -188,7 +188,7 @@ public class InlineMenu {
      * @param newId Internal id
      * @see InlineMenuRegistry
      */
-    public void setInternalId(int newId) {
+    public void setInternalId(String newId) {
         if (!validateCaller(InlineMenuRegistry.class)) {
             throw new UnsupportedOperationException("Invalid caller! Caller must implement InlineMenuRegistry");
         }
