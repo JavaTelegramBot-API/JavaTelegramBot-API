@@ -13,6 +13,11 @@ Please join this channel for information about updates to this bot.
 You can also contact me at https://telegram.me/zackpollard   
 If you need help in Persian(فارسی) you can contact https://telegram.me/aaomidi
 
+## Source Code
+Source is stored on GitLab and mirrored to Github   
+[![Repo on GitHub](https://img.shields.io/badge/repo-GitHub-3D76C2.svg)](https://github.com/zackpollard/JavaTelegramBot-API)   
+[![Repo on GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://git.zackpollard.pro/personal-projects/open-source/JavaTelegramBot-API)   
+
 ## Example Usage
 You can find fully working examples of bots in the following repository   
 https://github.com/zackpollard/JavaTelegramBot-API-Examples   
