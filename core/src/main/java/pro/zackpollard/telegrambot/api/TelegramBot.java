@@ -183,8 +183,11 @@ public final class TelegramBot {
                     MultipartBody request = Unirest.post(getBotAPIUrl() + "sendMessage")
                             .field("chat_id", chat.getId(), "application/json; charset=utf8;")
                             .field("text", textMessage.getMessage(), "application/json; charset=utf8;")
-                            .field("disable_web_page_preview", textMessage.isDisableWebPagePreview())
-                            .field("parse_mode", textMessage.getParseMode() != null ? textMessage.getParseMode().getModeName() : ParseMode.NONE);
+                            .field("disable_web_page_preview", textMessage.isDisableWebPagePreview());
+
+                    if(textMessage.getParseMode() != null && textMessage.getParseMode() != ParseMode.NONE) {
+                        request.field("parse_mode", textMessage.getParseMode().getModeName());
+                    }
 
                     Utils.processReplyContent(request, textMessage);
                     Utils.processNotificationContent(request, textMessage);
@@ -642,7 +645,7 @@ public final class TelegramBot {
             if(chatId != null) requests.field("chat_id", chatId, "application/json; charset=utf8;");
             if(messageId != null) requests.field("message_id", messageId);
             if(inlineMessageId != null) requests.field("inline_message_id", inlineMessageId, "application/json; charset=utf8;");
-            if(parseMode != null) requests.field("parse_mode", parseMode.getModeName(), "application/json; charset=utf8;");
+            if(parseMode != null && parseMode != ParseMode.NONE) requests.field("parse_mode", parseMode.getModeName(), "application/json; charset=utf8;");
             if(inlineReplyMarkup != null) requests.field("reply_markup", GSON.toJson(inlineReplyMarkup, InlineKeyboardMarkup.class), "application/json; charset=utf8;");
 
             response = requests.asString();
