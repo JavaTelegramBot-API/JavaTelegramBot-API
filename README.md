@@ -72,9 +72,6 @@ Maven is used for dependency management and deployment.
 
 The following is required temporarily as github package registry can't be used without authentication, please follow the instructions on the following issue:
 https://github.com/zackpollard/JavaTelegramBot-API/issues/93#issuecomment-577789861
-### CI Builds
-You shouldn't use this, you should be using maven, but if you really need to it is there. Any build there would have however been pushed to maven central already.   
-Latest Release Build [![Build Status](http://ci.zackpollard.pro/job/JavaTelegramBot-API/badge/icon)](http://ci.zackpollard.pro/job/JavaTelegramBot-API/)
 
 ## Licensing
 
