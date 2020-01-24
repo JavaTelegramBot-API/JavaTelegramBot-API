@@ -57,7 +57,7 @@ public class MyListener implements Listener {
 ```
 ## Deployment
 
-The API is available on Maven or through the CI.
+The API is available on Github Package Registry.
 ### Maven
 Maven is used for dependency management and deployment.
 ```xml
@@ -65,10 +65,13 @@ Maven is used for dependency management and deployment.
     <dependency>
         <groupId>pro.zackpollard.telegrambot.api</groupId>
         <artifactId>jtelegram-botapi</artifactId>
-        <version>1.7.0</version>
+        <version>1.7.1</version>
     </dependency>
 </dependencies>
 ```
+
+The following is required temporarily as github package registry can't be used without authentication, please follow the instructions on the following issue:
+https://github.com/zackpollard/JavaTelegramBot-API/issues/93#issuecomment-577789861
 ### CI Builds
 You shouldn't use this, you should be using maven, but if you really need to it is there. Any build there would have however been pushed to maven central already.   
 Latest Release Build [![Build Status](http://ci.zackpollard.pro/job/JavaTelegramBot-API/badge/icon)](http://ci.zackpollard.pro/job/JavaTelegramBot-API/)
