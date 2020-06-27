@@ -68,7 +68,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
                         if (this.priorityIndex >= PRIORITIES.length) {
                             break;
                         }
-                        this.iterator = priorised.getOrDefault(PRIORITIES[priorityIndex++], Collections.emptySet()).iterator();
+                        this.iterator = new LinkedHashSet<>(priorised.getOrDefault(PRIORITIES[priorityIndex++], Collections.emptySet())).iterator();
                     }
                 }
 
@@ -149,7 +149,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
         }
     };
 
-    private final Map<Class<?>, PrioritisedSet<RegisteredListener>> listenerByContent = new ConcurrentHashMap<>();
+    private final Map<Class<?>, PrioritisedSet<RegisteredListener>> listenerByContent = new HashMap<>();
 
     public void register(Listener listener) {
         boolean globalIgnore = Optional.ofNullable(listener.getClass().getAnnotation(Event.Handler.class))
