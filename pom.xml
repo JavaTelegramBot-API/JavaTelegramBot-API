@@ -27,9 +27,9 @@
     </licenses>
 
     <scm>
-        <url>git@github.com:zackpollard/JavaTelegramBot-API.git</url>
-        <connection>scm:git:git@github.com:zackpollard/JavaTelegramBot-API.git</connection>
-        <developerConnection>scm:git:git@github.com:zackpollard/JavaTelegramBot-API.git</developerConnection>
+        <url>git@github.com:JavaTelegramBot-API/JavaTelegramBot-API.git</url>
+        <connection>scm:git:git@github.com:JavaTelegramBot-API/JavaTelegramBot-API.git</connection>
+        <developerConnection>scm:git:git@github.com:JavaTelegramBot-API/JavaTelegramBot-API.git</developerConnection>
     </scm>
 
     <developers>
@@ -52,7 +52,7 @@
         <repository>
             <id>github</id>
             <name>GitHub JavaTelegramBot-API Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/zackpollard/JavaTelegramBot-API</url>
+            <url>https://maven.pkg.github.com/JavaTelegramBot-API/JavaTelegramBot-API</url>
         </repository>
     </distributionManagement>
 
