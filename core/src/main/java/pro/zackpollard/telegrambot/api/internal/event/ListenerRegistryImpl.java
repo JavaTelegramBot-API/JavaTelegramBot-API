@@ -16,6 +16,7 @@ import pro.zackpollard.telegrambot.api.event.chat.message.*;
 
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 /**
@@ -148,7 +149,7 @@ public class ListenerRegistryImpl implements ListenerRegistry {
         }
     };
 
-    private final Map<Class<?>, PrioritisedSet<RegisteredListener>> listenerByContent = new HashMap<>();
+    private final Map<Class<?>, PrioritisedSet<RegisteredListener>> listenerByContent = new ConcurrentHashMap<>();
 
     public void register(Listener listener) {
         boolean globalIgnore = Optional.ofNullable(listener.getClass().getAnnotation(Event.Handler.class))
