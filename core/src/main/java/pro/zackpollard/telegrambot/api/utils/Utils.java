@@ -22,7 +22,11 @@ import java.util.Random;
  * @author Zack Pollard
  */
 public class Utils {
-
+    static ForcedReply fp = new ForcedReply();
+    InlinedKeyboardMarkup ik = new InlinedKeyboardMarkup();
+    KeyboardHide kh = new KeyboardHide();
+    KeyboardMarkup km = new KeyboardMarkup();
+    KeyboardRemove kr = new KeyboardRemove();
     /**
      * Generates a random alphanumeric String of the length specified
      *
@@ -97,26 +101,11 @@ public class Utils {
         if (replyingOptions.getReplyTo() != 0)
             multipartBody.field("reply_to_message_id", String.valueOf(replyingOptions.getReplyTo()), "application/json; charset=utf8;");
         if (replyingOptions.getReplyMarkup() != null) {
-
-            switch (replyingOptions.getReplyMarkup().getType()) {
-
-                case FORCE_REPLY:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ForceReply.class), "application/json; charset=utf8;");
-                    break;
-                case KEYBOARD_HIDE:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardHide.class), "application/json; charset=utf8;");
-                    break;
-                case KEYBOARD_REMOVE:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardRemove.class), "application/json; charset=utf8;");
-                    break;
-                case KEYBOARD_MARKUP:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), ReplyKeyboardMarkup.class), "application/json; charset=utf8;");
-                    break;
-                case INLINE_KEYBOARD_MARKUP:
-                    multipartBody.field("reply_markup", TelegramBot.GSON.toJson(replyingOptions.getReplyMarkup(), InlineKeyboardMarkup.class), "application/json; charset=utf8;");
-                    break;
-            }
+            findReplyingOptions(multipartBody,replyingOptions);
         }
+    }
+    public static void findReplyingOptions(MultipartBody multipartBody, ReplyingOptions replyingOptions){
+        fp.multipartBodyField(multipartBody, replyingOptions);
     }
 
     /**
