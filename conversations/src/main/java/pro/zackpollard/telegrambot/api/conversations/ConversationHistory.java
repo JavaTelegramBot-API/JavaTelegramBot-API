@@ -25,7 +25,7 @@ public final class ConversationHistory {
      * @throws IndexOutOfBoundsException if there are no messages
      * @return The first message sent by the other member
      */
-    public Message first() {
+    public Message firstMessage() {
         return history.get(0);
     }
 
@@ -46,16 +46,17 @@ public final class ConversationHistory {
      * @return message sent at specified prompt
      * @throws IndexOutOfBoundsException if there are no messages from that prompt
      */
-    public Message messageAt(ConversationPrompt prompt, Conversation conversation) {
+    public Message messageAtPrompt(ConversationPrompt prompt, Conversation conversation) {
         return messageAt(conversation.getPrompts().indexOf(prompt));
     }
+
 
     /**
      * Gets the last message sent
      * @return last message sent
      * @throws IndexOutOfBoundsException if there are no messages
      */
-    public Message last() {
+    public Message lastMessage() {
         if (history.isEmpty()) {
             return null;
         }
